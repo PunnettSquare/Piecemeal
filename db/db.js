@@ -1,11 +1,6 @@
-var knex = require("knex")({
-  client: "pg",
-  connection: {
-    host: "localhost",
-    user: "admin",
-    password: "admin",
-    database: "piecemeal"
-  }
-});
+var config = require('../knexfile')
+var knex = require("knex")(config['development']);
 
 module.exports = knex;
+
+knex.migrate.latest([config]); 
