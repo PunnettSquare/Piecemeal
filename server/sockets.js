@@ -1,6 +1,6 @@
 // # Socket Connection Handler
 
-var connect = function(eventUrl, io) {
+var connect = function(eventUrl, eventInfo, io) {
   // Set the Socket.io namespace to the eventUrl.
   var mealEvent = io.of(eventUrl);
 
@@ -9,6 +9,12 @@ var connect = function(eventUrl, io) {
   //   socket.on('userAdded', function(user){
   //     io.emit('userAdded', user);
   //   });
+    socket.emit('join', eventInfo);
+
+    socket.on('addDish', function(data) {
+      //TODO add dish to DB
+      socket.broadcast.emit('dishAdded', {cost: data.cost, name: data.name});
+    });
 
   });
 };
