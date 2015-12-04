@@ -3,6 +3,8 @@
 # Logs
 logs
 *.log
+_.editorconfig
+_.gitattributes
 
 # Runtime data
 pids

@@ -1,7 +1,7 @@
 (function() {
   'use strict';
 
-  angular.module('PieceMeal')
+  angular.module('Piecemeal')
     .factory('guestBillFactory', guestBillFactory);
 
   guestBillFactory.$inject = [];

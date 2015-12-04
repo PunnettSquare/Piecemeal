@@ -2,7 +2,7 @@
   'use strict';
 
   angular.module('Piecemeal')
-  .controller('LoadingCtrl', LoadingCtrl);
+    .controller('LoadingCtrl', LoadingCtrl);
 
   LoadingCtrl.$inject = [];
 
@@ -10,6 +10,9 @@
     var self = this;
 
 
+    self.setSessionUser = function(username) {
+      window.sessionStorage.setItem('username', username);
+    };
   }
 
 })();
