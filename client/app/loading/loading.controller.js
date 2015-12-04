@@ -4,15 +4,15 @@
   angular.module('Piecemeal')
     .controller('LoadingCtrl', LoadingCtrl);
 
-  LoadingCtrl.$inject = [];
+  LoadingCtrl.$inject = ['$http'];
 
-  function LoadingCtrl() {
+  function LoadingCtrl($http) {
     var self = this;
 
 
-    self.setSessionUser = function(username) {
-      window.sessionStorage.setItem('username', username);
-    };
+
   }
 
 })();
+
+

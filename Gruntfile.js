@@ -103,6 +103,7 @@ module.exports = function(grunt) {
       injectJS: {
         files: ['<%= app.client %>/app/app.module.js',
           '<%= app.client %>/app/app.routes.js',
+          '<%= app.client %>/app/app.socket.init.js',
           '<%= app.client %>/{app,components}/**/!(*.spec|*.mock).js',
           '!<%= app.client %>/app/app.js'
         ],
@@ -172,7 +173,8 @@ module.exports = function(grunt) {
         },
         files: {
           '<%= app.client %>/index.html': [
-            ['<%= app.client %>/app/app.module.js',
+            ['<%= app.client %>/app/app.socket.init.js',
+              '<%= app.client %>/app/app.module.js',
               '<%= app.client %>/app/app.routes.js',
               '{.tmp,<%= app.client %>}/{app,components}/**/!(*.spec|*.mock).js',
               '!{.tmp,<%= app.client %>}/app/app.js'
