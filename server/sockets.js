@@ -6,7 +6,7 @@ var connect = function(eventUrl, io) {
 
   mealEvent.once('connection', function(socket) {
 
-  };
+  });
 };
 
 // Required by [server.js]
