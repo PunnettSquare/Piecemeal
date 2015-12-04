@@ -31,7 +31,7 @@ app.get('/createEvent', function(req, res) {
 
 app.post('/newUser', function(req, res) {
   //create user in DB
-  var userObject = {username:'Fawn', user_id: 1};
+  var userObject = {username:'Fawn', id: 1};
   //send back id 
   res.send(userObject);
 })
@@ -42,12 +42,12 @@ app.get('/*', function(req, res) {
   //dummy data for mvp
   var eventInfo = {users: [
     {
-      user_id: 3,
+      id: 3,
       username:'Jackson',
       dishes: {1: {cost: 10, name: 'Chicken Salad'}} 
     }, 
     {
-      user_id: 2,
+      id: 2,
       username: 'Michelle',
       dishes: {2: {cost: 12, name: 'Hamburger'}} 
     } 
