@@ -1,12 +1,12 @@
 (function() {
   'use strict';
 
-  angular.module('PieceMeal')
-    .factory('landingFactory', landingFactory);
+  angular.module('Piecemeal')
+    .factory('homeFactory', homeFactory);
 
-  landingFactory.$inject = [];
+  homeFactory.$inject = [];
 
-  function landingFactory() {
+  function homeFactory() {
     var services = {
       enterRoom: enterRoom
     };
