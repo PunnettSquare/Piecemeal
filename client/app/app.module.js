@@ -8,23 +8,16 @@ angular.module('Piecemeal', ['ui.router', 'ngMessages', 'btford.socket-io'])
   return socket;
 
 
-}).controller('piecemealCtrl', function ($scope, socket) {
+});
+
+// .controller('piecemealCtrl', function ($scope, socket) {
 
   // ** ------- Socket listeners ------- **
 
-  // addUser:
-  socket.forward('addUser', $scope);
-  $scope.$on('socket:addUser', function (e, data) {
-    // do something. e.g. $scope.data = data
-  });
-
-  // addHost?
-
-  // addDish
-
-  // removeDish
-
-  // etc.
+  // socket.forward('getDish', $scope);
+  // $scope.$on('socket:getDish', function (e, data) {
+  //   // do something. e.g. $scope.data = data
+  // });
 
   // ** ------- Examples of Socket Emitters ------- **
 
@@ -32,4 +25,4 @@ angular.module('Piecemeal', ['ui.router', 'ngMessages', 'btford.socket-io'])
 
   // e.g. on click of add button, socket.emit('addUser')
 
-});
+// });
