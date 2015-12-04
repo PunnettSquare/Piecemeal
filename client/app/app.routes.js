@@ -12,10 +12,18 @@
     $stateProvider
       .state('home', {
         url: '/home',
-        templateUrl: 'home/home.html',
-        controller: 'HomeCtrl',
-        controllerAs: 'home',
-
+        views: {
+          'navbar': {
+            templateUrl: 'components/navbar/navbar.html',
+            controller: 'NavbarCtrl',
+            controllerAs: 'navbar'
+          },
+          '@': {
+            templateUrl: 'home/home.html',
+            controller: 'HomeCtrl',
+            controllerAs: 'home'
+          }
+        }
       })
       .state('addDish', {
         url: '/addDish',
@@ -47,25 +55,6 @@
             templateUrl: 'app/allDishes/allDishes.html',
             controller: 'AllDishesCtrl',
             controllerAs: 'allDishes',
-          }
-        },
-        resolve: {
-
-        }
-
-      })
-      .state('guestBill', {
-        url: '/guestBill',
-        views: {
-          'navbar': {
-            templateUrl: 'components/navbar/navbar.html',
-            controller: 'NavbarCtrl',
-            controllerAs: 'navbar'
-          },
-          '@': {
-            templateUrl: 'app/guestBill/guestBill.html',
-            controller: 'GuestBillCtrl',
-            controllerAs: 'guestBill'
           }
         },
         resolve: {
