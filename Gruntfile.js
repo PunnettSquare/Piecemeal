@@ -104,9 +104,7 @@ module.exports = function(grunt) {
         files: ['<%= app.client %>/app/app.module.js',
           '<%= app.client %>/app/app.routes.js',
           '<%= app.client %>/{app,components}/**/!(*.spec|*.mock).js',
-          '!<%= app.client %>/app/app.js',
-          '<%= app.client %>/../../node_modules/socket.io-client/socket.io.js'
-
+          '!<%= app.client %>/app/app.js'
         ],
         tasks: ['injector:scripts']
       },
