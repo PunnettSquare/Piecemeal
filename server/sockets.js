@@ -6,14 +6,20 @@ var connect = function(eventUrl, eventInfo, io) {
 
   mealEvent.once('connection', function(socket) {
 
-  //   socket.on('userAdded', function(user){
-  //     io.emit('userAdded', user);
-  //   });
+    // socket.on('userAdded', function(user) {
+    //   socket.broadcast.emit('userAdded', user);
+    // });
+
     socket.emit('join', eventInfo);
 
     socket.on('addDish', function(data) {
+      console.log("AddDish event heard from the server!");
+      console.log('data =', data);
       //TODO add dish to DB
-      socket.broadcast.emit('dishAdded', {cost: data.cost, name: data.name});
+      socket.broadcast.emit('dishAdded', {
+        cost: data.cost,
+        name: data.name
+      });
     });
 
   });
@@ -22,8 +28,8 @@ var connect = function(eventUrl, eventInfo, io) {
 // Required by [server.js]
 module.exports = connect;
 
-  // won't need this unless using handshake sessions for user auth:
-    // io.use(sharedsession(session));
-    // socket.on("login", function(data){
-    //       console.log("client["+socket.handshake.session.myCustomData.userID+"] sent data: " + data);
-    //   })
+// won't need this unless using handshake sessions for user auth:
+// io.use(sharedsession(session));
+// socket.on("login", function(data){
+//       console.log("client["+socket.handshake.session.myCustomData.userID+"] sent data: " + data);
+//   })
