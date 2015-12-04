@@ -11,13 +11,6 @@ module.exports = function(grunt) {
       dist: 'dist'
     },
 
-
-    banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - ' +
-      '<%= grunt.template.today("yyyy-mm-dd") %>\n' +
-      '<%= pkg.homepage ? "* " + pkg.homepage + "\\n" : "" %>' +
-      '* Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author.name %>;' +
-      ' Licensed <%= props.license %> */\n',
-
     // Task configuration
     jshint: {
       options: {
@@ -62,44 +55,44 @@ module.exports = function(grunt) {
         src: '<%= app.client %>/index.html',
         ignorePath: '<%= app.client %>/',
       },
-      test: {
-        src: './karma.conf.js',
-        devDependencies: true
-      }
+      // test: {
+      //   src: './karma.conf.js',
+      //   devDependencies: true
+      // }
     },
 
-    karma: {
-      unit: {
-        configFile: 'karma.conf.js',
-        singleRun: true
-      }
-    },
+    // karma: {
+    //   unit: {
+    //     configFile: 'karma.conf.js',
+    //     singleRun: true
+    //   }
+    // },
 
-    mochaTest: {
-      options: {
-        reporter: 'spec',
-        require: 'mocha.conf.js',
-        timeout: 5000 // set default mocha spec timeout
-      },
-      unit: {
-        src: ['<%= app.server %>/**/*.spec.js']
-      },
-      integration: {
-        src: ['<%= app.server %>/**/*.integration.js']
-      }
-    },
+    // mochaTest: {
+    //   options: {
+    //     reporter: 'spec',
+    //     require: 'mocha.conf.js',
+    //     timeout: 5000 // set default mocha spec timeout
+    //   },
+    //   unit: {
+    //     src: ['<%= app.server %>/**/*.spec.js']
+    //   },
+    //   integration: {
+    //     src: ['<%= app.server %>/**/*.integration.js']
+    //   }
+    // },
 
     // Compiles Sass to CSS
-    sass: {
-      server: {
-        options: {
-          compass: false
-        },
-        files: {
-          '.tmp/app/app.css': '<%= app.client %>/app/app.scss'
-        }
-      }
-    },
+    // sass: {
+    //   server: {
+    //     options: {
+    //       compass: false
+    //     },
+    //     files: {
+    //       '.tmp/app/app.css': '<%= app.client %>/app/app.scss'
+    //     }
+    //   }
+    // },
 
 
 
@@ -115,51 +108,51 @@ module.exports = function(grunt) {
         ],
         tasks: ['injector:scripts']
       },
-      injectCss: {
-        files: ['<%= app.client %>/{app,components}/**/*.css'],
-        tasks: ['injector:css']
-      },
-      mochaTest: {
-        files: ['<%= app.server %>/**/*.{spec,integration}.js'],
-        tasks: ['env:test', 'mochaTest']
-      },
-      jsTest: {
-        files: ['<%= app.client %>/{app,components}/**/*.{spec,mock}.js'],
-        tasks: ['newer:jshint:all', 'wiredep:test', 'karma']
-      },
-      injectSass: {
-        files: ['<%= app.client %>/{app,components}/**/*.{scss,sass}'],
-        tasks: ['injector:sass']
-      },
-      sass: {
-        files: ['<%= app.client %>/{app,components}/**/*.{scss,sass}'],
-        tasks: ['sass', 'postcss']
-      },
-      gruntfile: {
-        files: ['Gruntfile.js']
-      },
-      livereload: {
-        files: [
-          '{.tmp,<%= app.client %>}/{app,components}/**/*.{css,html}',
-          '{.tmp,<%= app.client %>}/{app,components}/**/!(*.spec|*.mock).js',
-          '<%= app.client %>/assets/images/{,*//*}*.{png,jpg,jpeg,gif,webp,svg}'
-        ],
-        options: {
-          livereload: true
-        }
-      },
-      express: {
-        files: ['<%= app.server %>/**/*.{js,json}'],
-        tasks: ['express:dev', 'wait'],
-        options: {
-          livereload: true,
-          spawn: false //Without this option specified express won't be reloaded
-        }
-      },
-      bower: {
-        files: ['bower.json'],
-        tasks: ['wiredep']
-      },
+      // injectCss: {
+      //   files: ['<%= app.client %>/{app,components}/**/*.css'],
+      //   tasks: ['injector:css']
+      // },
+      // mochaTest: {
+      //   files: ['<%= app.server %>/**/*.{spec,integration}.js'],
+      //   tasks: ['env:test', 'mochaTest']
+      // },
+      // jsTest: {
+      //   files: ['<%= app.client %>/{app,components}/**/*.{spec,mock}.js'],
+      //   tasks: ['newer:jshint:all', 'wiredep:test', 'karma']
+      // },
+      // injectSass: {
+      //   files: ['<%= app.client %>/{app,components}/**/*.{scss,sass}'],
+      //   tasks: ['injector:sass']
+      // },
+      // sass: {
+      //   files: ['<%= app.client %>/{app,components}/**/*.{scss,sass}'],
+      //   tasks: ['sass', 'postcss']
+      // },
+      // gruntfile: {
+      //   files: ['Gruntfile.js']
+      // },
+      // livereload: {
+      //   files: [
+      //     '{.tmp,<%= app.client %>}/{app,components}/**/*.{css,html}',
+      //     '{.tmp,<%= app.client %>}/{app,components}/**/!(*.spec|*.mock).js',
+      //     '<%= app.client %>/assets/images/{,*//*}*.{png,jpg,jpeg,gif,webp,svg}'
+      //   ],
+      //   options: {
+      //     livereload: true
+      //   }
+      // },
+      // express: {
+      //   files: ['<%= app.server %>/**/*.{js,json}'],
+      //   tasks: ['express:dev', 'wait'],
+      //   options: {
+      //     livereload: true,
+      //     spawn: false //Without this option specified express won't be reloaded
+      //   }
+      // },
+      // bower: {
+      //   files: ['bower.json'],
+      //   tasks: ['wiredep']
+      // },
     },
 
     injector: {
@@ -191,41 +184,41 @@ module.exports = function(grunt) {
 
 
       // Inject component scss into app.scss
-      sass: {
-        options: {
-          transform: function(filePath) {
-            filePath = filePath.replace('/client/app/', '');
-            filePath = filePath.replace('/client/components/', '../components/');
-            return '@import \'' + filePath + '\';';
-          },
-          starttag: '// injector',
-          endtag: '// endinjector'
-        },
-        files: {
-          '<%= app.client %>/app/app.scss': [
-            '<%= app.client %>/{app,components}/**/*.{scss,sass}',
-            '!<%= app.client %>/app/app.{scss,sass}'
-          ]
-        }
-      },
+      // sass: {
+      //   options: {
+      //     transform: function(filePath) {
+      //       filePath = filePath.replace('/client/app/', '');
+      //       filePath = filePath.replace('/client/components/', '../components/');
+      //       return '@import \'' + filePath + '\';';
+      //     },
+      //     starttag: '// injector',
+      //     endtag: '// endinjector'
+      //   },
+      //   files: {
+      //     '<%= app.client %>/app/app.scss': [
+      //       '<%= app.client %>/{app,components}/**/*.{scss,sass}',
+      //       '!<%= app.client %>/app/app.{scss,sass}'
+      //     ]
+      //   }
+      // },
 
       // Inject component css into index.html
-      css: {
-        options: {
-          transform: function(filePath) {
-            filePath = filePath.replace('/client/', '');
-            filePath = filePath.replace('/.tmp/', '');
-            return '<link rel="stylesheet" href="' + filePath + '">';
-          },
-          starttag: '<!-- injector:css -->',
-          endtag: '<!-- endinjector -->'
-        },
-        files: {
-          '<%= app.client %>/index.html': [
-            '<%= app.client %>/{app,components}/**/*.css'
-          ]
-        }
-      }
+      // css: {
+      //   options: {
+      //     transform: function(filePath) {
+      //       filePath = filePath.replace('/client/', '');
+      //       filePath = filePath.replace('/.tmp/', '');
+      //       return '<link rel="stylesheet" href="' + filePath + '">';
+      //     },
+      //     starttag: '<!-- injector:css -->',
+      //     endtag: '<!-- endinjector -->'
+      //   },
+      //   files: {
+      //     '<%= app.client %>/index.html': [
+      //       '<%= app.client %>/{app,components}/**/*.css'
+      //     ]
+      //   }
+      // }
     }
 
   });

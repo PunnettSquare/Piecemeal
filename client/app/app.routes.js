@@ -77,7 +77,15 @@
           }
         },
         resolve: {
-
+          guestBillData: ['$http', function($http) {
+            return $http({
+              method: 'GET',
+              url: '/guestBill',
+              params: {
+                username: window.sessionStorage.getItem('username')
+              }
+            });
+          }]
         }
 
       })
