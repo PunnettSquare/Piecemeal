@@ -1,9 +1,11 @@
-angular.module('Piecemeal', ['ui.router', 'ngMessages', 'btford.socket.io', 'Piecemeal.appCtrl'])
+angular.module('Piecemeal', ['ui.router', 'ngMessages', 'btford.socket-io'])
 
+
+// johnpapa style?
 .factory('mySocket', function (socketFactory) {
-  var mySocket = socketFactory();
-  // mySocket.forward('error'); //could add this back in if error handling is necessary
-  return mySocket;
+  var socket = socketFactory();
+  // socket.forward('error'); //could add this back in if error handling is necessary
+  return socket;
 
 
 }).controller('piecemealCtrl', function ($scope, socket) {

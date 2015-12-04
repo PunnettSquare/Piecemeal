@@ -5,7 +5,7 @@ var express = require('express');
 var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
-var db = require('./db/db');
+// var db = require('./db/db');
 var port = process.env.PORT || 8080;
 var handleSocket = require('./server/sockets');
 var util = require('./server/utility.js');
@@ -31,7 +31,7 @@ app.get('/*', function(req, res) {
     //otherwise handle the socket connection
     //send them to event
     handleSocket(req.url, io);
-    res.sendFile(__dirname + '/client/loading.html')
+    res.sendFile(__dirname + '/client/loading.html');
 });
 
 
