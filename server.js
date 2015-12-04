@@ -36,6 +36,6 @@ app.get('/*', function(req, res) {
 
 
 // **Start the server.**
-http.listen(port, function() {
+http.listen(port, function() { // why not server.listen?
   console.log('server listening on', port, 'at', new Date());
 });
