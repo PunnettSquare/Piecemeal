@@ -19,7 +19,7 @@
             controllerAs: 'navbar'
           },
           '@': {
-            templateUrl: 'home/home.html',
+            templateUrl: 'app/home/home.html',
             controller: 'HomeCtrl',
             controllerAs: 'home'
           }

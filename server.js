@@ -31,7 +31,7 @@ app.get('/*', function(req, res) {
     //otherwise handle the socket connection
     //send them to event
     handleSocket(req.url, io);
-    res.sendFile(__dirname + '/client/loading.html')
+    res.sendFile(__dirname + '/client/loading.html');
 });
 
 
