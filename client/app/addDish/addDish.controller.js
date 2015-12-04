@@ -4,7 +4,7 @@
   angular.module('Piecemeal')
   .controller('AddDishCtrl', AddDishCtrl);
 
-  AddDishCtrl.$inject = ['$sessionStorage'];
+  AddDishCtrl.$inject = [];
 
   function AddDishCtrl() {
     var self = this;
