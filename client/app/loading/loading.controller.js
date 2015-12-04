@@ -2,14 +2,17 @@
   'use strict';
 
   angular.module('Piecemeal')
-  .controller('LoadingCtrl', LoadingCtrl);
+    .controller('LoadingCtrl', LoadingCtrl);
 
-  LoadingCtrl.$inject = [];
+  LoadingCtrl.$inject = ['$sessionStorage'];
 
-  function LoadingCtrl() {
+  function LoadingCtrl($sessionStorage) {
     var self = this;
 
 
+    self.setSessionUser = function(username) {
+      $sessionStorage.username = username;
+    };
   }
 
 })();
