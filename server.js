@@ -5,6 +5,7 @@ var express = require('express');
 var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
+var db = require('./db/db');
 var port = process.env.PORT || 8080;
 var handleSocket = require('./server/sockets');
 var util = require('./server/utility.js');
@@ -20,8 +21,17 @@ app.use(bodyParser.json());
 app.use('/', express.static(__dirname + '/client'));
 
 
-app.get('/*', function(req, res) {
 
+// **Wildcard route & event id handler.**
+app.get('/*', function(req, res) {
+  var id = req.url.slice(1);
+
+  //TODO query DB for event
+    //If not found or error, redirect to home page
+    //otherwise handle the socket connection
+    //send them to event
+    handleSocket(req.url, io);
+    res.sendFile(__dirname + '/client/loading.html')
 });
 
 
