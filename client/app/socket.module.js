@@ -1,3 +1,5 @@
+// JOHN PAPA REFACTOR IN PROGRESS
+
 // (function() {
 //   'use strict';
 
@@ -16,8 +18,12 @@
 
 // })();
 
-// note to self: refactor the john papa way (test in home temporarily), then fix ui-router
+
+// NON-JOHN PAPA STYLE, BUT FUNCTIONAL:
+
 // inject 'socket' (and add to params) in all controllers that will use sockets (all except home)
+// adds sockets to the digest cycle the angular way:
+
 angular.module('socket', [])
 
 .factory('socket', function ($rootScope, $window) {
@@ -26,10 +32,6 @@ angular.module('socket', [])
   var socket = io(ioRoom);
   console.log('Joining ioRoom: ', ioRoom);
 
-  // return socket;
-
-  // Since socket is now in a factory, we'll need to use $apply on the scope
-  // Instead, we will use $apply on the scope, this allows us to 
   return {
     on: function (eventName, callback) {
       socket.on(eventName, function () {
