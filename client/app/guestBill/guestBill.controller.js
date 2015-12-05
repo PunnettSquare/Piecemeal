@@ -2,7 +2,7 @@
   'use strict';
 
   angular.module('Piecemeal')
-  .controller('GuestBillCtrl', GuestBillCtrl);
+    .controller('GuestBillCtrl', GuestBillCtrl);
 
   GuestBillCtrl.$inject = [];
 
