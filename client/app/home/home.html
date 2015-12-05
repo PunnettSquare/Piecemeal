@@ -3,7 +3,16 @@
   <p>{{home.socketmessage}}</p> <!--For testing sockets-->
 
   <h2>What is your name?</h2>
-  <input type="text" placeholder="Enter Your Name" ng-model="username" name="username" required>
+  <form name="userInput">
+    <input type="text" placeholder="Enter Your Name" ng-model="username" name="username" required autofocus>
+    <input type="checkbox" ng>
+
+  </form>
+
+
+
+
+
 
   <h2>Are you a host?</h2>
   <input type="submit" value="Create room" ng-click="home.setSessionUser(username, true, null)">

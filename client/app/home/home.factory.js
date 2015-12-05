@@ -14,6 +14,8 @@
 
     return services;
 
+
+
     function enterRoom() {
 
     }
@@ -22,11 +24,23 @@
       return $http({
           method: 'POST',
           url: '/newUser',
-          data: username
+          data: username // user id, possibly username
         })
         .then(function(res) {
           return res.data;
         });
+    }
+
+    function createEvent() {
+      return $http({
+        method: 'POST',
+        url: '/createEvent',
+        data: {username: username}
+      })
+      .then(function(res) {
+        console.log('res.data =', res.data);
+        return res.data // nothing -> redirect from socket
+      });
     }
   }
 
