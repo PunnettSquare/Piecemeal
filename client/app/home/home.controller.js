@@ -14,7 +14,7 @@
     self.socketmessage = "test";
 
     socketFactory.on('join', function(data) {
-      console.log("receiving data for join");
+      console.log("receiving data for join", data);
       self.socketmessage = "data: " + data;
     });
     // end test

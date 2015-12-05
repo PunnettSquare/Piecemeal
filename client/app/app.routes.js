@@ -13,7 +13,7 @@ var firstLog = true;
     console.log('window.sessionStorage =', window.sessionStorage)
     $urlRouterProvider.otherwise(function($injector, $window) {
       // console.log('$window =', $window);
-      console.log('$window.$$path =', $window.$$path);
+      // console.log('$window.$$path =', $window.$$path);
       var state = $injector.get('$state');
       // if ($window.$$path === '' || $window.$$path === '/' || $window.$$path === '/home' || $window.$$path === '/undefined') {
       if (!window.sessionStorage.username || window.sessionStorage.username === "undefined") {

@@ -4,11 +4,17 @@
   angular.module('Piecemeal')
     .controller('AllDishesCtrl', AllDishesCtrl);
 
-  AllDishesCtrl.$inject = [];
+  AllDishesCtrl.$inject = ['socketFactory'];
 
-  function AllDishesCtrl() {
+  function AllDishesCtrl(socketFactory) {
     var self = this;
     self.listOfMeals;
+
+    socketFactory.on('join', function(data) {
+      console.log("receiving data for join", data);
+      self.socketmessage = "data: " + data;
+    });
+    // end test
 
 
     // db queries
