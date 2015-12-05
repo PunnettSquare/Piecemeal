@@ -10,11 +10,15 @@ var firstLog = true;
 
   function config($stateProvider, $urlRouterProvider, $window) {
 
+    console.log('window.sessionStorage.username =', window.sessionStorage.username);
+
     $urlRouterProvider.otherwise(function($injector, $window) {
       console.log('$window =', $window);
       console.log('$window.$$path =', $window.$$path);
       var state = $injector.get('$state');
-      if ($window.$$path === '' || $window.$$path === '/' || $window.$$path === '/home' || $window.$$path === '/undefined') {
+      // if ($window.$$path === '' || $window.$$path === '/' || $window.$$path === '/home' || $window.$$path === '/undefined') {
+      console.log('window.sessionStorage.username =', window.sessionStorage.username);
+      if (!window.sessionStorage.username) {
         state.go('home');
       } else {
         state.go('allDishes');
