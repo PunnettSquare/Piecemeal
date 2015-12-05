@@ -16,7 +16,7 @@ var connect = function(eventUrl, eventInfo, io) {
       console.log("AddDish event heard from the server!");
       console.log('data =', data);
       //TODO add dish to DB
-      socket.broadcast.emit('dishAdded', {
+      socket.broadcast.emit('dishAdded', { //or mealEvent.emit to send to all
         cost: data.cost,
         name: data.name
       });
