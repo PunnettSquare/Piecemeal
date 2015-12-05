@@ -9,10 +9,15 @@
   function AddDishCtrl(socketFactory) {
     var self = this;
 
-    socketFactory.emit('addDish', {
-      cost: 324234,
-      name: "yum"
-    });
+    self.addDish = function(dish, cost) {
+      console.log('dish, cost =', dish, cost);
+      socketFactory.emit('addDish', {
+        cost: cost,
+        name: dish
+      });
+      self.amount = 0;
+      self.dishName = '';
+    };
 
     // db queries
     // input: username + id + event

@@ -33,6 +33,7 @@ app.get('/createEvent', function(req, res) {
   //TODO crete event in DB
   //Generate URL
   var url = 'testRoom';
+  console.log('req =', req);
   //redirect to room after event has been created
   res.redirect('/' + url);
 });
