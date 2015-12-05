@@ -14,7 +14,7 @@
     return services;
 
     function getAllDishData() {
-      // AppSocket.socket.on('dishAdded', function(data) {
+      // socketFactory.on('dishAdded', function(data) {
       // return data;
       // });
     }

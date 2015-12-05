@@ -34,10 +34,10 @@
 
 
 // join
-// AppSocket.socket.on('join', function(data) {
+// socketFactory.on('join', function(data) {
 //   self.listOfMeals = data;
 // });
 
-// AppSocket.socket.on('dishAdded', function(data) {
+// socketFactory.on('dishAdded', function(data) {
 //   self.listOfMeals.push(data);
 // });
