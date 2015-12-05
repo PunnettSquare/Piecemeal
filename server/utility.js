@@ -10,18 +10,15 @@ module.exports = {
         return db('usersJoinEvents').insert({user_id: userId[0], event_id: eventId[0], host: true, status: true}).returning('id');
       });
     })
-    // .catch(function(err) {
-    //   // callback(err)
-    // })
   },
 
   createUser: function(db, username, eventId, host) {
-    //add event and add join table
    return db('users').insert({username: username})
     .returning('id')
     .then(function(userId) {
-      return db('usersJoinEvents').insert({user_id: userId[0], event_id: eventId, status: false, host: host})
+      return db('usersJoinEvents').insert({user_id: userId[0], event_id: eventId, status: false, host: host}).returning('user_id');
     })
+
   },
 
   createDish: function(db, dishName, cost, userId, eventId) {
@@ -83,5 +80,9 @@ module.exports = {
 
   findUserDishes: function(db, userId) {
     return db.select().from('users').leftJoin('usersJoinDishes', 'users.id', 'usersJoinDishes.user_id').leftJoin('dishes', 'dishes.id', 'usersJoinDishes.dish_id').where('users.id', userId)
+  },
+
+  generateCode: function() {
+    return 'testRoom';
   }
 }
