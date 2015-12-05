@@ -12,6 +12,11 @@
   socketFactory.$inject = ['$rootScope', '$window'];
 
   function socketFactory($rootScope, $window) {
+    // Connect to sockets.io with unique ioRoom ID
+    var ioRoom = $window.location.href;
+    var socket = io(ioRoom);
+    console.log('Joining ioRoom: ', ioRoom);
+
     var services = {
       on: on,
       emit: emit
