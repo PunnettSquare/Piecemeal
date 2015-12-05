@@ -4,12 +4,12 @@
   angular.module('Piecemeal')
     .controller('AddDishCtrl', AddDishCtrl);
 
-  AddDishCtrl.$inject = [];
+  AddDishCtrl.$inject = ['socketFactory'];
 
-  function AddDishCtrl() {
+  function AddDishCtrl(socketFactory) {
     var self = this;
 
-    AppSocket.socket.emit('addDish', {
+    socketFactory.emit('addDish', {
       cost: 324234,
       name: "yum"
     });
