@@ -27,64 +27,50 @@ app.use(morgan('dev'));
 // **Static folder for serving application assets**
 app.use('/', express.static(path.join(__dirname, 'client/')));
 
-// send username along
-//
-app.get('/createEvent', function(req, res) {
-  //TODO crete event in DB
-  //Generate URL
-  var url = 'testRoom';
-  console.log('req =', req);
-  //redirect to room after event has been created
-  res.redirect('/' + url);
+app.post('/createEvent', function(req, res) {
+  var username = req.body.username || 'Jerry';
+  //Generate code
+  var code = util.codeGenerator()
+  //crete event in DB
+  util.createEvent(db, code, username)
+  .then(function() {
+    //redirect to room after event has been created
+    res.redirect('/' + url);
+  })
 });
 
 
 app.post('/newUser', function(req, res) {
   //create user in DB
-  var userObject = {
-    username: req.body.username,
-    id: 1,
-    isHost: req.body.isHost
-  };
+  var eventId = req.body.eventId || 1; //setup for dummy data
+  var username = req.body.username || 'Jerry';
+  util.createUser(db, username, eventId, false)
+  .then(function(stuff) {
+    res.status(200).send(userObject);
+  })
   //send back id
-  res.status(200).send(userObject);
 });
 
 
 // **Wildcard route & event id handler.**
 app.get('/*', function(req, res) {
-  var id = req.url.slice(1);
-  //query database for event id based on url
-  //call utils to make event info
-  //dummy data for mvp
-  var eventInfo = {
-    eventId: 1,
-    users: [{
-      userId: 3,
-      username: 'Jackson',
-      dishes: [{
-        dishId: 1,
-        cost: 10,
-        name: 'Chicken Salad'
-      }]
-    }, {
-      userId: 2,
-      username: 'Michelle',
-      dishes: [{
-        dishId: 3,
-        cost: 12,
-        name: 'Hamburger'
-      }]
-    }]
-  };
+  var code = req.url.slice(1);
 
-//TODO query DB for event
-//If not found or error, redirect to home page
-//otherwise handle the socket connection
-//send them to event
+  //query database for event id based on code
+  util.findEvent(db, code)
+  .then(function(eventId) {
+    return util.gatherState(db, eventId[0], code) //retrieve the state of the event to send to socket
+    .then(function(eventInfo) {
+      //handle the socket connection
+      handleSocket(req.url, eventInfo, io);
+      res.sendFile(__dirname + '/client/index.html');
+    })
+  })
+  .catch(function(err) {
+    res.redirect('/');  // is this where we want to redirect to?
+    console.error(err);
+  })
 
-handleSocket(req.url, eventInfo, io);
-res.sendFile(__dirname + '/client/index.html');
 });
 
 
