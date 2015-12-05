@@ -1,8 +1,13 @@
 <div id="allDishes" ng-cloak>
+
   <h1>All Dishes</h1>
+
   <div ng-repeat="dish in data.dishes">
     <span>{{dish.name}} {{dish.cost}} {{ getId(dish.users, data) }}</span>
   </div>
   <button ng-click="allDishes.goToAddDish()">Add Dish</button>
+
+<!--   <div>Your total so far: {{allDishes.userTotal}}</div>
+  <div>Group total so far: {{allDishes.groupTotal}}</div> -->
 
 </div>
