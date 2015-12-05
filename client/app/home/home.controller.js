@@ -4,16 +4,16 @@
   angular.module('Piecemeal')
     .controller('HomeCtrl', HomeCtrl);
 
-  HomeCtrl.$inject = ['homeFactory', 'socket', '$window'];
+  HomeCtrl.$inject = ['homeFactory', 'socketFactory', '$window'];
 
-  function HomeCtrl(homeFactory, socket, $window) {
+  function HomeCtrl(homeFactory, socketFactory, $window) {
 
     var self = this;
 
-    //start testing socket
+    //start testing socketFactory
     self.socketmessage = "test";
 
-    socket.on('join', function(data) {
+    socketFactory.on('join', function(data) {
       console.log("receiving data for join");
       self.socketmessage = "data: " + data;
     });
