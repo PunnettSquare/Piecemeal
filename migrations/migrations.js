@@ -4,7 +4,7 @@ exports.up = function(knex, Promise) {
 
         knex.schema.createTable('users', function(table) {
             table.increments('id').primary();
-            table.string('name');
+            table.string('username');
             // table.string('username');
             // table.string('password');
             // table.string('email');
@@ -41,8 +41,6 @@ exports.up = function(knex, Promise) {
         
         knex.schema.createTable('usersJoinDishes', function(table){
             table.increments('id').primary();
-            table.boolean('status');
-            table.boolean('host');
             table.integer('dish_id')
                  .references('id')
                  .inTable('dishes');
@@ -58,11 +56,11 @@ exports.up = function(knex, Promise) {
 exports.down = function(knex, Promise) {
 
   return Promise.all([
+        knex.schema.dropTable('usersJoinDishes'),
+        knex.schema.dropTable('usersJoinEvents'),
         knex.schema.dropTable('users'),
         knex.schema.dropTable('events'),
-        knex.schema.dropTable('dishes'),
-        knex.schema.dropTable('usersJoinDishes'),
-        knex.schema.dropTable('usersJoinEvents')
+        knex.schema.dropTable('dishes')
 
     ])
   
