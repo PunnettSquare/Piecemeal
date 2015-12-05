@@ -2,7 +2,7 @@
   'use strict';
 
   angular.module('Piecemeal')
-  .controller('HostReceiptCtrl', HostReceiptCtrl);
+    .controller('HostReceiptCtrl', HostReceiptCtrl);
 
   HostReceiptCtrl.$inject = [];
 
