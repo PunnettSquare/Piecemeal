@@ -10,9 +10,9 @@ module.exports = {
         return db('usersJoinEvents').insert({user_id: userId[0], event_id: eventId[0], host: true, status: true}).returning('id');
       });
     })
-    .catch(function(err) {
-      // callback(err)
-    })
+    // .catch(function(err) {
+    //   // callback(err)
+    // })
   },
 
   createUser: function(db, username, eventId, host) {
@@ -61,10 +61,9 @@ module.exports = {
       console.error(err);
     })
   },
+  // example output from findUserDishes 
   // [ { id: 3,
   //     username: 'Fawn',
-  //     status: null,
-  //     host: null,
   //     dish_id: 3,
   //     user_id: 7,
   //     name: 'chicken',
@@ -72,6 +71,7 @@ module.exports = {
   //     event_id: 7 },
   // ]
 
+  //example output from findEventUsers
   //[{username: 'Fawn', status: true, host: true, id: 7 }]
   findEvent: function(db, code) {
     return db('events').where({code: code}).select('id')
@@ -79,32 +79,9 @@ module.exports = {
 
   findEventUsers: function(db, eventId) {
     return db.select('users.username', 'usersJoinEvents.status', 'usersJoinEvents.host', 'users.id').from('events').leftJoin('usersJoinEvents', 'events.id', 'usersJoinEvents.event_id').leftJoin('users', 'users.id', 'usersJoinEvents.user_id').where('events.id', eventId)
-    // .then(console.log)
   },
 
   findUserDishes: function(db, userId) {
     return db.select().from('users').leftJoin('usersJoinDishes', 'users.id', 'usersJoinDishes.user_id').leftJoin('dishes', 'dishes.id', 'usersJoinDishes.dish_id').where('users.id', userId)
-    // .then(console.log)
   }
 }
-
-// var eventInfo = {
-//    eventId: 1,
-//    users: [{
-//      userId: 3,
-//      username: 'Jackson',
-//      dishes: [{
-//        dishId: 1,
-//        cost: 10,
-//        name: 'Chicken Salad'
-//      }]
-//    }, {
-//      userId: 2,
-//      username: 'Michelle',
-//      dishes: [{
-//        dishId: 3,
-//        cost: 12,
-//        name: 'Hamburger'
-//      }]
-//    }]
-//  };

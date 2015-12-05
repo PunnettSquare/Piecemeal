@@ -92,4 +92,4 @@ http.listen(port, function() {
 
 // uncomment this to populate an empty database with dummy data from ./generateData.js
 // comment it out again after
-// setTimeout(generateData, 1000);
+setTimeout(generateData, 1500);
