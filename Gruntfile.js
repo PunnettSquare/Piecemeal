@@ -173,7 +173,7 @@ module.exports = function(grunt) {
         },
         files: {
           '<%= app.client %>/index.html': [
-            ['<%= app.client %>/app/app.socket.init.js',
+            ['<%= app.client %>/app/socket.module.js',
               '<%= app.client %>/app/app.module.js',
               '<%= app.client %>/app/app.routes.js',
               '{.tmp,<%= app.client %>}/{app,components}/**/!(*.spec|*.mock).js',

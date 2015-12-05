@@ -10,5 +10,3 @@
 //       console.log(data);
 //     });
 // };
-
-// AppSocket.init();
