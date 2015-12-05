@@ -12,7 +12,7 @@ var handleSocket = require('./server/sockets');
 var util = require('./server/utility.js');
 var bodyParser = require('body-parser');
 var morgan = require('morgan');
-
+var generateData = require('./generateData')
 app.use(bodyParser.urlencoded({
   extended: true
 }));
@@ -51,6 +51,8 @@ app.post('/newUser', function(req, res) {
 // **Wildcard route & event id handler.**
 app.get('/*', function(req, res) {
   var id = req.url.slice(1);
+  //query database for event id based on url
+  //call utils to make event info
   //dummy data for mvp
   var eventInfo = {
     users: [{
@@ -87,3 +89,7 @@ app.get('/*', function(req, res) {
 http.listen(port, function() {
   console.log('server listening on', port, 'at', new Date());
 });
+
+// uncomment this to populate an empty database with dummy data from ./generateData.js
+// comment it out again after
+// setTimeout(generateData, 1500);
