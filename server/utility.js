@@ -16,8 +16,9 @@ module.exports = {
    return db('users').insert({username: username})
     .returning('id')
     .then(function(userId) {
-      return db('usersJoinEvents').insert({user_id: userId[0], event_id: eventId, status: false, host: host})
+      return db('usersJoinEvents').insert({user_id: userId[0], event_id: eventId, status: false, host: host}).returning('user_id');
     })
+
   },
 
   createDish: function(db, dishName, cost, userId, eventId) {
@@ -82,6 +83,6 @@ module.exports = {
   },
 
   generateCode: function() {
-    return testRoom;
+    return 'testRoom';
   }
 }

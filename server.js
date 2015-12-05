@@ -35,40 +35,41 @@ app.post('/createEvent', function(req, res) {
   util.createEvent(db, code, username)
   .then(function() {
     //redirect to room after event has been created
-    res.redirect('/' + url);
+    res.redirect('/' + code);
   })
 });
 
 
 app.post('/newUser', function(req, res) {
-  //create user in DB
   var eventId = req.body.eventId || 1; //setup for dummy data
   var username = req.body.username || 'Jerry';
-  util.createUser(db, username, eventId, false)
-  .then(function(stuff) {
-    res.status(200).send(userObject);
+  var code = req.body.code || 'testRoom';
+  var host = req.body.host || false;
+  util.createUser(db, username, eventId, host)
+  .then(function(userIdArray) {
+    res.status(200).send({username: username, userId: userIdArray[0]}); // things to send back possibly: usernme, definitely add this userid, eventname, eventid, ishost
   })
-  //send back id
 });
 
 
 // **Wildcard route & event id handler.**
 app.get('/*', function(req, res) {
   var code = req.url.slice(1);
-
+  console.log('code =', code);
   //query database for event id based on code
   util.findEvent(db, code)
   .then(function(eventId) {
     return util.gatherState(db, eventId[0], code) //retrieve the state of the event to send to socket
     .then(function(eventInfo) {
       //handle the socket connection
+      console.log(eventInfo);
       handleSocket(req.url, eventInfo, io);
       res.sendFile(__dirname + '/client/index.html');
     })
   })
   .catch(function(err) {
     res.redirect('/');  // is this where we want to redirect to?
-    console.error(err);
+    throw err;
   })
 
 });
