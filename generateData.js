@@ -34,7 +34,12 @@ module.exports = function() {
       ])
   .then(function() {
   util.gatherState(db, 1, roomName)
-  .then(console.log)
+  .then(function(data) {
+    data.users.forEach(function(user, index) {
+      data.users[index].dishes = JSON.stringify(user.dishes);
+    })
+    console.log('Event Info Dummy Data: \n', data);
+  })
   })
     
   })
