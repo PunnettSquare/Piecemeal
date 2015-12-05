@@ -12,7 +12,7 @@ var handleSocket = require('./server/sockets');
 var util = require('./server/utility.js');
 var bodyParser = require('body-parser');
 var morgan = require('morgan');
-
+var _ = require('underscore');
 app.use(bodyParser.urlencoded({
   extended: true
 }));
@@ -51,6 +51,8 @@ app.post('/newUser', function(req, res) {
 // **Wildcard route & event id handler.**
 app.get('/*', function(req, res) {
   var id = req.url.slice(1);
+  //query database for event id based on url
+  //call utils to make event info
   //dummy data for mvp
   var eventInfo = {
     users: [{
@@ -87,3 +89,37 @@ app.get('/*', function(req, res) {
 http.listen(port, function() {
   console.log('server listening on', port, 'at', new Date());
 });
+var roomName = 'testRoom';
+Promise.all([
+util.createEvent(db, 'testRoom')
+util.createUser(db, 'Jack', 7, false),
+util.createUser(db,'Jill', 7, false),
+util.createUser(db,'Sarah', 7, false),
+util.createUser(db,'Ted', 7, false),
+// util.findEventUsers(db, 7),
+util.createDish(db, 'chicken', 10, 12, 7),
+util.createDish(db, 'rice', 13, 13, 7),
+util.createDish(db, 'soup', 5, 14, 7),
+util.createDish(db, 'protein', 1, 15, 7),
+util.createDish(db, 'chicken', 10, 13, 7),
+util.createDish(db, 'rice', 13, 14, 7),
+util.createDish(db, 'soup', 5, 15, 7),
+util.createDish(db, 'protein', 1, 12, 7),
+util.createDish(db, 'chicken', 10, 14, 7),
+util.createDish(db, 'rice', 13, 15, 7),
+util.createDish(db, 'soup', 5, 12, 7),
+util.createDish(db, 'protein', 1, 13, 7),
+util.createDish(db, 'chicken', 10, 15, 7),
+util.createDish(db, 'rice', 13, 12, 7),
+util.createDish(db, 'soup', 5, 13, 7),
+util.createDish(db, 'protein', 1, 14, 7)
+  ])
+.then(function() {
+util.gatherState(db, 7, 'the code')
+.then(console.log)
+  
+})
+.catch(function(err){
+  console.error(err);
+})
+// util.findUserDishes(db, 7);
