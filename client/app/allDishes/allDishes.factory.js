@@ -9,8 +9,6 @@
   function allDishesFactory($http, $window) {
 
 
-
-
     var services = {
       // showDishes: showDishes,
       getEventInfo: getEventInfo
@@ -29,7 +27,26 @@
         });
     }
 
-    
+    // Example of how socketIO factory functions looks like
+    // function on(eventName, callback) {
+    //   socket.on(eventName, function() {
+    //     var args = arguments;
+    //     $rootScope.$apply(function() {
+    //       callback.apply(socket, args);
+    //     });
+    //   });
+    // }
+
+    // function emit(eventName, data, callback) {
+    //   socket.emit(eventName, data, function() {
+    //     var args = arguments;
+    //     $rootScope.$apply(function() {
+    //       if (callback) {
+    //         callback.apply(socket, args);
+    //       }
+    //     });
+    //   });
+    // }
 
     // db queries
     // input: username + id + event

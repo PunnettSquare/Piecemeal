@@ -7,9 +7,33 @@
   AllDishesCtrl.$inject = ['socketFactory', 'allDishesFactory', '$location', '$window', '$scope'];
 
   function AllDishesCtrl(socketFactory, allDishesFactory, $location, $window, $scope) {
-    var self = this;
-    self.listOfMeals;
 
+    var self = this;
+
+    // join test
+    socket.on('join', function(data) {
+      console.log("receiving data for join");
+    });
+
+    // self.listOfMeals;
+
+    // AppSocket.socket.on('join', function(data) {
+    //   self.listOfMeals = data;
+    //   console.log(data);
+    // });
+
+    // AppSocket.socket.on('dishAdded', function(data) {
+    //   self.listOfMeals.push(data);
+    // });
+
+// join
+// socketFactory.on('join', function(data) {
+//   self.listOfMeals = data;
+// });
+
+// socketFactory.on('dishAdded', function(data) {
+//   self.listOfMeals.push(data);
+// });
 
     socketFactory.init();
 
@@ -63,11 +87,4 @@
 })();
 
 
-// join
-// socketFactory.on('join', function(data) {
-//   self.listOfMeals = data;
-// });
 
-// socketFactory.on('dishAdded', function(data) {
-//   self.listOfMeals.push(data);
-// });
