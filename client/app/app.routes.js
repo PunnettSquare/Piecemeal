@@ -1,3 +1,5 @@
+var firstLog = true;
+
 (function() {
   'use strict';
 
@@ -6,8 +8,17 @@
 
   config.$inject = ['$stateProvider', '$urlRouterProvider'];
 
-  function config($stateProvider, $urlRouterProvider) {
-    $urlRouterProvider.otherwise('home');
+  function config($stateProvider, $urlRouterProvider, $window) {
+
+    $urlRouterProvider.otherwise(function($injector, $window) {
+      console.log('$window.$$path =', $window.$$path);
+      var state = $injector.get('$state');
+      if ($window.$$path === '/' || $window.$$path === '/home' || $window.$$path === '/undefined') {
+        state.go('home');
+      } else {
+        state.go('allDishes');
+      }
+    });
 
     $stateProvider
       .state('home', {

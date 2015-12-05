@@ -27,6 +27,8 @@ app.use(morgan('dev'));
 // **Static folder for serving application assets**
 app.use('/', express.static(path.join(__dirname, 'client/')));
 
+// send username along
+//
 app.get('/createEvent', function(req, res) {
   //TODO crete event in DB
   //Generate URL
@@ -55,33 +57,32 @@ app.get('/*', function(req, res) {
   //call utils to make event info
   //dummy data for mvp
   var eventInfo = {
+    eventId: 1,
     users: [{
-      id: 3,
+      userId: 3,
       username: 'Jackson',
-      dishes: {
-        1: {
-          cost: 10,
-          name: 'Chicken Salad'
-        }
-      }
+      dishes: [{
+        dishId: 1,
+        cost: 10,
+        name: 'Chicken Salad'
+      }]
     }, {
-      id: 2,
+      userId: 2,
       username: 'Michelle',
-      dishes: {
-        2: {
-          cost: 12,
-          name: 'Hamburger'
-        }
-      }
+      dishes: [{
+        dishId: 3,
+        cost: 12,
+        name: 'Hamburger'
+      }]
     }]
   };
-  //TODO query DB for event
-  //If not found or error, redirect to home page
-  //otherwise handle the socket connection
-  //send them to event
 
-  handleSocket(req.url, eventInfo, io);
-  res.sendFile(__dirname + '/client/index.html');
+//TODO query DB for event
+//If not found or error, redirect to home page
+//otherwise handle the socket connection
+//send them to event
+
+handleSocket(req.url, eventInfo, io); res.sendFile(__dirname + '/client/index.html');
 });
 
 

@@ -1,16 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <base href="/">
     <meta charset="UTF-8">
     <title>Piecemeal</title>
+    <style>
+    * {
+    border: 1px solid red;
+    }
+    </style>
     <!-- injector:css -->
     <!-- endinjector -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.7/socket.io.js"></script>
   </head>
   <body ng-app="Piecemeal" ng-cloak>
-    <h1>Piecemeal home page!</h1>
-
-
     <div ui-view="navbar"></div>
     <div ui-view></div>
 
@@ -28,13 +31,14 @@
     <!-- endbower -->
 
     <!-- injector:js -->
-    <script src="app/app.socket.init.js"></script>
     <script src="app/app.module.js"></script>
     <script src="app/app.routes.js"></script>
     <script src="app/addDish/addDish.controller.js"></script>
     <script src="app/addDish/addDish.factory.js"></script>
     <script src="app/allDishes/allDishes.controller.js"></script>
     <script src="app/allDishes/allDishes.factory.js"></script>
+    <script src="app/app.factory.js"></script>
+    <script src="app/app.socket.init.js"></script>
     <script src="app/guestBill/guestBill.controller.js"></script>
     <script src="app/guestBill/guestBill.factory.js"></script>
     <script src="app/home/home.controller.js"></script>
