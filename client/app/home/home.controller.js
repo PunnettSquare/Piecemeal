@@ -6,8 +6,18 @@
 
   HomeCtrl.$inject = ['homeFactory', 'socket', '$window'];
 
-  function HomeCtrl(homeFactory, $window, socket) {
+  function HomeCtrl(homeFactory, socket, $window) {
+
     var self = this;
+
+    //start testing socket
+    self.socketmessage = "test";
+
+    socket.on('join', function(data) {
+      console.log("receiving data for join");
+      self.socketmessage = "data: " + data;
+    });
+    // end test
 
     self.setSessionUser = function(username, isHost, roomname) {
       window.sessionStorage.setItem('username', username);
@@ -20,6 +30,7 @@
         self.sendSessionUser(_.assign(sessionStorage, {
           'isHost': false
         }));
+        window.sessionStorage.setItem('code', roomname);
         $window.location.href = '/' + roomname;
       }
     };
@@ -34,14 +45,6 @@
         .catch(queryFail);
     };
 
-    //start testing socket
-    self.socketmessage = "test";
-
-    socket.on('join', function(data) {
-      console.log("receiving data for join");
-      self.socketmessage = "data: " + data;
-    });
-    //end test
 
     function queryFail(err) {
       console.error('Query Failed',

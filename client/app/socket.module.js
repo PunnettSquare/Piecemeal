@@ -5,17 +5,17 @@
   'use strict';
 
   angular.module('Piecemeal')
-  
+
   .factory('socket', socketFn);
 
   socketFn.$inject = ['$rootScope', '$window'];
 
   function socketFn ($rootScope, $window) {
-    
+
     var ioRoom = $window.location.href;
     var socket = io(ioRoom);
     console.log('Joining ioRoom: ', ioRoom);
-   
+
     return {
       on: function (eventName, callback) {
         socket.on(eventName, function () {
@@ -41,7 +41,7 @@
 })();
 
 
-// NON-JOHN PAPA STYLE, BUT FUNCTIONAL: 
+// NON-JOHN PAPA STYLE, BUT FUNCTIONAL:
 // Note: requires adding 'socket' to Piecemeal's dependencies
 // Keeping this temporarily in case it makes testing complicated bugs easier
 
