@@ -4,52 +4,47 @@
   angular.module('Piecemeal')
     .controller('HomeCtrl', HomeCtrl);
 
-  HomeCtrl.$inject = ['homeFactory', 'socket'];
+  HomeCtrl.$inject = ['homeFactory', 'socketFactory', '$window'];
 
-  function HomeCtrl(homeFactory, socket) {
+  function HomeCtrl(homeFactory, socketFactory, $window) {
+
     var self = this;
 
-    self.setSessionUser = function(username) {
-      window.sessionStorage.setItem('username', username);
-      self.sendSessionGuest(window.sessionStorage);
+    //start testing socketFactory
+    self.socketmessage = "test";
 
+    socketFactory.on('join', function(data) {
+      console.log("receiving data for join");
+      self.socketmessage = "data: " + data;
+    });
+    // end test
+
+    self.setSessionUser = function(username, isHost, roomname) {
+      window.sessionStorage.setItem('username', username);
+      if (isHost) {
+        self.sendSessionUser(_.assign(sessionStorage, {
+          'isHost': true
+        }));
+        $window.location.href = '/createEvent';
+      } else {
+        self.sendSessionUser(_.assign(sessionStorage, {
+          'isHost': false
+        }));
+        window.sessionStorage.setItem('code', roomname);
+        $window.location.href = '/' + roomname;
+      }
     };
 
-    self.sendSessionGuest = function(username) {
-      homeFactory.sendSessionUser(_.assign(username, {
-          'isHost': false
-        }))
+    self.sendSessionUser = function(username) {
+      homeFactory.sendSessionUser(username)
         .then(function(userInfo) {
           self.userId = userInfo.id;
           self.username = userInfo.username;
           console.log("Successfully received userInfo", userInfo);
         })
-        .catch(function(err) {
-          console.log("Didn't receive guest id");
-        });
+        .catch(queryFail);
     };
 
-    //start testing socket
-    self.socketmessage = "test";
-
-    socket.on('join', function(data) {
-      console.log("receiving data for join");
-      self.socketmessage = "data: " + data;
-    });
-    //end test
-
-    // self.sendSessionHost = function(username) {
-    //   homeFactory.sendSessionUser(_.assign(username, {
-    //       'isHost': true
-    //     }))
-    //     .then(function(userInfo) {
-    //       self.userId = userInfo.userId;
-    //       self.username = userInfo.username;
-    //     })
-    //     .catch(function(err) {
-    //       console.log("Didn't receive id");
-    //     });
-    // };
 
     function queryFail(err) {
       console.error('Query Failed',

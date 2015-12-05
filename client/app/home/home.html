@@ -1,8 +1,16 @@
 <div id="home" ng-cloak>
   <h1>Home page</h1>
-  <input type="text" ng-model="username">
-  <input type="submit" value="Guest" ng-click="home.setSessionUser(username)">
-  <!-- <input type="submit" value="Host" ng-click="home.setSessionHost(username)"> -->
-
   <p>{{home.socketmessage}}</p> <!--For testing sockets-->
+
+  <h2>What is your name?</h2>
+  <input type="text" placeholder="Enter Your Name" ng-model="username" name="username" required>
+
+  <h2>Are you a host?</h2>
+  <input type="submit" value="Create room" ng-click="home.setSessionUser(username, true, null)">
+
+  <h2>Are you a guest?</h2>
+  piecemeal.com/<input type="text" placeholder="roomName" ng-model="url">
+  <input type="submit" value="Enter Room" ng-click="home.setSessionUser(username, false, url)">
+
+  <!-- name, code, create, join -->
 </div>

@@ -10,14 +10,7 @@
     var self = this;
     self.listOfMeals;
 
-    // join
-    AppSocket.socket.on('join', function(data) {
-      self.listOfMeals = data;
-    });
 
-    AppSocket.socket.on('dishAdded', function(data) {
-      self.listOfMeals.push(data);
-    });
     // db queries
     // input: username + id + event
     // outputs:
@@ -38,3 +31,13 @@
     // dinner party total bill (reduce total list cost)
   }
 })();
+
+
+// join
+// socketFactory.on('join', function(data) {
+//   self.listOfMeals = data;
+// });
+
+// socketFactory.on('dishAdded', function(data) {
+//   self.listOfMeals.push(data);
+// });
