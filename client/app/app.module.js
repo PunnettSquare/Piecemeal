@@ -1,1 +1,1 @@
-angular.module('Piecemeal', ['ui.router', 'ngMessages', 'socket']);
+angular.module('Piecemeal', ['ui.router', 'ngMessages']);
