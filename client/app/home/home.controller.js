@@ -4,9 +4,9 @@
   angular.module('Piecemeal')
     .controller('HomeCtrl', HomeCtrl);
 
-  HomeCtrl.$inject = ['homeFactory'];
+  HomeCtrl.$inject = ['homeFactory', 'socket'];
 
-  function HomeCtrl(homeFactory) {
+  function HomeCtrl(homeFactory, socket) {
     var self = this;
 
     self.setSessionUser = function(username) {
@@ -28,6 +28,15 @@
           console.log("Didn't receive guest id");
         });
     };
+
+    //start testing socket
+    self.socketmessage = "test";
+
+    socket.on('join', function(data) {
+      console.log("receiving data for join");
+      self.socketmessage = "data: " + data;
+    });
+    //end test
 
     // self.sendSessionHost = function(username) {
     //   homeFactory.sendSessionUser(_.assign(username, {
