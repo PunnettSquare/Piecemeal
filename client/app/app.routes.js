@@ -17,7 +17,6 @@ var firstLog = true;
       var state = $injector.get('$state');
       // if ($window.$$path === '' || $window.$$path === '/' || $window.$$path === '/home' || $window.$$path === '/undefined') {
       if (!window.sessionStorage.username || window.sessionStorage.username === "undefined") {
-        // window.location.href = '/home'
         state.go('home');
       } else {
         state.go('allDishes');
