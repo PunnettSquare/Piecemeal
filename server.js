@@ -30,7 +30,7 @@ app.use('/', express.static(path.join(__dirname, 'client/')));
 app.post('/createEvent', function(req, res) {
   var username = req.body.username || 'Jerry';
   //Generate code
-  var code = util.codeGenerator()
+  var code = util.generateCode()
   //crete event in DB
   util.createEvent(db, code, username)
   .then(function() {
@@ -59,12 +59,13 @@ app.get('/*', function(req, res) {
   //query database for event id based on code
   util.findEvent(db, code)
   .then(function(eventId) {
-    return util.gatherState(db, eventId[0], code) //retrieve the state of the event to send to socket
+    return util.gatherState(db, eventId[0].id, code) //retrieve the state of the event to send to socket
     .then(function(eventInfo) {
       //handle the socket connection
-      console.log(eventInfo);
+      // console.log(eventInfo);
       handleSocket(req.url, eventInfo, io);
-      res.sendFile(__dirname + '/client/index.html');
+      // res.send();
+      // res.sendFile(path.join(__dirname, '/client/index.html'));
     })
   })
   .catch(function(err) {

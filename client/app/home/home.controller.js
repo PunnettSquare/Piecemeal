@@ -21,16 +21,19 @@
 
     self.setSessionUser = function(username, isHost, roomname) {
       window.sessionStorage.setItem('username', username);
+      self.username = window.sessionStorage.getItem('username');
       if (isHost) {
-        self.sendSessionUser(_.assign(sessionStorage, {
-          'isHost': true
-        }));
-        $window.location.href = '/createEvent';
+        // self.sendSessionUser(_.assign(sessionStorage, {
+        //   'isHost': true
+        // }));
+        homeFactory.createEvent({username: self.username});
+        // $window.location.pathname = '/createRoom';
       } else {
         self.sendSessionUser(_.assign(sessionStorage, {
           'isHost': false
         }));
         window.sessionStorage.setItem('code', roomname);
+        homeFactory.createUser({username: self.username});
         $window.location.href = '/' + roomname;
       }
     };
