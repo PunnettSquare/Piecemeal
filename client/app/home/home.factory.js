@@ -8,11 +8,13 @@
 
   function homeFactory($http) {
     var services = {
-      enterRoom: enterRoom,
+      createEvent: createEvent,
       sendSessionUser: sendSessionUser
     };
 
     return services;
+
+
 
     function enterRoom() {
 
@@ -22,11 +24,23 @@
       return $http({
           method: 'POST',
           url: '/newUser',
-          data: username
+          data: username // user id, possibly username
         })
         .then(function(res) {
           return res.data;
         });
+    }
+
+    function createEvent(userObj) {
+      return $http({
+        method: 'POST',
+        url: '/createEvent',
+        data: userObj
+      })
+      .then(function(res) {
+        console.log('res.data =', res.data);
+      //   return res.data // nothing -> redirect from socket
+      });
     }
   }
 
