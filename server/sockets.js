@@ -12,14 +12,9 @@ var connect = function(eventUrl, eventInfo, io) {
 
     socket.emit('join', eventInfo);
 
-<<<<<<< HEAD
     socket.on('addDish', function(data) {
       console.log("AddDish event heard from the client!");
       
-=======
-    socket.on('addDish', function (data) {
-      console.log("AddDish event heard from the server!");
->>>>>>> Last changes to allDishes -F
       console.log('data =', data);
       //TODO add dish to DB
       socket.broadcast.emit('dishAdded', { //or mealEvent.emit to send to all
@@ -29,7 +24,7 @@ var connect = function(eventUrl, eventInfo, io) {
     });
 
     socket.on('shareDish', function (data) {
-      console.log("User is sharing dish"); 
+      console.log("User is sharing dish");
       // TO DO: add user to dish's list of users in DB
     });
 
