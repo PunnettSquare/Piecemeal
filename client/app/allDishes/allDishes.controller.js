@@ -7,9 +7,12 @@
   AllDishesCtrl.$inject = ['socketFactory', 'allDishesFactory', '$location', '$window', '$scope'];
 
   function AllDishesCtrl(socketFactory, allDishesFactory, $location, $window, $scope) {
-    var self = this;
-    self.listOfMeals;
 
+    var self = this;
+    self.listOfDishes = []; // dishes and users per dish
+    self.yourTotal = 0;
+    self.groupTotal = 0;
+    self.listOfUsers = []; // FUTURE feature, for having floating active users
 
     socketFactory.init();
 
@@ -19,13 +22,16 @@
       $scope.data = data;
     });
 
-    // added this to test sockets across different views
+    socketFactory.on('dishAdded', function(data) {
+      self.listOfMeals.push(data);
+    });
+
     self.goToAddDish = function () {
       $location.path('/' + $window.location.toString().split('/')[4] + '/addDish');
     }
 
     allDishesFactory.getEventInfo();
-    // end test
+
     $scope.getId = function (arrayOfIds, eventInfo) {
       var usernames = arrayOfIds.map(function(id) {
         var result;
@@ -41,33 +47,29 @@
       return usernames.length === 1 ? usernames[0] : usernames.join(', ');
     }
 
-    // db queries
-    // input: username + id + event
-    // outputs:
-    // list of dishes & costs
-    // how many people sharing dish
+    self.shareDish = function(dishId, userId) { //nclick must access dishId** figure out how to provide these
+      socketFactory.emit('shareDish', { // server needs .on(shareDish) that adds user to Dish
+        dishId: dishId,
+        userId: userId // ** ask Michelle how to get user from session
+      });
+      // update this dish's shared users in self.listOfDishes to include user
+      // update self.groupTotal
+    };
 
-    // socket broadcast
-    // remove meal
-    // share meal
+    self.unshareDish = function (dishId, userId) {
+      socketFactory.emit('unshareDish', { // server needs .on(unshareDish) that adds user to Dish
+        dishId: dishId,
+        userId: userId
+      });
+      // update this dish's shared users in self.listOfDishes to remove user
+      // update self.groupTotal
+    };
 
-    // global listener (already on app.socket.init)
-    // any added dishes from other people (in real time)
+    // For future floating active users feature:
+    // socketFactory.on('addUser', function(data) {
+    //   console.log("----->Upon new user joining, received this user data: ", data);
+    //   self.listOfUsers.push = data;
+    // });
 
-    // calculate:
-    // filter total list for user-only dishes
-    //  calculate cost of each shared dish by dividing by # of people sharing it
-    // your total bill
-    // dinner party total bill (reduce total list cost)
   }
 })();
-
-
-// join
-// socketFactory.on('join', function(data) {
-//   self.listOfMeals = data;
-// });
-
-// socketFactory.on('dishAdded', function(data) {
-//   self.listOfMeals.push(data);
-// });

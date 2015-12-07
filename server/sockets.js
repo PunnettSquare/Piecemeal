@@ -23,6 +23,16 @@ var connect = function(eventUrl, eventInfo, io) {
       });
     });
 
+    socket.on('shareDish', function (data) {
+      console.log("User is sharing dish");
+      // TO DO: add user to dish's list of users in DB
+    });
+
+    socket.on('unshareDish', function (data) {
+      console.log("User is no longer sharing dish"); 
+      // TO DO: remove user from dish's list of users in DB
+    });
+
   });
 };
 
