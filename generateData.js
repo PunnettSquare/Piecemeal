@@ -47,14 +47,14 @@ module.exports = function() {
   })
   .then(function() {
   return util.gatherState(db, 1, roomName)
-        .then(function(data) {
-        data.users.forEach(function(user, index) {
-          data.users[index].dishes = JSON.stringify(user.dishes);
-        })
-        console.log('Event Info Dummy Data: \n', data);
+    .then(function(data) {
+      data.users.forEach(function(user, index) {
+        data.users[index].dishes = JSON.stringify(user.dishes);
       })
+      console.log('Event Info Dummy Data: \n', data);
     })
-    .catch(function(err){
-      console.error('Error Generating Dummy Data: ', err)
-    })
+  })
+  .catch(function(err){
+    console.error('Error Generating Dummy Data: ', err)
+  })
 }
