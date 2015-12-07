@@ -65,7 +65,8 @@ app.get('/*', function(req, res) {
   util.findEvent(db, code)
   .then(function(eventId) {
     //retrieve the state of the event to send to socket
-    return util.gatherState(db, eventId[0].id/* change this to 1 to send dummy data */, code) 
+    return util.gatherState(db, 1, code) // dummy data
+    // return util.gatherState(db, eventId[0].id, code) // real data
     .then(function(eventInfo) {
       //handle the socket connection
       handleSocket(req.url, eventInfo, io);
