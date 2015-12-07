@@ -4,16 +4,9 @@
   angular.module('Piecemeal')
     .factory('allDishesFactory', allDishesFactory);
 
-<<<<<<< HEAD
   allDishesFactory.$inject = ['$http', '$window'];
 
   function allDishesFactory($http, $window) {
-
-=======
-  allDishesFactory.$inject = ['socketFactory'];
-
-  function allDishesFactory(socketFactory) {
->>>>>>> Add data example, update allDishes sockets and allDishes html
 
     var services = {
       // showDishes: showDishes,

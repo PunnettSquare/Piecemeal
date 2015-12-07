@@ -4,6 +4,15 @@
 
   <div ng-repeat="dish in data.dishes">
     <span>{{dish.name}} {{dish.cost}} {{ getId(dish.users, data) }}</span>
+<!--   <div ng-repeat="dish in allDishes.listOfDishes">
+    <div>
+      {{dish.dishName}} {{dish.cost}}
+    </div>
+    <div>
+      {{dish.sharedUsers}}
+      <button ng-click="allDishes.shareDish(dishId)">Share</button>
+      <button ng-click="allDishes.unshareDish(dishId)">Remove</button>
+    </div> -->
   </div>
   <button ng-click="allDishes.goToAddDish()">Add Dish</button>
 
