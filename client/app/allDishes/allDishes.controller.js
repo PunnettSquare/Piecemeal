@@ -47,7 +47,7 @@
       return usernames.length === 1 ? usernames[0] : usernames.join(', ');
     }
 
-    self.shareDish = function(dishId) { //nclick must access dishId** figure out how to provide these
+    self.shareDish = function(dishId, userId) { //nclick must access dishId** figure out how to provide these
       socketFactory.emit('shareDish', { // server needs .on(shareDish) that adds user to Dish
         dishId: dishId,
         userId: userId // ** ask Michelle how to get user from session
@@ -73,82 +73,3 @@
 
   }
 })();
-
-    /* current format of data:
-      {
-        eventId: 1,
-        users: [
-          {
-            dishes: [{
-              cost: ,
-              dishId: ,
-              name:
-            }],
-            userId: ,
-            username:
-          },
-          {
-            dishes: [{
-              cost: ,
-              dishId: ,
-              name:
-            }],
-            userId: ,
-            username:
-          }
-        ]
-      }
-    */
-
-    /* Future format of data: BUT INCORRECT. We need a list of dishes, not users.
-        { eventId: 1,
-          code: 'testRoom', // <---- will be added later on
-          users: 
-           [ { username: 'Jackson',
-               status: true,
-               host: true,
-               id: 1,
-               dishes: '[{
-                 "id":1,
-                 "username":"Jackson",
-                 "dish_id":1,
-                 "user_id":1,
-                 "name":"chicken",
-                 "cost":10,"event_id":1
-               },
-               {
-                  "id":2,
-                  "username":"Jackson",
-                  "dish_id":2,
-                  "user_id":1,
-                  "name":"rice",
-                  "cost":13,
-                  "event_id":1
-                }]'
-              },
-             { username: 'Jack',
-               status: false,
-               host: false,
-               id: 2,
-               dishes: '[{
-                "id":5,
-                "username":"Jack",
-                "dish_id":5,
-                "user_id":2,
-                "name":"chicken",
-                "cost":10,
-                "event_id":1
-              },
-              {
-                "id":12,
-                "username":"Jack",
-                "dish_id":12,
-                "user_id":2,
-                "name":"protein",
-                "cost":1,
-                "event_id":1
-              }]'
-            }]
-          }]
-        }
-    */
