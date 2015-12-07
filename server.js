@@ -36,6 +36,9 @@ app.post('/createEvent', function(req, res) {
   .then(function() {
     res.send({code: code});
   })
+  .catch(function(err) {
+    throw err;
+  })
 });
 
 
@@ -47,6 +50,9 @@ app.post('/newUser', function(req, res) {
   util.createUser(db, username, eventId, host)
   .then(function(userIdArray) {
     res.status(200).send({username: username, userId: userIdArray[0]}); // things to send back possibly: usernme, definitely add this userid, eventname, eventid, ishost
+  })
+  .catch(function(err) {
+    throw err;
   })
 });
 
@@ -67,8 +73,7 @@ app.get('/*', function(req, res) {
     })
   })
   .catch(function(err) {
-    res.redirect('/');  // is this where we want to redirect to in the event of an error?
-    console.error('Error in server.js: ', err)
+    throw err;
   })
 
 });
