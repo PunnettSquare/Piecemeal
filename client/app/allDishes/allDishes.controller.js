@@ -4,16 +4,26 @@
   angular.module('Piecemeal')
     .controller('AllDishesCtrl', AllDishesCtrl);
 
-  AllDishesCtrl.$inject = ['socketFactory'];
+  AllDishesCtrl.$inject = ['socketFactory', 'allDishesFactory', '$location', '$window'];
 
-  function AllDishesCtrl(socketFactory) {
+  function AllDishesCtrl(socketFactory, allDishesFactory, $location, $window) {
     var self = this;
     self.listOfMeals;
+
+
+    socketFactory.init();
 
     socketFactory.on('join', function(data) {
       console.log("receiving data for join", data);
       self.socketmessage = "data: " + data;
     });
+
+    // added this to test sockets across different views
+    self.goToAddDish = function () {
+      $location.path('/' + $window.location.toString().split('/')[4] + '/addDish');
+    }
+
+    allDishesFactory.getEventInfo();
     // end test
 
 

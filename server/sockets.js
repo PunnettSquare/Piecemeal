@@ -2,18 +2,19 @@
 
 var connect = function(eventUrl, eventInfo, io) {
   // Set the Socket.io namespace to the eventUrl.
+  console.log('eventUrl =', eventUrl);
   var mealEvent = io.of(eventUrl);
-
+  console.log('hello from socket handler');
   mealEvent.once('connection', function(socket) {
 
     // socket.on('userAdded', function(user) {
     //   socket.broadcast.emit('userAdded', user);
     // });
-
+    console.log('socket connection made with server');
     socket.emit('join', eventInfo);
 
     socket.on('addDish', function(data) {
-      console.log("AddDish event heard from the server!");
+      console.log("AddDish event heard from the client!");
       console.log('data =', data);
       //TODO add dish to DB
       socket.broadcast.emit('dishAdded', { //or mealEvent.emit to send to all

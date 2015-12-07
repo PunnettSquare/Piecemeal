@@ -38,8 +38,7 @@
         data: userObj
       })
       .then(function(res) {
-        console.log('res.data =', res.data);
-      //   return res.data // nothing -> redirect from socket
+        return res.data // TODO look at where createEvent is called, and handle the data and page change with $location.path('newLocation')
       });
     }
   }
