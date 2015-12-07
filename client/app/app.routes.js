@@ -40,7 +40,17 @@ var firstLog = true;
           }
         }
       })
-      .state('addDish', {
+      .state('event', {
+        url: '/:id',
+        views: {
+          'navbar': {
+            templateUrl: 'components/navbar/navbar.html',
+            controller: 'NavbarCtrl',
+            controllerAs: 'navbar'
+          }
+        }
+      })
+      .state('event.addDish', {
         url: '/addDish',
         views: {
           'navbar': {
@@ -58,7 +68,7 @@ var firstLog = true;
 
         }
       })
-      .state('allDishes', {
+      .state('event.allDishes', {
         url: '/allDishes',
         views: {
           'navbar': {
@@ -77,7 +87,7 @@ var firstLog = true;
         }
 
       })
-      .state('guestBill', {
+      .state('event.guestBill', {
         url: '/guestBill',
         views: {
           'navbar': {
@@ -104,7 +114,7 @@ var firstLog = true;
         }
 
       })
-      .state('hostReceipt', {
+      .state('event.hostReceipt', {
         url: '/hostReceipt',
         views: {
           'navbar': {
@@ -123,7 +133,7 @@ var firstLog = true;
         }
 
       })
-      .state('hostBill', {
+      .state('event.hostBill', {
         url: '/hostBill',
         views: {
           'navbar': {
@@ -142,7 +152,7 @@ var firstLog = true;
         }
 
       })
-      .state('loading', {
+      .state('event.loading', {
         url: '/loading',
 
         templateUrl: 'app/loading/loading.html',

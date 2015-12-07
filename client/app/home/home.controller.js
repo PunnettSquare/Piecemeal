@@ -4,19 +4,19 @@
   angular.module('Piecemeal')
     .controller('HomeCtrl', HomeCtrl);
 
-  HomeCtrl.$inject = ['homeFactory', 'socketFactory', '$window'];
+  HomeCtrl.$inject = ['homeFactory', '$window', '$location'];
 
-  function HomeCtrl(homeFactory, socketFactory, $window) {
+  function HomeCtrl(homeFactory, $window, $location) {
 
     var self = this;
 
     //start testing socketFactory
-    self.socketmessage = "test";
+    // self.socketmessage = "test";
 
-    socketFactory.on('join', function(data) {
-      console.log("receiving data for join", data);
-      self.socketmessage = "data: " + data;
-    });
+    // socketFactory.on('join', function(data) {
+    //   console.log("receiving data for join", data);
+    //   self.socketmessage = "data: " + data;
+    // });
     // end test
 
     self.setSessionUser = function(username, isHost, roomname) {
@@ -26,7 +26,15 @@
         // self.sendSessionUser(_.assign(sessionStorage, {
         //   'isHost': true
         // }));
-        homeFactory.createEvent({username: self.username});
+        homeFactory.createEvent({username: self.username})
+        .then(function(data) {
+          // TODO store code, username, and userID and eventID possibly
+          //store code
+          $location.path('/' + data.code + '/allDishes');
+        })
+        .catch(function(err) {
+          throw err;
+        });
         // $window.location.pathname = '/createRoom';
       } else {
         self.sendSessionUser(_.assign(sessionStorage, {
