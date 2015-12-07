@@ -1,5 +1,3 @@
-var firstLog = true;
-
 (function() {
   'use strict';
 
@@ -11,18 +9,17 @@ var firstLog = true;
   function config($stateProvider, $urlRouterProvider, $window) {
 
     console.log('window.sessionStorage =', window.sessionStorage);
-    $urlRouterProvider.otherwise('home');
-    // $urlRouterProvider.otherwise(function($injector, $window) {
-    // console.log('$window =', $window);
-    // console.log('$window.$$path =', $window.$$path);
-    // var state = $injector.get('$state');
-    // // if ($window.$$path === '' || $window.$$path === '/' || $window.$$path === '/home' || $window.$$path === '/undefined') {
-    // if (!window.sessionStorage.username || window.sessionStorage.username === "undefined") {
-    // state.go('home');
-    // } else {
-    //   state.go('allDishes');
-    // }
-    // });
+    // $urlRouterProvider.otherwise('home');
+    $urlRouterProvider.otherwise(function($injector, $window) {
+      // console.log('$window.$$path =', $window.$$path);
+      var state = $injector.get('$state');
+      // if ($window.$$path === '' || $window.$$path === '/' || $window.$$path === '/home' || $window.$$path === '/undefined') {
+      if (!window.sessionStorage.username || window.sessionStorage.username === "undefined") {
+        state.go('home');
+      } else {
+        state.go('event.allDishes');
+      }
+    });
 
     $stateProvider
       .state('home', {
@@ -83,7 +80,9 @@ var firstLog = true;
           }
         },
         resolve: {
-
+          // refresh: function() {
+          //   $state.reload();
+          // }
         }
 
       })

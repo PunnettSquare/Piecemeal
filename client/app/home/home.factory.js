@@ -24,7 +24,7 @@
       return $http({
           method: 'POST',
           url: '/newUser',
-          data: username // user id, possibly username
+          data: username // sending username + event code
         })
         .then(function(res) {
           return res.data;

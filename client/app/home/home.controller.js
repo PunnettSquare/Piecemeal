@@ -19,48 +19,62 @@
     // });
     // end test
 
-    self.setSessionUser = function(username, isHost, roomname) {
+    self.setSessionUser = function(username, isHost, code) {
       window.sessionStorage.setItem('username', username);
-      self.username = window.sessionStorage.getItem('username');
+
       if (isHost) {
-        // self.sendSessionUser(_.assign(sessionStorage, {
-        //   'isHost': true
-        // }));
-        homeFactory.createEvent({username: self.username})
-        .then(function(data) {
-          // TODO store code, username, and userID and eventID possibly
-          //store code
-          $location.path('/' + data.code + '/allDishes');
-        })
-        .catch(function(err) {
-          throw err;
-        });
-        // $window.location.pathname = '/createRoom';
+        homeFactory.createEvent({
+            username: self.username
+          })
+          .then(function(data) {
+            // TODO store code, username, and userID and eventID possibly
+            // store code here
+            window.sessionStorage.setItem('code', data.code);
+            $location.path('/' + data.code + '/allDishes');
+            window.location.reload(true);
+          })
+          .catch(function(err) {
+            console.log("Error in creating event.");
+          });
       } else {
-        self.sendSessionUser(_.assign(sessionStorage, {
+        code = code || 'testRoom'; // just mock data - add functionality later that the user *must* enter a test room
+        window.sessionStorage.setItem('code', code);
+        var userObj = _.assign(sessionStorage, {
           'isHost': false
-        }));
-        window.sessionStorage.setItem('code', roomname);
-        homeFactory.createUser({username: self.username});
-        $window.location.href = '/' + roomname;
+        });
+
+        homeFactory.sendSessionUser(userObj)
+          .then(function(userInfo) {
+            window.sessionStorage.setItem('user_id', userInfo.user_id);
+            window.sessionStorage.setItem('event_id', userInfo.event_id);
+            $location.path('/' + code + '/allDishes');
+            window.location.reload(true);
+          })
+          .catch(function(err) {
+            console.log("Error in logging in guest.");
+          });
+
+          // window.sessionStorage.setItem('code', code);
+        // homeFactory.createUser({username: self.username});
+        // $window.location.href = '/' + code;
       }
     };
 
-    self.sendSessionUser = function(username) {
-      homeFactory.sendSessionUser(username)
-        .then(function(userInfo) {
-          self.userId = userInfo.id;
-          self.username = userInfo.username;
-          console.log("Successfully received userInfo", userInfo);
-        })
-        .catch(queryFail);
-    };
+    // self.sendSessionUser = function(username) {
+    //   homeFactory.sendSessionUser(username)
+    //     .then(function(userInfo) {
+    //       self.userId = userInfo.id;
+    //       self.username = userInfo.username;
+    //       console.log("Successfully received userInfo", userInfo);
+    //     })
+    //     .catch(queryFail);
+    // };
 
 
-    function queryFail(err) {
-      console.error('Query Failed',
-        err.data.replace(/<br>/g, '\n').replace(/ &nbsp;/g, '>'),
-        err);
-    }
+    // function queryFail(err) {
+    //   console.error('Query Failed',
+    //     err.data.replace(/<br>/g, '\n').replace(/ &nbsp;/g, '>'),
+    //     err);
+    // }
   }
 })();
