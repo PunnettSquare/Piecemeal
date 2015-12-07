@@ -12,7 +12,7 @@ var handleSocket = require('./server/sockets');
 var util = require('./server/utility.js');
 var bodyParser = require('body-parser');
 var morgan = require('morgan');
-var generateData = require('./generateData')
+var generateData = require('./generateData');
 app.use(bodyParser.urlencoded({
   extended: true
 }));
@@ -29,54 +29,59 @@ app.use('/', express.static(path.join(__dirname, 'client/')));
 
 app.post('/createEvent', function(req, res) {
   var username = req.body.username || 'Jerry';
-  //Generate code
-  var code = util.generateCode()
-  //crete event in DB
+  // Generate code
+  var code = util.generateCode();
   util.createEvent(db, code, username)
-  .then(function() {
-    res.send({code: code});
-  })
-  .catch(function(err) {
-    throw err;
-  })
+    .then(function() {
+      res.send({
+        code: code
+      });
+    })
+    .catch(function(err) {
+      throw err;
+    });
 });
 
 
 app.post('/newUser', function(req, res) {
-  var eventId = req.body.eventId || 1; //setup for dummy data
   var username = req.body.username || 'Jerry';
   var code = req.body.code || 'testRoom';
   var host = req.body.host || false;
-  util.createUser(db, username, eventId, host)
-  .then(function(userIdArray) {
-    res.status(200).send({username: username, userId: userIdArray[0]}); // things to send back possibly: usernme, definitely add this userid, eventname, eventid, ishost
-  })
-  .catch(function(err) {
-    throw err;
-  })
-});
+  var event_id;
 
+  // find event ID
+  util.findEvent(db, code)
+    .then(function(eventIdArray) {
+      event_id = eventIdArray[0].id;
+      return util.createUser(db, username, event_id, false);
+    })
+    .then(function(guestId) {
+      res.status(200).send({
+        user_id: guestId[0],
+        event_id: event_id
+      });
+    });
+});
 
 // **Wildcard route & event id handler.**
 app.get('/*', function(req, res) {
   var code = req.url.slice(1);
   console.log('code =', code);
-  //query database for event id based on code
+  // query database for event id based on code
   util.findEvent(db, code)
-  .then(function(eventId) {
-    //retrieve the state of the event to send to socket
-    return util.gatherState(db, 1, code) // dummy data
-    // return util.gatherState(db, eventId[0].id, code) // real data
-    .then(function(eventInfo) {
-      //handle the socket connection
-      handleSocket(req.url, eventInfo, io);
-      res.end();
+    .then(function(eventId) {
+      // retrieve the state of the event to send to socket
+      return util.gatherState(db, 1, code) // dummy data
+        // return util.gatherState(db, eventId[0].id, code) // real data
+        .then(function(eventInfo) {
+          // handle the socket connection
+          handleSocket(req.url, eventInfo, io);
+          res.end();
+        });
     })
-  })
-  .catch(function(err) {
-    throw err;
-  })
-
+    .catch(function(err) {
+      throw err;
+    });
 });
 
 
