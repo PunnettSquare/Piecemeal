@@ -13,32 +13,36 @@
 
   function socketFactory($rootScope, $window) {
     // Connect to sockets.io with unique ioRoom ID
-    var ioRoom = $window.location.href;
-    var socket = io(ioRoom);
-    console.log('Joining ioRoom: ', ioRoom);
 
     var services = {
       on: on,
-      emit: emit
+      emit: emit,
+      init: init
     };
 
     return services;
+    var socket;
+    function init() {
+      var ioRoom = $window.location.origin + '/' + $window.location.toString().split('/')[4]; //maybe 4
+      window.socket = io(ioRoom);
+      console.log('Joining ioRoom: ', ioRoom);
+    }
 
     function on(eventName, callback) {
-      socket.on(eventName, function() {
+      window.socket.on(eventName, function() {
         var args = arguments;
         $rootScope.$apply(function() {
-          callback.apply(socket, args);
+          callback.apply(window.socket, args);
         });
       });
     }
 
     function emit(eventName, data, callback) {
-      socket.emit(eventName, data, function() {
+      window.socket.emit(eventName, data, function() {
         var args = arguments;
         $rootScope.$apply(function() {
           if (callback) {
-            callback.apply(socket, args);
+            callback.apply(window.socket, args);
           }
         });
       });

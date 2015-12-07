@@ -34,8 +34,10 @@ app.post('/createEvent', function(req, res) {
   //crete event in DB
   util.createEvent(db, code, username)
   .then(function() {
-    //redirect to room after event has been created
-    res.redirect('/' + code);
+    res.send({code: code});
+  })
+  .catch(function(err) {
+    throw err;
   })
 });
 
@@ -49,6 +51,9 @@ app.post('/newUser', function(req, res) {
   .then(function(userIdArray) {
     res.status(200).send({username: username, userId: userIdArray[0]}); // things to send back possibly: usernme, definitely add this userid, eventname, eventid, ishost
   })
+  .catch(function(err) {
+    throw err;
+  })
 });
 
 
@@ -59,17 +64,16 @@ app.get('/*', function(req, res) {
   //query database for event id based on code
   util.findEvent(db, code)
   .then(function(eventId) {
-    return util.gatherState(db, eventId[0].id, code) //retrieve the state of the event to send to socket
+    //retrieve the state of the event to send to socket
+    return util.gatherState(db, 1, code) // dummy data
+    // return util.gatherState(db, eventId[0].id, code) // real data
     .then(function(eventInfo) {
       //handle the socket connection
-      // console.log(eventInfo);
       handleSocket(req.url, eventInfo, io);
-      // res.send();
-      // res.sendFile(path.join(__dirname, '/client/index.html'));
+      res.end();
     })
   })
   .catch(function(err) {
-    res.redirect('/');  // is this where we want to redirect to?
     throw err;
   })
 

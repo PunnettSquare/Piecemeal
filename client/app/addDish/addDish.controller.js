@@ -9,6 +9,7 @@
   function AddDishCtrl(socketFactory) {
     var self = this;
 
+
     self.addDish = function(dish, cost) {
       console.log('dish, cost =', dish, cost);
       socketFactory.emit('addDish', {

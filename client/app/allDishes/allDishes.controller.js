@@ -4,18 +4,42 @@
   angular.module('Piecemeal')
     .controller('AllDishesCtrl', AllDishesCtrl);
 
-  AllDishesCtrl.$inject = ['socketFactory'];
+  AllDishesCtrl.$inject = ['socketFactory', 'allDishesFactory', '$location', '$window', '$scope'];
 
-  function AllDishesCtrl(socketFactory) {
+  function AllDishesCtrl(socketFactory, allDishesFactory, $location, $window, $scope) {
     var self = this;
     self.listOfMeals;
+
+
+    socketFactory.init();
 
     socketFactory.on('join', function(data) {
       console.log("receiving data for join", data);
       self.socketmessage = "data: " + data;
+      $scope.data = data;
     });
-    // end test
 
+    // added this to test sockets across different views
+    self.goToAddDish = function () {
+      $location.path('/' + $window.location.toString().split('/')[4] + '/addDish');
+    }
+
+    allDishesFactory.getEventInfo();
+    // end test
+    $scope.getId = function (arrayOfIds, eventInfo) {
+      var usernames = arrayOfIds.map(function(id) {
+        var result;
+        eventInfo.users.forEach(function(user) {
+          if (user.id === id) {
+            result = user.username;
+          }
+        });
+        if (result) {
+          return result;
+        }
+      })
+      return usernames.length === 1 ? usernames[0] : usernames.join(', ');
+    }
 
     // db queries
     // input: username + id + event
