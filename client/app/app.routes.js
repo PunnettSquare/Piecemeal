@@ -1,4 +1,3 @@
-
 (function() {
   'use strict';
 
@@ -12,13 +11,13 @@
     console.log('window.sessionStorage =', window.sessionStorage);
     // $urlRouterProvider.otherwise('home');
     $urlRouterProvider.otherwise(function($injector, $window) {
-      console.log('$window.$$path =', $window.$$path);
+      // console.log('$window.$$path =', $window.$$path);
       var state = $injector.get('$state');
-      if ($window.$$path === '' || $window.$$path === '/' || $window.$$path === '/home' || $window.$$path === '/undefined') {
-        // if (!window.sessionStorage.username || window.sessionStorage.username === "undefined") {
+      // if ($window.$$path === '' || $window.$$path === '/' || $window.$$path === '/home' || $window.$$path === '/undefined') {
+      if (!window.sessionStorage.username || window.sessionStorage.username === "undefined") {
         state.go('home');
       } else {
-        state.go('allDishes');
+        state.go('event.allDishes');
       }
     });
 
@@ -81,7 +80,9 @@
           }
         },
         resolve: {
-
+          // refresh: function() {
+          //   $state.reload();
+          // }
         }
 
       })
