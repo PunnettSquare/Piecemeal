@@ -29,6 +29,10 @@ module.exports = {
     })
   },
 
+  shareDish: function (db, userId, dishId) {
+    return db('usersJoinDishes').insert({user_id: userId, dish_id: dishId})
+  },
+
   gatherState: function (db, eventId, code) {
     var state = {eventId: eventId, code: code};
     return module.exports.findEventUsers(db, eventId)
