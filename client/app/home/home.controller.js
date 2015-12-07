@@ -45,9 +45,9 @@
 
         homeFactory.sendSessionUser(userObj)
           .then(function(userInfo) {
-            window.sessionStorage.setItem('user_id', userObj.user_id);
-            window.sessionStorage.setItem('event_id', userObj.event_id);
-            $location.path('/' + data.code + '/allDishes');
+            window.sessionStorage.setItem('user_id', userInfo.user_id);
+            window.sessionStorage.setItem('event_id', userInfo.event_id);
+            $location.path('/' + code + '/allDishes');
             window.location.reload(true);
           })
           .catch(function(err) {
