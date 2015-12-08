@@ -10,25 +10,16 @@
 
     var self = this;
 
-    //start testing socketFactory
-    // self.socketmessage = "test";
-
-    // socketFactory.on('join', function(data) {
-    //   console.log("receiving data for join", data);
-    //   self.socketmessage = "data: " + data;
-    // });
-    // end test
-
+    // window.sessionStorage should have: username, user_id, event code, event_id, and isHost
     self.setSessionUser = function(username, isHost, code) {
       window.sessionStorage.setItem('username', username);
+      window.sessionStorage.setItem('isHost', true);
 
       if (isHost) {
         homeFactory.createEvent({
-            username: self.username
+            username: username
           })
           .then(function(data) {
-            // TODO store code, username, and userID and eventID possibly
-            // store code here
             window.sessionStorage.setItem('code', data.code);
             $location.path('/' + data.code + '/allDishes');
             window.location.reload(true);
@@ -39,42 +30,23 @@
       } else {
         code = code || 'testRoom'; // just mock data - add functionality later that the user *must* enter a test room
         window.sessionStorage.setItem('code', code);
-        var userObj = _.assign(sessionStorage, {
-          'isHost': false
-        });
+        window.sessionStorage.setItem('isHost', false);
 
-        homeFactory.sendSessionUser(userObj)
+        homeFactory.sendSessionUser(window.sessionStorage)
           .then(function(userInfo) {
             window.sessionStorage.setItem('user_id', userInfo.user_id);
             window.sessionStorage.setItem('event_id', userInfo.event_id);
             $location.path('/' + code + '/allDishes');
             window.location.reload(true);
           })
-          .catch(function(err) {
-            console.log("Error in logging in guest.");
-          });
-
-          // window.sessionStorage.setItem('code', code);
-        // homeFactory.createUser({username: self.username});
-        // $window.location.href = '/' + code;
+          .catch(queryFail);
       }
     };
 
-    // self.sendSessionUser = function(username) {
-    //   homeFactory.sendSessionUser(username)
-    //     .then(function(userInfo) {
-    //       self.userId = userInfo.id;
-    //       self.username = userInfo.username;
-    //       console.log("Successfully received userInfo", userInfo);
-    //     })
-    //     .catch(queryFail);
-    // };
-
-
-    // function queryFail(err) {
-    //   console.error('Query Failed',
-    //     err.data.replace(/<br>/g, '\n').replace(/ &nbsp;/g, '>'),
-    //     err);
-    // }
+    function queryFail(err) {
+      console.error('Query Failed',
+        err.data.replace(/<br>/g, '\n').replace(/ &nbsp;/g, '>'),
+        err);
+    }
   }
 })();

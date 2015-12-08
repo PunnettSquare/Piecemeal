@@ -13,6 +13,7 @@
 
   function socketFactory($rootScope, $window) {
 
+    var socket;
     var services = {
       on: on,
       emit: emit,
@@ -20,9 +21,9 @@
     };
 
     return services;
-    var socket;
+
     function init() {
-      var ioRoom = $window.location.origin + '/' + $window.location.toString().split('/')[4]; //maybe 4
+      var ioRoom = $window.location.origin + '/' + window.sessionStorage.code;
       window.socket = io(ioRoom);
       console.log('Joining ioRoom: ', ioRoom);
     }
