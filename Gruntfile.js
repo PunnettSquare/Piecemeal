@@ -1,40 +1,48 @@
+var LIVERELOAD_PORT = 35729;
+var lrSnippet = require('connect-livereload')({
+  port: LIVERELOAD_PORT
+});
+
 module.exports = function(grunt) {
   'use strict';
+
   // Project configuration
+  require('load-grunt-tasks')(grunt);
+
+  var mountFolder = function(connect, dir) {
+    return connect.static(require('path').resolve(dir));
+  };
+
   grunt.initConfig({
     // Metadata
     pkg: grunt.file.readJSON('package.json'),
 
-    app: {
+    project: {
       client: 'client',
       server: 'server',
-      dist: 'dist'
+      app: 'app',
+      dist: 'dist',
+      css: ['<=% project.client%>/app/**/*.scss'],
+      js: ['<%= project.client %>/app/app.module.js',
+        '<%= project.client %>/app/app.routes.js',
+        '<%= project.client %>/app/app.socket.init.js',
+        '<%= project.client %>/{app,components}/**/!(*.spec|*.mock).js'
+      ]
     },
 
     // Task configuration
     jshint: {
+      files: ['*.js'],
       options: {
-        node: true,
-        curly: true,
-        eqeqeq: true,
-        immed: true,
-        latedef: true,
-        newcap: true,
-        noarg: true,
-        sub: true,
-        undef: true,
-        unused: true,
-        eqnull: true,
-        globals: {
-          jQuery: true
-        },
-        boss: true
-      },
-      gruntfile: {
-        src: 'gruntfile.js'
-      },
-      lib_test: {
-        src: ['lib/**/*.js', 'test/**/*.js']
+        jshintrc: '_.jshintrc'
+      }
+    },
+
+    uglify: {
+      dist: {
+        files: {
+          '<%= project.dist %>/js/scripts.min.js': '<%= project.js %>'
+        }
       }
     },
 
@@ -52,13 +60,33 @@ module.exports = function(grunt) {
         ]
       },
       client: {
-        src: '<%= app.client %>/index.html',
-        ignorePath: '<%= app.client %>/',
+        src: '<%= project.client %>/index.html',
+        ignorePath: '<%= project.client %>/',
       },
       // test: {
       //   src: './karma.conf.js',
       //   devDependencies: true
       // }
+    },
+
+    connect: {
+      options: {
+        port: 8080,
+        hostname: '*'
+      },
+      livereload: {
+        options: {
+          middleware: function(connect) {
+            return [lrSnippet, mountFolder(connect, 'client')];
+          }
+        }
+      }
+    },
+
+    open: {
+      server: {
+        path: 'http://localhost:<%= connect.options.port %>'
+      }
     },
 
     // karma: {
@@ -75,75 +103,98 @@ module.exports = function(grunt) {
     //     timeout: 5000 // set default mocha spec timeout
     //   },
     //   unit: {
-    //     src: ['<%= app.server %>/**/*.spec.js']
+    //     src: ['<%= project.server %>/**/*.spec.js']
     //   },
     //   integration: {
-    //     src: ['<%= app.server %>/**/*.integration.js']
+    //     src: ['<%= project.server %>/**/*.integration.js']
     //   }
     // },
 
     // Compiles Sass to CSS
-    // sass: {
-    //   server: {
-    //     options: {
-    //       compass: false
-    //     },
-    //     files: {
-    //       '.tmp/app/app.css': '<%= app.client %>/app/app.scss'
-    //     }
-    //   }
-    // },
-
+    sass: {
+      dev: {
+        options: {
+          style: "expanded",
+          update: true,
+          sourcemap: "none",
+          noCache: true
+        },
+        files: {
+          '<%= project.client%>/app.css': '<%= project.client %>/app/app.scss'
+        }
+      },
+      dist: {
+        options: {
+          style: 'expanded'
+        },
+        files: {
+          '<%= project.dist %>/css/style.css': '<%= project.css %>'
+        }
+      }
+    },
 
 
     // nodeunit: {
     //   files: ['test/**/*_test.js']
     // },
     watch: {
-      injectJS: {
-        files: ['<%= app.client %>/app/app.module.js',
-          '<%= app.client %>/app/app.routes.js',
-          '<%= app.client %>/app/app.socket.init.js',
-          '<%= app.client %>/{app,components}/**/!(*.spec|*.mock).js',
-          '!<%= app.client %>/app/app.js'
-        ],
-        tasks: ['injector:scripts']
+      livereload: {
+        options: {
+          livereload: LIVERELOAD_PORT
+        },
+        files: ['<%= project.client %>{,*/}**/*.*',
+          '<%= project.server %>{,*/}**/*.*',
+        ]
       },
-      // injectCss: {
-      //   files: ['<%= app.client %>/{app,components}/**/*.css'],
-      //   tasks: ['injector:css']
-      // },
-      // mochaTest: {
-      //   files: ['<%= app.server %>/**/*.{spec,integration}.js'],
-      //   tasks: ['env:test', 'mochaTest']
-      // },
-      // jsTest: {
-      //   files: ['<%= app.client %>/{app,components}/**/*.{spec,mock}.js'],
-      //   tasks: ['newer:jshint:all', 'wiredep:test', 'karma']
-      // },
-      // injectSass: {
-      //   files: ['<%= app.client %>/{app,components}/**/*.{scss,sass}'],
-      //   tasks: ['injector:sass']
-      // },
-      // sass: {
-      //   files: ['<%= app.client %>/{app,components}/**/*.{scss,sass}'],
-      //   tasks: ['sass', 'postcss']
-      // },
-      // gruntfile: {
-      //   files: ['Gruntfile.js']
-      // },
       // livereload: {
       //   files: [
-      //     '{.tmp,<%= app.client %>}/{app,components}/**/*.{css,html}',
-      //     '{.tmp,<%= app.client %>}/{app,components}/**/!(*.spec|*.mock).js',
-      //     '<%= app.client %>/assets/images/{,*//*}*.{png,jpg,jpeg,gif,webp,svg}'
+      //     '{<%= project.client %>}/{app,components}/**/*.{css,html}',
+      //     '{<%= project.client %>}/{app,components}/**/!(*.spec|*.mock).js',
+      //     '<%= project.client %>/assets/images/{,*//*}*.{png,jpg,jpeg,gif,webp,svg}'
       //   ],
       //   options: {
       //     livereload: true
       //   }
       // },
+
+      injectJS: {
+        files: ['<%= project.client %>/app/app.module.js',
+          '<%= project.client %>/app/app.routes.js',
+          '<%= project.client %>/app/app.socket.init.js',
+          '<%= project.client %>/{app,components}/**/!(*.spec|*.mock).js'
+        ],
+        tasks: ['injector:scripts']
+      },
+      injectCss: {
+        files: ['<%= project.client %>/app.css'],
+        tasks: ['injector:css']
+      },
+      // mochaTest: {
+      //   files: ['<%= project.server %>/**/*.{spec,integration}.js'],
+      //   tasks: ['env:test', 'mochaTest']
+      // },
+      // jsTest: {
+      //   files: ['<%= project.client %>/{app,components}/**/*.{spec,mock}.js'],
+      //   tasks: ['newer:jshint:all', 'wiredep:test', 'karma']
+      // },
+      injectSass: {
+        files: ['<%= project.client %>/{app,components}/**/*.{scss,sass}'],
+        tasks: ['injector:sass']
+      },
+      sass: {
+        files: ['<%= project.client %>/{app,components}/**/*.{scss,sass}'],
+        tasks: ['sass:dev']
+      },
+      // sass: {
+      //   files: ['<%= project.client %>/{app,components}/**/*.{scss,sass}'],
+      //   tasks: ['sass', 'postcss']
+      // },
+      // gruntfile: {
+      //   files: ['Gruntfile.js']
+      // },
+
       // express: {
-      //   files: ['<%= app.server %>/**/*.{js,json}'],
+      //   files: ['<%= project.server %>/**/*.{js,json}'],
       //   tasks: ['express:dev', 'wait'],
       //   options: {
       //     livereload: true,
@@ -172,69 +223,57 @@ module.exports = function(grunt) {
           endtag: '<!-- endinjector -->'
         },
         files: {
-          '<%= app.client %>/index.html': [
-            ['<%= app.client %>/app/app.module.js',
-              '<%= app.client %>/app/app.routes.js',
-              '<%= app.client %>/app/socket.module.js',
-              '{.tmp,<%= app.client %>}/{app,components}/**/!(*.spec|*.mock).js',
-              '!{.tmp,<%= app.client %>}/app/app.js'
+          '<%= project.client %>/index.html': [
+            ['<%= project.client %>/app/app.module.js',
+              '<%= project.client %>/app/app.routes.js',
+              '<%= project.client %>/app/socket.module.js',
+              '{.tmp,<%= project.client %>}/{app,components}/**/!(*.spec|*.mock).js'
             ]
           ]
         }
       },
 
-
-
       // Inject component scss into app.scss
-      // sass: {
-      //   options: {
-      //     transform: function(filePath) {
-      //       filePath = filePath.replace('/client/app/', '');
-      //       filePath = filePath.replace('/client/components/', '../components/');
-      //       return '@import \'' + filePath + '\';';
-      //     },
-      //     starttag: '// injector',
-      //     endtag: '// endinjector'
-      //   },
-      //   files: {
-      //     '<%= app.client %>/app/app.scss': [
-      //       '<%= app.client %>/{app,components}/**/*.{scss,sass}',
-      //       '!<%= app.client %>/app/app.{scss,sass}'
-      //     ]
-      //   }
-      // },
+      sass: {
+        options: {
+          transform: function(filePath) {
+            filePath = filePath.replace('/client/app/', '');
+            filePath = filePath.replace('/client/components/', '../components/');
+            return '@import \'' + filePath + '\';';
+          },
+          starttag: '// injector',
+          endtag: '// endinjector'
+        },
+        files: {
+          '<%= project.client %>/app/app.scss': [
+            '<%= project.client %>/{app,components}/**/*.{scss,sass}',
+            '!<%= project.client %>/app/app.scss'
+          ]
+        }
+      },
 
       // Inject component css into index.html
-      // css: {
-      //   options: {
-      //     transform: function(filePath) {
-      //       filePath = filePath.replace('/client/', '');
-      //       filePath = filePath.replace('/.tmp/', '');
-      //       return '<link rel="stylesheet" href="' + filePath + '">';
-      //     },
-      //     starttag: '<!-- injector:css -->',
-      //     endtag: '<!-- endinjector -->'
-      //   },
-      //   files: {
-      //     '<%= app.client %>/index.html': [
-      //       '<%= app.client %>/{app,components}/**/*.css'
-      //     ]
-      //   }
-      // }
+      css: {
+        options: {
+          transform: function(filePath) {
+            filePath = filePath.replace('/client/', '');
+            filePath = filePath.replace('/.tmp/', '');
+            return '<link rel="stylesheet" href="' + filePath + '">';
+          },
+          starttag: '<!-- injector:css -->',
+          endtag: '<!-- endinjector -->'
+        },
+        files: {
+          '<%= project.client %>/index.html': [
+            '<%= project.client %>/app.css'
+          ]
+        }
+      }
     }
 
   });
 
-  // These plugins provide necessary tasks
-  grunt.loadNpmTasks('grunt-contrib-nodeunit');
-  grunt.loadNpmTasks('grunt-contrib-jshint');
-  grunt.loadNpmTasks('grunt-contrib-watch');
-  grunt.loadNpmTasks('grunt-injector');
-  grunt.loadNpmTasks('grunt-wiredep');
-  grunt.loadNpmTasks('grunt-contrib-sass');
-
-
   // Default task
-  grunt.registerTask('default', ['jshint']);
-  grunt.registerTask('build', ['injector', 'wiredep']);
+  grunt.registerTask('default', ['jshint', 'connect:livereload', 'open', 'watch']);
+  grunt.registerTask('build', ['injector:scripts', 'sass', 'injector:sass', 'wiredep']);
 };

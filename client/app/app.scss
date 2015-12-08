@@ -1,0 +1,13 @@
+// injector
+@import 'addDish/addDish.scss';
+@import 'allDishes/allDishes.scss';
+@import 'guestBill/guestBill.scss';
+@import 'home/home.scss';
+@import 'hostBill/hostBill.scss';
+@import 'hostReceipt/hostReceipt.scss';
+@import 'loading/loading.scss';
+// endinjector
+
+* {
+    border: 1px solid gray;
+}
