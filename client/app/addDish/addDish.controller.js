@@ -31,6 +31,10 @@
       $location.path('/' + window.sessionStorage.code + '/allDishes');
     };
 
+    self.goToGuestBill = function() {
+      $location.path('/' + window.sessionStorage.code + '/guestBill');
+    };
+
     self.calcUserCurrentTotal = function() {
       self.userTotal = _.filter($rootScope.data.users, 'username', window.sessionStorage.username)[0].dishes.reduce(function(acc, current) {
         return acc + (current.cost / current.users.length);

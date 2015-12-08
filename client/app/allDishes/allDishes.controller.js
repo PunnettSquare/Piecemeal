@@ -20,6 +20,7 @@
       console.log("Receiving all event info data & attaching to rootScope", data);
       window.sessionStorage.setItem('event_id', data.event_id);
       $rootScope.data = data;
+      console.log('$rootScope.data =', $rootScope.data);
       if (data.users.length === 1) {
         window.sessionStorage.setItem('user_id', data.user_id);
       }
