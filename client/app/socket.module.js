@@ -29,6 +29,7 @@
     }
 
     function on(eventName, callback) {
+      console.log("socketFactory.on exists!"); 
       window.socket.on(eventName, function() {
         var args = arguments;
         $rootScope.$apply(function() {
