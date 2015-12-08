@@ -7,9 +7,9 @@
   angular.module('Piecemeal')
     .factory('appFactory', appFactory);
 
-  appFactory.$inject = ['socketFactory'];
+  appFactory.$inject = ['socketFactory', '$rootScope'];
 
-  function appFactory(socketFactory) {
+  function appFactory(socketFactory, $rootScope) {
     
     var services = {
       initListeners: initListeners
@@ -26,6 +26,8 @@
       socketFactory.on('joined', function(data) {
         console.log("heard 'joined' in appFactory. data: ", data);
         services.data = data;
+        console.log("services.data = ", services.data); 
+        $rootScope.$broadcast('joined');
       });
 
       socketFactory.on('dishAdded', function(data) {
