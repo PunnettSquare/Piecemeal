@@ -24,7 +24,7 @@
 
     self.goToAddDish = function () {
       $location.path('/' + $window.location.toString().split('/')[4] + '/addDish');
-    }
+    };
 
     allDishesFactory.getEventInfo();
 
@@ -41,7 +41,7 @@
         }
       })
       return usernames.length === 1 ? usernames[0] : usernames.join(', ');
-    }
+    };
 
     self.isOnDish = function(dish_id, user_id) {
       var result = false;
@@ -55,7 +55,7 @@
         }
       });
       return result;
-    }
+    };
     
     self.shareDish = function(dish_id, user_id) { //nclick must access dish_id** figure out how to provide these
       if (!self.isOnDish(dish_id, user_id)) {

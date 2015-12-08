@@ -21,7 +21,8 @@ var connect = function(eventUrl, eventInfo, io) {
       socket.broadcast.emit('dishAdded', {
       // mealEvent.emit('dishAdded', { // use this instead of socket.broadcast to send to all for testing purposes on your client
         cost: data.cost,
-        name: data.name
+        name: data.name,
+        user_id: data.user_id
       });
     });
 
