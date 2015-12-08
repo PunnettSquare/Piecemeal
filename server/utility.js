@@ -77,7 +77,6 @@ module.exports = {
             return module.exports.findUserDishes(db, user.id);
           }))
           .then(function(usersDishesArrays) {
-            console.log(usersDishesArrays);
             usersDishesArrays.forEach(function(userDishesArray) {
               _.each(state.users, function(userObj, index, list) {
                 var username = userObj.username;
