@@ -11,7 +11,7 @@
 
     self.activate = function() {
       socketFactory.init();
-      socketFactory.on('join', function(data) {
+      socketFactory.on('joined', function(data) {
         console.log("Joined Add Dish page, receiving data:", data);
       });
       self.calcUserCurrentTotal();

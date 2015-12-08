@@ -18,7 +18,7 @@
 
     // window.sessionStorage should have: username, user_id, event code, event_id, and isHost, i.e.:
     // {code: "PHmBlkxjACGOECgHae2ux8AkapXyVp0s", event_id: "10", isHost: "true", user_id: "10", username: "asdf"}
-    socketFactory.on('join', function(data) {
+    socketFactory.on('joined', function(data) {
       console.log("Receiving all event info data & attaching to rootScope", data);
       window.sessionStorage.setItem('event_id', data.event_id);
       $rootScope.data = data;
