@@ -31,7 +31,7 @@
       socketFactory.on('dishAdded', function(data) {
         console.log("heard 'dishAdded' in appFactory" );
         console.log("dishAdded data is: ", data); // data format: {cost: 3, name: "rice", user_id: "29319"}
-        services.dishes.push(data);
+        // services.dishes.push(data);
         // eventData.whereverDishesare.push(data);
         // now, either pages will have two way data binding with the above data, OR will need to broadcast with scope
       });

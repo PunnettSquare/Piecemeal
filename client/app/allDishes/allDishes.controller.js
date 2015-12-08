@@ -23,6 +23,7 @@
       window.sessionStorage.setItem('event_id', data.event_id);
       $rootScope.data = data;
       self.data = data;
+      // appFactory.data = data;
       console.log('$rootScope.data =', $rootScope.data);
       if (data.users.length === 1) {
         window.sessionStorage.setItem('user_id', data.user_id);
