@@ -30,7 +30,11 @@ module.exports = {
   },
 
   shareDish: function (db, userId, dishId) {
-    return db('usersJoinDishes').insert({user_id: userId, dish_id: dishId})
+    return db('usersJoinDishes').insert({user_id: userId, dish_id: dishId});
+  },
+
+  unshareDish: function (db, userId, dishId) {
+    return db('usersJoinDishes').where({user_id: userId, dish_id: dishId}).del();
   },
 
   gatherState: function (db, eventId, code) {

@@ -1,4 +1,6 @@
 // # Socket Connection Handler
+var util = require('./utility');
+var db = require('../db/db');
 
 var connect = function(eventUrl, eventInfo, io) {
   // Set the Socket.io namespace to the eventUrl.
@@ -14,7 +16,6 @@ var connect = function(eventUrl, eventInfo, io) {
 
     socket.on('addDish', function(data) {
       console.log("AddDish event heard from the client!");
-      
       console.log('data =', data);
       //TODO add dish to DB
       socket.broadcast.emit('dishAdded', { //or mealEvent.emit to send to all
@@ -25,14 +26,25 @@ var connect = function(eventUrl, eventInfo, io) {
 
     socket.on('shareDish', function (data) {
       console.log("User is sharing dish");
-      // TO DO: add user to dish's list of users in DB
+      socket.broadcast.emit('shareDish', {user_id: data.user_id, dish_id: data.dish_id});
+      console.log(data);
+      util.shareDish(db, data.user_id, data.dish_id)
+      .catch(function(err) {
+        throw err;
+      });
     });
 
     socket.on('unshareDish', function (data) {
       console.log("User is no longer sharing dish"); 
-      // TO DO: remove user from dish's list of users in DB
+      socket.broadcast.emit('unshareDish', {user_id: data.user_id, dish_id: data.dish_id});
+      util.unshareDish(db, data.user_id, data.dish_id)
+      .catch(function(e) {
+        throw err;
+      });
     });
-
+    // socket.on('finished', function(data) { // how to 
+    //   util.userFinished(db, data.userId, data.eventId);
+    // })
   });
 };
 

@@ -1,8 +1,8 @@
 var util = require('./server/utility');
-var db = require('./db/db')
+var db = require('./db/db');
 module.exports = function() {
   var roomName = 'testRoom';
-  var hostUserName = 'Jackson'
+  var hostUserName = 'Jackson';
   util.createEvent(db, roomName, hostUserName)
   .then(function() {
     return Promise.all([
@@ -55,6 +55,6 @@ module.exports = function() {
     })
   })
   .catch(function(err){
-    console.error('Error Generating Dummy Data: ', err)
+    console.error('Error Generating Dummy Data: ', err);
   })
 }
