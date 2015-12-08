@@ -26,7 +26,7 @@
       // appFactory.data = data;
       console.log('$rootScope.data =', $rootScope.data);
       if (data.users.length === 1) {
-        window.sessionStorage.setItem('user_id', data.user_id);
+        window.sessionStorage.setItem('user_id', data.users[0].id);
       }
     });
 
