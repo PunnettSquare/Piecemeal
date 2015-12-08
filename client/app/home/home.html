@@ -14,6 +14,9 @@
 
   <h2>Are you a guest?</h2>
   piecemeal.com/<input type="text" placeholder="roomName" ng-model="url">
-  <input type="submit" value="Enter Room" ng-click="home.setSessionUser(username, false, url)">
+  <input name="submit" type="submit" value="Enter Room" ng-click="home.setSessionUser(username, false, url)">
+
+  <div ng-show="home.isError">Your entered room does not exist. Please try another.</div>
+
 
 </div>
