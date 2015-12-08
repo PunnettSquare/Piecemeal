@@ -4,8 +4,8 @@
 
   <div ng-repeat="dish in data.dishes">
     <span>{{dish.name}} {{dish.cost}} {{ getId(dish.users, data) }}</span>
-      <button ng-click="allDishes.shareDish(dish.dish_id, window.sessionStorage.id)">Share</button>
-      <button ng-click="allDishes.goToAddDish(dish.dish_id, window.sessionStorage.id)">Unshare</button>
+      <button ng-click="allDishes.shareDish(dish.dish_id, allDishes.user_id)">Share</button>
+      <button ng-click="allDishes.unshareDish(dish.dish_id, allDishes.user_id)">Unshare</button>
   </div>
   <button ng-click="allDishes.goToAddDish()">Add Dish</button>
 

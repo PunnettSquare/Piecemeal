@@ -9,10 +9,8 @@
   function AllDishesCtrl(socketFactory, allDishesFactory, $location, $window, $scope) {
 
     var self = this;
-    self.listOfDishes = []; // dishes and users per dish
-    self.yourTotal = 0;
-    self.groupTotal = 0;
-    self.listOfUsers = []; // FUTURE feature, for having floating active users
+
+    self.user_id = parseInt(window.sessionStorage.user_id);
 
     socketFactory.init();
 
@@ -20,10 +18,6 @@
       console.log("receiving data for join", data);
       self.socketmessage = "data: " + data;
       $scope.data = data;
-    });
-
-    socketFactory.on('dishAdded', function(data) {
-      self.listOfMeals.push(data);
     });
 
     self.goToAddDish = function () {
@@ -47,22 +41,49 @@
       return usernames.length === 1 ? usernames[0] : usernames.join(', ');
     }
 
-    self.shareDish = function(dishId, userId) { //nclick must access dishId** figure out how to provide these
-      socketFactory.emit('shareDish', { // server needs .on(shareDish) that adds user to Dish
-        dishId: dishId,
-        userId: userId // ** ask Michelle how to get user from session
+    self.isOnDish = function(dish_id, user_id) {
+      var result = false;
+      $scope.data.dishes.forEach(function(dish) {
+        if (dish.dish_id === dish_id) {
+          dish.users.forEach(function(user) {
+            if (user === user_id) {
+              result = true;
+            }
+          });
+        }
       });
-      // update this dish's shared users in self.listOfDishes to include user
-      // update self.groupTotal
+      return result;
+    }
+    
+    self.shareDish = function(dish_id, user_id) { //nclick must access dish_id** figure out how to provide these
+      if (!self.isOnDish(dish_id, user_id)) {
+        socketFactory.emit('shareDish', { // server needs .on(shareDish) that adds user to Dish
+          dish_id: dish_id,
+          user_id: user_id // ** ask Michelle how to get user from session
+        });
+        // update this dish's shared users in self.listOfDishes to include user
+        $scope.data.dishes.forEach(function(dish) {
+          if (dish.dish_id === dish_id) {
+            dish.users.push(user_id);
+          }
+        })
+      } 
     };
 
-    self.unshareDish = function (dishId, userId) {
-      socketFactory.emit('unshareDish', { // server needs .on(unshareDish) that adds user to Dish
-        dishId: dishId,
-        userId: userId
-      });
-      // update this dish's shared users in self.listOfDishes to remove user
-      // update self.groupTotal
+    self.unshareDish = function (dish_id, user_id) {
+      if (self.isOnDish(dish_id, user_id)) {
+        socketFactory.emit('unshareDish', { // server needs .on(unshareDish) that adds user to Dish
+          dish_id: dish_id,
+          user_id: user_id
+        });
+
+        // update this dish's shared users in self.listOfDishes to remove user
+        $scope.data.dishes.forEach(function(dish) {
+          if (dish.dish_id === dish_id) {
+            dish.users.splice(dish.users.indexOf(user_id), 1);
+          }
+        })
+      }
     };
 
     // For future floating active users feature:
