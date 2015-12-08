@@ -19,7 +19,7 @@ exports.up = function(knex, Promise) {
         knex.schema.createTable('dishes', function(table){
             table.increments('id').primary();
             table.string('name');
-            table.integer('cost');
+            table.decimal('cost');
             table.integer('event_id')
                  .references('id')
                  .inTable('events');
