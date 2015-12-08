@@ -10,14 +10,19 @@ var connect = function(eventUrl, eventInfo, io) {
     // socket.on('userAdded', function(user) {
     //   socket.broadcast.emit('userAdded', user);
     // });
-    console.log('socket connection made with server');
+    console.log('Socket connection made with server.');
 
     socket.emit('joined', eventInfo);
 
     socket.on('addDish', function(data) {
-      console.log("AddDish event heard from the client!");
-      console.log('data =', data);
-      //TODO add dish to DB
+      console.log("AddDish event heard from the client!", data);
+
+      // TELL JACKSON: Only takes in round numbers for cost.
+      util.createDish(db, data.name, Math.round(data.cost), parseInt(data.user_id), parseInt(data.event_id))
+      .catch(function(err) {
+        throw err;
+      });
+
       socket.broadcast.emit('dishAdded', {
       // mealEvent.emit('dishAdded', { // use this instead of socket.broadcast to send to all for testing purposes on your client
         cost: data.cost,
@@ -44,7 +49,7 @@ var connect = function(eventUrl, eventInfo, io) {
         throw err;
       });
     });
-    // socket.on('finished', function(data) { // how to 
+    // socket.on('finished', function(data) { // how to
     //   util.userFinished(db, data.userId, data.eventId);
     // })
   });

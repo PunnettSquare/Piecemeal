@@ -19,10 +19,12 @@
 
     self.addDish = function(dish, cost) {
       console.log("Emitting dish", dish, "with cost", cost);
+
       socketFactory.emit('addDish', {
         cost: cost,
         name: dish,
-        user_id: window.sessionStorage.user_id
+        user_id: window.sessionStorage.user_id,
+        event_id: window.sessionStorage.event_id
       });
       self.amount = 0;
       self.dishName = '';
