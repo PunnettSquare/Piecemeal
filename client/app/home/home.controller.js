@@ -34,8 +34,8 @@
 
         homeFactory.sendSessionUser(window.sessionStorage)
           .then(function(userInfo) {
-            window.sessionStorage.setItem('user_id', userInfo.user_id);
-            window.sessionStorage.setItem('event_id', userInfo.event_id);
+            window.sessionStorage.setItem('user_id', parseInt(userInfo.user_id));
+            window.sessionStorage.setItem('event_id', parseInt(userInfo.event_id));
             $location.path('/' + code + '/allDishes');
             window.location.reload(true);
           })
