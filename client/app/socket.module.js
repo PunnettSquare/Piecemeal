@@ -20,7 +20,7 @@
     };
 
     return services;
-    var socket;
+
     function init() {
       var ioRoom = $window.location.origin + '/' + $window.location.toString().split('/')[4]; //maybe 4
       window.socket = io(ioRoom);
@@ -28,6 +28,7 @@
     }
 
     function on(eventName, callback) {
+      console.log("socketFactory.on exists!"); 
       window.socket.on(eventName, function() {
         var args = arguments;
         $rootScope.$apply(function() {

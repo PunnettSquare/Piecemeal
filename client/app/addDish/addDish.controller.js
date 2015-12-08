@@ -4,9 +4,9 @@
   angular.module('Piecemeal')
     .controller('AddDishCtrl', AddDishCtrl);
 
-  AddDishCtrl.$inject = ['socketFactory'];
+  AddDishCtrl.$inject = ['socketFactory', 'appFactory'];
 
-  function AddDishCtrl(socketFactory) {
+  function AddDishCtrl(socketFactory, appFactory) {
     var self = this;
 
 
@@ -14,7 +14,8 @@
       console.log('dish, cost =', dish, cost);
       socketFactory.emit('addDish', {
         cost: cost,
-        name: dish
+        name: dish,
+        user_id: window.sessionStorage.user_id
       });
       self.amount = 0;
       self.dishName = '';

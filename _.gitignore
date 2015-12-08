@@ -5,6 +5,8 @@ logs
 *.log
 _.editorconfig
 _.gitattributes
+.DS_Store
+**/.DS_Store
 
 # Runtime data
 pids
@@ -30,3 +32,4 @@ dist/
 node_modules/
 bower_components/
 client/bower_components/
+

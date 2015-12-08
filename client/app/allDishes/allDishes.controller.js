@@ -4,15 +4,17 @@
   angular.module('Piecemeal')
     .controller('AllDishesCtrl', AllDishesCtrl);
 
-  AllDishesCtrl.$inject = ['socketFactory', 'allDishesFactory', '$location', '$window', '$scope'];
+  AllDishesCtrl.$inject = ['socketFactory', 'allDishesFactory', '$location', '$window', '$scope', 'appFactory'];
 
-  function AllDishesCtrl(socketFactory, allDishesFactory, $location, $window, $scope) {
+  function AllDishesCtrl(socketFactory, allDishesFactory, $location, $window, $scope, appFactory) {
 
     var self = this;
 
     self.user_id = parseInt(window.sessionStorage.user_id);
+    self.dishes = appFactory.dishes; //testing
 
     socketFactory.init();
+    appFactory.initListeners();
 
     socketFactory.on('join', function(data) {
       console.log("receiving data for join", data);

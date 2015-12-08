@@ -4,19 +4,28 @@
   angular.module('Piecemeal')
     .factory('appFactory', appFactory);
 
-  appFactory.$inject = [];
+  appFactory.$inject = ['socketFactory'];
 
-  function appFactory() {
+  function appFactory(socketFactory) {
+
     var services = {
-      getAllDishData: getAllDishData
+      eventData: [],
+      dishes: [],
+      initListeners: initListeners
     };
 
     return services;
 
-    function getAllDishData() {
-      // socketFactory.on('dishAdded', function(data) {
-      // return data;
-      // });
+    function initListeners() {
+      console.log("eventlisteners added");
+
+      socketFactory.on('dishAdded', function(data) {
+        console.log("---->heard 'dishAdded' in dataFactory" );
+        console.log("dishAdded data is: ", data); // data format: {cost: 3, name: "rice", user_id: "29319"}
+        services.dishes.push(data);
+        // eventData.whereverDishesare.push(data);
+        // now, either pages will have two way data binding with the above data, OR will need to broadcast with scope
+      });
     }
   }
 
@@ -46,6 +55,7 @@
 // then, if the controllers have direct binding to this data, no further action is needed
 // if necessary, use $rootScope to setup broadcast and emit to controllers in the client. (not using sockets to do this, b/c sockets go back and forth to the server)
 
+/*
 (function() {
   'use strict';
 
@@ -75,5 +85,4 @@
   }
 
 })();
-
-/* in allDishes
+*/
