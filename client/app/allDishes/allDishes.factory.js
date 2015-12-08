@@ -18,7 +18,7 @@
     function getEventInfo(username) {
       return $http({
           method: 'GET',
-          url: '/' + $window.location.toString().split('/')[4],
+          url: '/' + window.sessionStorage.code,
           data: username // user id, possibly username
         })
         .then(function(res) {

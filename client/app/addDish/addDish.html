@@ -1,13 +1,26 @@
 <div id="addDish" ng-cloak>
-  <h1>Add Dish</h1>
-  <input type="text" placeholder="Dish Name" ng-model="addDish.dishName">
 
-  <input type="number" ng-model="addDish.amount" aria-label="amount"> <br>
+  <form name="dishForm">
 
-  <!-- $<input type="number" name="currencyDollars" min="0" max="9999" size="4" aria-label="amount" title="Only numbers are allowed" ng-model="dollar"/>
-  . <input type="number" name="currencyCents" min="0" max="99" size="2" title="Only numbers are allowed" ng-model="cents"/> -->
 
- Your Current Total: <span id="currency-default">{{addDish.amount | currency}}</span><br>
+    <input type="submit" ng-click="addDish.goToAllDishes()" value="Go To All Dishes">
+    <h1>Add Dish</h1>
 
-  <input type="submit" ng-click="addDish.addDish(addDish.dishName, addDish.amount)">
+
+    <input name="name" type="text" placeholder="Dish Name" ng-model="addDish.dishName">
+
+    <input name="amount" type="number" ng-model="addDish.amount"  placeholder="$0.00" aria-label="amount"> <br>
+
+    <!-- $<input type="number" name="currencyDollars" min="0" max="9999" size="4" aria-label="amount" title="Only numbers are allowed" ng-model="dollar"/>
+    . <input type="number" name="currencyCents" min="0" max="99" size="2" title="Only numbers are allowed" ng-model="cents"/> -->
+
+    This dish costs:
+    <span ng-show="dishForm.amount.$pristine">$0.00</span>
+    <span ng-show="dishForm.amount.$dirty" id="currency-default">{{addDish.amount | currency}}</span><br>
+
+
+    <input type="submit" ng-click="addDish.addDish(addDish.dishName, addDish.amount)">
+
+    Your total so far is: <span id="currency-default">{{addDish.userTotal | currency}}</span><br>
+  </form>
 </div>
