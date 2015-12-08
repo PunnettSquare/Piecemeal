@@ -4,15 +4,17 @@
   angular.module('Piecemeal')
     .controller('AllDishesCtrl', AllDishesCtrl);
 
-  AllDishesCtrl.$inject = ['socketFactory', 'allDishesFactory', '$location', '$window', '$scope', '$rootScope'];
+  AllDishesCtrl.$inject = ['socketFactory', 'allDishesFactory', '$location', '$window', '$scope', 'appFactory', '$rootScope'];
 
-  function AllDishesCtrl(socketFactory, allDishesFactory, $location, $window, $scope, $rootScope) {
+  function AllDishesCtrl(socketFactory, allDishesFactory, $location, $window, $scope, appFactory, $rootScope) {
 
     var self = this;
 
     self.user_id = parseInt(window.sessionStorage.user_id);
+    self.dishes = appFactory.dishes; //testing
 
     socketFactory.init();
+    appFactory.initListeners();
 
     // window.sessionStorage should have: username, user_id, event code, event_id, and isHost, i.e.:
     // {code: "PHmBlkxjACGOECgHae2ux8AkapXyVp0s", event_id: "10", isHost: "true", user_id: "10", username: "asdf"}

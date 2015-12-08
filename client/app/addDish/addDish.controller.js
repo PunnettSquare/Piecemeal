@@ -4,9 +4,9 @@
   angular.module('Piecemeal')
     .controller('AddDishCtrl', AddDishCtrl);
 
-  AddDishCtrl.$inject = ['socketFactory', '$location', '$rootScope'];
+  AddDishCtrl.$inject = ['socketFactory', 'appFactory', '$rootScope', '$location',];
 
-  function AddDishCtrl(socketFactory, $location, $rootScope) {
+  function AddDishCtrl(socketFactory, appFactory, $rootScope, $location) {
     var self = this;
 
     self.activate = function() {
@@ -21,7 +21,8 @@
       console.log("Emitting dish", dish, "with cost", cost);
       socketFactory.emit('addDish', {
         cost: cost,
-        name: dish
+        name: dish,
+        user_id: window.sessionStorage.user_id
       });
       self.amount = 0;
       self.dishName = '';
@@ -50,25 +51,6 @@
     };
 
     self.activate();
-
-    // db queries
-    // input: username + id + event
-    // outputs:
-    // list of dishes & costs
-    // how many people sharing dish
-
-    // socket broadcast
-    // remove meal
-    // share meal
-
-    // global listener (already on app.socket.init)
-    // any added dishes from other people (in real time)
-
-    // calculate:
-    // filter total list for user-only dishes
-    //   calculate cost of each shared dish by dividing by # of people sharing it
-    //      your total bill
-    // dinner party total bill (reduce total list cost)
 
   }
 
