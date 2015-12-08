@@ -9,6 +9,10 @@
   function GuestBillCtrl() {
     var self = this;
 
+    self.goToAllDishes = function() {
+      $location.path('/' + window.sessionStorage.code + '/allDishes');
+    };
+
 
   }
 

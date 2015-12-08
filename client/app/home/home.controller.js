@@ -17,9 +17,11 @@
             username: username
           })
           .then(function(data) {
-            window.sessionStorage.setItem('username', username);
-            window.sessionStorage.setItem('isHost', true);
-            window.sessionStorage.setItem('code', data.code);
+            _.assign(window.sessionStorage, {
+              username: username,
+              code: data.code,
+              isHost: false
+            });
             $location.path('/' + data.code + '/allDishes');
             window.location.reload(true);
           })
@@ -27,14 +29,18 @@
             console.log("Error in creating event.");
           });
       } else {
-        // code = code || 'testRoom'; // just mock data - add functionality later that the user *must* enter a test room
-
-        homeFactory.sendSessionUser(window.sessionStorage)
+        // code = code || 'testRoom'; // only for mock data
+        homeFactory.sendSessionUser(
+            _.assign(window.sessionStorage, {
+              username: username,
+              code: code,
+              isHost: false
+            }))
           .then(function(userInfo) {
-            window.sessionStorage.setItem('code', code);
-            window.sessionStorage.setItem('isHost', false);
-            window.sessionStorage.setItem('user_id', parseInt(userInfo.user_id));
-            window.sessionStorage.setItem('event_id', parseInt(userInfo.event_id));
+            _.assign(window.sessionStorage, {
+              user_id: userInfo.user_id,
+              event_id: userInfo.event_id
+            });
             $location.path('/' + code + '/allDishes');
             window.location.reload(true);
           })
