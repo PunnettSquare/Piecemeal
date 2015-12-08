@@ -36,9 +36,16 @@
     };
 
     self.calcUserCurrentTotal = function() {
-      self.userTotal = _.filter($rootScope.data.users, 'username', window.sessionStorage.username)[0].dishes.reduce(function(acc, current) {
-        return acc + (current.cost / current.users.length);
-      }, 0);
+      console.log('$rootScope =', $rootScope);
+      self.userTotal = _.filter($rootScope.data.users, 'username', window.sessionStorage.username)[0].dishes
+        .filter(function(value, key) {
+          return _.isNumber(value.dish_id);
+        })
+        .reduce(function(acc, current) {
+          console.log('current =', current);
+          var numShared = (current.users) ? current.users.length : 1;
+          return acc + (current.cost / numShared);
+        }, 0);
       console.log('self.userTotal =', self.userTotal);
     };
 
