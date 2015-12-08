@@ -12,7 +12,7 @@ var connect = function(eventUrl, eventInfo, io) {
     // });
     console.log('socket connection made with server');
 
-    socket.emit('join', eventInfo);
+    socket.emit('joined', eventInfo);
 
     socket.on('addDish', function(data) {
       console.log("AddDish event heard from the client!");
@@ -28,7 +28,7 @@ var connect = function(eventUrl, eventInfo, io) {
 
     socket.on('shareDish', function (data) {
       console.log("User is sharing dish");
-      socket.broadcast.emit('shareDish', {user_id: data.user_id, dish_id: data.dish_id});
+      socket.broadcast.emit('dishShared', {user_id: data.user_id, dish_id: data.dish_id});
       console.log(data);
       util.shareDish(db, data.user_id, data.dish_id)
       .catch(function(err) {
@@ -38,7 +38,7 @@ var connect = function(eventUrl, eventInfo, io) {
 
     socket.on('unshareDish', function (data) {
       console.log("User is no longer sharing dish");
-      socket.broadcast.emit('unshareDish', {user_id: data.user_id, dish_id: data.dish_id});
+      socket.broadcast.emit('dishUnshared', {user_id: data.user_id, dish_id: data.dish_id});
       util.unshareDish(db, data.user_id, data.dish_id)
       .catch(function(e) {
         throw err;
