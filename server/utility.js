@@ -77,6 +77,7 @@ module.exports = {
             return module.exports.findUserDishes(db, user.id);
           }))
           .then(function(usersDishesArrays) {
+            console.log(usersDishesArrays);
             usersDishesArrays.forEach(function(userDishesArray) {
               _.each(state.users, function(userObj, index, list) {
                 var username = userObj.username;
@@ -121,7 +122,7 @@ module.exports = {
   },
 
   findUserDishes: function(db, user_id) {
-    return db.select().from('users').leftJoin('usersJoinDishes', 'users.id', 'usersJoinDishes.user_id').leftJoin('dishes', 'dishes.id', 'usersJoinDishes.dish_id').where('users.id', user_id);
+    return db.select().from('users').innerJoin('usersJoinDishes', 'users.id', 'usersJoinDishes.user_id').innerJoin('dishes', 'dishes.id', 'usersJoinDishes.dish_id').where('users.id', user_id); // TODO only get dishes associated with the event
   },
 
   generateCode: function() {
