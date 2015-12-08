@@ -23,6 +23,9 @@ app.use(morgan('dev'));
 
 // ## Routes
 
+app.get('/favicon.ico', function(req, res) {
+  res.sendStatus(200);
+})
 
 // **Static folder for serving application assets**
 app.use('/', express.static(path.join(__dirname, 'client/')));
@@ -41,6 +44,7 @@ app.post('/createEvent', function(req, res) {
       throw err;
     });
 });
+
 
 
 app.post('/newUser', function(req, res) {
@@ -71,8 +75,8 @@ app.get('/*', function(req, res) {
   util.findEvent(db, code)
     .then(function(event_id) {
       // retrieve the state of the event to send to socket
-      return util.gatherState(db, 1, code) // dummy data
-        // return util.gatherState(db, event_id[0].id, code) // real data
+      // return util.gatherState(db, 1, code) // dummy data
+        return util.gatherState(db, event_id[0].id, code) // real data
         .then(function(eventInfo) {
           // handle the socket connection
           handleSocket(req.url, eventInfo, io);
