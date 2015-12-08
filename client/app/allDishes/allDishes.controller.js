@@ -49,6 +49,7 @@
       });
       return usernames.length === 1 ? usernames[0] : usernames.join(', ');
     };
+
     self.isOnDish = function(dish_id, user_id) {
       var result = false;
       $scope.data.dishes.forEach(function(dish) {
@@ -62,6 +63,7 @@
       });
       return result;
     };
+
     self.shareDish = function(dish_id, user_id) { //nclick must access dish_id** figure out how to provide these
       if (!self.isOnDish(dish_id, user_id)) {
         socketFactory.emit('shareDish', { // server needs .on(shareDish) that adds user to Dish

@@ -7,10 +7,8 @@
   appFactory.$inject = ['socketFactory'];
 
   function appFactory(socketFactory) {
-
+    
     var services = {
-      eventData: [],
-      dishes: [],
       initListeners: initListeners
     };
 
@@ -19,6 +17,11 @@
     function initListeners() {
       console.log("eventlisteners added");
 
+      socketFactory.on('join', function(data) {
+        console.log("receiving data for join", data);
+        services.data = data;
+      });
+
       socketFactory.on('dishAdded', function(data) {
         console.log("---->heard 'dishAdded' in dataFactory" );
         console.log("dishAdded data is: ", data); // data format: {cost: 3, name: "rice", user_id: "29319"}
@@ -26,6 +29,7 @@
         // eventData.whereverDishesare.push(data);
         // now, either pages will have two way data binding with the above data, OR will need to broadcast with scope
       });
+
     }
   }
 
