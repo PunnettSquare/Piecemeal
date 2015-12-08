@@ -4,14 +4,21 @@
   angular.module('Piecemeal')
     .controller('AddDishCtrl', AddDishCtrl);
 
-  AddDishCtrl.$inject = ['socketFactory'];
+  AddDishCtrl.$inject = ['socketFactory', '$location', '$rootScope'];
 
-  function AddDishCtrl(socketFactory) {
+  function AddDishCtrl(socketFactory, $location, $rootScope) {
     var self = this;
 
+    self.activate = function() {
+      socketFactory.init();
+      socketFactory.on('join', function(data) {
+        console.log("Joined Add Dish page, receiving data:", data);
+      });
+      self.calcUserCurrentTotal();
+    };
 
     self.addDish = function(dish, cost) {
-      console.log('dish, cost =', dish, cost);
+      console.log("Emitting dish", dish, "with cost", cost);
       socketFactory.emit('addDish', {
         cost: cost,
         name: dish
@@ -19,6 +26,20 @@
       self.amount = 0;
       self.dishName = '';
     };
+
+    self.goToAllDishes = function() {
+      $location.path('/' + window.sessionStorage.code + '/allDishes');
+    };
+
+    self.calcUserCurrentTotal = function() {
+      self.userTotal = _.filter($rootScope.data.users, 'username', window.sessionStorage.username)[0].dishes.reduce(function(acc, current) {
+        return acc + (current.cost / current.users.length);
+      }, 0);
+      console.log('self.userTotal =', self.userTotal);
+    };
+
+    self.activate();
+
 
     // db queries
     // input: username + id + event
