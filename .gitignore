@@ -2,6 +2,6 @@ node_modules/
 bower_components/
 *.log
 dbInfo.js
-
+venmoApiKeys.js
 build/
 dist/

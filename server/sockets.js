@@ -34,7 +34,6 @@ var connect = function(eventUrl, eventInfo, io) {
     socket.on('shareDish', function (data) {
       console.log("User is sharing dish");
       socket.broadcast.emit('dishShared', {user_id: data.user_id, dish_id: data.dish_id});
-      console.log(data);
       util.shareDish(db, data.user_id, data.dish_id)
       .catch(function(err) {
         throw err;

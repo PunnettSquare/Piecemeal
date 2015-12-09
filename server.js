@@ -18,8 +18,9 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json());
 app.use(morgan('dev'));
-
-
+var oauthRouter = express.Router();
+app.use('/auth', oauthRouter)
+require('./server/OAuth/oauthRouter')(oauthRouter);
 
 // ## Routes
 
@@ -78,8 +79,8 @@ app.get('/*', function(req, res) {
   util.findEvent(db, code)
     .then(function(event_id) {
       // retrieve the state of the event to send to socket
-      // return util.gatherState(db, 1, code) // dummy data
-        return util.gatherState(db, event_id[0].id, code) // real data
+      return util.gatherState(db, 1, code) // dummy data
+        // return util.gatherState(db, event_id[0].id, code) // real data
         .then(function(eventInfo) {
           // handle the socket connection
           handleSocket(req.url, eventInfo, io);

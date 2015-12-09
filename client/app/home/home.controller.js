@@ -23,7 +23,6 @@
               isHost: true
             });
             $location.path('/' + data.code + '/allDishes');
-            window.location.reload(true);
           })
           .catch(function(err) {
             console.log("Error in creating event.");
@@ -42,7 +41,6 @@
               event_id: userInfo.event_id
             });
             $location.path('/' + code + '/allDishes');
-            window.location.reload(true);
           })
           .catch(function(err) {
             console.log("Error: Could not send session user info.");
