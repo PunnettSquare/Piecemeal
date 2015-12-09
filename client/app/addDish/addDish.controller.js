@@ -21,12 +21,15 @@
       console.log("Emitting dish", dish, "with cost", cost);
       socketFactory.emit('addDish', {
         cost: cost,
-        name: dish,
+        name: _.capitalize(dish),
         user_id: window.sessionStorage.user_id,
         event_id: window.sessionStorage.event_id
       });
       self.amount = 0;
       self.dishName = '';
+      // PROBLEM: When dish is added, "your total so far" is not automatically updated. Can be fixed via:
+      // - fix sockets so data is updated real time, rather than attaching to a static self.data
+      // - can continuously add to self.userTotal, but we should *really* avoid this because if someone decides to share the dish then our calculation will be out of date (especially if someone clicks share while the other person is still on addDish page - we want the numbers to update themselves automatically)
     };
 
     self.goToAllDishes = function() {

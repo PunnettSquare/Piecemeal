@@ -14,11 +14,11 @@
     self.setSessionUser = function(username, isHost, code) {
       if (isHost) {
         homeFactory.createEvent({
-            username: username
+            username: _.capitalize(username)
           })
           .then(function(data) {
             _.assign(window.sessionStorage, {
-              username: username,
+              username: _.capitalize(username),
               code: data.code,
               isHost: false
             });
@@ -32,7 +32,7 @@
         // code = code || 'testRoom'; // only for mock data
         homeFactory.sendSessionUser(
             _.assign(window.sessionStorage, {
-              username: username,
+              username: _.capitalize(username),
               code: code,
               isHost: false
             }))
