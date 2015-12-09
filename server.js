@@ -64,6 +64,9 @@ app.post('/newUser', function(req, res) {
         user_id: guestId[0],
         event_id: event_id
       });
+    })
+    .catch(function(err) {
+      res.send(500, err);
     });
 });
 

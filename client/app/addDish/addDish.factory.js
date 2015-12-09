@@ -4,17 +4,22 @@
   angular.module('Piecemeal')
     .factory('addDishFactory', addDishFactory);
 
-  addDishFactory.$inject = [];
+  addDishFactory.$inject = ['$rootScope'];
 
-  function addDishFactory() {
+  function addDishFactory($rootScope) {
     var services = {
-      addDish: addDish
+      calculateRunningTotal: calculateRunningTotal
     };
 
     return services;
 
-    function addDish() {
-
+    function calculateRunningTotal() {
+      return _.filter($rootScope.data.dishes, function(obj, key) {
+          return _.contains(obj.users, parseInt(window.sessionStorage.user_id));
+        })
+        .reduce(function(acc, current) {
+          return acc + (current.cost / current.users.length);
+        }, 0);
     }
   }
 
