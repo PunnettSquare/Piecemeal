@@ -23,7 +23,8 @@
         cost: cost,
         name: dish,
         user_id: window.sessionStorage.user_id,
-        event_id: window.sessionStorage.event_id
+        event_id: window.sessionStorage.event_id,
+        users: [window.sessionStorage.user_id]
       });
       self.amount = 0;
       self.dishName = '';

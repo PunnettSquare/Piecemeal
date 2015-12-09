@@ -37,7 +37,7 @@
       // {code: "PHmBlkxjACGOECgHae2ux8AkapXyVp0s", event_id: "10", isHost: "true", user_id: "10", username: "asdf"}
       window.sessionStorage.setItem('event_id', self.data.event_id);
       if (appFactory.data.users.length === 1) {
-        window.sessionStorage.setItem('user_id', data.users[0].id);
+        window.sessionStorage.setItem('user_id', self.data.users[0].id);
       }
     });
 
@@ -48,6 +48,7 @@
     allDishesFactory.getEventInfo();
 
     self.getId = function(arrayOfIds, eventInfo) {
+      console.log("----->arrayOfIds: ", arrayOfIds); 
       var usernames = arrayOfIds.map(function(id) {
         var result;
         eventInfo.users.forEach(function(user) {

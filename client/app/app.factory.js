@@ -26,15 +26,19 @@
       socketFactory.on('joined', function(data) {
         console.log("heard 'joined' in appFactory. data: ", data);
         services.data = data;
-        console.log("services.data = ", services.data); 
+        console.log("services.data = ", services.data);
         $rootScope.$broadcast('joined');
       });
 
       socketFactory.on('dishAdded', function(data) {
         console.log("heard 'dishAdded' in appFactory" );
-        console.log("dishAdded data is: ", data); // data format: {cost: 3, name: "rice", user_id: "29319"}
-        // services.dishes.push(data);
-        // eventData.whereverDishesare.push(data);
+        console.log("dishAdded data is: ", data); // data format: {cost: 3, name: "rice", user_id: "29319", event_id: 1, users: ["29319"]}
+        for (var i = 0; i < services.data.users.length; i++) {
+          if (services.data.users[i].id == data.user_id) {
+            services.data.users[i].dishes.push(data);
+          }
+        }
+        services.data.dishes.push(data);
         // now, either pages will have two way data binding with the above data, OR will need to broadcast with scope
       });
 
