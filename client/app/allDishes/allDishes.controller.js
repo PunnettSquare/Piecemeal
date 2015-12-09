@@ -25,7 +25,7 @@
       self.data = data;
       // appFactory.data = data;
       if (data.users.length === 1) {
-        window.sessionStorage.setItem('user_id', data.users[0].id);
+        window.sessionStorage.setItem('user_id', data.user_id);
       }
     });
 
