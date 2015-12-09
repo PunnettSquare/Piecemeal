@@ -42,8 +42,8 @@
     };
 
     self.calcUserCurrentTotal = function() {
-      self.userTotal = addDishFactory.calculateRunningTotal();
-      console.log('self.userTotal =', self.userTotal);
+      // self.userTotal = addDishFactory.calculateRunningTotal();
+      // console.log('self.userTotal =', self.userTotal);
     };
 
     self.activate();

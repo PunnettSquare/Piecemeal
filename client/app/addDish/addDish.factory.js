@@ -14,12 +14,12 @@
     return services;
 
     function calculateRunningTotal() {
-      return _.filter($rootScope.data.dishes, function(obj, key) {
-          return _.contains(obj.users, parseInt(window.sessionStorage.user_id));
-        })
-        .reduce(function(acc, current) {
-          return acc + (current.cost / current.users.length);
-        }, 0);
+    //   return _.filter($rootScope.data.dishes, function(obj, key) {
+    //       return _.contains(obj.users, parseInt(window.sessionStorage.user_id));
+    //     })
+    //     .reduce(function(acc, current) {
+    //       return acc + (current.cost / current.users.length);
+    //     }, 0);
     }
   }
 
