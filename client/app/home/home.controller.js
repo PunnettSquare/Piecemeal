@@ -48,14 +48,7 @@
             console.error(err);
             self.isError = true;
           });
-
       }
     };
-
-    // function queryFail(err) {
-    //   console.error('Query Failed',
-    //     err.data.replace(/<br>/g, '\n').replace(/ &nbsp;/g, '>'),
-    //     err);
-    // }
   }
 })();

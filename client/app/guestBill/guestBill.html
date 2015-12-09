@@ -15,5 +15,21 @@
     <p ng-show="!dish.isShared">
       <span>Shared by yourself only</span>
     </p>
-  </ul>
+  </div>
+
+  <br><br>
+
+  <div ng-show="guestBill.billSent">
+    <h2>Your Subtotal</h2>
+    <p>{{guestBill.guestSubtotal | currency}}</p>
+    <h3>Tax</h3>
+    <p>{{guestBill.guestTax | currency}}</p>
+    <small>You were charged {{ guestBill.billData.taxPercent }}% for tax.</small>
+    <h3>Tip</h3>
+    <p>{{guestBill.guestTip | currency}}</p>
+    <small>Your host chose {{ guestBill.billData.tipPercent }}% for tip.</small>
+    <h2>Your Total</h2>
+    <p>{{guestBill.guestGrandTotal | currency}}</p>
+    <small>(Dinner Grand Total: {{  guestBill.billData.grandTotal | currency}})</small>
+  </div>
 </div>

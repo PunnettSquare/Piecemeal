@@ -64,6 +64,7 @@
       if (!self.isOnDish(users, user_id)) {
         socketFactory.emit('shareDish', {
           dish_id: dish_id,
+          user_id: user_id
         });
         appFactory.shareDish(dish_id, user_id);
       }

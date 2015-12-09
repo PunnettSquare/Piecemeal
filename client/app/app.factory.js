@@ -90,6 +90,12 @@
         unshareDish(data.dish_id, data.user_id);
       });
 
+      socket.on('billsSentToGuests', function(data) {
+        services.billData = data;
+        $rootScope.$broadcast('billsSentToGuests');
+        $rootScope.$apply();
+      });
+
     }
   }
 

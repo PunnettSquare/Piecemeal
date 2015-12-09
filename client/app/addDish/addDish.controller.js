@@ -14,7 +14,6 @@
 
     // When appFactory is updated, $rootScope is used as a bus to emit to user's allDishes controller $scope
     self.data = appFactory.data;
-    console.log('self.data =', self.data);
 
     self.goToAllDishes = function() {
       $location.path('/' + window.sessionStorage.code + '/allDishes');
@@ -44,7 +43,6 @@
 
     self.calcUserCurrentTotal = function(data) {
       self.userTotal = addDishFactory.calculateRunningTotal(data);
-      console.log('self.userTotal =', self.userTotal);
     };
     self.calcUserCurrentTotal(self.data);
   }
