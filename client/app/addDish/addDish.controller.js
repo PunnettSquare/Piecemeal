@@ -4,17 +4,28 @@
   angular.module('Piecemeal')
     .controller('AddDishCtrl', AddDishCtrl);
 
-  AddDishCtrl.$inject = ['socketFactory', 'appFactory', '$location','addDishFactory'];
+  AddDishCtrl.$inject = ['socketFactory', 'addDishFactory', '$location', 'appFactory', '$scope'];
 
-  function AddDishCtrl(socketFactory, appFactory, $location, addDishFactory) {
+  function AddDishCtrl(socketFactory, addDishFactory, $location, appFactory, $scope) {
     var self = this;
 
-    self.activate = function() {
-      socketFactory.init();
-      socketFactory.on('joined', function(data) {
-        console.log("Joined Add Dish page, receiving data:", data);
-      });
-      self.calcUserCurrentTotal();
+    socketFactory.init();
+    appFactory.initListeners();
+
+    // When appFactory is updated, $rootScope is used as a bus to emit to user's allDishes controller $scope
+    self.data = "";
+    $scope.$on('joined', function() { // $on does not work with `self`
+      self.data = appFactory.data;
+      console.log("Joined the All Dishes room.");
+      console.log('AppFactory Data = ', self.data);
+    });
+
+    self.goToAllDishes = function() {
+      $location.path('/' + window.sessionStorage.code + '/allDishes');
+    };
+
+    self.goToGuestBill = function() {
+      $location.path('/' + window.sessionStorage.code + '/guestBill');
     };
 
     self.addDish = function(name, cost) {
@@ -36,21 +47,11 @@
       // - can continuously add to self.userTotal, but we should *really* avoid this because if someone decides to share the dish then our calculation will be out of date (especially if someone clicks share while the other person is still on addDish page - we want the numbers to update themselves automatically)
     };
 
-    self.goToAllDishes = function() {
-      $location.path('/' + window.sessionStorage.code + '/allDishes');
+    self.calcUserCurrentTotal = function(data) {
+      self.userTotal = addDishFactory.calculateRunningTotal(data);
+      console.log('self.userTotal =', self.userTotal);
     };
-
-    self.goToGuestBill = function() {
-      $location.path('/' + window.sessionStorage.code + '/guestBill');
-    };
-
-    self.calcUserCurrentTotal = function() {
-      // self.userTotal = addDishFactory.calculateRunningTotal();
-      // console.log('self.userTotal =', self.userTotal);
-    };
-
-    self.activate();
-
+    self.calcUserCurrentTotal(self.data);
   }
 
 })();

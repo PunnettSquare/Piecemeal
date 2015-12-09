@@ -17,10 +17,12 @@
 
     function getEventInfo(user_id) {
       return $http({
-          method: 'POST',
-          url: '/' + window.sessionStorage.code,
-          data: {user_id: user_id}
-        })
+        method: 'POST',
+        url: '/' + window.sessionStorage.code,
+        data: {
+          user_id: user_id
+        }
+      });
     }
   }
 })();

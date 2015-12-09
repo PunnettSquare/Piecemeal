@@ -4,9 +4,9 @@
   angular.module('Piecemeal')
     .controller('AllDishesCtrl', AllDishesCtrl);
 
-  AllDishesCtrl.$inject = ['socketFactory', 'allDishesFactory', '$location', '$window', 'appFactory', '$rootScope', '$scope'];
+  AllDishesCtrl.$inject = ['socketFactory', 'allDishesFactory', '$location', 'appFactory', '$scope'];
 
-  function AllDishesCtrl(socketFactory, allDishesFactory, $location, $window, appFactory, $rootScope, $scope) {
+  function AllDishesCtrl(socketFactory, allDishesFactory, $location, appFactory, $scope) {
 
     var self = this;
 
@@ -21,7 +21,7 @@
 
     $scope.$on('joined', function() { //$on does not work with `self`
       self.data = appFactory.data;
-      console.log('AppFactory Data = ', self.data);
+      console.log("Joined the All Dishes room.");
 
       window.sessionStorage.setItem('event_id', self.data.event_id);
       if (appFactory.data.users.length === 1) {

@@ -4,12 +4,18 @@
   angular.module('Piecemeal')
     .controller('GuestBillCtrl', GuestBillCtrl);
 
-  GuestBillCtrl.$inject = ['socketFactory', '$rootScope'];
+  GuestBillCtrl.$inject = ['socketFactory', '$scope'];
 
-  function GuestBillCtrl(socketFactory, $rootScope) {
+  function GuestBillCtrl(socketFactory, $scope) {
     var self = this;
 
     socketFactory.init();
+
+    $scope.$on('joined', function() { // $on does not work with `self`
+      console.log("Joined the Guest Bill Room.");
+      self.data = appFactory.data;
+      console.log('AppFactory Data = ', self.data);
+    });
 
     self.goToAllDishes = function() {
       $location.path('/' + window.sessionStorage.code + '/allDishes');
@@ -18,28 +24,28 @@
     self.username = window.sessionStorage.username;
     self.user_id = parseInt(window.sessionStorage.user_id);
 
-    // self.guestDishes = _.each(
-    //   _.filter($rootScope.data.dishes,
-    //     function(obj, key) {
-    //       return _.contains(obj.users, self.user_id);
-    //     }),
-    //   function(obj, key) {
-    //     obj.indivCost = obj.cost / obj.users.length;
-    //     obj.isShared = (obj.users.length === 1) ? false : true;
-    //     obj.otherSharedIds = _.filter(obj.users, function(id) {
-    //       return id !== self.user_id;
-    //     });
-    //     obj.otherSharedUsers = _.map(obj.otherSharedIds, function(id) {
-    //       var index = _.findIndex($rootScope.data.users, {
-    //         'id': id
-    //       });
-    //       return {
-    //         username: $rootScope.data.users[index].username,
-    //         user_id: $rootScope.data.users[index].id,
-    //         isHost: $rootScope.data.users[index].host
-    //       };
-    //     });
-    //   });
+    self.guestDishes = _.each(
+      _.filter(self.data.dishes,
+        function(obj, key) {
+          return _.contains(obj.users, self.user_id);
+        }),
+      function(obj, key) {
+        obj.indivCost = obj.cost / obj.users.length;
+        obj.isShared = (obj.users.length === 1) ? false : true;
+        obj.otherSharedIds = _.filter(obj.users, function(id) {
+          return id !== self.user_id;
+        });
+        obj.otherSharedUsers = _.map(obj.otherSharedIds, function(id) {
+          var index = _.findIndex(self.data.users, {
+            'id': id
+          });
+          return {
+            username: self.data.users[index].username,
+            user_id: self.data.users[index].id,
+            isHost: self.data.users[index].host
+          };
+        });
+      });
   }
 
 })();

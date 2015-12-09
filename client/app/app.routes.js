@@ -80,11 +80,13 @@
           }
         },
         resolve: {
-          // refresh: function() {
-          //   $state.reload();
-          // }
+          getEventInfo: ['$http', function($http) {
+            return $http({
+              method: 'GET',
+              url: '/' + window.sessionStorage.code
+            });
+          }]
         }
-
       })
       .state('event.guestBill', {
         url: '/guestBill',
