@@ -17,7 +17,8 @@
     appFactory.initListeners();
 
     // When appFactory is updated, $rootScope is used as a bus to emit to user's allDishes controller $scope
-    self.data = "";
+    self.data = appFactory.data;
+
     $scope.$on('joined', function () { //$on does not work with `self`
       self.data = appFactory.data;
       console.log('AllDishesCtrl self.data = ', self.data);
