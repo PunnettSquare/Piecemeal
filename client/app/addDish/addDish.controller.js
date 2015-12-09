@@ -21,7 +21,7 @@
       console.log("Emitting dish", dish, "with cost", cost);
       socketFactory.emit('addDish', {
         cost: cost,
-        name: _.capitalize(dish),
+        name: dish,
         user_id: window.sessionStorage.user_id,
         event_id: window.sessionStorage.event_id
       });

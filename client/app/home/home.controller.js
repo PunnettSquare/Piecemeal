@@ -14,13 +14,13 @@
     self.setSessionUser = function(username, isHost, code) {
       if (isHost) {
         homeFactory.createEvent({
-            username: _.capitalize(username)
+            username: username
           })
           .then(function(data) {
             _.assign(window.sessionStorage, {
-              username: _.capitalize(username),
+              username: username,
               code: data.code,
-              isHost: false
+              isHost: true
             });
             $location.path('/' + data.code + '/allDishes');
             window.location.reload(true);
@@ -32,7 +32,7 @@
         // code = code || 'testRoom'; // only for mock data
         homeFactory.sendSessionUser(
             _.assign(window.sessionStorage, {
-              username: _.capitalize(username),
+              username: username,
               code: code,
               isHost: false
             }))
