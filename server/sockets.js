@@ -17,8 +17,7 @@ var connect = function(eventUrl, eventInfo, io) {
     socket.on('addDish', function(data) {
       console.log("AddDish event heard from the client!", data);
 
-      // TELL JACKSON: Only takes in round numbers for cost.
-      util.createDish(db, data.name, Math.round(data.cost), parseInt(data.user_id), parseInt(data.event_id))
+      util.createDish(db, data.name, Number(data.cost), parseInt(data.user_id), parseInt(data.event_id))
       .catch(function(err) {
         throw err;
       });
