@@ -66,7 +66,6 @@ app.post('/newUser', function(req, res) {
       });
     })
     .catch(function(err) {
-      console.log('Cannot find event.');
       res.send(500, err);
     });
 });

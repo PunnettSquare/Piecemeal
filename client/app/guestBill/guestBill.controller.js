@@ -40,7 +40,6 @@
           };
         });
       });
-    console.log('self.guestDishes =', self.guestDishes);
   }
 
 })();
