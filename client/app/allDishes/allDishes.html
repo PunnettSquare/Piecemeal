@@ -2,14 +2,17 @@
 
   <button ng-click="allDishes.goToAddDish()">Add Dish</button>
   <h1>All Dishes</h1>
-
+  <p>Bill code: {{allDishes.data.code}}</p>
   <div ng-repeat="dish in allDishes.data.dishes">
+    <span>Testing dish.users to see if undefined: {{dish.users}}</span>
     <span>{{dish.name}} {{dish.cost}} {{ allDishes.getId(dish.users, allDishes.data) }}</span>
       <button ng-click="allDishes.shareDish(dish.dish_id, allDishes.user_id)">Share</button>
       <button ng-click="allDishes.unshareDish(dish.dish_id, allDishes.user_id)">Unshare</button>
   </div>
 
-  Test self.dishes: {{allDishes.dishes}}
+  <div> Test allDishes.dishes: {{allDishes.data.dishes}}</div>
+  <div>Test allDishes.data.users: {{allDishes.data.users}}</div>
+  <div>Test allDishes.data: {{allDishes.data}}</div>
 <!--   <div>Your total so far: {{allDishes.userTotal}}</div>
   <div>Group total so far: {{allDishes.groupTotal}}</div> -->
 

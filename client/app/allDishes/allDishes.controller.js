@@ -4,9 +4,9 @@
   angular.module('Piecemeal')
     .controller('AllDishesCtrl', AllDishesCtrl);
 
-  AllDishesCtrl.$inject = ['socketFactory', 'allDishesFactory', '$location', '$window', 'appFactory', '$rootScope'];
+  AllDishesCtrl.$inject = ['socketFactory', 'allDishesFactory', '$location', '$window', 'appFactory', '$rootScope', '$scope'];
 
-  function AllDishesCtrl(socketFactory, allDishesFactory, $location, $window, appFactory, $rootScope) {
+  function AllDishesCtrl(socketFactory, allDishesFactory, $location, $window, appFactory, $rootScope, $scope) {
 
     var self = this;
 
@@ -16,17 +16,16 @@
     socketFactory.init();
     appFactory.initListeners();
 
-    // window.sessionStorage should have: username, user_id, event code, event_id, and isHost, i.e.:
-    // {code: "PHmBlkxjACGOECgHae2ux8AkapXyVp0s", event_id: "10", isHost: "true", user_id: "10", username: "asdf"}
-    socketFactory.on('joined', function(data) {
-      console.log("Receiving all event info data & attaching to rootScope", data);
-      window.sessionStorage.setItem('event_id', data.event_id);
-      $rootScope.data = data;
-      self.data = data;
-      // appFactory.data = data;
-      console.log('$rootScope.data =', $rootScope.data);
-      if (data.users.length === 1) {
-        window.sessionStorage.setItem('user_id', data.user_id);
+    // When appFactory is updated, $rootScope is used as a bus to emit to user's allDishes controller $scope
+    self.data = "";
+    $scope.$on('joined', function () { //$on does not work with `self`
+      self.data = appFactory.data;
+      console.log('AllDishesCtrl self.data = ', self.data);
+      // window.sessionStorage should have: username, user_id, event code, event_id, and isHost, i.e.:
+      // {code: "PHmBlkxjACGOECgHae2ux8AkapXyVp0s", event_id: "10", isHost: "true", user_id: "10", username: "asdf"}
+      window.sessionStorage.setItem('event_id', self.data.event_id);
+      if (appFactory.data.users.length === 1) {
+        window.sessionStorage.setItem('user_id', self.data.users[0].id);
       }
     });
 
@@ -71,12 +70,14 @@
           dish_id: dish_id,
           user_id: user_id // ** ask Michelle how to get user from session
         });
-        // update this dish's shared users in self.listOfDishes to include user
-        self.data.dishes.forEach(function(dish) {
-          if (dish.dish_id === dish_id) {
-            dish.users.push(user_id);
-          }
-        });
+
+        // Below code is in the process of being moved to appFactory
+
+        // self.data.dishes.forEach(function(dish) { 
+        //   if (dish.dish_id === dish_id) {
+        //     dish.users.push(user_id);
+        //   }
+        // });
       }
     };
 
@@ -87,12 +88,13 @@
           user_id: user_id
         });
 
-        // update this dish's shared users in self.listOfDishes to remove user
-        self.data.dishes.forEach(function(dish) {
-          if (dish.dish_id === dish_id) {
-            dish.users.splice(dish.users.indexOf(user_id), 1);
-          }
-        });
+        // Below code is in the process of being moved to appFactory
+
+        // self.data.dishes.forEach(function(dish) {
+        //   if (dish.dish_id === dish_id) {
+        //     dish.users.splice(dish.users.indexOf(user_id), 1);
+        //   }
+        // });
       }
     };
 

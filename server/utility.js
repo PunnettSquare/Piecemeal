@@ -80,11 +80,11 @@ module.exports = {
             usersDishesArrays.forEach(function(userDishesArray) {
               _.each(state.users, function(userObj, index, list) {
                 var username = userObj.username;
+                if (list[index].dishes === undefined) {
+                  list[index].dishes = [];
+                }
                 userDishesArray.forEach(function(dishObj) {
                   if (username === dishObj.username) {
-                    if (list[index].dishes === undefined) {
-                      list[index].dishes = [];
-                    }
                     list[index].dishes.push(dishObj);
                   }
                 });

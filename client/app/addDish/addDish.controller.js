@@ -23,7 +23,8 @@
         cost: cost,
         name: dish,
         user_id: window.sessionStorage.user_id,
-        event_id: window.sessionStorage.event_id
+        event_id: window.sessionStorage.event_id,
+        users: [window.sessionStorage.user_id]
       });
       self.amount = 0;
       self.dishName = '';
@@ -41,8 +42,8 @@
     };
 
     self.calcUserCurrentTotal = function() {
-      self.userTotal = addDishFactory.calculateRunningTotal();
-      console.log('self.userTotal =', self.userTotal);
+      // self.userTotal = addDishFactory.calculateRunningTotal();
+      // console.log('self.userTotal =', self.userTotal);
     };
 
     self.activate();
