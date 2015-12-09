@@ -19,11 +19,10 @@
     }
     // When appFactory is updated, $rootScope is used as a bus to emit to user's allDishes controller $scope
 
-    $scope.$on('joined', function () { //$on does not work with `self`
+    $scope.$on('joined', function() { //$on does not work with `self`
       self.data = appFactory.data;
-      console.log('AllDishesCtrl self.data = ', self.data);
-      // window.sessionStorage should have: username, user_id, event code, event_id, and isHost, i.e.:
-      // {code: "PHmBlkxjACGOECgHae2ux8AkapXyVp0s", event_id: "10", isHost: "true", user_id: "10", username: "asdf"}
+      console.log('AppFactory Data = ', self.data);
+
       window.sessionStorage.setItem('event_id', self.data.event_id);
       if (appFactory.data.users.length === 1) {
         window.sessionStorage.setItem('user_id', self.data.users[0].id);
@@ -63,9 +62,8 @@
 
     self.shareDish = function(dish_id, user_id, users) {
       if (!self.isOnDish(users, user_id)) {
-        socketFactory.emit('shareDish', { 
+        socketFactory.emit('shareDish', {
           dish_id: dish_id,
-          user_id: user_id 
         });
         appFactory.shareDish(dish_id, user_id);
       }
@@ -73,7 +71,7 @@
 
     self.unshareDish = function(dish_id, user_id, users) {
       if (self.isOnDish(users, user_id)) {
-        socketFactory.emit('unshareDish', { 
+        socketFactory.emit('unshareDish', {
           dish_id: dish_id,
           user_id: user_id
         });

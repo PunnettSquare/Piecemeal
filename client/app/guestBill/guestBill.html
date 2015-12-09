@@ -2,13 +2,13 @@
   <h1>{{guestBill.username}}'s Total Bill</h1>
 
   <div ng-repeat="dish in guestBill.guestDishes">
-    <h2>{{dish.name}}</h2>
+    <h2>{{_.capitalize(dish.name)}}</h2>
     <p>Your portion: {{dish.indivCost | currency }}</p>
     <small>Total Cost</small>
     <span><small>{{dish.cost | currency }}</small></span>
     <h3>You Shared This With:</h3>
     <p ng-show="dish.isShared" ng-repeat="person in dish.otherSharedUsers">
-      <span>{{person.username }}</span>
+      <span>{{ _.capitalize(person.username) }}</span>
     </p>
     <p ng-show="!dish.isShared">
       <span>Shared by yourself only</span>
