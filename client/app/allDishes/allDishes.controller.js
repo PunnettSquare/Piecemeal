@@ -27,7 +27,7 @@
       if (appFactory.data.users.length === 1) {
         window.sessionStorage.setItem('user_id', self.data.users[0].id);
       }
-    });
+    })
 
     self.goToAddDish = function() {
       $location.path('/' + window.sessionStorage.code + '/addDish');
