@@ -16,18 +16,6 @@
     socketFactory.init();
     appFactory.initListeners();
 
-    // socketFactory.on('joined', function(data) {
-    //   console.log("Receiving all event info data & attaching to rootScope", data);
-    //   window.sessionStorage.setItem('event_id', data.event_id);
-    //   $rootScope.data = data;
-    //   self.data = data;
-    //   // appFactory.data = data;
-    //   console.log('$rootScope.data =', $rootScope.data);
-    //   if (data.users.length === 1) {
-    //     window.sessionStorage.setItem('user_id', data.user_id);
-    //   }
-    // });
-
     // When appFactory is updated, $rootScope is used as a bus to emit to user's allDishes controller $scope
     self.data = "";
     $scope.$on('joined', function () { //$on does not work with `self`
@@ -48,7 +36,6 @@
     allDishesFactory.getEventInfo();
 
     self.getId = function(arrayOfIds, eventInfo) {
-      console.log("----->arrayOfIds: ", arrayOfIds); 
       var usernames = arrayOfIds.map(function(id) {
         var result;
         eventInfo.users.forEach(function(user) {
@@ -83,12 +70,14 @@
           dish_id: dish_id,
           user_id: user_id // ** ask Michelle how to get user from session
         });
-        // update this dish's shared users in self.listOfDishes to include user
-        self.data.dishes.forEach(function(dish) {
-          if (dish.dish_id === dish_id) {
-            dish.users.push(user_id);
-          }
-        });
+
+        // Below code is in the process of being moved to appFactory
+
+        // self.data.dishes.forEach(function(dish) { 
+        //   if (dish.dish_id === dish_id) {
+        //     dish.users.push(user_id);
+        //   }
+        // });
       }
     };
 
@@ -99,12 +88,13 @@
           user_id: user_id
         });
 
-        // update this dish's shared users in self.listOfDishes to remove user
-        self.data.dishes.forEach(function(dish) {
-          if (dish.dish_id === dish_id) {
-            dish.users.splice(dish.users.indexOf(user_id), 1);
-          }
-        });
+        // Below code is in the process of being moved to appFactory
+
+        // self.data.dishes.forEach(function(dish) {
+        //   if (dish.dish_id === dish_id) {
+        //     dish.users.splice(dish.users.indexOf(user_id), 1);
+        //   }
+        // });
       }
     };
 

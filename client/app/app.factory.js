@@ -44,20 +44,20 @@
 
       socketFactory.on('dishShared', function (data) {
         console.log("heard 'dishShared' in appFactory. data: ", data); // data format: {user_id: 24, dish_id: 14}
-        // services.data.dishes.forEach(function(dish) {
-        //   if (dish.dish_id === data.____.dish_id) { // fill in ___
-        //     dish.users.push(data.user_id);
-        //   }
-        // });
+        services.data.dishes.forEach(function(dish) {
+          if (dish.dish_id === data.dish_id) {
+            dish.users.push(data.user_id);
+          }
+        });
       });
 
       socketFactory.on('dishUnshared', function (data) {
         console.log("heard 'dishUnshared' in appFactory. data: ", data); // data format: 
-        // services.data.dishes.forEach(function(dish) {
-        //   if (dish.dish_id === data.______.dish_id) { // fill in ___
-        //     dish.users.splice(dish.users.indexOf(data.user_id), 1);
-        //   }
-        // });
+        services.data.dishes.forEach(function(dish) {
+          if (dish.dish_id === data.dish_id) {
+            dish.users.splice(dish.users.indexOf(data.user_id), 1);
+          }
+        });
       });
 
     }
