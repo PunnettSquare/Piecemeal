@@ -53,14 +53,19 @@ module.exports = function (app, io) {
     // query database for event id based on code
     util.findEvent(db, code)
       .then(function(event_id) {
-        // retrieve the state of the event to send to socket
-        return util.gatherState(db, 1, code) // dummy data
-          // return util.gatherState(db, event_id[0].id, code) // real data
+        //check for an event
+        if (event_id.length !== 0) {
+          return util.gatherState(db, event_id[0].id, code) // real data
           .then(function(eventInfo) {
             // handle the socket connection
             handleSocket(req.url, eventInfo, io);
             res.end();
           });
+        } else {
+          res.end();
+        }
+        // retrieve the state of the event to send to socket
+        // return util.gatherState(db, 1, code) // dummy data
       })
       .catch(function(err) {
         throw err;

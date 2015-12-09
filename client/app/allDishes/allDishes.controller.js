@@ -70,14 +70,11 @@
           dish_id: dish_id,
           user_id: user_id // ** ask Michelle how to get user from session
         });
-
-        // Below code is in the process of being moved to appFactory
-
-        // self.data.dishes.forEach(function(dish) { 
-        //   if (dish.dish_id === dish_id) {
-        //     dish.users.push(user_id);
-        //   }
-        // });
+        appFactory.data.dishes.forEach(function (dish) { 
+          if (dish.dish_id === dish_id) {
+            dish.users.push(user_id);
+          }
+        });
       }
     };
 
@@ -87,14 +84,11 @@
           dish_id: dish_id,
           user_id: user_id
         });
-
-        // Below code is in the process of being moved to appFactory
-
-        // self.data.dishes.forEach(function(dish) {
-        //   if (dish.dish_id === dish_id) {
-        //     dish.users.splice(dish.users.indexOf(user_id), 1);
-        //   }
-        // });
+        appFactory.data.dishes.forEach(function(dish) {
+          if (dish.dish_id === dish_id) {
+            dish.users.splice(dish.users.indexOf(user_id), 1);
+          }
+        });
       }
     };
 
