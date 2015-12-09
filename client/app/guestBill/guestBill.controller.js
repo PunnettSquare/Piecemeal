@@ -4,14 +4,19 @@
   angular.module('Piecemeal')
     .controller('GuestBillCtrl', GuestBillCtrl);
 
-  GuestBillCtrl.$inject = ['socketFactory', '$scope', 'appFactory'];
+  GuestBillCtrl.$inject = ['socketFactory', '$scope', 'appFactory', '$location'];
 
-  function GuestBillCtrl(socketFactory, $scope, appFactory) {
+  function GuestBillCtrl(socketFactory, $scope, appFactory, $location) {
     var self = this;
     self.data = appFactory.data;
+    self.isHost = window.sessionStorage.isHost;
 
     self.goToAllDishes = function() {
       $location.path('/' + window.sessionStorage.code + '/allDishes');
+    };
+
+    self.goToHostBill = function() {
+      $location.path('/' + window.sessionStorage.code + '/hostBill');
     };
 
     self.username = window.sessionStorage.username;

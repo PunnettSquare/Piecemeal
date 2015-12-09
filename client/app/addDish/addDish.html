@@ -17,7 +17,7 @@
 
     This dish costs:
     <span ng-show="dishForm.amount.$pristine">$0.00</span>
-    <span ng-show="dishForm.amount.$dirty" id="currency-default">{{addDish.amount | currency}}</span><br>
+    <span ng-show="dishForm.amount.$dirty" id="currency-default">{{ 0 + addDish.amount | currency}}</span><br>
 
 
     <input type="submit" ng-click="addDish.addDish(addDish.dishName, addDish.amount)">
