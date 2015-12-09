@@ -9,16 +9,12 @@
   function AddDishCtrl(socketFactory, addDishFactory, $location, appFactory, $scope) {
     var self = this;
 
-    socketFactory.init();
-    appFactory.initListeners();
+    // socketFactory.init();
+    // appFactory.initListeners();
 
     // When appFactory is updated, $rootScope is used as a bus to emit to user's allDishes controller $scope
-    self.data = "";
-    $scope.$on('joined', function() { // $on does not work with `self`
-      self.data = appFactory.data;
-      console.log("Joined the All Dishes room.");
-      console.log('AppFactory Data = ', self.data);
-    });
+    self.data = appFactory.data;
+    console.log('self.data =', self.data);
 
     self.goToAllDishes = function() {
       $location.path('/' + window.sessionStorage.code + '/allDishes');
@@ -36,9 +32,8 @@
         user_id: window.sessionStorage.user_id,
         event_id: window.sessionStorage.event_id,
         users: [window.sessionStorage.user_id]
-      }
+      };
       socketFactory.emit('addDish', dish);
-      console.log(appFactory.addDish)
       appFactory.addDish(dish);
       self.amount = 0;
       self.dishName = '';

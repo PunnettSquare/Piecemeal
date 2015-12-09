@@ -18,7 +18,7 @@
           return _.contains(obj.users, parseInt(window.sessionStorage.user_id));
         })
         .reduce(function(acc, current) {
-          return acc + (current.cost / current.users.length);
+          return acc + (Number(current.cost) / current.users.length);
         }, 0);
     }
   }

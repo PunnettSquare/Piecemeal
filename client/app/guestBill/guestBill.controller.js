@@ -4,18 +4,11 @@
   angular.module('Piecemeal')
     .controller('GuestBillCtrl', GuestBillCtrl);
 
-  GuestBillCtrl.$inject = ['socketFactory', '$scope'];
+  GuestBillCtrl.$inject = ['socketFactory', '$scope', 'appFactory'];
 
-  function GuestBillCtrl(socketFactory, $scope) {
+  function GuestBillCtrl(socketFactory, $scope, appFactory) {
     var self = this;
-
-    socketFactory.init();
-
-    $scope.$on('joined', function() { // $on does not work with `self`
-      console.log("Joined the Guest Bill Room.");
-      self.data = appFactory.data;
-      console.log('AppFactory Data = ', self.data);
-    });
+    self.data = appFactory.data;
 
     self.goToAllDishes = function() {
       $location.path('/' + window.sessionStorage.code + '/allDishes');
