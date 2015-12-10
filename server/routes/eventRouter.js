@@ -18,7 +18,8 @@ module.exports = function (app, io) {
       .then(function(dataObj) {
         res.send({
           code: code,
-          user_id: dataObj.user_id
+          user_id: dataObj.user_id[0],
+          event_id: dataObj.event_id[0]
         });
       })
       .catch(function(err) {

@@ -40,6 +40,7 @@ module.exports = {
   },
 
   createDish: function(db, dishName, cost, user_id, event_id) {
+    var dishId
     return db('dishes').insert({
         name: dishName,
         cost: cost,
@@ -47,10 +48,14 @@ module.exports = {
       })
       .returning('id')
       .then(function(dish_id) {
+        dishId = dish_id
         return db('usersJoinDishes').insert({
           user_id: user_id,
           dish_id: dish_id[0]
         }).returning('id');
+      })
+      .then(function () {
+        return {dish_id: dishId}
       });
   },
 
