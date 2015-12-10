@@ -34,22 +34,24 @@ var connect = function(eventUrl, eventInfo, io, userObj) {
       .catch(function(err) {
         throw err;
       });
-
     });
 
-    socket.on('shareDish', function (data) {
+    socket.on('shareDish', function(data) {
       console.log("User is sharing dish");
-      socket.broadcast.emit('dishShared', {user_id: parseInt(data.user_id), dish_id: parseInt(data.dish_id)});
-      util.shareDish(db, parseInt(data.user_id), parseInt(data.dish_id))
-      .catch(function(err) {
-        throw err;
+      socket.broadcast.emit('dishShared', {
+        user_id: data.user_id,
+        dish_id: data.dish_id
       });
+      util.shareDish(db, data.user_id, data.dish_id)
+        .catch(function(err) {
+          throw err;
+        });
     });
 
-    socket.on('unshareDish', function (data) {
+    socket.on('unshareDish', function(data) {
       console.log("User is no longer sharing dish");
-      socket.broadcast.emit('dishUnshared', {user_id: parseInt(data.user_id), dish_id: parseInt(data.dish_id)});
-      util.unshareDish(db, parseInt(data.user_id), parseInt(data.dish_id))
+      socket.broadcast.emit('dishUnshared', {user_id: data.user_id, dish_id: data.dish_id});
+      util.unshareDish(db, data.user_id, data.dish_id)
       .catch(function(err) {
         throw err;
       });

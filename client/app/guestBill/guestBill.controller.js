@@ -14,6 +14,7 @@
     self.userInfo.isHost = (window.sessionStorage.isHost === "false") ? false : true;
     self.billSent = false;
 
+    socketFactory.init();
     self.data = appFactory.data;
 
     // bill being sent while guest is on guestBill page for the first time
