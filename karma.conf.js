@@ -16,6 +16,7 @@ module.exports = function(config) {
     // list of files / patterns to load in the browser
     files: [
       // {pattern: "bower_components/angular-socket.io-mock.js", included: false},
+      // not included unless needed: jquery, angular-animate, angular-aria
       // load angular and angular-mocks.js first:
       'client/bower_components/angular/angular.js',
       'client/bower_components/angular-mocks/angular-mocks.js',
@@ -23,6 +24,7 @@ module.exports = function(config) {
       // 'client/bower_components/angular-socket-io/socket.js',
       'client/bower_components/angular-ui-router/**/*.js',
       'client/bower_components/angular-messages/angular-messages.js',
+      'client/bower_components/lodash/lodash.js',
       'client/app/app.module.js',
       'client/app/*.js',
       'client/app/**/*.js',

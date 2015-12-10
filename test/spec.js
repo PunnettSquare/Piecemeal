@@ -46,24 +46,24 @@ describe('AllDishesCtrl', function() {
     //   expect($scope.test).toEqual('test');
     // });
 
-    it("emits and receives messages", function(){
-      var testReceived = false;
+    // it("emits and receives messages", function(){
+    //   var testReceived = false;
 
-      socketMock.on("addDish", function(data){
-        testReceived = true;
-      });
+    //   socketMock.on("addDish", function(data){
+    //     testReceived = true;
+    //   });
 
-      socketMock.emit("addDish", {
-        cost: 10,
-        name: "Ramen",
-        user_id: window.sessionStorage.user_id,
-        event_id: window.sessionStorage.event_id,
-        users: [window.sessionStorage.user_id]
-      });
-      console.log("socketMock.events: ", socketMock.events); 
-      console.log("socketMock.emits: ", socketMock.emits); 
-      expect(testReceived).toBe(true);
-    });
+    //   socketMock.emit("addDish", {
+    //     cost: 10,
+    //     name: "Ramen",
+    //     user_id: window.sessionStorage.user_id,
+    //     event_id: window.sessionStorage.event_id,
+    //     users: [window.sessionStorage.user_id]
+    //   });
+    //   console.log("socketMock.events: ", socketMock.events); 
+    //   console.log("socketMock.emits: ", socketMock.emits); 
+    //   expect(testReceived).toBe(true);
+    // });
 
     // it("emits and receives messages", function(){
     //   var testReceived = false;
