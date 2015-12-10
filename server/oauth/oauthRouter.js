@@ -1,6 +1,6 @@
 var passport = require('passport');
 var VenmoStrategy = require('passport-venmo').Strategy;
-if (process.env) {
+if (process.env.PORT) {
   var venmoInfo = {id:process.env.VENMO_ID, secret: process.env.VENMO_SECRET}
 } else {
   var venmoInfo = require('../../venmoApiKeys');
