@@ -23,7 +23,7 @@ module.exports = function (app, express, io) {
 
   app.use('/', eventRouter);
 
-  require('../OAuth/oauthRouter')(oauthRouter);
+  require('../oauth/oauthRouter')(oauthRouter);
 
   require('../routes/eventRouter')(eventRouter, io);
 

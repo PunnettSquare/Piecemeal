@@ -8,5 +8,10 @@ module.exports = {
       password: 'admin',
       database: "piecemeal"
     }
+  },
+
+  prod: {
+    client: 'pg',
+    connection: process.env.DATABASE_URL
   }
 }
