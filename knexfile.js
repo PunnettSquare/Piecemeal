@@ -12,6 +12,6 @@ module.exports = {
 
   prod: {
     client: 'pg',
-    connection: HEROKU_POSTGRESQL_COLOR_URL
+    connection: process.env.DATABASE_URL
   }
 }
