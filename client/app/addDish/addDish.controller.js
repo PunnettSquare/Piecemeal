@@ -21,7 +21,7 @@
         users: [parseInt(window.sessionStorage.user_id)]
       };
       socketFactory.emit('addDish', dish);
-      appFactory.addDish(dish);
+      // appFactory.addDish(dish);
       self.userTotal += cost;
       self.amount = 0;
       self.dishName = '';
