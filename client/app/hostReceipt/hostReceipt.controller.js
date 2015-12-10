@@ -9,7 +9,7 @@
   function HostReceiptCtrl($scope) {
     var self = this;
 
-    self.test = "test";
+    self.test = "test"; //for spec tests, remove later
 
   }
 
