@@ -15,10 +15,10 @@
     self.addDish = function(name, cost) {
       var dish = {
         cost: cost,
-        name: _.map(name.split(" "), _.capitalize).join(" "),
-        user_id: parseInt(window.sessionStorage.user_id),
-        event_id: parseInt(window.sessionStorage.event_id),
-        users: [parseInt(window.sessionStorage.user_id)]
+        name: name,
+        user_id: window.sessionStorage.user_id,
+        event_id: window.sessionStorage.event_id,
+        users: [window.sessionStorage.user_id]
       };
       socketFactory.emit('addDish', dish);
       appFactory.addDish(dish);
