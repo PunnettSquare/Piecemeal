@@ -76,12 +76,12 @@
         services.data.users.push(userObj);
       });
       socketFactory.on('dishAdded', function(dish) {
-        console.log("dishAdded data is: ", dish);
+        // data format: {cost: 3, name: "rice", user_id: "29319", event_id: 1, users: ["29319"]}
         addDish(dish);
       });
 
       socketFactory.on('dishShared', function(data) {
-        console.log("heard 'dishShared' in appFactory. data: ", data);
+        // data format: {user_id: 24, dish_id: 14}
         shareDish(data.dish_id, data.user_id);
       });
 
