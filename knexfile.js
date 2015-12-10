@@ -11,7 +11,7 @@ module.exports = {
   },
 
   prod: {
-    client: 'postgresql',
+    client: 'pg',
     connection: HEROKU_POSTGRESQL_COLOR_URL
   }
 }
