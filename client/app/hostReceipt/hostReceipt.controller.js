@@ -4,11 +4,12 @@
   angular.module('Piecemeal')
     .controller('HostReceiptCtrl', HostReceiptCtrl);
 
-  HostReceiptCtrl.$inject = [];
+  HostReceiptCtrl.$inject = ['$scope'];
 
-  function HostReceiptCtrl() {
+  function HostReceiptCtrl($scope) {
     var self = this;
 
+    self.test = "test";
 
   }
 

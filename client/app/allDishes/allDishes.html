@@ -14,6 +14,7 @@
   </div> -->
 
   <div ng-repeat="dish in allDishes.data.dishes">
+
     <h3>{{ _.map(dish.name.split(" "), _.capitalize).join(" ") }}</h3>
     <p>Cost: {{dish.cost | currency }}</p>
     <span>
