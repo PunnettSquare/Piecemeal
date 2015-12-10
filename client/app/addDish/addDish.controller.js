@@ -14,14 +14,15 @@
 
     self.addDish = function(name, cost) {
       var dish = {
-        cost: cost,
+        cost: Number(cost),
         name: name,
-        user_id: parseInt(window.sessionStorage.user_id),
-        event_id: parseInt(window.sessionStorage.event_id),
-        users: [parseInt(window.sessionStorage.user_id)]
+        user_id: appFactory.getSessStorage('user_id'),
+        event_id: appFactory.getSessStorage('event_id'),
+        users: [appFactory.getSessStorage('user_id')]
       };
       socketFactory.emit('addDish', dish);
       // appFactory.addDish(dish);
+      // NEED TO GET DISH ID somehow.
       self.userTotal += cost;
       self.amount = 0;
       self.dishName = '';

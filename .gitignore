@@ -5,3 +5,4 @@ dbInfo.js
 venmoApiKeys.js
 build/
 dist/
+test/
