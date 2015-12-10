@@ -19,7 +19,6 @@
 
     self.addDish = function(name, cost) {
       console.log("Emitting dish", name, "with cost", cost);
-      console.log('window.sess =', window.sessionStorage.user_id);
       var dish = {
         cost: cost,
         name: name,
