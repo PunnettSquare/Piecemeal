@@ -99,7 +99,7 @@
     }
   }
 
-})();
+})()
 
 // Temporarily keep old version of socket setup for reference:
 
