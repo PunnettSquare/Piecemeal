@@ -275,5 +275,6 @@ module.exports = function(grunt) {
 
   // Default task
   grunt.registerTask('default', ['jshint', 'connect:livereload', 'open', 'watch']);
+  grunt.registerTask('test', ['wiredep', 'karma']);
   grunt.registerTask('build', ['injector:scripts', 'sass', 'injector:sass', 'wiredep']);
 };
