@@ -1,6 +1,10 @@
 var passport = require('passport');
 var VenmoStrategy = require('passport-venmo').Strategy;
-var venmoInfo = require('../../venmoApiKeys');
+if (process.env) {
+  var venmoInfo = {id:process.env.VENMO_ID, secret: process.env.VENMO_SECRET}
+} else {
+  var venmoInfo = require('../../venmoApiKeys');
+}
 var cookieParser = require('cookie-parser');
 var db = require('../../db/db');
 var util = require('../utility');
