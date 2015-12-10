@@ -22,12 +22,12 @@ var connect = function(eventUrl, eventInfo, io, userObj) {
     socket.on('addDish', function(data) {
       console.log("AddDish event heard from the client!", data);
       util.createDish(db, data.name, Number(data.cost), data.user_id, data.event_id)
-      .then(function(dish_id) {
+      .then(function(dishIdObj) {
         mealEvent.emit('dishAdded', {
           cost: data.cost,
           name: data.name,
           user_id: parseInt(data.user_id),
-          dish_id: dish_id,
+          dish_id: dishIdObj.dish_id[0],
           users: data.users
         });
       })
@@ -39,6 +39,9 @@ var connect = function(eventUrl, eventInfo, io, userObj) {
 
     socket.on('shareDish', function (data) {
       console.log("User is sharing dish");
+      console.log('data.dish_id =', data.dish_id);
+      console.log('data.user_id =', data.user_id);
+
       socket.broadcast.emit('dishShared', {user_id: parseInt(data.user_id), dish_id: parseInt(data.dish_id)});
       util.shareDish(db, parseInt(data.user_id), parseInt(data.dish_id))
       .catch(function(err) {
