@@ -21,21 +21,31 @@ module.exports = function(grunt) {
     project: {
       client: 'client',
       server: 'server',
-      app: 'app',
       dist: 'dist',
       css: ['<=% project.client%>/app/**/*.scss'],
       js: ['<%= project.client %>/app/app.module.js',
         '<%= project.client %>/app/app.routes.js',
         '<%= project.client %>/app/app.socket.init.js',
         '<%= project.client %>/{app,components}/**/!(*.spec|*.mock).js'
-      ]
+      ],
+      test: 'test'
     },
 
     // Task configuration
     jshint: {
-      files: ['*.js'],
       options: {
         jshintrc: '_.jshintrc'
+      },
+      all: {
+        src: [
+          'Gruntfile.js',
+          '<%= project.client %>/app/**/*.js',
+          '<%= project.server %>/**/*.js',
+          '*.js'
+        ]
+      },
+      test: {
+        src: ['<%= project.test %>/**/*.js']
       }
     },
 
@@ -63,10 +73,23 @@ module.exports = function(grunt) {
       client: {
         src: '<%= project.client %>/index.html',
         ignorePath: '<%= project.client %>/',
-      },
+      }
+      // ,
       // test: {
-      //   src: './karma.conf.js',
-      //   devDependencies: true
+      //   devDependencies: true,
+      //   src: '<%= karma.unit.configFile %>',
+      //   ignorePath:  /\.\.\//,
+      //   fileTypes:{
+      //     js: {
+      //       block: /(([\s\t]*)\/{2}\s*?bower:\s*?(\S*))(\n|\r|.)*?(\/{2}\s*endbower)/gi,
+      //         detect: {
+      //           js: /'(.*\.js)'/gi
+      //         },
+      //         replace: {
+      //           js: '\'{{filePath}}\','
+      //         }
+      //       }
+      //     }
       // }
     },
 
@@ -133,7 +156,6 @@ module.exports = function(grunt) {
         }
       }
     },
-
 
     // nodeunit: {
     //   files: ['test/**/*_test.js']
