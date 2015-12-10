@@ -21,26 +21,26 @@ var connect = function(eventUrl, eventInfo, io, userObj) {
 
     socket.on('addDish', function(data) {
       console.log("AddDish event heard from the server!", data);
-      util.createDish(db, data.name, Number(data.cost), data.user_id, data.event_id)
-      .then(function(dish_id) {
-        mealEvent.emit('dishAdded', {
-          cost: data.cost,
-          name: data.name,
-          user_id: parseInt(data.user_id),
-          dish_id: dish_id,
-          users: data.users
+      util.createDish(db, data.name, Number(data.cost), parseInt(data.user_id), parseInt(data.event_id))
+        .then(function(dish_id) {
+          mealEvent.emit('dishAdded', {
+            cost: data.cost,
+            name: data.name,
+            user_id: parseInt(data.user_id),
+            dish_id: dish_id,
+            users: data.users
+          });
+        })
+        .catch(function(err) {
+          throw err;
         });
-      })
-      .catch(function(err) {
-        throw err;
-      });
     });
 
     socket.on('shareDish', function(data) {
       console.log("ShareDish event heard from server!", data);
       socket.broadcast.emit('dishShared', {
         user_id: data.user_id,
-        dish_id: data.dish_id
+        dish_id: data.dish_id.dish_id[0]
       });
       util.shareDish(db, data.user_id, data.dish_id)
         .catch(function(err) {
@@ -50,11 +50,14 @@ var connect = function(eventUrl, eventInfo, io, userObj) {
 
     socket.on('unshareDish', function(data) {
       console.log("UnshareDish event heard from server!", data);
-      socket.broadcast.emit('dishUnshared', {user_id: data.user_id, dish_id: data.dish_id});
-      util.unshareDish(db, data.user_id, data.dish_id)
-      .catch(function(err) {
-        throw err;
+      socket.broadcast.emit('dishUnshared', {
+        user_id: data.user_id,
+        dish_id: data.dish_id.dish_id[0]
       });
+      util.unshareDish(db, data.user_id, data.dish_id)
+        .catch(function(err) {
+          throw err;
+        });
     });
 
     socket.on('sendBillToGuests', function(data) {
