@@ -8,7 +8,7 @@
 
   function AddDishCtrl(socketFactory, addDishFactory, $location, appFactory, $scope) {
     var self = this;
-    self.test = "test";
+    self.test = "test"; // Remove later
 
     // When appFactory is updated, $rootScope is used as a bus to emit to user's allDishes controller $scope
     self.data = appFactory.data;
