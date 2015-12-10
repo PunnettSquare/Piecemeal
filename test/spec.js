@@ -1,4 +1,4 @@
-// JASMINE
+// JASMINE TESTS
 
 describe('AllDishesCtrl', function() {
   beforeEach(module('Piecemeal'));
@@ -6,8 +6,8 @@ describe('AllDishesCtrl', function() {
   var $controller;
 
   beforeEach(inject(function(_$controller_, $rootScope){
-    // The injector unwraps the underscores (_) from around the parameter names when matching
-    $controller = _$controller_; //ngMock thing, optional
+    // Angular mock injector unwraps the underscores (_) from around the parameter names when matching
+    $controller = _$controller_;
     socketMock = new sockMock($rootScope);
   }));
 
@@ -34,24 +34,36 @@ describe('AllDishesCtrl', function() {
       controller = $controller('AddDishCtrl', { $scope: $scope, socketFactory: socketMock, serverState:{roomName:'testRoom'}});
     });
 
-    it('AddDishCtrl.test should equal "test"', function() {
+    it('AddDishCtrl.addDish should emit "addDish"', function() {
       expect(controller.test).toEqual('test');
     });
-
-    // it('AddDishCtrl.addDish should emit "addDish"', function() {
-    //   expect(controller.addDish).toEqual('test');
-    // });
+    
+    it('AddDishCtrl.test should equal "test"', function() {
+      controller.addDish("ramen", 10);
+      var testReceived = false;
+      socketMock.on("addDish", function(data){
+        if (data.cost === 10 && data.name === "ramen") {
+          testReceived = true;
+        }
+        console.log("testReceived: ", testReceived); 
+      });
+      expect(testReceived).toBe(true);
+    });
 
     // it('AddDishCtrl.addDish should emit a dish object', function() {
     //   expect($scope.test).toEqual('test');
     // });
 
+    // working socketMock test:
     // it("emits and receives messages", function(){
     //   var testReceived = false;
 
-    //   socketMock.on("addDish", function(data){
-    //     testReceived = true;
-    //   });
+      // socketMock.on("addDish", function(data){
+      //   if (data.cost === 10 && data.name === "Ramen") {
+      //     testReceived = true;
+      //   }
+      //   console.log("testReceived: ", testReceived); 
+      // });
 
     //   socketMock.emit("addDish", {
     //     cost: 10,
@@ -65,6 +77,7 @@ describe('AllDishesCtrl', function() {
     //   expect(testReceived).toBe(true);
     // });
 
+    // socketMock test format:
     // it("emits and receives messages", function(){
     //   var testReceived = false;
 
@@ -82,7 +95,7 @@ describe('AllDishesCtrl', function() {
 });
 
 /*
-Simple mock for socket.io
+Mock for socket.io
 see: https://github.com/btford/angular-socket-io-seed/issues/4
 https://github.com/hackify/hackify-server/blob/master/test/controllers.test.js
 https://github.com/nullivex/angular-socket.io-mock
@@ -102,13 +115,17 @@ var sockMock = function($rootScope){
   };
 
   // intercept 'emit' calls from the client and record them to assert against in the test
-  this.emit = function(eventName){
-    var args = Array.prototype.slice.call(arguments, 1);
 
-    if(!this.emits[eventName])
-      this.emits[eventName] = [];
-    this.emits[eventName].push(args);
-  };
+    this.emit = function(eventName, data, emitCallback){
+    if(this.events[eventName]){
+      angular.forEach(this.events[eventName], function(callback){
+        $rootScope.$apply(function() {
+          callback(data);
+        });
+      });
+    };
+    if(emitCallback) emitCallback();
+  }
 
   //simulate an inbound message to the socket from the server (only called from the test)
   this.receive = function(eventName){
@@ -124,6 +141,7 @@ var sockMock = function($rootScope){
   };
 
 };
+
 
 /*
 // ANGULAR EXAMPLE

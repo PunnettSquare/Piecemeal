@@ -50,8 +50,8 @@ module.exports = function(config) {
     reporters: ['progress'],
 
 
-    // web server port
-    port: 8080,
+    // port for karma's own web server to run. should not overlap with existing web server's port (8080)
+    port: 9876,
 
 
     // enable / disable colors in the output (reporters and logs)
