@@ -8,6 +8,7 @@ module.exports = function(grunt) {
 
   // Project configuration
   require('load-grunt-tasks')(grunt);
+  require('time-grunt')(grunt);
 
   var mountFolder = function(connect, dir) {
     return connect.static(require('path').resolve(dir));
@@ -89,12 +90,12 @@ module.exports = function(grunt) {
       }
     },
 
-    // karma: {
-    //   unit: {
-    //     configFile: 'karma.conf.js',
-    //     singleRun: true
-    //   }
-    // },
+    karma: {
+      unit: {
+        configFile: 'karma.conf.js',
+        singleRun: true
+      }
+    },
 
     // mochaTest: {
     //   options: {
@@ -138,6 +139,10 @@ module.exports = function(grunt) {
     //   files: ['test/**/*_test.js']
     // },
     watch: {
+      bower: {
+        files: ['bower.json'],
+        tasks: ['wiredep']
+      },
       livereload: {
         options: {
           livereload: LIVERELOAD_PORT
@@ -145,6 +150,13 @@ module.exports = function(grunt) {
         files: ['<%= project.client %>{,*/}**/*.*',
           '<%= project.server %>{,*/}**/*.*',
         ]
+      },
+      js: {
+        files: ['<%= project.client %>/**/*.js'],
+        tasks: ['newer:jshint:all', 'newer:jscs:all'],
+        options: {
+          livereload: '<%= connect.options.livereload %>'
+        }
       },
       // livereload: {
       //   files: [
@@ -201,10 +213,7 @@ module.exports = function(grunt) {
       //     spawn: false //Without this option specified express won't be reloaded
       //   }
       // },
-      // bower: {
-      //   files: ['bower.json'],
-      //   tasks: ['wiredep']
-      // },
+
     },
 
     injector: {
