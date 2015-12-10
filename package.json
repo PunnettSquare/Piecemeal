@@ -4,7 +4,7 @@
   "description": "The simplest way to split a bill",
   "scripts": {
     "lint": "jscs ./",
-    "start": "node server/server.js", 
+    "start": "npm install; node server/server.js", 
     "postinstall": "./node_modules/bower/bin/bower cache clean && ./node_modules/bower/bin/bower install"
   },
   "pre-commit": "lint",
