@@ -6,3 +6,4 @@ venmoApiKeys.js
 build/
 dist/
 test/
+karma.conf.js
