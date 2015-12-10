@@ -2,6 +2,7 @@ var generateData = require('../../generateData');
 var db = require('../../db/db');
 var handleSocket = require('../sockets');
 var util = require('../utility.js');
+var _ = require('underscore');
 
 module.exports = function (app, io) {
 
@@ -14,9 +15,10 @@ module.exports = function (app, io) {
     // Generate code
     var code = util.generateCode();
     util.createEvent(db, code, username)
-      .then(function() {
+      .then(function(dataObj) {
         res.send({
-          code: code
+          code: code,
+          user_id: dataObj.user_id
         });
       })
       .catch(function(err) {
@@ -37,7 +39,7 @@ module.exports = function (app, io) {
         return util.createUser(db, username, event_id, false);
       })
       .then(function(guestId) {
-        res.status(200).send({
+        res.send(200, {
           user_id: guestId[0],
           event_id: event_id
         });
@@ -48,7 +50,7 @@ module.exports = function (app, io) {
   });
 
   // **Wildcard route & event id handler.**
-  app.get('/*', function(req, res) {
+  app.post('/*', function(req, res) {
     var code = req.url.slice(1);
     // query database for event id based on code
     util.findEvent(db, code)
@@ -58,7 +60,17 @@ module.exports = function (app, io) {
           return util.gatherState(db, event_id[0].id, code) // real data
           .then(function(eventInfo) {
             // handle the socket connection
-            handleSocket(req.url, eventInfo, io);
+            var newUserObj = _.reduce(eventInfo.users, function(user, curr) {
+              if (!!user) {
+                return user;
+              }
+              if (curr.id.toString() === req.body.user_id) {
+                return curr;
+              }
+              return user;
+            }, false);
+
+            handleSocket(req.url, eventInfo, io, newUserObj);
             res.end();
           });
         } else {

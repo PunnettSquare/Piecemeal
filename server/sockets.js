@@ -2,8 +2,9 @@
 var util = require('./utility');
 var db = require('../db/db');
 
-var connect = function(eventUrl, eventInfo, io) {
+var connect = function(eventUrl, eventInfo, io, userObj) {
   // Set the Socket.io namespace to the eventUrl.
+
   var mealEvent = io.of(eventUrl);
   mealEvent.once('connection', function(socket) {
 
@@ -13,6 +14,10 @@ var connect = function(eventUrl, eventInfo, io) {
     console.log('Socket connection made with server.');
 
     socket.emit('joined', eventInfo);
+
+    socket.broadcast.emit('newParticipant', userObj);
+
+    //make users object, send it to everyone
 
     socket.on('addDish', function(data) {
       console.log("AddDish event heard from the client!", data);

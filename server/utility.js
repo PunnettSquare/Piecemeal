@@ -16,7 +16,10 @@ module.exports = {
               event_id: event_id[0],
               host: true,
               status: true
-            }).returning('id');
+            }).returning('id')
+            .then(function(event_id) {
+              return {event_id: event_id, user_id: user_id};
+            });
           });
       });
   },

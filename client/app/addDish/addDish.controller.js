@@ -17,15 +17,19 @@
       self.calcUserCurrentTotal();
     };
 
-    self.addDish = function(dish, cost) {
-      console.log("Emitting dish", dish, "with cost", cost);
-      socketFactory.emit('addDish', {
+    self.addDish = function(name, cost) {
+      console.log("Emitting dish", name, "with cost", cost);
+      console.log('window.sess =', window.sessionStorage.user_id);
+      var dish = {
         cost: cost,
-        name: dish,
+        name: name,
         user_id: window.sessionStorage.user_id,
         event_id: window.sessionStorage.event_id,
         users: [window.sessionStorage.user_id]
-      });
+      }
+      socketFactory.emit('addDish', dish);
+      console.log(appFactory.addDish)
+      appFactory.addDish(dish);
       self.amount = 0;
       self.dishName = '';
       // PROBLEM: When dish is added, "your total so far" is not automatically updated. Can be fixed via:
