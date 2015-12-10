@@ -6,14 +6,10 @@
 
   config.$inject = ['$stateProvider', '$urlRouterProvider'];
 
-  function config($stateProvider, $urlRouterProvider, $window) {
-
-    console.log('window.sessionStorage =', window.sessionStorage);
-    // $urlRouterProvider.otherwise('home');
-    $urlRouterProvider.otherwise(function($injector, $window) {
-      // console.log('$window.$$path =', $window.$$path);
+  function config($stateProvider, $urlRouterProvider) {
+    $urlRouterProvider.otherwise(function($injector) {
       var state = $injector.get('$state');
-      // if ($window.$$path === '' || $window.$$path === '/' || $window.$$path === '/home' || $window.$$path === '/undefined') {
+      // use $window.$$path if we stop using window.sessionStorage
       if (!window.sessionStorage.username || window.sessionStorage.username === "undefined") {
         state.go('home');
       } else {
@@ -80,11 +76,16 @@
           }
         },
         resolve: {
-          // refresh: function() {
-          //   $state.reload();
-          // }
+          getEventInfo: ['$http', function($http) {
+            return $http({
+              method: 'POST',
+              url: '/' + window.sessionStorage.code,
+              data: {
+                user_id: window.sessionStorage.user_id
+              }
+            });
+          }]
         }
-
       })
       .state('event.guestBill', {
         url: '/guestBill',
@@ -100,8 +101,7 @@
             controllerAs: 'guestBill'
           }
         },
-        resolve: {
-        }
+        resolve: {}
 
       })
       .state('event.hostReceipt', {

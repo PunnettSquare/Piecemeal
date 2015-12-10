@@ -1,17 +1,35 @@
 <div id="guestBill" ng-cloak>
-  <h1>{{guestBill.username}}'s Total Bill</h1>
+  <button ng-click="guestBill.goToAllDishes()">See All Dishes</button>
+  <button ng-show="guestBill.userInfo.isHost" ng-click="guestBill.goToHostBill()">See Final Bill</button>
+  <h1>{{ _.capitalize(guestBill.userInfo.username) }}'s Total Bill</h1>
 
   <div ng-repeat="dish in guestBill.guestDishes">
-    <h2>{{dish.name}}</h2>
+    <h2>{{_.capitalize(dish.name)}}</h2>
     <p>Your portion: {{dish.indivCost | currency }}</p>
     <small>Total Cost</small>
     <span><small>{{dish.cost | currency }}</small></span>
     <h3>You Shared This With:</h3>
     <p ng-show="dish.isShared" ng-repeat="person in dish.otherSharedUsers">
-      <span>{{person.username }}</span>
+      <span>{{ _.capitalize(person.username) }}</span>
     </p>
     <p ng-show="!dish.isShared">
       <span>Shared by yourself only</span>
     </p>
-  </ul>
+  </div>
+
+  <br><br>
+
+  <div ng-show="guestBill.billSent">
+    <h2>Your Subtotal</h2>
+    <p>{{guestBill.guestSubtotal | currency}}</p>
+    <h3>Tax</h3>
+    <p>{{guestBill.guestTax | currency}}</p>
+    <small>You were charged {{ guestBill.billData.taxPercent }}% for tax.</small>
+    <h3>Tip</h3>
+    <p>{{guestBill.guestTip | currency}}</p>
+    <small>Your host chose {{ guestBill.billData.tipPercent }}% for tip.</small>
+    <h2>Your Total</h2>
+    <p>{{guestBill.guestGrandTotal | currency}}</p>
+    <small>(Dinner Grand Total: {{  guestBill.billData.grandTotal | currency}})</small>
+  </div>
 </div>

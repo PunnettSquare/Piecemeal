@@ -10,7 +10,7 @@
   appFactory.$inject = ['socketFactory', '$rootScope'];
 
   function appFactory(socketFactory, $rootScope) {
-    
+
     var services = {
       initListeners: initListeners,
       addDish: addDish,
@@ -31,7 +31,7 @@
 
     function shareDish(dish_id, user_id) {
       var dishObj;
-      services.data.dishes.forEach(function (dish) { 
+      services.data.dishes.forEach(function(dish) {
         if (dish.dish_id === dish_id) {
           dish.users.push(user_id);
           dishObj = dish;
@@ -41,7 +41,7 @@
         if (user.id.toString() === user_id) {
           user.dishes.push(dishObj);
         }
-      })
+      });
     }
 
     function unshareDish(dish_id, user_id) {
@@ -59,42 +59,59 @@
             if (dish.dish_id === dish_id) {
               return index;
             }
-          }, false)
-          user.dishes.splice(dishIndex, 1)
+          }, false);
+          user.dishes.splice(dishIndex, 1);
         }
-      })
+      });
     }
 
     function initListeners() {
-      console.log("eventlisteners added");
-
       socketFactory.on('joined', function(data) {
-        console.log("heard 'joined' in appFactory. data: ", data);
+        console.log("Heard 'joined' in appFactory.data: ", data);
         services.data = data;
         $rootScope.$broadcast('joined');
       });
 
       socketFactory.on('newParticipant', function(userObj) {
         services.data.users.push(userObj);
-      })
-
+      });
       socketFactory.on('dishAdded', function(dish) {
-        console.log("dishAdded data is: ", dish); // data format: {cost: 3, name: "rice", user_id: "29319", event_id: 1, users: ["29319"]}
+        // data format: {cost: 3, name: "rice", user_id: "29319", event_id: 1, users: ["29319"]}
         addDish(dish);
       });
 
-      socketFactory.on('dishShared', function (data) {
-        console.log("heard 'dishShared' in appFactory. data: ", data); // data format: {user_id: 24, dish_id: 14}
+      socketFactory.on('dishShared', function(data) {
+        // data format: {user_id: 24, dish_id: 14}
         shareDish(data.dish_id, data.user_id);
       });
 
-      socketFactory.on('dishUnshared', function (data) {
-        console.log("heard 'dishUnshared' in appFactory. data: ", data); // data format: 
+      socketFactory.on('dishUnshared', function(data) {
+        console.log("heard 'dishUnshared' in appFactory. data: ", data);
         unshareDish(data.dish_id, data.user_id);
+      });
 
+      socket.on('billsSentToGuests', function(data) {
+        services.billData = data;
+        $rootScope.$broadcast('billsSentToGuests');
+        $rootScope.$apply();
       });
 
     }
   }
 
 })();
+
+// Temporarily keep old version of socket setup for reference:
+
+// .controller('piecemealCtrl', function ($scope, socket) {
+
+// ** ------- Socket listeners ------- **
+
+// socket.forward('getDish', $scope);
+// $scope.$on('socket:getDish', function (e, data) {
+//   // do something. e.g. $scope.data = data
+// });
+
+// ** ------- Socket Emitters ------- **
+
+// Put these on other controllers

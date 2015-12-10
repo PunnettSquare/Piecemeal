@@ -28,18 +28,17 @@ var connect = function(eventUrl, eventInfo, io, userObj) {
       });
 
       socket.broadcast.emit('dishAdded', {
-      // mealEvent.emit('dishAdded', { // use this instead of socket.broadcast to send to all for testing purposes on your client
         cost: data.cost,
         name: data.name,
-        user_id: data.user_id,
+        user_id: parseInt(data.user_id),
         users: data.users
       });
     });
 
     socket.on('shareDish', function (data) {
       console.log("User is sharing dish");
-      socket.broadcast.emit('dishShared', {user_id: data.user_id, dish_id: data.dish_id});
-      util.shareDish(db, data.user_id, data.dish_id)
+      socket.broadcast.emit('dishShared', {user_id: parseInt(data.user_id), dish_id: parseInt(data.dish_id)});
+      util.shareDish(db, parseInt(data.user_id), parseInt(data.dish_id))
       .catch(function(err) {
         throw err;
       });
@@ -47,11 +46,16 @@ var connect = function(eventUrl, eventInfo, io, userObj) {
 
     socket.on('unshareDish', function (data) {
       console.log("User is no longer sharing dish");
-      socket.broadcast.emit('dishUnshared', {user_id: data.user_id, dish_id: data.dish_id});
-      util.unshareDish(db, data.user_id, data.dish_id)
+      socket.broadcast.emit('dishUnshared', {user_id: parseInt(data.user_id), dish_id: parseInt(data.dish_id)});
+      util.unshareDish(db, parseInt(data.user_id), parseInt(data.dish_id))
       .catch(function(e) {
         throw err;
       });
+    });
+
+    socket.on('sendBillToGuests', function(data) {
+      console.log('Bill data sent to guests =', data);
+      socket.broadcast.emit('billsSentToGuests', data);
     });
     // socket.on('finished', function(data) { // how to
     //   util.userFinished(db, data.userId, data.eventId);
