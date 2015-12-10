@@ -3,7 +3,7 @@
   <button ng-click="allDishes.goToAddDish()">Add Dish</button>
   <h1>All Dishes</h1>
 
-  <p>Hi, {{_.capitalize(allDishes.userInfo.username)}}. You are in room <strong>{{allDishes.data.code}}</strong>.</p>
+  <p>Hi, {{_.capitalize(allDishes.username)}}. You are in room <strong>{{allDishes.data.code}}</strong>.</p>
 
   <!--   <div ng-repeat="dish in allDishes.allDishes">
     <h3>{{ _.capitalize(dish.name)}}</h3>
@@ -17,6 +17,7 @@
 
     <h3>{{ _.map(dish.name.split(" "), _.capitalize).join(" ") }}</h3>
     <p>Cost: {{dish.cost | currency }}</p>
+    <p>Dish ID: {{dish.dish_id}}</p>
     <span>
       {{ allDishes.getId( dish.users, allDishes.data) }} got this.
       <small>
@@ -26,10 +27,10 @@
 
     <br><br>
 
-    <button ng-click="allDishes.shareDish(dish.dish_id, allDishes.userInfo.user_id, dish.users)">
+    <button ng-click="allDishes.shareDish(dish.dish_id, allDishes.user_id, dish.users)">
     Share
     </button>
-    <button ng-click="allDishes.unshareDish(dish.dish_id, allDishes.userInfo.user_id, dish.users)">
+    <button ng-click="allDishes.unshareDish(dish.dish_id, allDishes.user_id, dish.users)">
     Unshare
     </button>
   </div>

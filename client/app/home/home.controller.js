@@ -21,7 +21,8 @@
               username: username,
               code: data.code,
               isHost: true,
-              user_id: data.user_id
+              user_id: data.user_id,
+              event_id: data.event_id
             });
             $location.path('/' + data.code + '/allDishes');
           })

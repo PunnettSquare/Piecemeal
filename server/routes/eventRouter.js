@@ -8,7 +8,7 @@ module.exports = function (app, io) {
 
   app.get('/favicon.ico', function(req, res) {
     res.sendStatus(200);
-  })
+  });
 
   app.post('/createEvent', function(req, res) {
     var username = req.body.username || 'Jerry';
@@ -18,7 +18,8 @@ module.exports = function (app, io) {
       .then(function(dataObj) {
         res.send({
           code: code,
-          user_id: dataObj.user_id
+          user_id: dataObj.user_id,
+          event_id: dataObj.event_id
         });
       })
       .catch(function(err) {
@@ -64,7 +65,7 @@ module.exports = function (app, io) {
               if (!!user) {
                 return user;
               }
-              if (curr.id.toString() === req.body.user_id) {
+              if (curr.id.toString() === req.body.user_id.toString()) {
                 return curr;
               }
               return user;

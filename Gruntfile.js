@@ -8,6 +8,7 @@ module.exports = function(grunt) {
 
   // Project configuration
   require('load-grunt-tasks')(grunt);
+  require('time-grunt')(grunt);
 
   var mountFolder = function(connect, dir) {
     return connect.static(require('path').resolve(dir));
@@ -20,21 +21,31 @@ module.exports = function(grunt) {
     project: {
       client: 'client',
       server: 'server',
-      app: 'app',
       dist: 'dist',
       css: ['<=% project.client%>/app/**/*.scss'],
       js: ['<%= project.client %>/app/app.module.js',
         '<%= project.client %>/app/app.routes.js',
         '<%= project.client %>/app/app.socket.init.js',
         '<%= project.client %>/{app,components}/**/!(*.spec|*.mock).js'
-      ]
+      ],
+      test: 'test'
     },
 
     // Task configuration
     jshint: {
-      files: ['*.js'],
       options: {
         jshintrc: '_.jshintrc'
+      },
+      all: {
+        src: [
+          'Gruntfile.js',
+          '<%= project.client %>/app/**/*.js',
+          '<%= project.server %>/**/*.js',
+          '*.js'
+        ]
+      },
+      test: {
+        src: ['<%= project.test %>/**/*.js']
       }
     },
 
@@ -62,10 +73,23 @@ module.exports = function(grunt) {
       client: {
         src: '<%= project.client %>/index.html',
         ignorePath: '<%= project.client %>/',
-      },
+      }
+      // ,
       // test: {
-      //   src: './karma.conf.js',
-      //   devDependencies: true
+      //   devDependencies: true,
+      //   src: '<%= karma.unit.configFile %>',
+      //   ignorePath:  /\.\.\//,
+      //   fileTypes:{
+      //     js: {
+      //       block: /(([\s\t]*)\/{2}\s*?bower:\s*?(\S*))(\n|\r|.)*?(\/{2}\s*endbower)/gi,
+      //         detect: {
+      //           js: /'(.*\.js)'/gi
+      //         },
+      //         replace: {
+      //           js: '\'{{filePath}}\','
+      //         }
+      //       }
+      //     }
       // }
     },
 
@@ -89,12 +113,12 @@ module.exports = function(grunt) {
       }
     },
 
-    // karma: {
-    //   unit: {
-    //     configFile: 'karma.conf.js',
-    //     singleRun: true
-    //   }
-    // },
+    karma: {
+      unit: {
+        configFile: 'karma.conf.js',
+        singleRun: true
+      }
+    },
 
     // mochaTest: {
     //   options: {
@@ -133,11 +157,14 @@ module.exports = function(grunt) {
       }
     },
 
-
     // nodeunit: {
     //   files: ['test/**/*_test.js']
     // },
     watch: {
+      bower: {
+        files: ['bower.json'],
+        tasks: ['wiredep']
+      },
       livereload: {
         options: {
           livereload: LIVERELOAD_PORT
@@ -145,6 +172,13 @@ module.exports = function(grunt) {
         files: ['<%= project.client %>{,*/}**/*.*',
           '<%= project.server %>{,*/}**/*.*',
         ]
+      },
+      js: {
+        files: ['<%= project.client %>/**/*.js'],
+        tasks: ['newer:jshint:all', 'newer:jscs:all'],
+        options: {
+          livereload: '<%= connect.options.livereload %>'
+        }
       },
       // livereload: {
       //   files: [
@@ -201,10 +235,7 @@ module.exports = function(grunt) {
       //     spawn: false //Without this option specified express won't be reloaded
       //   }
       // },
-      // bower: {
-      //   files: ['bower.json'],
-      //   tasks: ['wiredep']
-      // },
+
     },
 
     injector: {
@@ -275,5 +306,6 @@ module.exports = function(grunt) {
 
   // Default task
   grunt.registerTask('default', ['jshint', 'connect:livereload', 'open', 'watch']);
+  grunt.registerTask('test', ['wiredep', 'karma']);
   grunt.registerTask('build', ['injector:scripts', 'sass', 'injector:sass', 'wiredep']);
 };

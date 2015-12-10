@@ -7,6 +7,7 @@
   config.$inject = ['$stateProvider', '$urlRouterProvider'];
 
   function config($stateProvider, $urlRouterProvider) {
+    console.log('window.sessionStorage =', window.sessionStorage);
     $urlRouterProvider.otherwise(function($injector) {
       var state = $injector.get('$state');
       // use $window.$$path if we stop using window.sessionStorage
@@ -81,7 +82,7 @@
               method: 'POST',
               url: '/' + window.sessionStorage.code,
               data: {
-                user_id: window.sessionStorage.user_id
+                user_id: parseInt(window.sessionStorage.user_id)
               }
             });
           }]
