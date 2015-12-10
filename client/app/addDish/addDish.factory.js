@@ -4,9 +4,9 @@
   angular.module('Piecemeal')
     .factory('addDishFactory', addDishFactory);
 
-  addDishFactory.$inject = [];
+  addDishFactory.$inject = ['appFactory'];
 
-  function addDishFactory() {
+  function addDishFactory(appFactory) {
     var services = {
       calculateRunningTotal: calculateRunningTotal
     };
@@ -15,7 +15,7 @@
 
     function calculateRunningTotal(data) {
       return _.filter(data.dishes, function(obj, key) {
-          return _.contains(obj.users, parseInt(window.sessionStorage.user_id));
+          return _.contains(obj.users, appFactory.getSessStorage('user_id'));
         })
         .reduce(function(acc, current) {
           return acc + (Number(current.cost) / current.users.length);

@@ -37,10 +37,10 @@
       self.grandTotal = self.subTotal + self.tax + self.tipSum;
 
       socketFactory.emit('sendBillToGuests', {
-        event_id: parseInt(window.sessionStorage.event_id),
-        code: window.sessionStorage.code,
-        hostUsername: window.sessionStorage.username,
-        host_id: parseInt(window.sessionStorage.user_id),
+        event_id: appFactory.getSessStorage('event_id'),
+        code: appFactory.getSessStorage('code'),
+        hostUsername: appFactory.getSessStorage('username'),
+        host_id: appFactory.getSessStorage('user_id'),
         subTotal: self.subTotal,
         taxPercent: self.tax,
         tipPercent: self.tip,

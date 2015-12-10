@@ -8,13 +8,19 @@
 
   function AllDishesCtrl(socketFactory, $location, appFactory, $scope) {
     var self = this;
-    self.user_id = window.sessionStorage.user_id;
-    self.userInfo = jQuery.extend({}, window.sessionStorage);
-    self.userInfo.user_id = parseInt(self.userInfo.user_id);
-    self.userInfo.event_id = parseInt(self.userInfo.event_id);
+
+    self.user_id = appFactory.getSessStorage('user_id');
+    self.event_id = appFactory.getSessStorage('event_id');
+    self.username = appFactory.getSessStorage('username');
+
+    // self.user_id = window.sessionStorage.user_id;
+    // self.userInfo = jQuery.extend({}, window.sessionStorage);
+    // self.userInfo.user_id = parseInt(self.userInfo.user_id);
+    // self.userInfo.event_id = parseInt(self.userInfo.event_id);
 
     self.data = appFactory.data;
-    self.dishes = appFactory.dishes; // should be able to get rid of this?
+
+    // self.dishes = appFactory.dishes; // should be able to get rid of this?
     socketFactory.init();
     if (!self.data) {
       appFactory.initListeners();
@@ -37,7 +43,7 @@
         var result;
         eventInfo.users.forEach(function(user) {
           if (user.id.toString() === id.toString()) {
-            result = user.username;
+            result = _.capitalize(user.username);
           }
         });
         if (result) {

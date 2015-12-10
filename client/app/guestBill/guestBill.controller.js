@@ -8,10 +8,16 @@
 
   function GuestBillCtrl(socketFactory, $scope, appFactory, $location, addDishFactory) {
     var self = this;
-    self.userInfo = jQuery.extend({}, window.sessionStorage);
-    self.userInfo.user_id = parseInt(self.userInfo.user_id);
-    self.userInfo.event_id = parseInt(self.userInfo.event_id);
-    self.userInfo.isHost = (window.sessionStorage.isHost === "false") ? false : true;
+
+    self.isHost = appFactory.getSessStorage('isHost');
+    self.username = appFactory.getSessStorage('username');
+    self.user_id = appFactory.getSessStorage('user_id');
+    self.event_id = appFactory.getSessStorage('event_id');
+
+    // self.userInfo = jQuery.extend({}, window.sessionStorage);
+    // self.userInfo.user_id = parseInt(self.userInfo.user_id);
+    // self.userInfo.event_id = parseInt(self.userInfo.event_id);
+    // self.userInfo.isHost = (window.sessionStorage.isHost === "false") ? false : true;
     self.billSent = false;
 
     self.data = appFactory.data;
@@ -42,13 +48,13 @@
     self.guestDishes = _.each(
       _.filter(self.data.dishes,
         function(obj, key) {
-          return _.contains(obj.users, self.userInfo.user_id);
+          return _.contains(obj.users, self.user_id);
         }),
       function(obj, key) {
         obj.indivCost = obj.cost / obj.users.length;
         obj.isShared = (obj.users.length === 1) ? false : true;
         obj.otherSharedIds = _.filter(obj.users, function(id) {
-          return id !== self.userInfo.user_id;
+          return id !== self.user_id;
         });
         obj.otherSharedUsers = _.map(obj.otherSharedIds, function(id) {
           var index = _.findIndex(self.data.users, {
