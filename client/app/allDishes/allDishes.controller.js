@@ -10,14 +10,14 @@
 
     var self = this;
 
-    self.user_id = parseInt(window.sessionStorage.user_id);
+    self.user_id = window.sessionStorage.user_id;
     self.dishes = appFactory.dishes; //testing
-
-    socketFactory.init();
-    appFactory.initListeners();
-
-    // When appFactory is updated, $rootScope is used as a bus to emit to user's allDishes controller $scope
     self.data = appFactory.data;
+    socketFactory.init();
+    if (!self.data) {
+      appFactory.initListeners();
+    }
+    // When appFactory is updated, $rootScope is used as a bus to emit to user's allDishes controller $scope
 
     $scope.$on('joined', function () { //$on does not work with `self`
       self.data = appFactory.data;
@@ -34,13 +34,13 @@
       $location.path('/' + window.sessionStorage.code + '/addDish');
     };
 
-    allDishesFactory.getEventInfo();
+    allDishesFactory.getEventInfo(window.sessionStorage.getItem('user_id'));
 
     self.getId = function(arrayOfIds, eventInfo) {
       var usernames = arrayOfIds.map(function(id) {
         var result;
         eventInfo.users.forEach(function(user) {
-          if (user.id === id) {
+          if (user.id.toString() === id.toString()) {
             result = user.username;
           }
         });
@@ -51,45 +51,33 @@
       return usernames.length === 1 ? usernames[0] : usernames.join(', ');
     };
 
-    self.isOnDish = function(dish_id, user_id) {
+    self.isOnDish = function(dishUsers, user_id) {
       var result = false;
-      self.data.dishes.forEach(function(dish) {
-        if (dish.dish_id === dish_id) {
-          dish.users.forEach(function(user) {
-            if (user === user_id) {
-              result = true;
-            }
-          });
+      return dishUsers.reduce(function(isOnDish, id) {
+        if (id.toString() === user_id.toString()) {
+          return true;
         }
-      });
-      return result;
+        return isOnDish;
+      }, false);
     };
 
-    self.shareDish = function(dish_id, user_id) {
-      if (!self.isOnDish(dish_id, user_id)) {
-        socketFactory.emit('shareDish', { // server needs .on(shareDish) that adds user to Dish
+    self.shareDish = function(dish_id, user_id, users) {
+      if (!self.isOnDish(users, user_id)) {
+        socketFactory.emit('shareDish', { 
           dish_id: dish_id,
-          user_id: user_id // ** ask Michelle how to get user from session
+          user_id: user_id 
         });
-        appFactory.data.dishes.forEach(function (dish) { 
-          if (dish.dish_id === dish_id) {
-            dish.users.push(user_id);
-          }
-        });
+        appFactory.shareDish(dish_id, user_id);
       }
     };
 
-    self.unshareDish = function(dish_id, user_id) {
-      if (self.isOnDish(dish_id, user_id)) {
-        socketFactory.emit('unshareDish', { // server needs .on(unshareDish) that adds user to Dish
+    self.unshareDish = function(dish_id, user_id, users) {
+      if (self.isOnDish(users, user_id)) {
+        socketFactory.emit('unshareDish', { 
           dish_id: dish_id,
           user_id: user_id
         });
-        appFactory.data.dishes.forEach(function(dish) {
-          if (dish.dish_id === dish_id) {
-            dish.users.splice(dish.users.indexOf(user_id), 1);
-          }
-        });
+        appFactory.unshareDish(dish_id, user_id);
       }
     };
 

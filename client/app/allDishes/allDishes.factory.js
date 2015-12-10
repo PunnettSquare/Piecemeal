@@ -15,15 +15,12 @@
 
     return services;
 
-    function getEventInfo(username) {
+    function getEventInfo(user_id) {
       return $http({
-          method: 'GET',
+          method: 'POST',
           url: '/' + window.sessionStorage.code,
-          data: username // user id, possibly username
+          data: {user_id: user_id}
         })
-        .then(function(res) {
-          return res.data;
-        });
     }
   }
 })();

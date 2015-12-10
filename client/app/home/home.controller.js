@@ -20,7 +20,8 @@
             _.assign(window.sessionStorage, {
               username: username,
               code: data.code,
-              isHost: true
+              isHost: true,
+              user_id: data.user_id
             });
             $location.path('/' + data.code + '/allDishes');
           })
