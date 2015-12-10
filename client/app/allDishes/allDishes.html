@@ -3,23 +3,42 @@
   <button ng-click="allDishes.goToAddDish()">Add Dish</button>
   <h1>All Dishes</h1>
 
-  <p>Hi, {{_.capitalize(allDishes.username)}}. You are in room <strong>{{allDishes.data.code}}</strong>. </p>
-  <div ng-repeat="dish in allDishes.data.dishes">
+  <p>Hi, {{_.capitalize(allDishes.userInfo.username)}}. You are in room <strong>{{allDishes.data.code}}</strong>.</p>
+
+  <!--   <div ng-repeat="dish in allDishes.allDishes">
+    <h3>{{ _.capitalize(dish.name)}}</h3>
+    <p>Cost: {{dish.cost | currency }}</p>
     <span>
-      {{_.capitalize(dish.name)}} {{dish.cost}} {{ allDishes.getId(dish.users, allDishes.data) }} {{ dish.users}}
+      {{ _.map(_.pluck(dish.users, 'username'), _.capitalize).join(", ") }} got this.
     </span>
-    <button ng-click="allDishes.shareDish(dish.dish_id, allDishes.user_id, dish.users)">Share</button>
-    <button ng-click="allDishes.unshareDish(dish.dish_id, allDishes.user_id, dish.users)">Unshare</button>
+  </div> -->
 
+  <div ng-repeat="dish in allDishes.data.dishes">
+    <h3>{{ _.map(dish.name.split(" "), _.capitalize).join(" ") }}</h3>
+    <p>Cost: {{dish.cost | currency }}</p>
+    <span>
+      {{ allDishes.getId( dish.users, allDishes.data) }} got this.
+      <small>
+      User IDs: {{ dish.users }}
+      </small>
+    </span>
+
+    <br><br>
+
+    <button ng-click="allDishes.shareDish(dish.dish_id, allDishes.userInfo.user_id, dish.users)">
+    Share
+    </button>
+    <button ng-click="allDishes.unshareDish(dish.dish_id, allDishes.userInfo.user_id, dish.users)">
+    Unshare
+    </button>
   </div>
-
-  <!-- <div> Test allDishes.dishes: {{allDishes.data.dishes}}</div>
-  <div>Test allDishes.data.users: {{allDishes.data.users}}</div>
-  <div>Test allDishes.data: {{allDishes.data}}</div>
-  <!-- <div>Your total so far: {{allDishes.userTotal}}</div>
-  <div>Group total so far: {{allDishes.groupTotal}}</div> -->
-  <div>Test allDishes.data: {{allDishes.data}}</div>
-  <div>Your total so far: {{allDishes.userTotal}}</div>
-  <div>Group total so far: {{allDishes.groupTotal}}</div>
-
 </div>
+
+<!-- <div> Test allDishes.dishes: {{allDishes.data.dishes}}</div>
+<div>Test allDishes.data.users: {{allDishes.data.users}}</div>
+<div>Test allDishes.data: {{allDishes.data}}</div>
+<!-- <div>Your total so far: {{allDishes.userTotal}}</div>
+<div>Group total so far: {{allDishes.groupTotal}}</div> -->
+<!--   <div>Test allDishes.data: {{allDishes.data}}</div>
+<div>Your total so far: {{allDishes.userTotal}}</div>
+<div>Group total so far: {{allDishes.groupTotal}}</div> -->

@@ -1,7 +1,7 @@
 <div id="guestBill" ng-cloak>
   <button ng-click="guestBill.goToAllDishes()">See All Dishes</button>
-  <button ng-show={{guestBill.isHost}} ng-click="guestBill.goToHostBill()">See Final Bill</button>
-  <h1>{{ _.capitalize(guestBill.username) }}'s Total Bill</h1>
+  <button ng-show="guestBill.userInfo.isHost" ng-click="guestBill.goToHostBill()">See Final Bill</button>
+  <h1>{{ _.capitalize(guestBill.userInfo.username) }}'s Total Bill</h1>
 
   <div ng-repeat="dish in guestBill.guestDishes">
     <h2>{{_.capitalize(dish.name)}}</h2>

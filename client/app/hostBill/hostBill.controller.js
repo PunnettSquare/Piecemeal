@@ -11,6 +11,7 @@
 
     self.data = appFactory.data;
 
+    // This will entirely depend on data reformat of appFactory.data.
     self.allDishes = _.each(self.data.dishes,
       function(obj, key) {
         obj.indivCost = obj.cost / obj.users.length;
@@ -28,8 +29,7 @@
       });
 
     self.subTotal = _.sum(_.pluck(self.allDishes, 'cost'));
-    self.tip = 0;
-    self.tax = 0;
+
 
     self.sendBillsToGuests = function() {
       self.tipSum = (self.subTotal * self.tip * 0.01) + self.subTotal;
