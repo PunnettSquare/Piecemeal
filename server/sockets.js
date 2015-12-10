@@ -21,11 +21,6 @@ var connect = function(eventUrl, eventInfo, io, userObj) {
 
     socket.on('addDish', function(data) {
       console.log("AddDish event heard from the client!", data);
-      console.log('parseInt(data.user_id) =', parseInt(data.user_id));
-      console.log('parseInt(data.event_id) =', parseInt(data.event_id));
-      console.log('data.user_id =', data.user_id);
-      console.log('data.event_id =', data.event_id);
-      console.log('Number(data.cost) =', Number(data.cost));
       util.createDish(db, data.name, Number(data.cost), data.user_id, data.event_id)
       .then(function(dish_id) {
         mealEvent.emit('dishAdded', {
