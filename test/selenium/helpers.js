@@ -93,5 +93,26 @@ goToAllDishes : function (webdriver, browser) {
       }
     })
   })
+ },
+ makeRoom: function(webdriver, browser, name, url) {
+  return browser.get(url)
+  .then(function() {
+    return browser.wait(webdriver.until.elementLocated(webdriver.By.css(".enterName")), 8 * 1000)
+  })
+  .then(function(element) {
+    return element.sendKeys(name);
+  })
+  .then(function() {
+    return browser.findElement(webdriver.By.className('createRoom'))
+  })
+  .then(function(button) {
+    return button.click()
+  })
+  .then(function() {
+    return browser.wait(webdriver.until.elementLocated(webdriver.By.css("strong.code")), 10000)
+  })
+  .then(function (element) {  
+    return element.getText();
+  })
  } 
 }

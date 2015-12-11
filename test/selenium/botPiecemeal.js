@@ -9,6 +9,8 @@ var guestTwo = new webdriver.Builder().usingServer().withCapabilities({'browserN
 var guestThree = new webdriver.Builder().usingServer().withCapabilities({'browserName': 'chrome' }).build();
 var By = webdriver.By;
 
+var url = 'localhost:8080/';
+
 setTimeout(function() {
 	helpers.closeBrowser(hostBrowser);
 	helpers.closeBrowser(guestOne);
@@ -16,33 +18,16 @@ setTimeout(function() {
 	helpers.closeBrowser(guestThree);
 }, 20000)
 
-hostBrowser.get('localhost:8080/')
 var roomCode;
 
-hostBrowser.wait(webdriver.until.elementLocated(webdriver.By.css("input.ng-invalid")), 8 * 1000)
-.then(function(element) {
-	element.sendKeys('host');
+helpers.makeRoom(webdriver, hostBrowser, 'Host', url)
+.then(function(code) {
+	console.log(code);
+	roomCode = code;
 })
 .then(function() {
-	return hostBrowser.findElements(By.tagName('input'))
-})
-.then(function(inputs) {
-	return inputs[1].click()
-})
-.then(function() {
-	return hostBrowser.wait(webdriver.until.elementLocated(webdriver.By.css(".ng-binding .ng-binding")), 8 * 1000)
-})
-.then(function (element) {
-	hostBrowser.sleep(200);
-	return element.getText();
-})
-.then(function(text) {
-	roomCode = text;
-	console.log('roomCode =', roomCode);
-})
-.then(function() {
-	helpers.joinRoom(webdriver, guestOne, 'localhost:8080/', roomCode, 'guestOne');
-	helpers.joinRoom(webdriver, guestTwo, 'localhost:8080/', roomCode, 'guestTwo');
+	helpers.joinRoom(webdriver, guestOne, url, roomCode, 'guestOne');
+	helpers.joinRoom(webdriver, guestTwo, url, roomCode, 'guestTwo');
 })
 .then(function() {
 	return helpers.goToAddDishes(webdriver, hostBrowser);
@@ -87,7 +72,7 @@ hostBrowser.wait(webdriver.until.elementLocated(webdriver.By.css("input.ng-inval
 	return helpers.goToAllDishes(webdriver, guestOne);
 })
 .then(function() {
-	return helpers.joinRoom(webdriver, guestThree, 'localhost:8080/', roomCode, 'guestThree');
+	return helpers.joinRoom(webdriver, guestThree, url, roomCode, 'guestThree');
 })
 .then(function() {
 	return guestThree.wait(webdriver.until.elementLocated(webdriver.By.css(".share")), 8 * 1000)
