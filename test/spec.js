@@ -1,10 +1,11 @@
 // JASMINE TESTS
 // Notes: May need to comment out calculateRunningTotal in addDish.factory to get this to work
+// run with karma start karma.conf.js
 
 beforeEach(module('Piecemeal'));
 var $controller;
 
-beforeEach(inject(function(_$controller_, $rootScope){
+beforeEach(inject(function(_$controller_, $rootScope, appFactory){
   // Angular mock injector unwraps the underscores (_) from around the parameter names when matching
   $controller = _$controller_;
   socketMock = new sockMock($rootScope);
@@ -26,17 +27,27 @@ describe('HostReceiptCtrl', function() {
 
 
 describe('AddDishCtrl', function() {
-  var $scope, controller;
+  var $scope, controller, addDishFactory;
 
   beforeEach(function() {
     $scope = {};
-    controller = $controller('AddDishCtrl', { $scope: $scope, socketFactory: socketMock, serverState:{roomName:'testRoom'}});
+    addDishFactory = {
+      calculateRunningTotal: function () {}
+    };
+    appFactory = {
+      getSessStorage: function () {},
+      initListeners : function() {},
+      shareDish: function () {}
+    };
+
+    controller = $controller('AddDishCtrl', { $scope: $scope, socketFactory: socketMock, addDishFactory: addDishFactory, appFactory: appFactory});
   });
 
   it('.test should equal "test"', function() {
     expect(controller.test).toEqual('test');
   });
   
+  // Bug: currently incorrectly returning 'false' instead of 'true':
   it('AddDishCtrl.addDish should emit "addDish" and a dish object', function() {
     controller.addDish("ramen", 10);
     var testReceived = false;
@@ -66,14 +77,12 @@ describe('AllDishesCtrl', function() {
         console.log("mock $scope .on"); 
       }
     };
-    var appFactory = {
-      initListeners : function() {
-        console.log("mock appFactory init!");
-      },
-      shareDish: function () {
-
-      }
+    appFactory = {
+      getSessStorage: function () {},
+      initListeners : function() {},
+      shareDish: function () {}
     };
+
     controller = $controller('AllDishesCtrl', { $scope: $scope, socketFactory: socketMock, appFactory: appFactory});
   });
 
