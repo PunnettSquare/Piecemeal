@@ -25,6 +25,7 @@ module.exports = function(config) {
       'client/bower_components/angular-ui-router/**/*.js',
       'client/bower_components/angular-messages/angular-messages.js',
       'client/bower_components/lodash/lodash.js',
+      'client/bower_components/jquery/dist/jquery.js',
       'client/app/app.module.js',
       'client/app/*.js',
       'client/app/**/*.js',

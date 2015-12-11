@@ -1,108 +1,104 @@
 // JASMINE TESTS
 // Notes: May need to comment out calculateRunningTotal in addDish.factory to get this to work
 
+beforeEach(module('Piecemeal'));
+var $controller;
+
+beforeEach(inject(function(_$controller_, $rootScope){
+  // Angular mock injector unwraps the underscores (_) from around the parameter names when matching
+  $controller = _$controller_;
+  socketMock = new sockMock($rootScope);
+}));
+
+describe('HostReceiptCtrl', function() {
+  var $scope, controller;
+
+  beforeEach(function() {
+    $scope = {};
+    controller = $controller('HostReceiptCtrl', { $scope: $scope, socketFactory: socketMock, serverState:{roomName:'testRoom'}});
+  });
+
+  it('has the property "test" which equals "test"', function() {
+    expect(controller.test).toEqual('test');
+  });
+
+});
+
+
+describe('AddDishCtrl', function() {
+  var $scope, controller;
+
+  beforeEach(function() {
+    $scope = {};
+    controller = $controller('AddDishCtrl', { $scope: $scope, socketFactory: socketMock, serverState:{roomName:'testRoom'}});
+  });
+
+  it('.test should equal "test"', function() {
+    expect(controller.test).toEqual('test');
+  });
+  
+  it('AddDishCtrl.addDish should emit "addDish" and a dish object', function() {
+    controller.addDish("ramen", 10);
+    var testReceived = false;
+
+    // Hacky way to check and update testReceived. socketMock.on can be used for the same thing once functional
+    if (socketMock.emits["addDish"].name === "Ramen" && socketMock.emits["addDish"].cost === 10) {
+      testReceived = true;
+    }
+
+    expect(testReceived).toBe(true);
+  });
+
+  it("should calculate user's current total", function() {
+
+  });
+
+
+});
+
 describe('AllDishesCtrl', function() {
-  beforeEach(module('Piecemeal'));
 
-  var $controller;
+  var $scope, controller;
 
-  beforeEach(inject(function(_$controller_, $rootScope){
-    // Angular mock injector unwraps the underscores (_) from around the parameter names when matching
-    $controller = _$controller_;
-    socketMock = new sockMock($rootScope);
-  }));
-
-  describe('HostReceiptCtrl', function() {
-    var $scope, controller;
-
-    beforeEach(function() {
-      $scope = {};
-      controller = $controller('HostReceiptCtrl', { $scope: $scope, socketFactory: socketMock, serverState:{roomName:'testRoom'}});
-    });
-
-    it('has the property "test" which equals "test"', function() {
-      expect(controller.test).toEqual('test');
-    });
-
-  });
-
-
-  describe('AddDishCtrl', function() {
-    var $scope, controller;
-
-    beforeEach(function() {
-      $scope = {};
-      controller = $controller('AddDishCtrl', { $scope: $scope, socketFactory: socketMock, serverState:{roomName:'testRoom'}});
-    });
-
-    it('.test should equal "test"', function() {
-      expect(controller.test).toEqual('test');
-    });
-    
-    it('AddDishCtrl.addDish should emit "addDish"', function() {
-      controller.addDish("ramen", 10);
-      var testReceived = false;
-
-      // Hacky way to check and update testReceived
-      if (socketMock.emits["addDish"].name === "Ramen" && socketMock.emits["addDish"].cost === 10) {
-        testReceived = true;
+  beforeEach(function() {
+    $scope = {
+      $on: function () {
+        console.log("mock $scope .on"); 
       }
+    };
+    var appFactory = {
+      initListeners : function() {
+        console.log("mock appFactory init!");
+      },
+      shareDish: function () {
 
-      // Original, but not necessary way to check and update testReceived is to use socketMock.on
-      // socketMock.on("addDish", function(data){
-      //   console.log("socketMock.on callback is receiving this data: ", data);  // BUG data = undefined
-      //   if (data.cost === 10 && data.name === "ramen") { //socketmock. .... .data
-      //     return true;
-      //   } else {
-      //     return false;
-      //   }
-      // });
-      // testReceived = socketMock.events["addDish"][0]("addDish"); // can remove
-
-      expect(testReceived).toBe(true);
-    });
-
-    // it('AddDishCtrl.addDish should emit a dish object', function() {
-    //   expect($scope.test).toEqual('test');
-    // });
-
-    // working socketMock test:
-    // it("emits and receives messages", function(){
-    //   var testReceived = false;
-
-      // socketMock.on("addDish", function(data){
-      //   if (data.cost === 10 && data.name === "Ramen") {
-      //     testReceived = true;
-      //   }
-      //   console.log("testReceived: ", testReceived); 
-      // });
-
-    //   socketMock.emit("addDish", {
-    //     cost: 10,
-    //     name: "Ramen",
-    //     user_id: window.sessionStorage.user_id,
-    //     event_id: window.sessionStorage.event_id,
-    //     users: [window.sessionStorage.user_id]
-    //   });
-    //   console.log("socketMock.events: ", socketMock.events); 
-    //   console.log("socketMock.emits: ", socketMock.emits); 
-    //   expect(testReceived).toBe(true);
-    // });
-
-    // socketMock test format:
-    // it("emits and receives messages", function(){
-    //   var testReceived = false;
-
-    //   socket.on("test", function(data){
-    //     testReceived = true;
-    //   });
-
-    //   socket.emit("test", { info: "test" });
-    //   expect(testReceived).toBe(true);
-    // });
-
+      }
+    };
+    controller = $controller('AllDishesCtrl', { $scope: $scope, socketFactory: socketMock, appFactory: appFactory});
   });
 
+  it('has the property "test" which equals "test"', function() {
+    // expect(controller.test).toEqual('test'); // put self.test on controller to verify it's working
+  });
+
+  it('listens for "joined"', function() {
+  });
+
+  // Bug: currently incorrectly returning 'false' instead of 'true':
+  // it('.shareDish emits "shareDish" with a dish object', function() {
+  //   controller.shareDish("burger", 10);
+  //   var testReceived = false;
+
+  //   // Hacky way to check and update testReceived. socketMock.on can be used for the same thing once functional
+  //   if (socketMock.emits["shareDish"].name === "Burger" && socketMock.emits["shareDish"].cost === 10) {
+  //     testReceived = true;
+  //   }
+
+  //   expect(testReceived).toBe(true);
+  // });
+
+  it('.unshareDish emits "unshareDish" with a dish object', function() {
+  });
 
 });
 
@@ -169,6 +165,18 @@ var sockMock = function($rootScope){
 
 };
 
+  // socketMock test format:
+
+  // it("emits and receives messages", function(){
+  //   var testReceived = false;
+
+  //   socket.on("test", function(data){
+  //     testReceived = true;
+  //   });
+
+  //   socket.emit("test", { info: "test" });
+  //   expect(testReceived).toBe(true);
+  // });
 
 /*
 // ANGULAR EXAMPLE
