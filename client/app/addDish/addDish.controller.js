@@ -13,6 +13,7 @@
     self.data = appFactory.data;
 
     self.addDish = function(name, cost) {
+
       var dish = {
         cost: Number(cost),
         name: name,
@@ -22,7 +23,6 @@
       };
       socketFactory.emit('addDish', dish);
       // appFactory.addDish(dish);
-      // NEED TO GET DISH ID somehow.
       self.userTotal += cost;
       self.amount = 0;
       self.dishName = '';

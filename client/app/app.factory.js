@@ -33,7 +33,8 @@
       }
       if (prop === "user_id") {
         return parseInt(window.sessionStorage.user_id);
-      } if (prop === "username") {
+      }
+      if (prop === "username") {
         return window.sessionStorage.username;
       }
     }
@@ -90,30 +91,35 @@
 
     function initListeners() {
       socketFactory.on('joined', function(data) {
-        console.log("Heard 'joined' in appFactory.data: ", data);
+        console.log("Heard 'joined' in appFactory.data:", data);
         services.data = data;
         $rootScope.$broadcast('joined');
       });
 
       socketFactory.on('newParticipant', function(userObj) {
+        console.log("Heard 'newParticipant' in appFactory:", userObj);
         services.data.users.push(userObj);
       });
+
       socketFactory.on('dishAdded', function(dish) {
+        console.log("Heard 'dishAdded' in appFactory.data:", dish);
         // data format: {cost: 3, name: "rice", user_id: "29319", event_id: 1, users: ["29319"]}
         addDish(dish);
       });
 
       socketFactory.on('dishShared', function(data) {
+        console.log("Heard 'dishShared' in appFactory.data:", data);
         // data format: {user_id: 24, dish_id: 14}
         shareDish(data.dish_id, data.user_id);
       });
 
       socketFactory.on('dishUnshared', function(data) {
-        console.log("heard 'dishUnshared' in appFactory. data: ", data);
+        console.log("Heard 'dishUnshared' in appFactory.data:", data);
         unshareDish(data.dish_id, data.user_id);
       });
 
       socket.on('billsSentToGuests', function(data) {
+        console.log("Heard 'billsSentToGuests' in appFactory.data:", data);
         services.billData = data;
         $rootScope.$broadcast('billsSentToGuests');
         $rootScope.$apply();
@@ -122,7 +128,7 @@
     }
   }
 
-})()
+})();
 
 // Temporarily keep old version of socket setup for reference:
 

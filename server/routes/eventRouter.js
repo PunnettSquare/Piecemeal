@@ -78,10 +78,10 @@ module.exports = function(app, io) {
                   return user;
                 }, false);
                 handleSocket(req.url, eventInfo, io, newUserObj);
-                res.send(200);
+                res.sendStatus(200);
               });
           } else {
-            res.send(200);
+            res.sendStatus(200);
           }
           // retrieve the state of the event to send to socket
           // return util.gatherState(db, 1, code) // dummy data
@@ -90,7 +90,7 @@ module.exports = function(app, io) {
           throw err;
         });
     } else {
-      res.send(200);
+      res.sendStatus(200);
     }
   });
 
