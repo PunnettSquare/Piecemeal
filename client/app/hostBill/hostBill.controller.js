@@ -11,25 +11,25 @@
 
     self.data = appFactory.data;
 
-    // This will entirely depend on data reformat of appFactory.data.
-    self.allDishes = _.each(self.data.dishes,
-      function(obj, key) {
-        obj.indivCost = obj.cost / obj.users.length;
-        obj.isShared = (obj.users.length === 1) ? false : true;
-        obj.users = _.map(obj.users, function(id) {
-          var index = _.findIndex(self.data.users, {
-            'id': id
+    if (self.data) {
+      // This will entirely depend on data reformat of appFactory.data.
+      self.allDishes = _.each(self.data.dishes,
+        function(obj, key) {
+          obj.indivCost = obj.cost / obj.users.length;
+          obj.isShared = (obj.users.length === 1) ? false : true;
+          obj.userSummary = _.map(obj.users, function(id) {
+            var index = _.findIndex(self.data.users, {
+              'id': id
+            });
+            return {
+              username: self.data.users[index].username,
+              user_id: parseInt(self.data.users[index].id),
+              isHost: self.data.users[index].host
+            };
           });
-          return {
-            username: self.data.users[index].username,
-            user_id: self.data.users[index].id,
-            isHost: self.data.users[index].host
-          };
         });
-      });
-
-    self.subTotal = _.sum(_.pluck(self.allDishes, 'cost'));
-
+      self.subTotal = _.sum(_.pluck(self.allDishes, 'cost'));
+    }
 
     self.sendBillsToGuests = function() {
       self.tipSum = (self.subTotal * self.tip * 0.01) + self.subTotal;

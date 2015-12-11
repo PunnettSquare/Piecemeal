@@ -63,7 +63,13 @@ var connect = function(eventUrl, eventInfo, io, userObj) {
     socket.on('sendBillToGuests', function(data) {
       console.log("sendBillToGuests event heard from server!", data);
       socket.broadcast.emit('billsSentToGuests', data);
+
+      util.addTipAndTax(db, data.event_id, data.taxPercent, data.tipPercent)
+        .catch(function(err) {
+          throw err;
+        });
     });
+
     // socket.on('finished', function(data) { // how to
     //   util.userFinished(db, data.userId, data.eventId);
     // })

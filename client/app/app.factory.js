@@ -17,6 +17,8 @@
       shareDish: shareDish,
       unshareDish: unshareDish,
       getSessStorage: getSessStorage
+        // data: data
+        // data.billData: billData
     };
 
     return services;
@@ -41,8 +43,6 @@
 
     function addDish(dish) {
       for (var i = 0; i < services.data.users.length; i++) {
-        // if (services.data.users[i].id.toString() === dish.user_id) {
-        // can get rid of toString because it's all ints now
         if (services.data.users[i].id === dish.user_id) {
           services.data.users[i].dishes.push(dish);
         }
@@ -53,7 +53,6 @@
     function shareDish(dish_id, user_id) {
       var dishObj;
       services.data.dishes.forEach(function(dish) {
-        // if (dish.dish_id.toString() === dish_id) {
         if (dish.dish_id === dish_id) {
           dish.users.push(user_id);
           dishObj = dish;
@@ -68,13 +67,11 @@
 
     function unshareDish(dish_id, user_id) {
       services.data.dishes.forEach(function(dish) {
-        // if (dish.dish_id.toString() === dish_id) {
         if (dish.dish_id === dish_id) {
           dish.users.splice(dish.users.indexOf(user_id), 1);
         }
       });
       services.data.users.forEach(function(user) {
-        // if (user.id.toString() === user_id) {
         if (user.id === user_id) {
           var dishIndex = user.dishes.reduce(function(dishIndex, dish, index) {
             if (dishIndex || dishIndex === 0) {
@@ -120,8 +117,8 @@
 
       socket.on('billsSentToGuests', function(data) {
         console.log("Heard 'billsSentToGuests' in appFactory.data:", data);
-        services.billData = data;
-        $rootScope.$broadcast('billsSentToGuests');
+        services.data.billData = data;
+        $rootScope.$broadcast('billsSentToGuests', data);
         $rootScope.$apply();
       });
 
