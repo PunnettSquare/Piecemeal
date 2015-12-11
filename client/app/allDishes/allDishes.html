@@ -1,6 +1,6 @@
 <div id="allDishes" ng-cloak>
 
-  <button ng-click="allDishes.goToAddDish()">Add Dish</button>
+  <button class="addDish" ng-click="allDishes.goToAddDish()">Add Dish</button>
   <h1>All Dishes</h1>
 
   <p>Hi, {{_.capitalize(allDishes.username)}}. You are in room <strong>{{allDishes.data.code}}</strong>.</p>
@@ -27,10 +27,10 @@
 
     <br><br>
 
-    <button ng-click="allDishes.shareDish(dish.dish_id, allDishes.user_id, dish.users)">
+    <button ng-click="allDishes.shareDish(dish.dish_id, allDishes.user_id, dish.users)" class="share">
     Share
     </button>
-    <button ng-click="allDishes.unshareDish(dish.dish_id, allDishes.user_id, dish.users)">
+    <button ng-click="allDishes.unshareDish(dish.dish_id, allDishes.user_id, dish.users)" class="unshare">
     Unshare
     </button>
   </div>
