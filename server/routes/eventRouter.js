@@ -88,7 +88,7 @@ module.exports = function(app, io) {
         .catch(function(err) {
           throw err;
         });
-    } 
+    }
   });
 
   // uncomment this to populate an empty database with dummy data from ./generateData.js
