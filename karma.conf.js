@@ -16,6 +16,7 @@ module.exports = function(config) {
     // list of files / patterns to load in the browser
     files: [
       // {pattern: "bower_components/angular-socket.io-mock.js", included: false},
+      // not included unless needed: jquery, angular-animate, angular-aria
       // load angular and angular-mocks.js first:
       'client/bower_components/angular/angular.js',
       'client/bower_components/angular-mocks/angular-mocks.js',
@@ -23,6 +24,8 @@ module.exports = function(config) {
       // 'client/bower_components/angular-socket-io/socket.js',
       'client/bower_components/angular-ui-router/**/*.js',
       'client/bower_components/angular-messages/angular-messages.js',
+      'client/bower_components/lodash/lodash.js',
+      'client/bower_components/jquery/dist/jquery.js',
       'client/app/app.module.js',
       'client/app/*.js',
       'client/app/**/*.js',
@@ -48,8 +51,8 @@ module.exports = function(config) {
     reporters: ['progress'],
 
 
-    // web server port
-    port: 8080,
+    // port for karma's own web server to run. should not overlap with existing web server's port (8080)
+    port: 9876,
 
 
     // enable / disable colors in the output (reporters and logs)
