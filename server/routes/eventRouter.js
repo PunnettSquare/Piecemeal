@@ -4,7 +4,7 @@ var handleSocket = require('../sockets');
 var util = require('../utility.js');
 var _ = require('underscore');
 
-module.exports = function (app, io) {
+module.exports = function(app, io) {
 
   app.get('/favicon.ico', function(req, res) {
     res.sendStatus(200);
@@ -50,43 +50,52 @@ module.exports = function (app, io) {
       });
   });
 
+  var connections = {};
+
   // **Wildcard route & event id handler.**
   app.post('/*', function(req, res) {
     var code = req.url.slice(1);
-    // query database for event id based on code
-    util.findEvent(db, code)
-      .then(function(event_id) {
-        //check for an event
-        if (event_id.length !== 0) {
-          return util.gatherState(db, event_id[0].id, code) // real data
-          .then(function(eventInfo) {
-            // handle the socket connection
-            var newUserObj = _.reduce(eventInfo.users, function(user, curr) {
-              if (!!user) {
-                return user;
-              }
-              if (curr.id.toString() === req.body.user_id.toString()) {
-                return curr;
-              }
-              return user;
-            }, false);
+    var user_id = req.body.user_id;
+    if (!connections[user_id]) {
+      connections[user_id] = true;
 
-            handleSocket(req.url, eventInfo, io, newUserObj);
-            res.end();
-          });
-        } else {
-          res.end();
-        }
-        // retrieve the state of the event to send to socket
-        // return util.gatherState(db, 1, code) // dummy data
-      })
-      .catch(function(err) {
-        throw err;
-      });
+      // query database for event id based on code
+
+      util.findEvent(db, code)
+        .then(function(event_id) {
+          //check for an event
+          if (event_id.length !== 0) {
+            return util.gatherState(db, event_id[0].id, code) // real data
+              .then(function(eventInfo) {
+                // handle the socket connection
+                var newUserObj = _.reduce(eventInfo.users, function(user, curr) {
+                  if (!!user) {
+                    return user;
+                  }
+                  if (curr.id.toString() === req.body.user_id.toString()) {
+                    return curr;
+                  }
+                  return user;
+                }, false);
+                handleSocket(req.url, eventInfo, io, newUserObj);
+                res.send(200);
+              });
+          } else {
+            res.send(200);
+          }
+          // retrieve the state of the event to send to socket
+          // return util.gatherState(db, 1, code) // dummy data
+        })
+        .catch(function(err) {
+          throw err;
+        });
+    } else {
+      res.send(200);
+    }
   });
 
   // uncomment this to populate an empty database with dummy data from ./generateData.js
   // comment it out again after one run of this file
   // setTimeout(generateData, 1500);
 
-}
+};

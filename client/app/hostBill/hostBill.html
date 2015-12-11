@@ -4,9 +4,15 @@
 
   <div ng-repeat="dish in hostBill.allDishes">
     <h3>{{ _.capitalize(dish.name)}}</h3>
+
+    <!-- not slow -->
     <p>Cost: {{dish.cost | currency }}</p>
+
+    <!-- slow! need to refactor. -->
     <p><small>Individual cost: {{dish.indivCost | currency }}</small></p>
+
     <span>
+      <!-- slow! need to refactor.-->
       {{ _.map(_.pluck(dish.users, 'username'), _.capitalize).join(", ") }} got this.
     </span>
   </div>
