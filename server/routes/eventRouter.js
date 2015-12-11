@@ -56,15 +56,19 @@ module.exports = function(app, io) {
   app.post('/*', function(req, res) {
     var code = req.url.slice(1);
     var user_id = req.body.user_id;
+    res.send(200);
     if (!connections[user_id]) {
       connections[user_id] = true;
-
+      setTimeout(function() {
+        connections[user_id] = false;
+      }, 5000);
       // query database for event id based on code
 
       util.findEvent(db, code)
         .then(function(event_id) {
           //check for an event
           if (event_id.length !== 0) {
+          // retrieve the state of the event to send to socket
             return util.gatherState(db, event_id[0].id, code) // real data
               .then(function(eventInfo) {
                 // handle the socket connection
@@ -78,24 +82,16 @@ module.exports = function(app, io) {
                   return user;
                 }, false);
                 handleSocket(req.url, eventInfo, io, newUserObj);
-                res.sendStatus(200);
               });
-          } else {
-            res.sendStatus(200);
           }
-          // retrieve the state of the event to send to socket
-          // return util.gatherState(db, 1, code) // dummy data
         })
         .catch(function(err) {
           throw err;
         });
-    } else {
-      res.sendStatus(200);
-    }
+    } 
   });
 
   // uncomment this to populate an empty database with dummy data from ./generateData.js
   // comment it out again after one run of this file
   // setTimeout(generateData, 1500);
-
 };

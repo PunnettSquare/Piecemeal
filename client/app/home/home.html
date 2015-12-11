@@ -9,11 +9,11 @@
   </form>
 
   <h2>Are you a host?</h2>
-  <input type="submit" value="Create room" ng-click="home.setSessionUser(username, true, null)">
+  <input type="submit" value="Create room" class="createRoom" ng-click="home.setSessionUser(username, true, null)">
 
   <h2>Are you a guest?</h2>
-  piecemeal.com/<input type="text" placeholder="roomName" ng-model="url">
-  <input name="submit" type="submit" value="Enter Room" ng-click="home.setSessionUser(username, false, url)">
+  piecemeal.com/<input type="text" class="roomName" placeholder="roomName" ng-model="url">
+  <input name="submit" type="submit" class="enterRoom" value="Enter Room" ng-click="home.setSessionUser(username, false, url)">
 
   <div ng-show="home.isError">Your entered room does not exist. Please try another.</div>
 
