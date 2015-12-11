@@ -13,24 +13,16 @@
     self.event_id = appFactory.getSessStorage('event_id');
     self.username = appFactory.getSessStorage('username');
 
-    // self.user_id = window.sessionStorage.user_id;
-    // self.userInfo = jQuery.extend({}, window.sessionStorage);
-    // self.userInfo.user_id = parseInt(self.userInfo.user_id);
-    // self.userInfo.event_id = parseInt(self.userInfo.event_id);
-
     self.data = appFactory.data;
 
     socketFactory.init();
     if (!self.data) {
       appFactory.initListeners();
-      // self.getDishes(self.data);
     }
     // When appFactory is updated, $rootScope is used as a bus to emit to user's allDishes controller $scope
-
     $scope.$on('joined', function() { //$on does not work with `self`
       self.data = appFactory.data;
       console.log("Joined the All Dishes room.");
-      // self.getDishes(self.data);
     });
 
     self.goToAddDish = function() {
