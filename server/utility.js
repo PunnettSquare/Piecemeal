@@ -17,7 +17,7 @@ module.exports = {
               host: true,
               status: true
             }).returning('id')
-            .then(function(event_id) {
+            .then(function() {
               return {event_id: event_id, user_id: user_id};
             });
           });

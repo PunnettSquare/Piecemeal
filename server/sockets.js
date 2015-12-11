@@ -20,7 +20,6 @@ var connect = function(eventUrl, eventInfo, io, userObj) {
     //make users object, send it to everyone
 
     socket.on('addDish', function(data) {
-<<<<<<< fec23bbfea542529d296758b0a59a685b263cc44
       console.log("AddDish event heard from the server!", data);
       util.createDish(db, data.name, Number(data.cost), parseInt(data.user_id), parseInt(data.event_id))
         .then(function(dishIdObj) {
