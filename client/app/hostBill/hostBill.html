@@ -13,7 +13,7 @@
 
     <span>
       <!-- slow! need to refactor.-->
-      {{ _.map(_.pluck(dish.users, 'username'), _.capitalize).join(", ") }} got this.
+      {{ _.map(_.pluck(dish.userSummary, 'username'), _.capitalize).join(", ") }} got this.
     </span>
   </div>
 

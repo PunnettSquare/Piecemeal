@@ -3,23 +3,23 @@
   <button ng-show="guestBill.isHost" ng-click="guestBill.goToHostBill()">See Final Bill</button>
   <h1>{{ _.capitalize(guestBill.username) }}'s Total Bill</h1>
 
-  <div ng-repeat="dish in guestBill.guestDishes">
+  <div ng-repeat="dish in guestBill.getGuestDishes(guestBill.user_id, guestBill.data.dishes)">
     <h2>{{_.capitalize(dish.name)}}</h2>
-    <p>Your portion: {{dish.indivCost | currency }}</p>
+    <p>Your portion: {{ guestBill.getDishIndivCost(guestBill.user_id, dish) | currency }}</p>
     <small>Total Cost</small>
-    <span><small>{{dish.cost | currency }}</small></span>
+    <span><small>{{ dish.cost | currency }}</small></span>
     <h3>You Shared This With:</h3>
-    <p ng-show="dish.isShared" ng-repeat="person in dish.otherSharedUsers">
+    <p ng-show="guestBill.isDishShared(guestBill.user_id, dish)" ng-repeat="person in guestBill.getOtherSharedUserForDish(guestBill.user_id, dish, guestBill.data.users) ">
       <span>{{ _.capitalize(person.username) }}</span>
     </p>
-    <p ng-show="!dish.isShared">
+    <p ng-hide="guestBill.isDishShared(guestBill.user_id, dish)">
       <span>Shared by yourself only</span>
     </p>
   </div>
 
   <br><br>
 
-  <div ng-show="guestBill.billSent">
+  <div ng-if="guestBill.billSent">
     <h2>Your Subtotal</h2>
     <p>{{guestBill.guestSubtotal | currency}}</p>
     <h3>Tax</h3>

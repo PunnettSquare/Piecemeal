@@ -17,7 +17,6 @@
             username: username
           })
           .then(function(data) {
-            console.log('data =', data);
             _.assign(window.sessionStorage, {
               username: username,
               code: data.code,

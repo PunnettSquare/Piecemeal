@@ -20,7 +20,6 @@
 
     self.data = appFactory.data;
 
-    // self.dishes = appFactory.dishes; // should be able to get rid of this?
     socketFactory.init();
     if (!self.data) {
       appFactory.initListeners();

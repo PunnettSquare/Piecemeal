@@ -12,16 +12,26 @@ module.exports = {
           .returning('id')
           .then(function(event_id) {
             return db('usersJoinEvents').insert({
-              user_id: user_id[0],
-              event_id: event_id[0],
-              host: true,
-              status: true
-            }).returning('id')
-            .then(function() {
-              return {event_id: event_id, user_id: user_id};
-            });
+                user_id: user_id[0],
+                event_id: event_id[0],
+                host: true,
+                status: true
+              }).returning('id')
+              .then(function() {
+                return {
+                  event_id: event_id,
+                  user_id: user_id
+                };
+              });
           });
       });
+  },
+
+  addTipAndTax: function(db, event_id, taxPercent, tipPercent) {
+    return db('events').insert({
+      taxPercent: taxPercent,
+      tipPercent: tipPercent
+    });
   },
 
   createUser: function(db, username, event_id, host) {
@@ -40,7 +50,7 @@ module.exports = {
   },
 
   createDish: function(db, dishName, cost, user_id, event_id) {
-    var dishId
+    var dishId;
     return db('dishes').insert({
         name: dishName,
         cost: cost,
@@ -48,14 +58,16 @@ module.exports = {
       })
       .returning('id')
       .then(function(dish_id) {
-        dishId = dish_id
+        dishId = dish_id;
         return db('usersJoinDishes').insert({
           user_id: user_id,
           dish_id: dish_id[0]
         }).returning('id');
       })
-      .then(function () {
-        return {dish_id: dishId}
+      .then(function() {
+        return {
+          dish_id: dishId
+        };
       });
   },
 
@@ -76,30 +88,37 @@ module.exports = {
   gatherState: function(db, event_id, code) {
     var state = {
       event_id: event_id,
-      code: code
+      code: code,
+      billData: {}
     };
-    return module.exports.findEventUsers(db, event_id)
-      .then(function(users) {
-        state.users = users;
-        return Promise.all(_.map(users, function(user) {
-            return module.exports.findUserDishes(db, user.id);
-          }))
-          .then(function(usersDishesArrays) {
-            usersDishesArrays.forEach(function(userDishesArray) {
-              _.each(state.users, function(userObj, index, list) {
-                var username = userObj.username;
-                if (list[index].dishes === undefined) {
-                  list[index].dishes = [];
-                }
-                userDishesArray.forEach(function(dishObj) {
-                  if (username === dishObj.username) {
-                    list[index].dishes.push(dishObj);
-                  }
+    return module.exports.findTipAndTax(db, event_id)
+      .then(function(tipTaxObj) {
+        state.billData.tipPercent = tipTaxObj.tipPercent;
+        state.billData.taxPercent = tipTaxObj.taxPercent;
+      }).then(function() {
+        return module.exports.findEventUsers(db, event_id)
+          .then(function(users) {
+            state.users = users;
+            return Promise.all(_.map(users, function(user) {
+                return module.exports.findUserDishes(db, user.id);
+              }))
+              .then(function(usersDishesArrays) {
+                usersDishesArrays.forEach(function(userDishesArray) {
+                  _.each(state.users, function(userObj, index, list) {
+                    var username = userObj.username;
+                    if (list[index].dishes === undefined) {
+                      list[index].dishes = [];
+                    }
+                    userDishesArray.forEach(function(dishObj) {
+                      if (username === dishObj.username) {
+                        list[index].dishes.push(dishObj);
+                      }
+                    });
+                  });
                 });
+                state.dishes = module.exports.findDishArray(usersDishesArrays);
+                return state;
               });
-            });
-            state.dishes = module.exports.findDishArray(usersDishesArrays);
-            return state;
           });
       })
       .catch(function(err) {
@@ -132,13 +151,18 @@ module.exports = {
     return db.select().from('users').innerJoin('usersJoinDishes', 'users.id', 'usersJoinDishes.user_id').innerJoin('dishes', 'dishes.id', 'usersJoinDishes.dish_id').where('users.id', user_id); // TODO only get dishes associated with the event
   },
 
+  findTipAndTax: function(db, event_id) {
+    return db('events').select('tipPercent', 'taxPercent')
+      .where('id', event_id);
+  },
+
   generateCode: function() {
     function randomString(length, chars) {
       var result = '';
       for (var i = length; i > 0; --i) result += chars[Math.floor(Math.random() * chars.length)];
       return result;
     }
-    return randomString(32, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
+    return randomString(8, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
   },
 
   findDishArray: function(usersDishesArray) {
