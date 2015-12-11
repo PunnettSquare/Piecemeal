@@ -20,43 +20,48 @@ var connect = function(eventUrl, eventInfo, io, userObj) {
     //make users object, send it to everyone
 
     socket.on('addDish', function(data) {
-      console.log("AddDish event heard from the client!", data);
-      util.createDish(db, data.name, Number(data.cost), data.user_id, data.event_id)
-      .then(function(dish_id) {
-        mealEvent.emit('dishAdded', {
-          cost: data.cost,
-          name: data.name,
-          user_id: parseInt(data.user_id),
-          dish_id: dish_id,
-          users: data.users
+      console.log("AddDish event heard from the server!", data);
+      util.createDish(db, data.name, Number(data.cost), parseInt(data.user_id), parseInt(data.event_id))
+        .then(function(dishIdObj) {
+          mealEvent.emit('dishAdded', {
+            cost: data.cost,
+            name: data.name,
+            user_id: parseInt(data.user_id),
+            dish_id: dishIdObj.dish_id[0],
+            users: data.users
+          });
+        })
+        .catch(function(err) {
+          throw err;
         });
-      })
-      .catch(function(err) {
-        throw err;
-      });
-
     });
 
-    socket.on('shareDish', function (data) {
-      console.log("User is sharing dish");
-      socket.broadcast.emit('dishShared', {user_id: parseInt(data.user_id), dish_id: parseInt(data.dish_id)});
-      util.shareDish(db, parseInt(data.user_id), parseInt(data.dish_id))
-      .catch(function(err) {
-        throw err;
+    socket.on('shareDish', function(data) {
+      console.log("ShareDish event heard from server!", data);
+      socket.broadcast.emit('dishShared', {
+        user_id: data.user_id,
+        dish_id: data.dish_id
       });
+      util.shareDish(db, data.user_id, data.dish_id)
+        .catch(function(err) {
+          throw err;
+        });
     });
 
-    socket.on('unshareDish', function (data) {
-      console.log("User is no longer sharing dish");
-      socket.broadcast.emit('dishUnshared', {user_id: parseInt(data.user_id), dish_id: parseInt(data.dish_id)});
-      util.unshareDish(db, parseInt(data.user_id), parseInt(data.dish_id))
-      .catch(function(err) {
-        throw err;
+    socket.on('unshareDish', function(data) {
+      console.log("UnshareDish event heard from server!", data);
+      socket.broadcast.emit('dishUnshared', {
+        user_id: data.user_id,
+        dish_id: data.dish_id
       });
+      util.unshareDish(db, data.user_id, data.dish_id)
+        .catch(function(err) {
+          throw err;
+        });
     });
 
     socket.on('sendBillToGuests', function(data) {
-      console.log('Bill data sent to guests =', data);
+      console.log("sendBillToGuests event heard from server!", data);
       socket.broadcast.emit('billsSentToGuests', data);
     });
     // socket.on('finished', function(data) { // how to
