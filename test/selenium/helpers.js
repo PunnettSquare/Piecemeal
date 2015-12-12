@@ -148,7 +148,6 @@ goToAllDishes : function (webdriver, browser) {
         }
         return shortest;
       });
-      console.log('shortest: ', shortest);
       return Promise.each(shortest, function(navigationFunction, index, list) {
         return module.exports['goTo' + _.capitalize(navigationFunction)](webdriver, browser)
         .then(function() {
@@ -209,10 +208,45 @@ goToAllDishes : function (webdriver, browser) {
     return button.click()
   })
   .then(function() {
+    browser.sleep(3000);
     return browser.wait(webdriver.until.elementLocated(webdriver.By.css("strong.code")), 10000)
   })
   .then(function (element) {  
     return element.getText();
   })
- } 
+ },
+
+  setTipAndTax: function(webdriver, browser, tip, tax) {
+    return browser.wait(webdriver.until.elementLocated(webdriver.By.css(".tipPercent")), 10000)
+    .then(function(element) {
+      return element.sendKeys(tip)
+    })
+    .then(function() {
+      return browser.findElement(webdriver.By.className('taxPercent'));
+    })
+    .then(function(element) {
+      return element.sendKeys(tax);
+    })
+    .then(function() {
+      return browser.findElement(webdriver.By.className('sendBills'));
+    })
+    .then(function(button) {
+      button.click();
+    })
+  },
+
+  getTip: function (webdriver, browser) {
+    return browser.wait(webdriver.until.elementLocated(webdriver.By.css(".tipPercent")), 10000)
+    .then(function(element) {
+      return element.getText()
+    })
+  },
+
+  getTax: function (webdriver, browser) {
+    return browser.wait(webdriver.until.elementLocated(webdriver.By.css(".taxPercent")), 10000)
+    .then(function(element) {
+      return element.getText()
+    })
+  }  
+
 }
