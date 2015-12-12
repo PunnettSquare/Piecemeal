@@ -36,7 +36,7 @@ helpers.makeRoom(webdriver, hostBrowser, 'Host', url)
 	return helpers.joinRoom(webdriver, guestTwo, url, roomCode, 'guestTwo');
 })
 .then(function() {
-	return helpers.goToAddDishes(webdriver, hostBrowser);
+	return helpers.goToAddDish(webdriver, hostBrowser);
 })
 
 .then(function() {
@@ -49,7 +49,7 @@ helpers.makeRoom(webdriver, hostBrowser, 'Host', url)
 	}))
 })
 .then(function() {
-	return helpers.goToAddDishes(webdriver, guestOne);
+	return helpers.goToAddDish(webdriver, guestOne);
 })
 .then(function() {
 	var dishes = [
@@ -61,7 +61,7 @@ helpers.makeRoom(webdriver, hostBrowser, 'Host', url)
 	}))
 })
 .then(function() {
-	return helpers.goToAddDishes(webdriver, guestTwo);
+	return helpers.goToAddDish(webdriver, guestTwo);
 })
 .then(function() {
 	var dishes = [
