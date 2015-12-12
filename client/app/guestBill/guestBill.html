@@ -38,20 +38,21 @@
   <h1>Your Subtotal</h1>
   <h2>{{guestBill.getGuestTotal(guestBill.data) | currency}}</h2>
 
-  <div ng-if="!guestBill.billSent && !guestBill.isHost">
+  <div ng-if="_.isEmpty(guestBill.data.billData) && !guestBill.isHost">
     Your host hasn't decided on the tip and tax yet. Please check again later.
   </div>
 
-  <div ng-if="guestBill.billSent">
+  <div ng-if="!_.isEmpty(guestBill.data.billData) && !guestBill.isHost">
     <h3>Tax</h3>
     <p>{{guestBill.guestTax | currency}}</p>
-    <small>You were charged {{ guestBill.billData.taxPercent }}% for tax.</small>
+    <small>You were charged {{ guestBill.data.billData.taxPercent }}% for tax.</small>
     <h3>Tip</h3>
     <p>{{guestBill.guestTip | currency}}</p>
-    <small>Your host chose {{ guestBill.billData.tipPercent }}% for tip.</small>
+    <small>Your host chose {{ guestBill.data.billData.tipPercent }}% for tip.</small>
     <h2>Your Total</h2>
     <p>{{guestBill.guestGrandTotal | currency}}</p>
-    <small>(Dinner Grand Total: {{  guestBill.billData.grandTotal | currency}})</small>
+    <small>(Dinner Grand Total: {{  guestBill.data.billData.grandTotal | currency}})</small>
   </div>
+
   <br><br>
 </div>
