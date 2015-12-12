@@ -31,6 +31,7 @@
           </p>
         </div>
         <br>
+
       </div>
 
       <br>
@@ -39,7 +40,7 @@
 
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h1 class="panel-title h1">Your Subtotal
+          <h2 class="panel-title h1">Your Subtotal
           <p class="text-right h5">{{guestBill.getGuestTotal(guestBill.data) | currency}}</p>
           </h2>
         </div>
@@ -50,44 +51,50 @@
       </div>
 
       <div class="panel panel-default" ng-if="!_.isEmpty(guestBill.data.billData) && !guestBill.isHost">
-        <div class="panel-heading"><h3 class="panel-title">Tax</h3></div>
-        <div class="panel-body">{{guestBill.guestTax | currency}}</div>
+        <div class="panel-body">
+          <h4 class="h4">Tax</h4 class="h4">
+          <p class="text-right h5">{{guestBill.guestTax | currency}}</p>
+        </div>
         <div class="panel-footer taxPercent">
           <small>You were charged {{ guestBill.data.billData.taxPercent }}% for tax.</small>
         </div>
       </div>
 
       <div class="panel panel-default" ng-if="!_.isEmpty(guestBill.data.billData) && !guestBill.isHost">
-        <div class="panel-heading"><h3 class="panel-title">Tip</h3></div>
-        <div class="panel-body">{{guestBill.guestTip | currency}}</div>
+        <div class="panel-body">
+          <h4 class="h4">Tip</h4 class="h4">
+          <p class="text-right h5">{{guestBill.guestTip | currency}}</p>
+        </div>
         <div class="panel-footer tipPercent">
           <small>Your host chose {{ guestBill.data.billData.tipPercent }}% for tip.</small>
         </div>
       </div>
 
+
       <div class="panel panel-default" ng-if="!_.isEmpty(guestBill.data.billData) && !guestBill.isHost">
-        <div class="panel-heading"><h3 class="panel-title">Your Total</h3></div>
-        <div class="panel-body">{{guestBill.guestGrandTotal | currency}}</div>
+        <div class="panel-heading"><h2 class="panel-title">Your Total</h2>
+          <p class="text-right h5">{{guestBill.guestGrandTotal | currency}}</p>
+        </div>
         <div class="panel-footer tipPercent">
-          <small>(Dinner Grand Total: {{  guestBill.data.billData.grandTotal | currency}})</small>
+          <small>Dinner Grand Total: {{  guestBill.data.billData.grandTotal | currency}}</small>
         </div>
       </div>
 
+      <!--      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">
+          Panel title
+          </h3>
+        </div>
+        <div class="panel-body">
+          Panel content
+        </div>
+        <div class="panel-footer">
+          Panel footer
+        </div>
+      </div> -->
+
+
     </div>
-    <!--      <div class="panel panel-default">
-      <div class="panel-heading">
-        <h3 class="panel-title">
-        Panel title
-        </h3>
-      </div>
-      <div class="panel-body">
-        Panel content
-      </div>
-      <div class="panel-footer">
-        Panel footer
-      </div>
-    </div> -->
-
-
   </div>
 </div>
