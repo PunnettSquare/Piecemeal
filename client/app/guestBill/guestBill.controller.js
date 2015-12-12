@@ -23,27 +23,37 @@
       });
     });
 
+    // bill being sent while guest is on guestBill page for the first time
+    $scope.$on('billsSentToGuests', function() {
+      self.billData = appFactory.data.billData;
+      console.log('self.billData =', self.billData);
+      console.log("Bill received by guest", self.billData);
+      self.showGuestBill();
+    });
+
+    if (appFactory.getSessStorage('isHost') === true && !_.isEmpty(appFactory.data.billData)) {
+      self.billData = appFactory.data.billData;
+    }
+
+    // if bill was already sent to guest and the guest wasn't on the guestBill page
+    // then they can get the data here
+    if (!_.isEmpty(appFactory.data.billData)) {
+      self.showGuestBill();
+    }
     // self.isGuestDish = function(user_id, dish) {
     //   return _.contains(dish.users, user_id);
     // };
 
-    self.getDishIndivCost = function(user_id, dish) {
-      //   if (self.isGuestDish(user_id, dish)) {
-      return dish.cost / dish.users.length;
-      //   }
-    };
+    // self.getDishIndivCost = function(dish) {
+    //   return dish.cost / dish.users.length;
+    // };
+    self.getDishIndivCost = appFactory.getDishIndivCost;
 
     // self.getDishesIndivCost = function(user_id, dishes, users) {
     //   return self.getGuestDishes(user_id, dishes, users).map(function(obj, key) {
     //     return obj.cost / obj.users.length;
     //   });
     // };
-
-    self.isDishShared = function(user_id, dish) {
-      //   if (self.isGuestDish(user_id, dish)) {
-      return dish.users.length === 1 ? false : true;
-      // }
-    };
 
     // self.areDishesShared = function(user_id, dishes, users) {
     //   return self.getGuestDishes(user_id, dishes, users).map(function(obj, key) {
@@ -70,34 +80,41 @@
     //   return _.contains(dish.users, user_id);
     // };
 
-    self.isDishSharedWithThisOtherUser = function(otherPersonId, dish) {
-      return _.contains(dish.users, otherPersonId);
-    };
+    // self.isDishSharedWithThisOtherUser = function(otherPersonId, dish) {
+    //   return _.contains(dish.users, otherPersonId);
+    // };
 
     self.getGuestTotal = function(data) {
       return addDishFactory.calculateRunningTotal(data);
     };
 
-    // bill being sent while guest is on guestBill page for the first time
-    $scope.$on('billsSentToGuests', function() {
-      self.billData = appFactory.data.billData;
-      console.log('self.billData =', self.billData);
-      console.log("Bill received by guest", self.billData);
-      self.showGuestBill();
-    });
+    self.getOtherUsersByUsername = function(dish, users, user_id) {
+      return appFactory.arrayToSentence(
+        _(dish.users).filter(function(id) {
+          return id !== user_id;
+        })
+        .map(function(id) {
+          return users[_.findIndex(users, {
+            'id': id
+          })].username;
+        }).value()
+      );
+      // return {
+      //   username: users[index].username,
+      //   user_id: parseInt(users[index].id),
+      //   isHost: users[index].host
+      // };
+    };
+
+
 
     self.showGuestBill = function() {
-      self.guestTax = self.billData.taxPercent * self.guestSubtotal * 0.01;
-      self.guestTip = self.billData.tipPercent * self.guestSubtotal * 0.01;
-      self.guestGrandTotal = self.guestSubtotal + self.guestTip + self.guestTax;
+      self.guestTax = self.billData.taxPercent * self.getGuestTotal(self.data) * 0.01;
+      self.guestTip = self.billData.tipPercent * self.getGuestTotal(self.data) * 0.01;
+      self.guestGrandTotal = self.getGuestTotal(self.data) + self.guestTip + self.guestTax;
       self.billSent = true;
     };
 
-    // if bill was already sent to guest and the guest wasn't on the guestBill page
-    // then they can get the data here
-    if (!_.isEmpty(self.billData)) {
-      self.showGuestBill();
-    }
 
     self.goToAllDishes = function() {
       $location.path('/' + window.sessionStorage.code + '/allDishes');

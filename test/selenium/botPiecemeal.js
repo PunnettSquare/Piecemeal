@@ -12,12 +12,12 @@ var Promise = require('bluebird');
 var _ = require('underscore');
 var url = 'localhost:8080/';
 
-setTimeout(function() {
-	helpers.closeBrowser(hostBrowser);
-	helpers.closeBrowser(guestOne);
-	helpers.closeBrowser(guestTwo);
-	helpers.closeBrowser(guestThree);
-}, 20000)
+// setTimeout(function() {
+// 	helpers.closeBrowser(hostBrowser);
+// 	helpers.closeBrowser(guestOne);
+// 	helpers.closeBrowser(guestTwo);
+// 	helpers.closeBrowser(guestThree);
+// }, 20000)
 
 var roomCode;
 

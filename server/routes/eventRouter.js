@@ -61,7 +61,7 @@ module.exports = function(app, io) {
       connections[user_id] = true;
       setTimeout(function() {
         connections[user_id] = false;
-      }, 5000);
+      }, 7000);
       // query database for event id based on code
 
       util.findEvent(db, code)
