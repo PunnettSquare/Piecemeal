@@ -28,7 +28,9 @@ module.exports = {
   },
 
   addTipAndTax: function(db, event_id, taxPercent, tipPercent) {
-    return db('events').insert({
+    return db('events').where({
+      'id': event_id
+    }).update({
       taxPercent: taxPercent,
       tipPercent: tipPercent
     });

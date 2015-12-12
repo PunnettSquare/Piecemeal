@@ -13,44 +13,38 @@
     self.event_id = appFactory.getSessStorage('event_id');
     self.username = appFactory.getSessStorage('username');
 
-    // self.user_id = window.sessionStorage.user_id;
-    // self.userInfo = jQuery.extend({}, window.sessionStorage);
-    // self.userInfo.user_id = parseInt(self.userInfo.user_id);
-    // self.userInfo.event_id = parseInt(self.userInfo.event_id);
-
     self.data = appFactory.data;
 
     socketFactory.init();
     if (!self.data) {
       appFactory.initListeners();
-      // self.getDishes(self.data);
     }
     // When appFactory is updated, $rootScope is used as a bus to emit to user's allDishes controller $scope
-
-    $scope.$on('joined', function() { //$on does not work with `self`
+    $scope.$on('joined', function() { // $on does not work with `self`
       self.data = appFactory.data;
       console.log("Joined the All Dishes room.");
-      // self.getDishes(self.data);
     });
+
+    self.getUsersByDish = appFactory.getUsersByDish;
 
     self.goToAddDish = function() {
       $location.path('/' + window.sessionStorage.code + '/addDish');
     };
 
-    self.getId = function(arrayOfIds, eventInfo) {
-      var usernames = arrayOfIds.map(function(id) {
-        var result;
-        eventInfo.users.forEach(function(user) {
-          if (user.id.toString() === id.toString()) {
-            result = _.capitalize(user.username);
-          }
-        });
-        if (result) {
-          return result;
-        }
-      });
-      return usernames.length === 1 ? usernames[0] : usernames.join(', ');
-    };
+    // self.getId = function(arrayOfIds, eventInfo) {
+    //   var usernames = arrayOfIds.map(function(id) {
+    //     var result;
+    //     eventInfo.users.forEach(function(user) {
+    //       if (user.id.toString() === id.toString()) {
+    //         result = _.capitalize(user.username);
+    //       }
+    //     });
+    //     if (result) {
+    //       return result;
+    //     }
+    //   });
+    //   return usernames.length === 1 ? usernames[0] : usernames.join(', ');
+    // };
 
     self.isOnDish = function(dishUsers, user_id) {
       var result = false;
