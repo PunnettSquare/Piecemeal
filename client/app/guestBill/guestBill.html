@@ -1,58 +1,93 @@
-<div id="guestBill" ng-cloak>
-  <button ng-click="guestBill.goToAllDishes()" class="allDishes">See All Dishes</button>
-  <button ng-show="guestBill.isHost" ng-click="guestBill.goToHostBill()" class="hostBill">See Final Bill</button>
-  <h1>{{ _.capitalize(guestBill.username) }}'s Total Bill</h1>
+<div class="container-fluid" id="guestBill" ng-cloak>
+  <div class="row">
+    <div class="col-md-12">
 
 
-  <!-- <div ng-repeat="dish in guestBill.data.dishes"> -->
-  <div ng-repeat="dish in guestBill.getGuestDishes(guestBill.user_id, guestBill.data.dishes)">
-    <h2>{{_.capitalize(dish.name)}}</h2>
-    <p>Your portion: {{ guestBill.getDishIndivCost(dish) | currency }}</p>
-    <small>Total Cost</small>
-    <span><small>
-      {{ dish.cost | currency }}
-    </small></span>
-    <article>
-      <p ng-if="dish.users.length !== 1">
-        <strong>You shared this with</strong>
-        <!-- <p ng-repeat="person in guestBill.data.users"> -->
-        <!-- <span ng-if="guestBill.isDishSharedWithThisOtherUser(person.id, dish) && person.id !== guestBill.user_id"> -->
-        {{ guestBill.getOtherUsersByUsername(dish, guestBill.data.users, guestBill.user_id) }}.
-        <!-- <span>{{ _.capitalize(person.username) }}</span> -->
-        <!-- </span> -->
-        <!-- </p> -->
+      <ul class="nav nav-tabs">
+        <!-- used to be 'button' -->
+        <li><a class="allDishes" ng-click="guestBill.goToAllDishes()">All Dishes</a></li>
+        <li><a ng-click="guestBill.goToAddDish()">Add Dish</a></li>
+        <li class="active"><a class="guestBill" ng-click="guestBill.goToGuestBill()">Your Bill</a></li>
+        <li><a class="hostBill" ng-show="guestBill.isHost" ng-click="guestBill.goToHostBill()" >Final Bill</a></li>
+      </ul>
 
-        <!-- or -->
-        <!-- <p ng-show="guestBill.isDishShared(guestBill.user_id, dish)" ng-repeat="person in guestBill.getOtherSharedUserForDish(guestBill.user_id, dish, guestBill.data.users) ">
-          <span>{{ _.capitalize(person.username) }}</span>
-        </p> -->
-      </p>
-      <p ng-if="dish.users.length === 1">
-        <span>Only you ate this.</span>
-      </p>
-    </article>
+      <h3>{{ _.capitalize(guestBill.username) }}'s Total Bill</h3>
+
+
+
+      <div ng-repeat="dish in guestBill.getGuestDishes(guestBill.user_id, guestBill.data.dishes)">
+        <div class="list-group-item">
+          <!-- used to be h2, now h4: for selenium? -->
+          <h4 class="list-group-item-heading">{{_.capitalize(dish.name)}}</h4>
+          <p class="list-group-item-text">Your portion: <strong>{{ guestBill.getDishIndivCost(dish) | currency }}</strong></p>
+          <small>Total cost: <span>{{ dish.cost | currency }}</span></small>
+        </div>
+
+        <div class="list-group-item">
+          <p class="list-group-item-text" ng-if="dish.users.length !== 1">
+          <small>You shared this with {{ guestBill.getOtherUsersByUsername(dish, guestBill.data.users, guestBill.user_id) }}.</small></p>
+          <p class="list-group-item-text" ng-if="dish.users.length === 1">
+            <span>Only you ate this.</span>
+          </p>
+        </div>
+        <br>
+      </div>
+
+      <br>
+
+      <!-- <a href="#" class="list-group-item active">Home</a> -->
+
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h1 class="panel-title h1">Your Subtotal
+          <p class="text-right h5">{{guestBill.getGuestTotal(guestBill.data) | currency}}</p>
+          </h2>
+        </div>
+        <!-- <div class="panel-body">{{guestBill.getGuestTotal(guestBill.data) | currency}}</div> -->
+        <div class="panel-footer" ng-if="_.isEmpty(guestBill.data.billData) && !guestBill.isHost">
+          Your host hasn't decided on the tip and tax yet. Please check again later.
+        </div>
+      </div>
+
+      <div class="panel panel-default" ng-if="!_.isEmpty(guestBill.data.billData) && !guestBill.isHost">
+        <div class="panel-heading"><h3 class="panel-title">Tax</h3></div>
+        <div class="panel-body">{{guestBill.guestTax | currency}}</div>
+        <div class="panel-footer taxPercent">
+          <small>You were charged {{ guestBill.data.billData.taxPercent }}% for tax.</small>
+        </div>
+      </div>
+
+      <div class="panel panel-default" ng-if="!_.isEmpty(guestBill.data.billData) && !guestBill.isHost">
+        <div class="panel-heading"><h3 class="panel-title">Tip</h3></div>
+        <div class="panel-body">{{guestBill.guestTip | currency}}</div>
+        <div class="panel-footer tipPercent">
+          <small>Your host chose {{ guestBill.data.billData.tipPercent }}% for tip.</small>
+        </div>
+      </div>
+
+      <div class="panel panel-default" ng-if="!_.isEmpty(guestBill.data.billData) && !guestBill.isHost">
+        <div class="panel-heading"><h3 class="panel-title">Your Total</h3></div>
+        <div class="panel-body">{{guestBill.guestGrandTotal | currency}}</div>
+        <div class="panel-footer tipPercent">
+          <small>(Dinner Grand Total: {{  guestBill.data.billData.grandTotal | currency}})</small>
+        </div>
+      </div>
+
+    </div>
+    <!--      <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+        Panel title
+        </h3>
+      </div>
+      <div class="panel-body">
+        Panel content
+      </div>
+      <div class="panel-footer">
+        Panel footer
+      </div>
+    </div> -->
+
+
   </div>
-
-  <br>
-
-  <h1>Your Subtotal</h1>
-  <h2>{{guestBill.getGuestTotal(guestBill.data) | currency}}</h2>
-
-  <div ng-if="_.isEmpty(guestBill.data.billData) && !guestBill.isHost">
-    Your host hasn't decided on the tip and tax yet. Please check again later.
-  </div>
-
-  <div ng-if="!_.isEmpty(guestBill.data.billData) && !guestBill.isHost">
-    <h3>Tax</h3>
-    <p >{{guestBill.guestTax | currency}}</p>
-    <small class="taxPercent">You were charged {{ guestBill.data.billData.taxPercent }}% for tax.</small>
-    <h3>Tip</h3>
-    <p >{{guestBill.guestTip | currency}}</p>
-    <small class="tipPercent">Your host chose {{ guestBill.data.billData.tipPercent }}% for tip.</small>
-    <h2>Your Total</h2>
-    <p>{{guestBill.guestGrandTotal | currency}}</p>
-    <small>(Dinner Grand Total: {{  guestBill.data.billData.grandTotal | currency}})</small>
-  </div>
-
-  <br><br>
 </div>

@@ -1,0 +1,31 @@
+<!-- <div id="addDish" ng-cloak>
+
+  <form name="dishForm">
+    <input type="submit" class="allDishes" ng-click="addDish.goToAllDishes()" value="Go To All Dishes">
+    <input type="submit" ng-click="addDish.goToGuestBill()" class="guestBill" value="Go To Guest Bill">
+
+    <h1>Add Dish</h1>
+
+    <input name="name" type="text" placeholder="Dish Name" ng-model="addDish.dishName" class="dishName">
+    <input name="amount" type="number" ng-model="addDish.amount" min="0" placeholder="$0.00" aria-label="amount" class="dishCost">
+
+    <br><br>
+
+    This dish costs
+    <strong><span ng-show="dishForm.amount.$pristine">
+      {{ 0 + addDish.amount | currency}}
+    </span>
+    <span ng-show="dishForm.amount.$dirty" id="currency-default">
+      {{ 0 + addDish.amount | currency}}
+    </span></strong>
+    and your total so far is
+    <strong><span id="currency-default">
+      {{addDish.userTotal | currency}}
+    </span></strong>.
+
+    <br><br>
+
+    <input type="submit" class="addDish" ng-click="addDish.addDish(addDish.dishName, addDish.amount)">
+  </form>
+</div>
+-->
