@@ -1,3 +1,5 @@
+var _ = require('lodash');
+var Promise = require('bluebird');
 module.exports = {
 logTitle: function (browser) {
   browser.getTitle()
@@ -59,7 +61,7 @@ addDish : function (webdriver, browser, name, cost) {
   })
  },
 
-goToAddDishes : function (webdriver, browser) {
+goToAddDish : function (webdriver, browser) {
   return browser.findElement(webdriver.By.className('addDish'))
   .then(function(button) {
     return button.click()
@@ -72,6 +74,104 @@ goToAllDishes : function (webdriver, browser) {
     return button.click();
   })
  },
+
+  goToGuestBill : function (webdriver, browser) {
+    return browser.findElement(webdriver.By.className('guestBill'))
+    .then(function(button) {
+      return button.click()
+    })
+  },
+
+  goToHostBill: function (webdriver, browser) {
+    return browser.findElement(webdriver.By.className('hostBill'))
+    .then(function(button) {
+      return button.click()
+    })
+  },
+
+  goToPage: function (webdriver, browser, pageName) {
+    browser.implicitly_wait
+    var pages = {
+      allDishes: {
+        connections: ['addDish']
+      },
+      addDish: {
+        connections: ['allDishes', 'guestBill']
+
+      },
+      guestBill: {
+        connections: ['allDishes', 'hostBill']
+
+      },
+      hostBill: {
+        connections: ['guestBill']
+      }
+    }
+    var routes = [];
+    var findPageRoute = function (webdriver, browser, pageName, route, visited, currentPage) {
+      route = route.slice();
+      visited = visited.slice();
+      visited.push(currentPage);
+        var isDeadEnd = _.reduce(pages[currentPage].connections, function (deadEnd, connection) {
+          if (_.indexOf(visited, connection) === -1) {
+            return false;
+          }
+          return deadEnd;
+        }, true);
+
+        if (isDeadEnd) {
+          return;
+
+        } 
+        if (pages[currentPage].connections.indexOf(pageName) > -1) {
+          route.push(pageName)
+          routes.push(route);
+        } else {
+          for (var i = 0; i < pages[currentPage].connections.length; i++) {
+            if (pages[currentPage]) {
+              route.push(pages[currentPage].connections[i]);
+              findPageRoute(webdriver, browser, pageName, route, visited, pages[currentPage].connections[i]);
+              route.pop();
+            }
+          }
+        }
+    }
+    return module.exports.determinePage(webdriver, browser)
+    .then(function(currentPage) {
+      return findPageRoute(webdriver, browser, pageName, [], [], currentPage);
+    })
+    .then(function() {
+
+      var shortest = _.reduce(routes, function(shortest, route) {
+        if (route.length < shortest.length) {
+          return route;
+        }
+        return shortest;
+      });
+      console.log('shortest: ', shortest);
+      return Promise.each(shortest, function(navigationFunction, index, list) {
+        return module.exports['goTo' + _.capitalize(navigationFunction)](webdriver, browser)
+        .then(function() {
+          if (shortest[index+1]) {
+            return browser.wait(webdriver.until.elementLocated(webdriver.By.css('.' + shortest[index+1])), 8 * 1000);
+          } else {
+            return
+          }
+        })
+      });
+    })
+  },
+
+
+
+  determinePage : function (webdriver, browser) {
+    return browser.getCurrentUrl()
+    .then(function(url) {
+      return url.split('/').pop();
+    })
+  },
+
+
 
  shareDishes: function(webdriver, browser, number) {
   return browser.findElements(webdriver.By.className('share'))
