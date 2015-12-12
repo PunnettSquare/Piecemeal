@@ -7,23 +7,30 @@
   <!-- <div ng-repeat="dish in guestBill.data.dishes"> -->
   <div ng-repeat="dish in guestBill.getGuestDishes(guestBill.user_id, guestBill.data.dishes)">
     <h2>{{_.capitalize(dish.name)}}</h2>
-    <p>Your portion: {{ guestBill.getDishIndivCost(guestBill.user_id, dish) | currency }}</p>
+    <p>Your portion: {{ guestBill.getDishIndivCost(dish) | currency }}</p>
     <small>Total Cost</small>
-    <span><small>{{ dish.cost | currency }}</small></span>
-    <h3>You Shared This With:</h3>
+    <span><small>
+      {{ dish.cost | currency }}
+    </small></span>
+    <article>
+      <p ng-if="dish.users.length !== 1">
+        <strong>You shared this with</strong>
+        <!-- <p ng-repeat="person in guestBill.data.users"> -->
+        <!-- <span ng-if="guestBill.isDishSharedWithThisOtherUser(person.id, dish) && person.id !== guestBill.user_id"> -->
+        {{ guestBill.getOtherUsersByUsername(dish, guestBill.data.users, guestBill.user_id) }}.
+        <!-- <span>{{ _.capitalize(person.username) }}</span> -->
+        <!-- </span> -->
+        <!-- </p> -->
 
-    <p ng-repeat="person in guestBill.data.users">
-      <span ng-if="guestBill.isDishSharedWithThisOtherUser(person.id, dish) && person.id !== guestBill.user_id">
-        <span>{{ _.capitalize(person.username) }}</span>
-      </span>
-    </p>
-    <!-- or -->
-    <!-- <p ng-show="guestBill.isDishShared(guestBill.user_id, dish)" ng-repeat="person in guestBill.getOtherSharedUserForDish(guestBill.user_id, dish, guestBill.data.users) ">
-      <span>{{ _.capitalize(person.username) }}</span>
-    </p> -->
-    <p ng-if="!guestBill.isDishShared(guestBill.user_id, dish)">
-      <span>Shared by yourself only</span>
-    </p>
+        <!-- or -->
+        <!-- <p ng-show="guestBill.isDishShared(guestBill.user_id, dish)" ng-repeat="person in guestBill.getOtherSharedUserForDish(guestBill.user_id, dish, guestBill.data.users) ">
+          <span>{{ _.capitalize(person.username) }}</span>
+        </p> -->
+      </p>
+      <p ng-if="dish.users.length === 1">
+        <span>Only you ate this.</span>
+      </p>
+    </article>
   </div>
 
   <br>

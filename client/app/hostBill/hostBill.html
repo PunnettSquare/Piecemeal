@@ -1,30 +1,32 @@
 <div id="hostBill" ng-cloak>
   <button ng-click="hostBill.goToGuestBill()" class="guestBill">See Your Individual Bill</button>
-  <h1>Final Bill (For You and Your Guests)</h1>
+  <h1>Final Bill For Everyone</h1>
 
-  <div ng-repeat="dish in hostBill.allDishes">
-    <h3>{{ _.capitalize(dish.name)}}</h3>
+  <div ng-repeat="dish in hostBill.data.dishes">
 
-    <!-- not slow -->
-    <p>Cost: {{dish.cost | currency }}</p>
+    <div ng-if="dish.users.length !== 0">
+      <h3>{{ _.capitalize(dish.name)}}</h3>
 
-    <!-- slow! need to refactor. -->
-    <p><small>Individual cost: {{dish.indivCost | currency }}</small></p>
+      <p>Cost: {{dish.cost | currency }}</p>
 
-    <span>
-      <!-- slow! need to refactor.-->
-      {{ _.map(_.pluck(dish.userSummary, 'username'), _.capitalize).join(", ") }} got this.
-    </span>
+      <p><small>Each individual paid: {{ hostBill.getDishIndivCost(dish) | currency }}</small></p>
+
+      <span>
+        <!-- slow! need to refactor.-->
+        <span>{{ hostBill.getUsersByDish(dish, hostBill.data.users) }}</span> got this.
+        <!-- {{ _.map(_.pluck(hostBill.getUsersByDish(dish, hostBill.data.users), 'username'), _.capitalize).join(", ") }} got this. -->
+        <!-- {{ _.map(_.pluck(dish.userSummary, 'username'), _.capitalize).join(", ") }} got this. -->
+      </span>
+    </div>
   </div>
-
   <br><br>
-
   <div>
+
     <form name="billForm">
 
       <div class="subtotal">
         <h2>Subtotal:</h2>
-        {{ hostBill.subTotal | currency}}
+        {{ hostBill.getSubTotal(hostBill.data.dishes) | currency}}
       </div>
 
       <div class="tip">
@@ -37,7 +39,7 @@
             {{ 0 + hostBill.tip | currency }}
           </span>
           <span ng-show="billForm.tip.$dirty" id="currency-default">
-            {{ hostBill.tip * 0.01 * hostBill.subTotal | currency}}
+            {{ hostBill.tip * 0.01 * hostBill.getSubTotal(hostBill.data.dishes) | currency}}
           </span>
         </article>
       </div>
@@ -51,7 +53,7 @@
             {{ 0 + hostBill.tax | currency }}
           </span>
           <span ng-show="billForm.tax.$dirty" id="currency-default">
-            {{ hostBill.tax * 0.01 * hostBill.subTotal  | currency}}
+            {{ hostBill.tax * 0.01 * hostBill.getSubTotal(hostBill.data.dishes)  | currency}}
           </span>
         </article>
       </div>
@@ -60,16 +62,16 @@
       <div class="grandTotal">
         <h2>Grand Total</h2>
         <span ng-show="billForm.tip.$pristine && billForm.tip.$pristine">
-          {{ hostBill.subTotal | currency}}
+          {{ hostBill.getSubTotal(hostBill.data.dishes) | currency}}
         </span>
         <span ng-show="billForm.tip.$dirty && billForm.tax.$pristine">
-          {{ hostBill.subTotal +
-          (hostBill.tip * 0.01 * hostBill.subTotal) | currency }}
+          {{ hostBill.getSubTotal(hostBill.data.dishes) +
+          (hostBill.tip * 0.01 * hostBill.getSubTotal(hostBill.data.dishes)) | currency }}
         </span>
         <span ng-show="billForm.tip.$dirty && billForm.tax.$dirty">
-          {{ hostBill.subTotal +
-          (hostBill.tip * 0.01 * hostBill.subTotal) +
-          (hostBill.tax * 0.01 * hostBill.subTotal) | currency }}
+          {{ hostBill.getSubTotal(hostBill.data.dishes) +
+          (hostBill.tip * 0.01 * hostBill.getSubTotal(hostBill.data.dishes)) +
+          (hostBill.tax * 0.01 * hostBill.getSubTotal(hostBill.data.dishes)) | currency }}
         </span>
       </div>
 

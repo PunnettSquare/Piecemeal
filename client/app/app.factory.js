@@ -16,7 +16,10 @@
       addDish: addDish,
       shareDish: shareDish,
       unshareDish: unshareDish,
-      getSessStorage: getSessStorage
+      getSessStorage: getSessStorage,
+      arrayToSentence: arrayToSentence,
+      getUsersByDish: getUsersByDish,
+      getDishIndivCost: getDishIndivCost
         // data: data
         // data.billData: billData
     };
@@ -38,6 +41,23 @@
       }
       if (prop === "username") {
         return window.sessionStorage.username;
+      }
+    }
+
+    function getDishIndivCost(dish) {
+      return dish.cost / dish.users.length;
+    }
+
+    function arrayToSentence(array) {
+      array = _.map(array, _.capitalize);
+      if (array.length === 1) {
+        return array[0];
+      }
+      if (array.length === 2) {
+        return array.join(" and ");
+      } else {
+        var last = array.pop();
+        return array.join(", ") + " and " + last;
       }
     }
 
@@ -86,6 +106,20 @@
       });
     }
 
+    function getUsersByDish(dish, users) {
+      return arrayToSentence(
+        _(dish.users).map(function(id) {
+          return users[_.findIndex(users, {
+            'id': id
+          })].username;
+        }).value());
+      //   return {
+      //     username: users[index].username,
+      //     user_id: parseInt(users[index].id),
+      //     isHost: users[index].host
+      //   };
+    }
+
     function initListeners() {
       socketFactory.on('joined', function(data) {
         console.log("Heard 'joined' in appFactory.data:", data);
@@ -118,13 +152,13 @@
       socket.on('billsSentToGuests', function(data) {
         console.log("Heard 'billsSentToGuests' in appFactory.data:", data);
         services.data.billData = data;
-        $rootScope.$broadcast('billsSentToGuests', data);
+        $rootScope.$broadcast('billsSentToGuests');
+        // $rootScope.$broadcast('billsSentToGuests', data);
         $rootScope.$apply();
       });
 
     }
   }
-
 })();
 
 // Temporarily keep old version of socket setup for reference:

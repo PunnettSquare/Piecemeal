@@ -20,29 +20,31 @@
       appFactory.initListeners();
     }
     // When appFactory is updated, $rootScope is used as a bus to emit to user's allDishes controller $scope
-    $scope.$on('joined', function() { //$on does not work with `self`
+    $scope.$on('joined', function() { // $on does not work with `self`
       self.data = appFactory.data;
       console.log("Joined the All Dishes room.");
     });
+
+    self.getUsersByDish = appFactory.getUsersByDish;
 
     self.goToAddDish = function() {
       $location.path('/' + window.sessionStorage.code + '/addDish');
     };
 
-    self.getId = function(arrayOfIds, eventInfo) {
-      var usernames = arrayOfIds.map(function(id) {
-        var result;
-        eventInfo.users.forEach(function(user) {
-          if (user.id.toString() === id.toString()) {
-            result = _.capitalize(user.username);
-          }
-        });
-        if (result) {
-          return result;
-        }
-      });
-      return usernames.length === 1 ? usernames[0] : usernames.join(', ');
-    };
+    // self.getId = function(arrayOfIds, eventInfo) {
+    //   var usernames = arrayOfIds.map(function(id) {
+    //     var result;
+    //     eventInfo.users.forEach(function(user) {
+    //       if (user.id.toString() === id.toString()) {
+    //         result = _.capitalize(user.username);
+    //       }
+    //     });
+    //     if (result) {
+    //       return result;
+    //     }
+    //   });
+    //   return usernames.length === 1 ? usernames[0] : usernames.join(', ');
+    // };
 
     self.isOnDish = function(dishUsers, user_id) {
       var result = false;
