@@ -209,10 +209,15 @@ goToAllDishes : function (webdriver, browser) {
     return button.click()
   })
   .then(function() {
+    browser.sleep(3000);
     return browser.wait(webdriver.until.elementLocated(webdriver.By.css("strong.code")), 10000)
   })
   .then(function (element) {  
     return element.getText();
   })
- } 
+ },
+
+  addTip: function (webdriver, browser, taxPercent, tipPercent) {
+    return browser.wait(webdriver.until.elementLocated(webdriver.By.css("strong.code")), 10000)
+  } 
 }
