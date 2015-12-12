@@ -8,7 +8,8 @@ var guestOne = new webdriver.Builder().usingServer().withCapabilities({'browserN
 var guestTwo = new webdriver.Builder().usingServer().withCapabilities({'browserName': 'chrome' }).build();
 var guestThree = new webdriver.Builder().usingServer().withCapabilities({'browserName': 'chrome' }).build();
 var By = webdriver.By;
-
+var Promise = require('bluebird');
+var _ = require('underscore');
 var url = 'localhost:8080/';
 
 setTimeout(function() {
@@ -26,45 +27,50 @@ helpers.makeRoom(webdriver, hostBrowser, 'Host', url)
 	roomCode = code;
 })
 .then(function() {
+	hostBrowser.getCurrentUrl()
+	.then(function(url) {
+		console.log(typeof url)
+		console.log(url);
+	})
 	helpers.joinRoom(webdriver, guestOne, url, roomCode, 'guestOne');
-	helpers.joinRoom(webdriver, guestTwo, url, roomCode, 'guestTwo');
+	return helpers.joinRoom(webdriver, guestTwo, url, roomCode, 'guestTwo');
 })
 .then(function() {
 	return helpers.goToAddDishes(webdriver, hostBrowser);
 })
 
 .then(function() {
-	return helpers.addDish(webdriver, hostBrowser, 'Host Dish 1', '19.99');
-})
-.then(function() {
-	return helpers.addDish(webdriver, hostBrowser, 'Host Dish 2', '12.99');
-})
-.then(function() {
-	return helpers.addDish(webdriver, hostBrowser, 'Host Dish 3', '8.39');
+	var dishes = [
+	{name: 'Host Dish 1', cost: '19.99'},
+	{name: 'Host Dish 2', cost: '24.99'},
+	{name: 'Host Dish 3', cost: '989.24'} ]
+	return Promise.all(_.map(dishes, function(dish) {
+		return helpers.addDish(webdriver, hostBrowser, dish.name, dish.cost);
+	}))
 })
 .then(function() {
 	return helpers.goToAddDishes(webdriver, guestOne);
 })
 .then(function() {
-	return helpers.addDish(webdriver, guestOne, 'guestOne Dish 1', '8.39');
-})
-.then(function() {
-	return helpers.addDish(webdriver, guestOne, 'guestOne Dish 2', '9.39');
-})
-.then(function() {
-	return helpers.addDish(webdriver, guestOne, 'guestOne Dish 3', '14.39');
+	var dishes = [
+	{name: 'guestOne Dish 1', cost: '19.99'},
+	{name: 'guestOne Dish 2', cost: '24.99'},
+	{name: 'guestOne Dish 3', cost: '9234.24'} ]
+	return Promise.all(_.map(dishes, function(dish) {
+		return helpers.addDish(webdriver, hostBrowser, dish.name, dish.cost);
+	}))
 })
 .then(function() {
 	return helpers.goToAddDishes(webdriver, guestTwo);
 })
 .then(function() {
-	return helpers.addDish(webdriver, guestTwo, 'guestTwo Dish 1', '8.39');
-})
-.then(function() {
-	return helpers.addDish(webdriver, guestTwo, 'guestTwo Dish 2', '9.39');
-})
-.then(function() {
-	return helpers.addDish(webdriver, guestTwo, 'guestTwo Dish 3', '14.39');
+	var dishes = [
+	{name: 'guestTwo Dish 1', cost: '112.79'},
+	{name: 'guestTwo Dish 2', cost: '34.94'},
+	{name: 'guestTwo Dish 3', cost: '9.24'} ]
+	return Promise.all(_.map(dishes, function(dish) {
+		return helpers.addDish(webdriver, hostBrowser, dish.name, dish.cost);
+	}))
 })
 .then(function() {
 	helpers.goToAllDishes(webdriver, hostBrowser);
