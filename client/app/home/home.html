@@ -1,21 +1,49 @@
-<div id="home" ng-cloak>
-  <h1>Home page</h1>
-  <p>{{home.socketmessage}}</p> <!--For testing sockets-->
+<div class="container-fluid" id="home">
+  <div class="row">
+    <div class="col-md-12">
+      <h1>
+      Piecemeal <small>The easiest way to split a bill.</small>
+      </h1>
 
-  <h2>What is your name?</h2>
-  <form name="userInput">
-    <input type="text" placeholder="Enter Your Name" ng-model="username" name="username" class="enterName" required autofocus>
+      <div class="row">
+        <div class="col-md-6">
+          <form name="userInput">
 
-  </form>
+            <div class="form-group">
+              <label for="name">Enter Name</label>
+              <input type="text" placeholder="Enter Your Name" ng-model="username" name="username" class="enterName form-control" required autofocus id="name">
+              <br>
+              <h5>Are You a Host?</h5>
+              <button type="submit" value="Create room" class="createRoom btn btn-default" ng-click="home.setSessionUser(username, true, null)">Create a Room</button>
+            </div>
 
-  <h2>Are you a host?</h2>
-  <input type="submit" value="Create room" class="createRoom" ng-click="home.setSessionUser(username, true, null)">
+            <div class="form-group">
+              <h3>Or</h3>
+              <label for="roomCode">Enter Room Code</label>
+              <input type="text" class="roomName form-control" placeholder="piecemeal.com/" ng-model="url" id="roomCode">
+              <button name="submit" type="submit" class="enterRoom btn btn-default" value="Enter Room" ng-click="home.setSessionUser(username, false, url)">
+              Enter Room
+              </button>
+            </div>
 
-  <h2>Are you a guest?</h2>
-  piecemeal.com/<input type="text" class="roomName" placeholder="roomName" ng-model="url">
-  <input name="submit" type="submit" class="enterRoom" value="Enter Room" ng-click="home.setSessionUser(username, false, url)">
-
-  <div ng-show="home.isError">Your entered room does not exist. Please try another.</div>
+            <div ng-show="home.isError">Your entered room does not exist. Please try another.</div>
 
 
+
+          </form>
+        </div>
+
+        <br><br><br>
+
+        <div class="col-md-6">
+          <div class="jumbotron well">
+            <h2>About Piecemeal</h2>
+            <p>The easiest way to split a bill. Hosts can create a room and invite guests to join via room code. No login or downloading required.</p>
+            <p><a class="btn btn-primary btn-large" href="#">Learn more</a></p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
 </div>

@@ -1,42 +1,55 @@
-<div id="allDishes" ng-cloak>
+<div class="container-fluid" id="allDishes" ng-cloak>
+  <div class="row">
+    <div class="col-md-12">
 
-  <button class="addDish" ng-click="allDishes.goToAddDish()">Add Dish</button>
-  <h1>All Dishes</h1>
+      <ul class="nav nav-tabs">
+        <li class="active"><a class="allDishes" ng-click="allDishes.goToAllDishes()">All Dishes</a></li>
+        <li><a class="addDish" ng-click="allDishes.goToAddDish()">Add Dish</a></li>
+        <li><a class="guestBill" ng-click="allDishes.goToGuestBill()">Your Bill</a></li>
+      </ul>
 
-  <p>Hi, {{_.capitalize(allDishes.username)}}.
-  You are in room <strong class="code">{{allDishes.data.code}}</strong>.</p>
+      <h3>All Dishes</h3>
+      <p>Hi, {{_.capitalize(allDishes.username)}}.
+      You are in room <strong class="code">{{allDishes.data.code}}</strong>.</p>
 
-  <div ng-repeat="dish in allDishes.data.dishes">
-    <div ng-if="dish.users.length !== 0">
-      <h3>{{ _.map(dish.name.split(" "), _.capitalize).join(" ") }}</h3>
-      <p>
-      Cost: {{dish.cost | currency }}
-      </p>
-      <span>
-        {{ allDishes.getUsersByDish(dish, allDishes.data.users) }} got this.
-        <!-- {{ allDishes.getId( dish.users, allDishes.data) }} got this. -->
-        <small>
-        User IDs: {{ dish.users }}
-        </small>
-      </span>
+      <div ng-repeat="dish in allDishes.data.dishes">
+        <div class="list-group" ng-if="dish.users.length !== 0">
+          <div class="list-group-item">
+            <h4 class="list-group-item-heading">
+            {{ _.map(dish.name.split(" "), _.capitalize).join(" ") }}
+            </h4>
+            <p class="list-group-item-text">
+              Cost: {{dish.cost | currency }}
+            </p>
+            <span><small>{{ allDishes.getUsersByDish(dish, allDishes.data.users) }} got this.</small></span>
+          </div>
+          <div class="list-group-item">
+          <!-- used to be 'button', now 'span: important for selenium -->
+            <button ng-click="allDishes.shareDish(dish.dish_id, allDishes.user_id, dish.users)" class="share badge">Share</button>
+            <button ng-click="allDishes.unshareDish(dish.dish_id, allDishes.user_id, dish.users)" class="unshare badge">Unshare</button>
+          </div>
+        </div>
 
-      <br><br>
+        <!--      <div class="list-group">
+          <a href="#" class="list-group-item active">Home</a>
+          <div class="list-group-item">
+            List header
+          </div>
+          <div class="list-group-item">
+            <h4 class="list-group-item-heading">
+            List group item heading
+            </h4>
+            <p class="list-group-item-text">
+              ...
+            </p>
+          </div>
+          <div class="list-group-item">
+            <span class="badge">14</span>Help
+          </div>
+          <a class="list-group-item active"><span class="badge">14</span>Help</a>
+        </div> -->
 
-      <button ng-click="allDishes.shareDish(dish.dish_id, allDishes.user_id, dish.users)" class="share">
-      Share
-      </button>
-      <button ng-click="allDishes.unshareDish(dish.dish_id, allDishes.user_id, dish.users)" class="unshare">
-      Unshare
-      </button>
+      </div>
     </div>
   </div>
 </div>
-
-<!-- <div> Test allDishes.dishes: {{allDishes.data.dishes}}</div>
-<div>Test allDishes.data.users: {{allDishes.data.users}}</div>
-<div>Test allDishes.data: {{allDishes.data}}</div>
-<!-- <div>Your total so far: {{allDishes.userTotal}}</div>
-<div>Group total so far: {{allDishes.groupTotal}}</div> -->
-<!--   <div>Test allDishes.data: {{allDishes.data}}</div>
-<div>Your total so far: {{allDishes.userTotal}}</div>
-<div>Group total so far: {{allDishes.groupTotal}}</div> -->
