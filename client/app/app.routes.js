@@ -13,6 +13,7 @@
       // use $window.$$path if we stop using window.sessionStorage
       if (!window.sessionStorage.username || window.sessionStorage.username === "undefined") {
         state.go('home');
+        // state.go('404');
       } else {
         state.go('event.allDishes');
       }
@@ -46,6 +47,19 @@
             templateUrl: 'app/oAuth/oAuth.html',
             controller: 'OAuthCtrl',
             controllerAs: 'oAuth'
+          }
+        }
+      })
+      .state('404', {
+        url: '/404',
+        views: {
+          'navbar': {
+            templateUrl: 'components/navbar/navbar.html',
+            controller: 'NavbarCtrl',
+            controllerAs: 'navbar'
+          },
+          '@': {
+            templateUrl: '404.html'
           }
         }
       })

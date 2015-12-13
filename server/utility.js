@@ -1,4 +1,7 @@
 var _ = require('underscore');
+var roomNames = _.sample(require('./roomNames.js'), 106);
+var counter = 0; // for room names
+
 module.exports = {
   createEvent: function(db, code, username) {
     return db('users').insert({
@@ -158,13 +161,20 @@ module.exports = {
       .where('id', event_id);
   },
 
+  // generateCode: function() {
+  //   function randomString(length, chars) {
+  //     var result = '';
+  //     for (var i = length; i > 0; --i) result += chars[Math.floor(Math.random() * chars.length)];
+  //     return result;
+  //   }
+  //   return randomString(8, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
+  // }
+
   generateCode: function() {
-    function randomString(length, chars) {
-      var result = '';
-      for (var i = length; i > 0; --i) result += chars[Math.floor(Math.random() * chars.length)];
-      return result;
+    if (counter === roomNames.length) {
+      throw new Error("Ran out of food room names! Please add more.");
     }
-    return randomString(8, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
+    return roomNames[counter++];
   },
 
   findDishArray: function(usersDishesArray) {
