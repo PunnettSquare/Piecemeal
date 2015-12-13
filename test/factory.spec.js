@@ -3,22 +3,20 @@ beforeEach(module('Piecemeal'));
 
 // Wrap the parameter in underscores
 
-describe('appFactory', function() {
+describe('app', function() {
   
   var myFactory;
+  var appFactory;
 
-  beforeEach( inject( function(_myFactory_){
-    myService = _myFactory_;
+  beforeEach( inject( function(_appFactory_){
+    appFactory = _appFactory_;
   }));
+  
+  describe('appFactory', function() {
 
-  var factory;
-
-  beforeEach(function() {
-    factory = myService('appFactory', { socketFactory: socketMock });
-  });
-
-  // Use myService in a series of tests.
-  it('makes use of myService', function() {
-    // myService.doStuff();
+    // add test property equal to "test" in appFactory if want to use this
+    // it('makes use of myFactory', function() {
+    //   expect(appFactory.test).toEqual('test');
+    // });
   });
 });

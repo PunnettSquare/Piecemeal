@@ -19,9 +19,10 @@
       getSessStorage: getSessStorage,
       arrayToSentence: arrayToSentence,
       getUsersByDish: getUsersByDish,
-      getDishIndivCost: getDishIndivCost
+      getDishIndivCost: getDishIndivCost,
         // data: data
         // data.billData: billData
+        test: "test"
     };
 
     return services;
