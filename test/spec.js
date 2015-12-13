@@ -53,7 +53,7 @@ describe('AddDishCtrl', function() {
     var testReceived = false;
 
     // Hacky way to check and update testReceived. socketMock.on can be used for the same thing once functional
-    if (socketMock.emits["addDish"].name === "Ramen" && socketMock.emits["addDish"].cost === 10) {
+    if (socketMock.emits["addDish"].name === "ramen" && socketMock.emits["addDish"].cost === 10) {
       testReceived = true;
     }
 
