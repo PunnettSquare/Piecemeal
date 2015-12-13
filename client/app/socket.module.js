@@ -23,27 +23,27 @@
     return services;
 
     function init() {
-      var ioRoom = $window.location.origin + '/' + window.sessionStorage.code;
-      window.socket = io(ioRoom);
+      var ioRoom = $window.location.origin + '/' + $window.sessionStorage.code;
+      $window.socket = io(ioRoom);
       // console.log('Joining ioRoom: ', ioRoom);
     }
 
     function on(eventName, callback) {
       // console.log("socketFactory.on exists!");
-      window.socket.on(eventName, function() {
+      $window.socket.on(eventName, function() {
         var args = arguments;
         $rootScope.$apply(function() {
-          callback.apply(window.socket, args);
+          callback.apply($window.socket, args);
         });
       });
     }
 
     function emit(eventName, data, callback) {
-      window.socket.emit(eventName, data, function() {
+      $window.socket.emit(eventName, data, function() {
         var args = arguments;
         $rootScope.$apply(function() {
           if (callback) {
-            callback.apply(window.socket, args);
+            callback.apply($window.socket, args);
           }
         });
       });

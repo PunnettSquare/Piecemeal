@@ -43,7 +43,7 @@
     };
 
     self.goToGuestBill = function() {
-      $location.path('/' + window.sessionStorage.code + '/guestBill');
+      $location.path('/' + appFactory.getSessStorage('code') + '/guestBill');
     };
 
   }

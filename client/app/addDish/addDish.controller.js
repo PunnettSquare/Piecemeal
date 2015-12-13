@@ -22,7 +22,6 @@
         users: [appFactory.getSessStorage('user_id')]
       };
       socketFactory.emit('addDish', dish);
-      // appFactory.addDish(dish);
       self.userTotal += cost;
       self.amount = 0;
       self.dishName = '';
@@ -35,11 +34,11 @@
     self.calcUserCurrentTotal(self.data);
 
     self.goToAllDishes = function() {
-      $location.path('/' + window.sessionStorage.code + '/allDishes');
+      $location.path('/' + appFactory.getSessStorage('code') + '/allDishes');
     };
 
     self.goToGuestBill = function() {
-      $location.path('/' + window.sessionStorage.code + '/guestBill');
+      $location.path('/' + appFactory.getSessStorage('code') + '/guestBill');
     };
   }
 

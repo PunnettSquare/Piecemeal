@@ -9,18 +9,25 @@
         <div class="col-md-6">
           <form name="userInput">
 
+            <!-- Enter Your Name -->
             <div class="form-group">
+            <br>
               <label for="name">Enter Name</label>
               <input type="text" placeholder="Enter Your Name" ng-model="username" name="username" class="enterName form-control" required autofocus id="name">
               <br>
-              <h5>Are You a Host?</h5>
+
+              <!-- Are you a host? Create button -->
+              <h4>Host?</h4>
               <button type="submit" value="Create room" class="createRoom btn btn-default" ng-click="home.setSessionUser(username, true, null)">Create a Room</button>
             </div>
+            <br>
 
+            <!-- Enter a room code (as a guest) -->
             <div class="form-group">
-              <h3>Or</h3>
+              <h4>Guest?</h4>
               <label for="roomCode">Enter Room Code</label>
               <input type="text" class="roomName form-control" placeholder="piecemeal.com/" ng-model="url" id="roomCode">
+              <br>
               <button name="submit" type="submit" class="enterRoom btn btn-default" value="Enter Room" ng-click="home.setSessionUser(username, false, url)">
               Enter Room
               </button>

@@ -7,9 +7,9 @@
   angular.module('Piecemeal')
     .factory('appFactory', appFactory);
 
-  appFactory.$inject = ['socketFactory', '$rootScope'];
+  appFactory.$inject = ['socketFactory', '$rootScope', '$window'];
 
-  function appFactory(socketFactory, $rootScope) {
+  function appFactory(socketFactory, $rootScope, $window) {
 
     var services = {
       initListeners: initListeners,
@@ -28,19 +28,19 @@
 
     function getSessStorage(prop) {
       if (prop === "code") {
-        return window.sessionStorage.code;
+        return $window.sessionStorage.code;
       }
       if (prop === "event_id") {
-        return parseInt(window.sessionStorage.event_id);
+        return parseInt($window.sessionStorage.event_id);
       }
       if (prop === "isHost") {
-        return (window.sessionStorage.isHost === "false") ? false : true;
+        return ($window.sessionStorage.isHost === "false") ? false : true;
       }
       if (prop === "user_id") {
-        return parseInt(window.sessionStorage.user_id);
+        return parseInt($window.sessionStorage.user_id);
       }
       if (prop === "username") {
-        return window.sessionStorage.username;
+        return $window.sessionStorage.username;
       }
     }
 
