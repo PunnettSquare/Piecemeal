@@ -3,13 +3,13 @@ var webdriver = require('selenium-webdriver');
 var Michelle = new webdriver.Builder().usingServer().withCapabilities({
   'browserName': 'chrome'
 }).build();
-var jason = new webdriver.Builder().usingServer().withCapabilities({
+var Jason = new webdriver.Builder().usingServer().withCapabilities({
   'browserName': 'chrome'
 }).build();
-var justin = new webdriver.Builder().usingServer().withCapabilities({
+var Justin = new webdriver.Builder().usingServer().withCapabilities({
   'browserName': 'chrome'
 }).build();
-var tiphanie = new webdriver.Builder().usingServer().withCapabilities({
+var Tiphanie = new webdriver.Builder().usingServer().withCapabilities({
   'browserName': 'chrome'
 }).build();
 var By = webdriver.By;
@@ -19,9 +19,9 @@ var url = 'localhost:8080/';
 
 // setTimeout(function() {
 //  helpers.closeBrowser(Michelle);
-//  helpers.closeBrowser(jason);
-//  helpers.closeBrowser(justin);
-//  helpers.closeBrowser(tiphanie);
+//  helpers.closeBrowser(Jason);
+//  helpers.closeBrowser(Justin);
+//  helpers.closeBrowser(Tiphanie);
 // }, 20000)
 
 var roomCode;
@@ -37,8 +37,8 @@ helpers.makeRoom(webdriver, Michelle, 'Michelle', url)
         console.log(typeof url);
         console.log(url);
       });
-    helpers.joinRoom(webdriver, jason, url, roomCode, 'jason');
-    return helpers.joinRoom(webdriver, justin, url, roomCode, 'justin');
+    helpers.joinRoom(webdriver, Jason, url, roomCode, 'Jason');
+    return helpers.joinRoom(webdriver, Justin, url, roomCode, 'Justin');
   })
   .then(function() {
     return helpers.goToAddDish(webdriver, Michelle);
@@ -60,7 +60,7 @@ helpers.makeRoom(webdriver, Michelle, 'Michelle', url)
     }));
   })
   .then(function() {
-    return helpers.goToAddDish(webdriver, jason);
+    return helpers.goToAddDish(webdriver, Jason);
   })
   .then(function() {
     var dishes = [{
@@ -78,7 +78,7 @@ helpers.makeRoom(webdriver, Michelle, 'Michelle', url)
     }));
   })
   .then(function() {
-    return helpers.goToAddDish(webdriver, justin);
+    return helpers.goToAddDish(webdriver, Justin);
   })
   .then(function() {
     var dishes = [{
@@ -97,24 +97,24 @@ helpers.makeRoom(webdriver, Michelle, 'Michelle', url)
   })
   .then(function() {
     helpers.goToAllDishes(webdriver, Michelle);
-    helpers.goToAllDishes(webdriver, justin);
-    return helpers.goToAllDishes(webdriver, jason);
+    helpers.goToAllDishes(webdriver, Justin);
+    return helpers.goToAllDishes(webdriver, Jason);
   })
   .then(function() {
-    return helpers.joinRoom(webdriver, tiphanie, url, roomCode, 'tiphanie');
+    return helpers.joinRoom(webdriver, Tiphanie, url, roomCode, 'Tiphanie');
   })
   .then(function() {
-    return tiphanie.wait(webdriver.until.elementLocated(webdriver.By.css(".share")), 8 * 1000);
+    return Tiphanie.wait(webdriver.until.elementLocated(webdriver.By.css(".share")), 8 * 1000);
   })
   .then(function(share) {
     return share.click();
   })
   .then(function() {
-    helpers.shareDishes(webdriver, jason, 8);
-    helpers.shareDishes(webdriver, justin, 8);
-    return helpers.shareDishes(webdriver, tiphanie, 9);
+    helpers.shareDishes(webdriver, Jason, 8);
+    helpers.shareDishes(webdriver, Justin, 8);
+    return helpers.shareDishes(webdriver, Tiphanie, 9);
   })
-  .then(function() {
-    tiphanie.sleep(500);
-    return helpers.unshareDishes(webdriver, tiphanie, 9);
-  });
+  // .then(function() {
+  //   Tiphanie.sleep(500);
+  //   return helpers.unshareDishes(webdriver, Tiphanie, 9);
+  // });
