@@ -1,7 +1,7 @@
 var Promise = require('bluebird');
 var _ = require('underscore');
 
-module.exports = function(helpers, webdriver, hostBrowser, guestOne, guestTwo, guestThree, url) {
+module.exports = function(helpers, webdriver, hostBrowser, guestOne, guestTwo, guestThree, url, timeToClose) {
 
 	"use strict";
 
@@ -10,20 +10,17 @@ module.exports = function(helpers, webdriver, hostBrowser, guestOne, guestTwo, g
 		helpers.closeBrowser(guestOne);
 		helpers.closeBrowser(guestTwo);
 		helpers.closeBrowser(guestThree);
-	}, 90000)
+	}, timeToClose)
 
 	var roomCode;
 
 	return helpers.makeRoom(webdriver, hostBrowser, 'Host', url)
 	.then(function(code) {
-		console.log(code);
 		roomCode = code;
 	})
 	.then(function() {
 		hostBrowser.getCurrentUrl()
 		.then(function(url) {
-			console.log(typeof url)
-			console.log(url);
 		})
 		helpers.joinRoom(webdriver, guestOne, url, roomCode, 'guestOne');
 		return helpers.joinRoom(webdriver, guestTwo, url, roomCode, 'guestTwo');
@@ -66,7 +63,7 @@ module.exports = function(helpers, webdriver, hostBrowser, guestOne, guestTwo, g
 	})
 	.then(function() {
 		helpers.goToAllDishes(webdriver, hostBrowser);
-		helpers.goToAllDishes(webdriver, guestTwo);
+		helpers.goToGuestBill(webdriver, guestTwo);
 		return helpers.goToAllDishes(webdriver, guestOne);
 	})
 	.then(function() {
@@ -80,7 +77,7 @@ module.exports = function(helpers, webdriver, hostBrowser, guestOne, guestTwo, g
 	})
 	.then(function() {
 		helpers.shareDishes(webdriver, guestOne, 8);
-		helpers.shareDishes(webdriver, guestTwo, 8);
+		// helpers.shareDishes(webdriver, guestTwo, 8);
 		return helpers.shareDishes(webdriver, guestThree, 9);
 	})
 	.then(function() {
