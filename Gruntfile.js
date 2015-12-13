@@ -161,6 +161,12 @@ module.exports = function(grunt) {
     //   files: ['test/**/*_test.js']
     // },
     watch: {
+      // all: {
+      //   files: ['<%= project.client %>{,*/}**/*.*',
+      //     '<%= project.server %>{,*/}**/*.*',
+      //   ],
+      //   tasks: ['newer:injector:scripts']
+      // }
       bower: {
         files: ['bower.json'],
         tasks: ['wiredep']
@@ -175,34 +181,23 @@ module.exports = function(grunt) {
       },
       js: {
         files: ['<%= project.client %>/**/*.js'],
-        tasks: ['newer:jshint:all', 'newer:jscs:all'],
+        // tasks: ['newer:jshint:all', 'newer:jscs:all'],
         options: {
           livereload: '<%= connect.options.livereload %>'
         }
       },
-      // livereload: {
-      //   files: [
-      //     '{<%= project.client %>}/{app,components}/**/*.{css,html}',
-      //     '{<%= project.client %>}/{app,components}/**/!(*.spec|*.mock).js',
-      //     '<%= project.client %>/assets/images/{,*//*}*.{png,jpg,jpeg,gif,webp,svg}'
+      // injectJS: {
+      //   files: ['<%= project.client %>/app/app.module.js',
+      //     '<%= project.client %>/app/app.routes.js',
+      //     '<%= project.client %>/app/app.socket.init.js',
+      //     '<%= project.client %>/{app,components}/**/!(*.spec|*.mock).js'
       //   ],
-      //   options: {
-      //     livereload: true
-      //   }
+      //   tasks: ['injector:scripts']
       // },
-
-      injectJS: {
-        files: ['<%= project.client %>/app/app.module.js',
-          '<%= project.client %>/app/app.routes.js',
-          '<%= project.client %>/app/app.socket.init.js',
-          '<%= project.client %>/{app,components}/**/!(*.spec|*.mock).js'
-        ],
-        tasks: ['injector:scripts']
-      },
-      injectCss: {
-        files: ['<%= project.client %>/app.css'],
-        tasks: ['injector:css']
-      },
+      // injectCss: {
+      //   files: ['<%= project.client %>/app.css'],
+      //   tasks: ['injector:css']
+      // },
       // mochaTest: {
       //   files: ['<%= project.server %>/**/*.{spec,integration}.js'],
       //   tasks: ['env:test', 'mochaTest']
@@ -211,14 +206,14 @@ module.exports = function(grunt) {
       //   files: ['<%= project.client %>/{app,components}/**/*.{spec,mock}.js'],
       //   tasks: ['newer:jshint:all', 'wiredep:test', 'karma']
       // },
-      injectSass: {
-        files: ['<%= project.client %>/{app,components}/**/*.{scss,sass}'],
-        tasks: ['injector:sass']
-      },
-      sass: {
-        files: ['<%= project.client %>/{app,components}/**/*.{scss,sass}'],
-        tasks: ['sass:dev']
-      },
+      // injectSass: {
+      //   files: ['<%= project.client %>/{app,components}/**/*.{scss,sass}'],
+      //   tasks: ['injector:sass']
+      // },
+      // sass: {
+      //   files: ['<%= project.client %>/{app,components}/**/*.{scss,sass}'],
+      //   tasks: ['sass:dev']
+      // },
       // sass: {
       //   files: ['<%= project.client %>/{app,components}/**/*.{scss,sass}'],
       //   tasks: ['sass', 'postcss']
@@ -305,7 +300,7 @@ module.exports = function(grunt) {
   });
 
   // Default task
-  grunt.registerTask('default', ['jshint', 'connect:livereload', 'open', 'watch']);
+  grunt.registerTask('default', ['jshint', 'open', 'watch']);
   grunt.registerTask('test', ['wiredep', 'karma']);
   grunt.registerTask('build', ['injector:scripts', 'sass', 'injector:sass', 'wiredep']);
 };

@@ -10,14 +10,14 @@
 
     var self = this;
 
-    // window.sessionStorage should have: username, user_id, event code, event_id, and isHost
+    // $window.sessionStorage should have: username, user_id, event code, event_id, and isHost
     self.setSessionUser = function(username, isHost, code) {
       if (isHost) {
         homeFactory.createEvent({
             username: username
           })
           .then(function(data) {
-            _.assign(window.sessionStorage, {
+            _.assign($window.sessionStorage, {
               username: username,
               code: data.code,
               isHost: true,
@@ -32,13 +32,13 @@
       } else {
         // code = code || 'testRoom'; // only for mock data
         homeFactory.sendSessionUser(
-            _.assign(window.sessionStorage, {
+            _.assign($window.sessionStorage, {
               username: username,
               code: code,
               isHost: false
             }))
           .then(function(userInfo) {
-            _.assign(window.sessionStorage, {
+            _.assign($window.sessionStorage, {
               user_id: userInfo.user_id,
               event_id: userInfo.event_id
             });

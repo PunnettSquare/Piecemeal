@@ -28,7 +28,7 @@
     self.getUsersByDish = appFactory.getUsersByDish;
 
     self.goToAddDish = function() {
-      $location.path('/' + window.sessionStorage.code + '/addDish');
+      $location.path('/' + appFactory.getSessStorage('code') + '/addDish');
     };
 
     // self.getId = function(arrayOfIds, eventInfo) {

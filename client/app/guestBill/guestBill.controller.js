@@ -118,11 +118,11 @@
 
 
     self.goToAllDishes = function() {
-      $location.path('/' + window.sessionStorage.code + '/allDishes');
+      $location.path('/' + appFactory.getSessStorage('code') + '/allDishes');
     };
 
     self.goToHostBill = function() {
-      $location.path('/' + window.sessionStorage.code + '/hostBill');
+      $location.path('/' + appFactory.getSessStorage('code') + '/hostBill');
     };
   }
 })();
