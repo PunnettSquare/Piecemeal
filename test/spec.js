@@ -5,7 +5,7 @@
 beforeEach(module('Piecemeal'));
 var $controller;
 
-beforeEach(inject(function(_$controller_, $rootScope, appFactory){
+beforeEach(inject(function(_$controller_, $rootScope){
   // Angular mock injector unwraps the underscores (_) from around the parameter names when matching
   $controller = _$controller_;
   socketMock = new sockMock($rootScope);
