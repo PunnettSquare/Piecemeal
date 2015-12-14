@@ -13,7 +13,7 @@ var Promise = require('bluebird');
 var _ = require('lodash');
 var tipInput = '20';
 var taxInput = '8';
-require('./botPiecemeal')(helpers, webdriver, hostBrowser, guestOne, guestTwo, guestThree, url, 70000)
+require('./botPiecemeal')(helpers, webdriver, hostBrowser, guestOne, guestTwo, guestThree, url)
 .then(function() {
   var directions = [
     [hostBrowser, 'hostBill'],
@@ -21,6 +21,7 @@ require('./botPiecemeal')(helpers, webdriver, hostBrowser, guestOne, guestTwo, g
     [guestTwo, 'guestBill'],
     [guestThree, 'allDishes'],
   ]
+  console.time();
   return Promise.all(_.map(directions, function(array) {
     return helpers.goToPage(webdriver, array[0], array[1]);
   }))

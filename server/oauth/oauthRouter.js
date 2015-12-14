@@ -8,28 +8,11 @@ if (process.env.PORT) {
 var cookieParser = require('cookie-parser');
 var db = require('../../db/db');
 var util = require('../utility');
-var cors = require('express-cors')
 module.exports = function(app) {
 
   app.use(passport.initialize());
   app.use(cookieParser());
   app.use(passport.session());
-  // app.use(function(req, res, next) {
-  //   res.header("Access-Control-Allow-Origin", "*");
-  //   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  //   res.header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
-  //   if ('OPTIONS' == req.method) {
-  //     res.send(200);
-  //   }
-  //   next();
-  // });
-
-   
-  app.use(cors({
-    allowedOrigins: [
-      'api.venmo.com'
-    ]
-  }))
 
   passport.serializeUser(function (user, done) {
     done(null, user);
@@ -42,7 +25,7 @@ module.exports = function(app) {
   passport.use(new VenmoStrategy({
       clientID: venmoInfo.id,
       clientSecret: venmoInfo.secret,
-      callbackURL: "http://127.0.0.1:8080/auth/venmo/callback"
+      callbackURL: "http://localhost:8080/auth/venmo/callback"
     },
     function(accessToken, refreshToken, profile, done) {
       console.log('profile', profile);
@@ -70,6 +53,6 @@ module.exports = function(app) {
     passport.authenticate('venmo', { failureRedirect: '/' }),
     function(req, res) {
       console.log('req.user: ',req.user);
-      res.redirect('/#/oAuth');
+      res.redirect('/testRoom');
     });
 }
