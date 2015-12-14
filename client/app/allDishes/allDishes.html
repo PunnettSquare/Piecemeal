@@ -21,7 +21,7 @@
             <p class="list-group-item-text">
               Cost: {{dish.cost | currency }}
             </p>
-            <span><small>{{ allDishes.getUsersByDish(dish, allDishes.data.users) }} got this.</small></span>
+            <span><small class="sharedBy">{{ allDishes.getUsersByDish(dish, allDishes.data.users) }} got this.</small></span>
           </div>
           <div class="list-group-item">
           <!-- used to be 'button', now 'span: important for selenium -->
