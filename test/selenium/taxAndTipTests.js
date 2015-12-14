@@ -18,7 +18,7 @@ require('./botPiecemeal')(helpers, webdriver, hostBrowser, guestOne, guestTwo, g
   var directions = [
     [hostBrowser, 'hostBill'],
     [guestOne, 'guestBill'],
-    // [guestTwo, 'guestBill'],
+    [guestTwo, 'guestBill'],
     [guestThree, 'allDishes'],
   ]
   return Promise.all(_.map(directions, function(array) {

@@ -25,7 +25,6 @@
     function init() {
       var ioRoom = $window.location.origin + '/' + $window.sessionStorage.code;
       $window.socket = io(ioRoom);
-      // console.log('Joining ioRoom: ', ioRoom);
     }
 
     function on(eventName, callback) {

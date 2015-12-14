@@ -1,6 +1,7 @@
 var path = require('path');
 var bodyParser = require('body-parser');
 var morgan = require('morgan');
+var cors = require('express-cors')
 
 
 module.exports = function (app, express, io) {
@@ -9,26 +10,22 @@ module.exports = function (app, express, io) {
     extended: true
   }));
 
-  app.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Origin: http://localhost:8080");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    res.header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
-    if ('OPTIONS' == req.method) {
-      res.send(200);
-    }
-    next();
-  });
+  // app.use(cors({
+  //   allowedOrigins: [
+  //     'api.venmo.com'
+  //   ]
+  // }))
 
   app.use(bodyParser.json());
 
-  app.use(morgan('dev'));
 
   var oauthRouter = express.Router();
 
   var eventRouter = express.Router();
 
   app.use('/', express.static(path.join(__dirname, '../../client/')));
+  
+  app.use(morgan('dev'));
 
   app.use('/auth', oauthRouter);
 

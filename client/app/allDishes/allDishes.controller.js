@@ -4,26 +4,27 @@
   angular.module('Piecemeal')
     .controller('AllDishesCtrl', AllDishesCtrl);
 
-  AllDishesCtrl.$inject = ['socketFactory', '$location', 'appFactory', '$scope'];
+  AllDishesCtrl.$inject = ['socketFactory', '$location', 'appFactory', '$scope', 'allDishesFactory'];
 
-  function AllDishesCtrl(socketFactory, $location, appFactory, $scope) {
+  function AllDishesCtrl(socketFactory, $location, appFactory, $scope, allDishesFactory) {
     var self = this;
 
     self.user_id = appFactory.getSessStorage('user_id');
     self.event_id = appFactory.getSessStorage('event_id');
     self.username = appFactory.getSessStorage('username');
 
-    self.data = appFactory.data;
-
-    socketFactory.init();
-    if (!self.data) {
-      appFactory.initListeners();
-    }
-    // When appFactory is updated, $rootScope is used as a bus to emit to user's allDishes controller $scope
     $scope.$on('joined', function() { // $on does not work with `self`
       self.data = appFactory.data;
       console.log("Joined the All Dishes room.");
     });
+
+    if (!appFactory.data) {
+      socketFactory.init()
+      appFactory.initListeners();
+      allDishesFactory.connect();
+    }
+    self.data = appFactory.data;
+    // When appFactory is updated, $rootScope is used as a bus to emit to user's allDishes controller $scope
 
     self.getUsersByDish = appFactory.getUsersByDish;
 

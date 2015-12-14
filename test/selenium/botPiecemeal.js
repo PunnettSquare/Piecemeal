@@ -5,12 +5,12 @@ module.exports = function(helpers, webdriver, hostBrowser, guestOne, guestTwo, g
 
 	"use strict";
 
-	setTimeout(function() {
-		helpers.closeBrowser(hostBrowser);
-		helpers.closeBrowser(guestOne);
-		helpers.closeBrowser(guestTwo);
-		helpers.closeBrowser(guestThree);
-	}, timeToClose)
+	// setTimeout(function() {
+	// 	helpers.closeBrowser(hostBrowser);
+	// 	helpers.closeBrowser(guestOne);
+	// 	helpers.closeBrowser(guestTwo);
+	// 	helpers.closeBrowser(guestThree);
+	// }, timeToClose)
 
 	var roomCode;
 
@@ -62,7 +62,7 @@ module.exports = function(helpers, webdriver, hostBrowser, guestOne, guestTwo, g
 		}))
 	})
 	.then(function() {
-		helpers.goToAllDishes(webdriver, hostBrowser);
+		helpers.goToPage(webdriver, hostBrowser, 'allDishes');
 		helpers.goToGuestBill(webdriver, guestTwo);
 		return helpers.goToAllDishes(webdriver, guestOne);
 	})
@@ -77,7 +77,7 @@ module.exports = function(helpers, webdriver, hostBrowser, guestOne, guestTwo, g
 	})
 	.then(function() {
 		helpers.shareDishes(webdriver, guestOne, 8);
-		// helpers.shareDishes(webdriver, guestTwo, 8);
+		helpers.shareDishes(webdriver, guestTwo, 8);
 		return helpers.shareDishes(webdriver, guestThree, 9);
 	})
 	.then(function() {
