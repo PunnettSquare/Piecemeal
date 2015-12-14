@@ -3,6 +3,7 @@ var db = require('../../db/db');
 var handleSocket = require('../sockets');
 var util = require('../utility.js');
 var _ = require('underscore');
+var colors = require('colors/safe');
 
 module.exports = function(app, io) {
 
@@ -16,7 +17,7 @@ module.exports = function(app, io) {
     var code = util.generateCode();
     util.createEvent(db, code, username)
       .then(function(dataObj) {
-        res.send({
+        res.status(200).send({
           code: code,
           user_id: dataObj.user_id[0],
           event_id: dataObj.event_id[0]
@@ -40,13 +41,14 @@ module.exports = function(app, io) {
         return util.createUser(db, username, event_id, false);
       })
       .then(function(guestId) {
-        res.send(200, {
+        res.status(200).send({
           user_id: guestId[0],
           event_id: event_id
         });
       })
       .catch(function(err) {
-        res.send(500, err);
+        console.log("Error!", err);
+        res.status(500).send(err);
       });
   });
 
@@ -56,22 +58,31 @@ module.exports = function(app, io) {
   app.post('/*', function(req, res) {
     var code = req.url.slice(1);
     var user_id = req.body.user_id;
-    res.send(200);
-    if (!connections[user_id]) {
-      connections[user_id] = true;
-      setTimeout(function() {
-        connections[user_id] = false;
-      }, 7000);
+
+    console.log("NEW POST /* request", user_id, code);
+
+    // console.log(colors.green("NEW POST /* REQUEST: with ID", user_id, "and code", code)); // for seeing multiple post requests
+    res.sendStatus(200);
+
+    // if (!connections[user_id]) {
+    //   connections[user_id] = true;
+    // if (!connections[req._startTime]) {
+    //   connections[req._startTime] = true;
+    //   setTimeout(function() {
+    //     connections[user_id] = false;
+    //   }, 8100);
+
       // query database for event id based on code
 
       util.findEvent(db, code)
         .then(function(event_id) {
           //check for an event
           if (event_id.length !== 0) {
-          // retrieve the state of the event to send to socket
+            // retrieve the state of the event to send to socket
             return util.gatherState(db, event_id[0].id, code) // real data
               .then(function(eventInfo) {
                 // handle the socket connection
+
                 var newUserObj = _.reduce(eventInfo.users, function(user, curr) {
                   if (!!user) {
                     return user;
@@ -88,7 +99,7 @@ module.exports = function(app, io) {
         .catch(function(err) {
           throw err;
         });
-    }
+    // }
   });
 
   // uncomment this to populate an empty database with dummy data from ./generateData.js

@@ -17,12 +17,12 @@ var Promise = require('bluebird');
 var _ = require('underscore');
 var url = 'localhost:8080/';
 
-// setTimeout(function() {
-//  helpers.closeBrowser(Michelle);
-//  helpers.closeBrowser(Jason);
-//  helpers.closeBrowser(Justin);
-//  helpers.closeBrowser(Tiphanie);
-// }, 20000)
+setTimeout(function() {
+ helpers.closeBrowser(Michelle);
+ helpers.closeBrowser(Jason);
+ helpers.closeBrowser(Justin);
+ helpers.closeBrowser(Tiphanie);
+}, 20000)
 
 var roomCode;
 

@@ -22,6 +22,7 @@
           data: username // sending username + event code
         })
         .then(function(res) {
+          // console.log("Sending your way to allDishes!"); // post req only logged once. so it's not an issue of multiple post requests.
           return res.data;
         });
     }

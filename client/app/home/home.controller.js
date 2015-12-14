@@ -42,6 +42,7 @@
               user_id: userInfo.user_id,
               event_id: userInfo.event_id
             });
+
             $location.path('/' + code + '/allDishes');
           })
           .catch(function(err) {
