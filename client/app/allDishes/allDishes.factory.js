@@ -8,19 +8,7 @@
 
   function allDishesFactory($http, $window) {
 
-    var services = {
-      connect: connect
-    };
-
-    function connect() {
-      $http({
-        method: 'POST',
-        url: '/' + window.sessionStorage.code,
-        data: {
-          user_id: parseInt(window.sessionStorage.user_id)
-        }
-      });
-    }
+    var services = {};
 
     return services;
 

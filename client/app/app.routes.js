@@ -34,21 +34,6 @@
           }
         }
       })
-      .state('oAuth', {
-        url: '/oAuth',
-        views: {
-          'navbar': {
-            templateUrl: 'components/navbar/navbar.html',
-            controller: 'NavbarCtrl',
-            controllerAs: 'navbar'
-          },
-          '@': {
-            templateUrl: 'app/oAuth/oAuth.html',
-            controller: 'OAuthCtrl',
-            controllerAs: 'oAuth'
-          }
-        }
-      })
       .state('event', {
         url: '/:id',
         views: {
@@ -90,19 +75,18 @@
             controller: 'AllDishesCtrl',
             controllerAs: 'allDishes',
           }
+        },
+        resolve: {
+          getEventInfo: ['$http', function($http) {
+            return $http({
+              method: 'POST',
+              url: '/' + window.sessionStorage.code,
+              data: {
+                user_id: parseInt(window.sessionStorage.user_id)
+              }
+            });
+          }]
         }
-        // ,
-        // resolve: {
-        //   getEventInfo: ['$http', function($http) {
-            // return $http({
-            //   method: 'POST',
-            //   url: '/' + window.sessionStorage.code,
-            //   data: {
-            //     user_id: parseInt(window.sessionStorage.user_id)
-            //   }
-            // });
-        //   }]
-        // }
       })
       .state('event.guestBill', {
         url: '/guestBill',

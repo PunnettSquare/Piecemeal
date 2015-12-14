@@ -1,7 +1,6 @@
 var path = require('path');
 var bodyParser = require('body-parser');
 var morgan = require('morgan');
-var cors = require('express-cors')
 
 
 module.exports = function (app, express, io) {
@@ -10,22 +9,15 @@ module.exports = function (app, express, io) {
     extended: true
   }));
 
-  // app.use(cors({
-  //   allowedOrigins: [
-  //     'api.venmo.com'
-  //   ]
-  // }))
-
   app.use(bodyParser.json());
 
+  app.use(morgan('dev'));
 
   var oauthRouter = express.Router();
 
   var eventRouter = express.Router();
 
   app.use('/', express.static(path.join(__dirname, '../../client/')));
-  
-  app.use(morgan('dev'));
 
   app.use('/auth', oauthRouter);
 

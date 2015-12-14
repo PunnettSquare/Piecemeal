@@ -30,7 +30,7 @@
     self.calcUserCurrentTotal = function(data) {
       self.userTotal = addDishFactory.calculateRunningTotal(data);
     };
-    
+
     self.calcUserCurrentTotal(self.data);
 
     self.goToAllDishes = function() {

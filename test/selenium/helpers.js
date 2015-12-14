@@ -90,7 +90,6 @@ goToAllDishes : function (webdriver, browser) {
   },
 
   goToPage: function (webdriver, browser, pageName) {
-
     browser.implicitly_wait
     var pages = {
       allDishes: {
@@ -108,7 +107,6 @@ goToAllDishes : function (webdriver, browser) {
         connections: ['guestBill']
       }
     }
-    var alreadyOnPage = false;
     var routes = [];
     var findPageRoute = function (webdriver, browser, pageName, route, visited, currentPage) {
       route = route.slice();
@@ -140,9 +138,6 @@ goToAllDishes : function (webdriver, browser) {
     }
     return module.exports.determinePage(webdriver, browser)
     .then(function(currentPage) {
-      if (currentPage === pageName) {
-        alreadyOnPage = true;
-      } 
       return findPageRoute(webdriver, browser, pageName, [], [], currentPage);
     })
     .then(function() {
@@ -153,20 +148,16 @@ goToAllDishes : function (webdriver, browser) {
         }
         return shortest;
       });
-      if (alreadyOnPage) {
-        return;
-      } else {
-        return Promise.each(shortest, function(navigationFunction, index, list) {
-          return module.exports['goTo' + _.capitalize(navigationFunction)](webdriver, browser)
-          .then(function() {
-            if (shortest[index+1]) {
-              return browser.wait(webdriver.until.elementLocated(webdriver.By.css('.' + shortest[index+1])), 8 * 1000);
-            } else {
-              return
-            }
-          })
-        });
-      }
+      return Promise.each(shortest, function(navigationFunction, index, list) {
+        return module.exports['goTo' + _.capitalize(navigationFunction)](webdriver, browser)
+        .then(function() {
+          if (shortest[index+1]) {
+            return browser.wait(webdriver.until.elementLocated(webdriver.By.css('.' + shortest[index+1])), 8 * 1000);
+          } else {
+            return
+          }
+        })
+      });
     })
   },
 
@@ -205,7 +196,6 @@ goToAllDishes : function (webdriver, browser) {
  makeRoom: function(webdriver, browser, name, url) {
   return browser.get(url)
   .then(function() {
-    browser.sleep(1000);
     return browser.wait(webdriver.until.elementLocated(webdriver.By.css(".enterName")), 8 * 1000)
   })
   .then(function(element) {
@@ -218,7 +208,7 @@ goToAllDishes : function (webdriver, browser) {
     return button.click()
   })
   .then(function() {
-    browser.sleep(4000);
+    browser.sleep(3000);
     return browser.wait(webdriver.until.elementLocated(webdriver.By.css("strong.code")), 10000)
   })
   .then(function (element) {  
@@ -257,46 +247,6 @@ goToAllDishes : function (webdriver, browser) {
     .then(function(element) {
       return element.getText()
     })
-  },
-
-  checkDuplication: function (webdriver, browser) {
-
-    return module.exports.goToPage(webdriver, browser, 'allDishes')
-    .then(function() {
-      return browser.wait(webdriver.until.elementLocated(webdriver.By.css(".sharedBy")), 10000)
-    })
-    .then(function() {
-      return browser.findElements(webdriver.By.className('sharedBy'))
-    })
-    .then(function (data) {
-      return Promise.all(data.map(function(element) {
-        return element.getText();
-      }))
-    })
-    .then(function(sharedStrings) {
-      var result;
-      sharedStrings.forEach(function(string) {
-        string.split('').splice(string.length-11, 10);
-        var words = string.split(' ');
-        result = words.reduce(function(duplication, user, index, list) {
-          if (duplication) {
-            console.log('Duplication Found');
-            return true;
-          }
-          if (user !== 'GuestOne' && user !== 'GuestTwo' && user !== 'GuestThree' && user !== 'Host') {
-            return false;
-          }
-          var doubles = _.filter(list, function(word) {
-            return word === user
-          })
-          if (doubles.length > 1) {
-            return true;
-          }
-          return false;
-        }, false);
-      });
-      module.exports.closeBrowser(browser);
-      return result;
-    })
   }  
+
 }
