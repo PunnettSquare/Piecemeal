@@ -21,9 +21,9 @@ describe('Piecemeal', function() {
     // });
 
     // add test property equal to "test" in appFactory if want to use this
-    it('makes use of myFactory', function() {
-      expect(appFactory.test).toEqual('test');
-    });
+    // it('makes use of myFactory', function() {
+    //   expect(appFactory.test).toEqual('test');
+    // });
 
     // it('initates listeners', function() {
     //   expect(appFactory.test).toEqual('test');

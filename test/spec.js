@@ -4,6 +4,63 @@
 
 beforeEach(module('Piecemeal'));
 var $controller;
+var appFactoryMock = {
+      getSessStorage: function () {},
+      initListeners : function() {},
+      shareDish: function () {},
+      getDishIndivCost: function (dish) {
+        return dish.cost / dish.users.length;
+      },
+      data: {
+        billData: {},
+        code: "bread",
+        dishes: [{
+          cost: 8,
+          dish_id: 5,
+          name: "ramen",
+          user_id: 7,
+          users: [7, 8]
+        }, {
+          cost: 10,
+          dish_id: 6,
+          name: "burger",
+          user_id: 8,
+          users: [8]
+        }],
+        event_id: 3,
+        users: [{
+          dishes: [{
+            cost: 8,
+            dish_id: 5,
+            name: "ramen",
+            user_id: 7,
+            users: [7, 8]
+          }],
+          host: true,
+          id: 7,
+          status: true,
+          username: "fawn"
+        }, {
+          dishes: [{
+            cost: 8,
+            dish_id: 5,
+            name: "ramen",
+            user_id: 7,
+            users: [7, 8]
+          }, {
+            cost: 10,
+            dish_id: 6,
+            name: "burger",
+            user_id: 8,
+            users: [8]
+          }],
+          host: false,
+          id: 8,
+          status: false,
+          username: "jackson"
+        }]
+      }
+    };
 
 beforeEach(inject(function(_$controller_, $rootScope){
   // Angular mock injector unwraps the underscores (_) from around the parameter names when matching
@@ -11,17 +68,40 @@ beforeEach(inject(function(_$controller_, $rootScope){
   socketMock = new sockMock($rootScope);
 }));
 
-describe('HostReceiptCtrl', function() {
+describe('HostBillCtrl', function() {
+  var $scope, controller, dishMock;
+
+  beforeEach(function() {
+    $scope = {};
+    controller = $controller('HostBillCtrl', { $scope: $scope, socketFactory: socketMock, appFactory: appFactoryMock});
+
+    // can optionally use dishMock instead of appFactoryMock.data.dishes[0] below for simplicity
+    // dishMock = {
+    //   cost: 8,
+    //   users: [7, 8]
+    // };
+  });
+
+  it('should return the individual\'s cost for a dish', function() {
+    expect(controller.getDishIndivCost(appFactoryMock.data.dishes[0])).toEqual(4);
+  });
+
+  it('should return subtotal for all dishes (not counting tax/tip)', function() {
+    expect(controller.getSubTotal(controller.data.dishes)).toEqual(18);
+  });
+});
+
+describe('GuestBillCtrl', function() {
   var $scope, controller;
 
   beforeEach(function() {
     $scope = {};
-    controller = $controller('HostReceiptCtrl', { $scope: $scope, socketFactory: socketMock, serverState:{roomName:'testRoom'}});
+    controller = $controller('GuestBillCtrl', { $scope: $scope, socketFactory: socketMock});
   });
 
-  it('has the property "test" which equals "test"', function() {
-    expect(controller.test).toEqual('test');
-  });
+  // it('has the property "test" which equals "test"', function() {
+  //   expect(controller.test).toEqual('test');
+  // });
 
 });
 
@@ -77,13 +157,8 @@ describe('AllDishesCtrl', function() {
         console.log("mock $scope .on"); 
       }
     };
-    appFactory = {
-      getSessStorage: function () {},
-      initListeners : function() {},
-      shareDish: function () {}
-    };
 
-    controller = $controller('AllDishesCtrl', { $scope: $scope, socketFactory: socketMock, appFactory: appFactory});
+    controller = $controller('AllDishesCtrl', { $scope: $scope, socketFactory: socketMock, appFactory: appFactoryMock});
   });
 
   it('has the property "test" which equals "test"', function() {

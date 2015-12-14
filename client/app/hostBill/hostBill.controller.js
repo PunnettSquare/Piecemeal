@@ -10,6 +10,7 @@
     var self = this;
 
     self.data = appFactory.data;
+    console.log("appFactory/hostBill data--->", self.data); 
 
     // self.getDishIndivCost = function(dish) {
     //   return dish.cost / dish.users.length;
