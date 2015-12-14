@@ -3,7 +3,6 @@ var db = require('../../db/db');
 var handleSocket = require('../sockets');
 var util = require('../utility.js');
 var _ = require('underscore');
-var colors = require('colors/safe');
 
 module.exports = function(app, io) {
 
@@ -59,9 +58,7 @@ module.exports = function(app, io) {
     var code = req.url.slice(1);
     var user_id = req.body.user_id;
 
-    console.log("NEW POST /* request", user_id, code);
-
-    // console.log(colors.green("NEW POST /* REQUEST: with ID", user_id, "and code", code)); // for seeing multiple post requests
+    console.log("NEW POST /* REQUEST: with ID", user_id, "and code", code);
     res.sendStatus(200);
 
     if (!connections[user_id]) {
