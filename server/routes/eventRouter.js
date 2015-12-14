@@ -64,16 +64,13 @@ module.exports = function(app, io) {
     // console.log(colors.green("NEW POST /* REQUEST: with ID", user_id, "and code", code)); // for seeing multiple post requests
     res.sendStatus(200);
 
-    // if (!connections[user_id]) {
-    //   connections[user_id] = true;
-    // if (!connections[req._startTime]) {
-    //   connections[req._startTime] = true;
-    //   setTimeout(function() {
-    //     connections[user_id] = false;
-    //   }, 8100);
+    if (!connections[user_id]) {
+      connections[user_id] = true;
+      setTimeout(function() {
+        connections[user_id] = false;
+      }, 8100);
 
       // query database for event id based on code
-
       util.findEvent(db, code)
         .then(function(event_id) {
           //check for an event
@@ -99,7 +96,7 @@ module.exports = function(app, io) {
         .catch(function(err) {
           throw err;
         });
-    // }
+    }
   });
 
   // uncomment this to populate an empty database with dummy data from ./generateData.js

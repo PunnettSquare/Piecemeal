@@ -1,16 +1,16 @@
 (function() {
-	'use strict';
+  'use strict';
 
-	angular.module('Piecemeal')
-		.factory('allDishesFactory', allDishesFactory);
+  angular.module('Piecemeal')
+    .factory('allDishesFactory', allDishesFactory);
 
-	allDishesFactory.$inject = ['$http', '$window'];
+  allDishesFactory.$inject = ['$http', '$window'];
 
-	function allDishesFactory($http, $window) {
+  function allDishesFactory($http, $window) {
 
-		var services = {};
+    var services = {};
 
-		return services;
+    return services;
 
-	}
+  }
 })();
