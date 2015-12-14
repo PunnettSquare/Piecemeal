@@ -21,7 +21,6 @@
     if (!appFactory.data) {
       socketFactory.init()
       appFactory.initListeners();
-      allDishesFactory.connect();
     }
     self.data = appFactory.data;
     // When appFactory is updated, $rootScope is used as a bus to emit to user's allDishes controller $scope

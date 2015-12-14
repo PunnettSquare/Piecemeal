@@ -1,28 +1,16 @@
 (function() {
-  'use strict';
+	'use strict';
 
-  angular.module('Piecemeal')
-    .factory('allDishesFactory', allDishesFactory);
+	angular.module('Piecemeal')
+		.factory('allDishesFactory', allDishesFactory);
 
-  allDishesFactory.$inject = ['$http', '$window'];
+	allDishesFactory.$inject = ['$http', '$window'];
 
-  function allDishesFactory($http, $window) {
+	function allDishesFactory($http, $window) {
 
-    var services = {
-      connect: connect
-    };
+		var services = {};
 
-    function connect() {
-      $http({
-        method: 'POST',
-        url: '/' + window.sessionStorage.code,
-        data: {
-          user_id: parseInt(window.sessionStorage.user_id)
-        }
-      });
-    }
+		return services;
 
-    return services;
-
-  }
+	}
 })();

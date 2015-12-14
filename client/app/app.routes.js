@@ -7,6 +7,9 @@
   config.$inject = ['$stateProvider', '$urlRouterProvider'];
 
   function config($stateProvider, $urlRouterProvider) {
+
+    var usernameCache = {};
+
     console.log('window.sessionStorage =', window.sessionStorage);
     $urlRouterProvider.otherwise(function($injector) {
       var state = $injector.get('$state');
@@ -104,19 +107,21 @@
             controller: 'AllDishesCtrl',
             controllerAs: 'allDishes',
           }
+        },
+        resolve: {
+          getEventInfo: ['$http', function($http) {
+            if (!usernameCache[window.sessionStorage.user_id]) {
+              usernameCache[window.sessionStorage.user_id] = true;
+              return $http({
+                method: 'POST',
+                url: '/' + window.sessionStorage.code,
+                data: {
+                  user_id: parseInt(window.sessionStorage.user_id)
+                }
+              });
+            }
+          }]
         }
-        // ,
-        // resolve: {
-        //   getEventInfo: ['$http', function($http) {
-            // return $http({
-            //   method: 'POST',
-            //   url: '/' + window.sessionStorage.code,
-            //   data: {
-            //     user_id: parseInt(window.sessionStorage.user_id)
-            //   }
-            // });
-        //   }]
-        // }
       })
       .state('event.guestBill', {
         url: '/guestBill',
