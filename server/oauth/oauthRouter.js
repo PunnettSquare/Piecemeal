@@ -8,7 +8,6 @@ if (process.env.PORT) {
 var cookieParser = require('cookie-parser');
 var db = require('../../db/db');
 var util = require('../utility');
-var cors = require('express-cors')
 module.exports = function(app) {
 
   app.use(passport.initialize());
@@ -24,12 +23,9 @@ module.exports = function(app) {
   //   next();
   // });
 
-   
-  app.use(cors({
-    allowedOrigins: [
-      'api.venmo.com'
-    ]
-  }))
+   // take name, and username
+
+
 
   passport.serializeUser(function (user, done) {
     done(null, user);
@@ -46,10 +42,10 @@ module.exports = function(app) {
     },
     function(accessToken, refreshToken, profile, done) {
       console.log('profile', profile);
-      var user = {code: profile._json.id};
+      var user = {code: profile.username};
       var code = util.generateCode();
       // console.log('profile._json =', profile._json);
-      util.createEvent(db, profile._json.id, profile._json.username);
+      util.createEvent(db, profile.username, profile.displayName);
       console.log('coming back from venmo oauth');
       return done(null, user);
     }

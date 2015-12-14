@@ -1,7 +1,7 @@
 var path = require('path');
 var bodyParser = require('body-parser');
 var morgan = require('morgan');
-var cors = require('express-cors');
+
 
 module.exports = function (app, express, io) {
 
@@ -14,6 +14,8 @@ module.exports = function (app, express, io) {
   //     'api.venmo.com'
   //   ]
   // }))
+
+  app.use(cors())
 
   app.use(bodyParser.json());
 
