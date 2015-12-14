@@ -46,7 +46,8 @@
         </div>
         <!-- <div class="panel-body">{{guestBill.getGuestTotal(guestBill.data) | currency}}</div> -->
         <div class="panel-footer" ng-if="_.isEmpty(guestBill.data.billData) && !guestBill.isHost">
-          Your host hasn't decided on the tip and tax yet. Please check again later.
+          The host has not entered the tax and tip yet. Please wait for your bill to be finalized.
+          <button type="submit" class="venmo"><img src="../../assets/venmo_logo_white.png" alt="Venmo" width="55px"></button>
         </div>
       </div>
 

@@ -1,3 +1,9 @@
-div {
-  border: 1px solid gray;
+.venmo {
+  border-radius: 3px;
+  border: 0;
+  padding: 8px 18px;
+}
+
+.venmo .enabled {
+  background-color: #3D95CE;
 }
