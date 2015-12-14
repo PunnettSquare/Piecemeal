@@ -46,8 +46,11 @@
         </div>
         <!-- <div class="panel-body">{{guestBill.getGuestTotal(guestBill.data) | currency}}</div> -->
         <div class="panel-footer" ng-if="_.isEmpty(guestBill.data.billData) && !guestBill.isHost">
-          The host has not entered the tax and tip yet. Please wait for your bill to be finalized.
-          <button type="submit" class="venmo"><img src="../../assets/venmo_logo_white.png" alt="Venmo" width="55px"></button>
+          <p>The host has not entered the tax and tip yet. Please wait for your bill to be finalized before proceeding with payment.</p>
+          <div>
+            <button type="submit" class="payButton"><img src="../../assets/venmo_logo_white.png" alt="Venmo" width="55px"></button>
+            <button type="submit" class="payButton">Cash</button>
+          </div>
         </div>
       </div>
 
@@ -79,6 +82,14 @@
         <div class="panel-footer tipPercent">
           <small>Dinner Grand Total: {{  guestBill.data.billData.grandTotal | currency}}</small>
         </div>
+      </div>
+
+      <div class="panel panel-default" ng-if="!_.isEmpty(guestBill.data.billData) && !guestBill.isHost">
+        <div class="panel-heading"><h2 class="panel-title">Pay with:</h2>
+          <div>
+            <button type="submit" class="payButton venmoEnabled"><img src="../../assets/venmo_logo_white.png" alt="Venmo" width="55px"></button>
+            <button type="submit" class="payButton cashEnabled">Cash</button>
+          </div>
       </div>
 
       <!--      <div class="panel panel-default">
