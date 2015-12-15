@@ -87,7 +87,7 @@
       <div class="panel panel-default" ng-if="!_.isEmpty(guestBill.data.billData) && !guestBill.isHost">
         <div class="panel-heading"><h2 class="panel-title">Pay with:</h2>
           <div>
-            <button type="submit" class="payButton venmoEnabled"><img src="../../assets/venmo_logo_white.png" alt="Venmo" width="55px"></button>
+            <a type="submit" class="payButton venmoEnabled" ng-href="https://venmo.com/{{guestBill.venmoUsername}}?txn=pay&amount={{guestBill.guestGrandTotal}}&audience=private"><img src="../../assets/venmo_logo_white.png" alt="Venmo" width="55px"></a>
             <button type="submit" class="payButton cashEnabled">Cash</button>
           </div>
       </div>

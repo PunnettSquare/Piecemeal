@@ -126,8 +126,13 @@ module.exports = {
         return module.exports.findEventUsers(db, event_id)
           .then(function(users) {
             state.users = users;
+            users.forEach(function(user){
+              if (!!user.venmoUsername && user.host) {
+                state.venmoUsername = user.venmoUsername;
+              }
+            })
             return Promise.all(_.map(users, function(user) {
-                return module.exports.findUserDishes(db, user.id);
+                return module.exports.findUserDishes(db, user.id, event_id);
               }))
               .then(function(usersDishesArrays) {
                 usersDishesArrays.forEach(function(userDishesArray) {
@@ -144,6 +149,7 @@ module.exports = {
                   });
                 });
                 state.dishes = module.exports.findDishArray(usersDishesArrays);
+
                 return state;
               });
           });
@@ -171,11 +177,16 @@ module.exports = {
   },
 
   findEventUsers: function(db, event_id) {
-    return db.select('users.username', 'usersJoinEvents.status', 'usersJoinEvents.host', 'users.id').from('events').leftJoin('usersJoinEvents', 'events.id', 'usersJoinEvents.event_id').leftJoin('users', 'users.id', 'usersJoinEvents.user_id').where('events.id', event_id);
+    return db.select('users.username', 'usersJoinEvents.status', 'usersJoinEvents.host', 'users.id', 'users.venmoUsername').from('events').leftJoin('usersJoinEvents', 'events.id', 'usersJoinEvents.event_id').leftJoin('users', 'users.id', 'usersJoinEvents.user_id').where('events.id', event_id);
   },
 
-  findUserDishes: function(db, user_id) {
-    return db.select().from('users').innerJoin('usersJoinDishes', 'users.id', 'usersJoinDishes.user_id').innerJoin('dishes', 'dishes.id', 'usersJoinDishes.dish_id').where('users.id', user_id); // TODO only get dishes associated with the event
+  findUserDishes: function(db, user_id, event_id) {
+    return db.select().from('users').innerJoin('usersJoinDishes', 'users.id', 'usersJoinDishes.user_id').innerJoin('dishes', 'dishes.id', 'usersJoinDishes.dish_id').where('users.id', user_id)
+    .then(function(dishes) {
+      return dishes.filter(function(dish) {
+        return dish.event_id === event_id;
+      });
+    }); // TODO only get dishes associated with the event
   },
 
   findTipAndTax: function(db, event_id) {
