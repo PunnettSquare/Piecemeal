@@ -36,8 +36,6 @@ helpers.makeRoom(webdriver, Michelle, 'Michelle', url)
     return helpers.joinRoom(webdriver, Jason, url, roomCode, 'Jason');
   })
   .then(function() {
-    Jason.sleep(500);
-    Michelle.sleep(500);
     return helpers.goToAddDish(webdriver, Michelle);
   })
 
@@ -53,8 +51,6 @@ helpers.makeRoom(webdriver, Michelle, 'Michelle', url)
       cost: '9.24'
     }];
     return Promise.all(_.map(dishes, function(dish) {
-      Jason.sleep(500);
-      Michelle.sleep(500);
       return helpers.addDish(webdriver, Michelle, dish.name, dish.cost);
     }));
   })
@@ -70,8 +66,6 @@ helpers.makeRoom(webdriver, Michelle, 'Michelle', url)
       cost: '8.50'
     }];
     return Promise.all(_.map(dishes, function(dish) {
-      Jason.sleep(500);
-      Michelle.sleep(500);
       return helpers.addDish(webdriver, Michelle, dish.name, dish.cost);
     }));
   })
@@ -81,15 +75,11 @@ helpers.makeRoom(webdriver, Michelle, 'Michelle', url)
       cost: '9.24'
     }];
     return Promise.all(_.map(dishes, function(dish) {
-      Jason.sleep(500);
-      Michelle.sleep(500);
       return helpers.addDish(webdriver, Michelle, dish.name, dish.cost);
     }));
   })
   .then(function() {
     helpers.goToAllDishes(webdriver, Michelle);
-    Jason.sleep(500);
-    Michelle.sleep(500);
     return helpers.goToAllDishes(webdriver, Jason);
   })
   .then(function() {
@@ -99,15 +89,13 @@ helpers.makeRoom(webdriver, Michelle, 'Michelle', url)
     return Tiphanie.wait(webdriver.until.elementLocated(webdriver.By.css(".share")), 8 * 1000);
   })
   .then(function(share) {
-    Jason.sleep(500);
-    Michelle.sleep(500);
     return share.click();
   })
   .then(function() {
     helpers.shareDishes(webdriver, Jason, 8);
     Jason.sleep(500);
     return helpers.shareDishes(webdriver, Tiphanie, 9);
-  }); // .then(function() {
-//   Tiphanie.sleep(500);
-//   return helpers.unshareDishes(webdriver, Tiphanie, 9);
-// });
+  }).then(function() {
+    Jason.sleep(500);
+    return helpers.unshareDishes(webdriver, Jason, 9);
+  });
