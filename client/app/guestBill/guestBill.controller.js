@@ -99,7 +99,7 @@
     self.showGuestBill = function() {
       self.guestTax = self.data.billData.taxPercent * self.getGuestTotal(self.data) * 0.01;
       self.guestTip = self.data.billData.tipPercent * self.getGuestTotal(self.data) * 0.01;
-      self.guestGrandTotal = self.getGuestTotal(self.data) + self.guestTip + self.guestTax;
+      self.guestGrandTotal = self.getGuestTotal(self.data) + (self.data.billData.taxPercent * self.getGuestTotal(self.data) * 0.01) + (self.data.billData.tipPercent * self.getGuestTotal(self.data) * 0.01);
     };
 
     // if bill was already sent to guest and the guest wasn't on the guestBill page
