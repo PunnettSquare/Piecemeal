@@ -24,7 +24,6 @@ require('./botPiecemeal')(helpers, webdriver, hostBrowser, guestOne, guestTwo, g
   return Promise.all(_.map(directions, function(array) {
     return helpers.goToPage(webdriver, array[0], array[1]);
   }))
-  
 })
 .then(function() {
   return helpers.setTipAndTax(webdriver, hostBrowser, tipInput, taxInput)
