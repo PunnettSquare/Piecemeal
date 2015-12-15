@@ -26,7 +26,6 @@
             <span><small class="sharedBy">{{ allDishes.getUsersByDish(dish, allDishes.data.users) }} got this.</small></span>
           </div>
           <div class="list-group-item">
-          <!-- used to be 'button', now 'span: important for selenium -->
             <button ng-click="allDishes.shareDish(dish.dish_id, allDishes.user_id, dish.users)" class="share badge">Share</button>
             <button ng-click="allDishes.unshareDish(dish.dish_id, allDishes.user_id, dish.users)" class="unshare badge">Unshare</button>
           </div>
