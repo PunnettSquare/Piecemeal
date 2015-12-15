@@ -1,5 +1,5 @@
 var _ = require('underscore');
-var roomNames = _.sample(require('./roomNames.js'), 106);
+var roomNames = require('./roomNames.js');
 var counter = 0; // for room names
 
 module.exports = {

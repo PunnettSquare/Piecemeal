@@ -12,6 +12,7 @@
     self.user_id = appFactory.getSessStorage('user_id');
     self.event_id = appFactory.getSessStorage('event_id');
     self.username = appFactory.getSessStorage('username');
+    self.isHost = appFactory.getSessStorage('isHost');
 
     $scope.$on('joined', function() { // $on does not work with `self`
       self.data = appFactory.data;
@@ -19,7 +20,7 @@
     });
 
     if (!appFactory.data) {
-      socketFactory.init()
+      socketFactory.init();
       appFactory.initListeners();
     }
     self.data = appFactory.data;
@@ -27,9 +28,10 @@
 
     self.getUsersByDish = appFactory.getUsersByDish;
 
-    self.goToAddDish = function() {
-      $location.path('/' + appFactory.getSessStorage('code') + '/addDish');
-    };
+    self.goToAllDishes = appFactory.goToAllDishes;
+    self.goToGuestBill = appFactory.goToGuestBill;
+    self.goToAddDish = appFactory.goToAddDish;
+    self.goToHostBill = appFactory.goToHostBill;
 
     // self.getId = function(arrayOfIds, eventInfo) {
     //   var usernames = arrayOfIds.map(function(id) {
@@ -75,25 +77,5 @@
         appFactory.unshareDish(dish_id, user_id);
       }
     };
-
-    // Depends on the appFactory.data refactor
-    // self.getDishes = function(data) {
-    //   self.allDishes = _.each(data.dishes,
-    //     function(obj, key) {
-    //       obj.indivCost = obj.cost / obj.users.length;
-    //       obj.isShared = (obj.users.length === 1) ? false : true;
-    //       obj.users = _.map(obj.users, function(id) {
-    //         var index = _.findIndex(data.users, {
-    //           'id': id
-    //         });
-    //         return {
-    //           username: data.users[index].username,
-    //           user_id: data.users[index].id,
-    //           isHost: data.users[index].host
-    //         };
-    //       });
-    //     });
-    // };
-
   }
 })();
