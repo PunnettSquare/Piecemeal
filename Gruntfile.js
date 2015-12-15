@@ -31,6 +31,38 @@ module.exports = function(grunt) {
       test: 'test'
     },
 
+    shell: {
+      dupTest: {
+        command: [
+          'psql',
+          'nodemon scripts/server.js',
+          'node test/selenium/duplicationTests.js'
+        ].join('&')
+      },
+      indivTest: {
+        command: [
+          'psql',
+          'nodemon scripts/server.js',
+          'node test/selenium/botPiecemealMichelle.js'
+        ].join('&')
+      },
+      start: {
+        command: [
+          'psql',
+          'nodemon scripts/server.js',
+        ].join('&')
+      }
+    },
+
+    pgsql: {
+      options: {
+        db: {
+          host: "127.0.0.1",
+          name: "piecemeal",
+          charset: "UTF8"
+        }
+      }
+    },
     // Task configuration
     jshint: {
       options: {
@@ -232,7 +264,6 @@ module.exports = function(grunt) {
       // },
 
     },
-
     injector: {
       options: {
 
@@ -300,7 +331,10 @@ module.exports = function(grunt) {
   });
 
   // Default task
-  grunt.registerTask('default', ['jshint', 'open', 'watch']);
-  grunt.registerTask('test', ['wiredep', 'karma']);
-  grunt.registerTask('build', ['injector:scripts', 'sass', 'injector:sass', 'wiredep']);
+  grunt.registerTask('init', ['shell:start']);
+  grunt.registerTask('start', ['open', 'watch']);
+  grunt.registerTask('testIndiv', ['shell:indivTest']);
+  grunt.registerTask('testDup', ['shell:dupTest']);
+  // grunt.registerTask('test', ['wiredep', 'karma']);
+  // grunt.registerTask('build', ['injector:scripts', 'sass', 'injector:sass', 'wiredep']);
 };

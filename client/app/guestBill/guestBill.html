@@ -2,14 +2,14 @@
   <div class="row">
     <div class="col-md-12">
 
-
+      <!-- REFACTOR TO NAVBAR LATER (need to do addClass('active') onClick) -->
       <ul class="nav nav-tabs">
-        <!-- used to be 'button' -->
         <li><a class="allDishes" ng-click="guestBill.goToAllDishes()">All Dishes</a></li>
         <li><a ng-click="guestBill.goToAddDish()">Add Dish</a></li>
         <li class="active"><a class="guestBill" ng-click="guestBill.goToGuestBill()">Your Bill</a></li>
         <li><a class="hostBill" ng-show="guestBill.isHost" ng-click="guestBill.goToHostBill()" >Final Bill</a></li>
       </ul>
+      <!-- /Navbar refactor -->
 
       <h3>{{ _.capitalize(guestBill.username) }}'s Total Bill</h3>
 
@@ -90,23 +90,24 @@
             <a type="submit" class="payButton venmoEnabled" ng-href="https://venmo.com/{{guestBill.venmoUsername}}?txn=pay&amount={{guestBill.guestGrandTotal}}&audience=private"><img src="../../assets/venmo_logo_white.png" alt="Venmo" width="55px"></a>
             <button type="submit" class="payButton cashEnabled">Cash</button>
           </div>
+        </div>
+
+        <!--      <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">
+            Panel title
+            </h3>
+          </div>
+          <div class="panel-body">
+            Panel content
+          </div>
+          <div class="panel-footer">
+            Panel footer
+          </div>
+        </div> -->
+
+
       </div>
-
-      <!--      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h3 class="panel-title">
-          Panel title
-          </h3>
-        </div>
-        <div class="panel-body">
-          Panel content
-        </div>
-        <div class="panel-footer">
-          Panel footer
-        </div>
-      </div> -->
-
-
     </div>
   </div>
 </div>

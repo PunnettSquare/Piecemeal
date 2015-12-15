@@ -34,6 +34,7 @@
       self.data.billData = appFactory.data.billData;
     }
 
+    self.getDishIndivCost = appFactory.getDishIndivCost;
 
     // self.isGuestDish = function(user_id, dish) {
     //   return _.contains(dish.users, user_id);
@@ -42,7 +43,6 @@
     // self.getDishIndivCost = function(dish) {
     //   return dish.cost / dish.users.length;
     // };
-    self.getDishIndivCost = appFactory.getDishIndivCost;
 
     // self.getDishesIndivCost = function(user_id, dishes, users) {
     //   return self.getGuestDishes(user_id, dishes, users).map(function(obj, key) {
@@ -94,19 +94,12 @@
           })].username;
         }).value()
       );
-      // return {
-      //   username: users[index].username,
-      //   user_id: parseInt(users[index].id),
-      //   isHost: users[index].host
-      // };
     };
-
-
 
     self.showGuestBill = function() {
       self.guestTax = self.data.billData.taxPercent * self.getGuestTotal(self.data) * 0.01;
       self.guestTip = self.data.billData.tipPercent * self.getGuestTotal(self.data) * 0.01;
-      self.guestGrandTotal = self.getGuestTotal(self.data) + self.guestTip + self.guestTax;
+      self.guestGrandTotal = self.getGuestTotal(self.data) + (self.data.billData.taxPercent * self.getGuestTotal(self.data) * 0.01) + (self.data.billData.tipPercent * self.getGuestTotal(self.data) * 0.01);
     };
 
     // if bill was already sent to guest and the guest wasn't on the guestBill page
@@ -117,12 +110,5 @@
     }
 
 
-    self.goToAllDishes = function() {
-      $location.path('/' + appFactory.getSessStorage('code') + '/allDishes');
-    };
-
-    self.goToHostBill = function() {
-      $location.path('/' + appFactory.getSessStorage('code') + '/hostBill');
-    };
   }
 })();

@@ -8,9 +8,10 @@
 
   function AddDishCtrl(socketFactory, addDishFactory, $location, appFactory, $scope) {
     var self = this;
-    self.test = "test";
+
     // When appFactory is updated, $rootScope is used as a bus to emit to user's allDishes controller $scope
     self.data = appFactory.data;
+    self.isHost = appFactory.getSessStorage('isHost');
 
     self.addDish = function(name, cost) {
 
@@ -23,23 +24,22 @@
       };
       socketFactory.emit('addDish', dish);
       self.userTotal += cost;
-      self.amount = 0;
+      self.amount = '';
       self.dishName = '';
+      self.addedDish = true;
+      self.previousDish = name;
     };
 
     self.calcUserCurrentTotal = function(data) {
       self.userTotal = addDishFactory.calculateRunningTotal(data);
     };
-    
+
     self.calcUserCurrentTotal(self.data);
 
-    self.goToAllDishes = function() {
-      $location.path('/' + appFactory.getSessStorage('code') + '/allDishes');
-    };
-
-    self.goToGuestBill = function() {
-      $location.path('/' + appFactory.getSessStorage('code') + '/guestBill');
-    };
+    self.goToAllDishes = appFactory.goToAllDishes;
+    self.goToGuestBill = appFactory.goToGuestBill;
+    self.goToAddDish = appFactory.goToAddDish;
+    self.goToHostBill = appFactory.goToHostBill;
   }
 
 })();

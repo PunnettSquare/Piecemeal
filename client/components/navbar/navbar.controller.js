@@ -4,11 +4,15 @@
   angular.module('Piecemeal')
   .controller('NavbarCtrl', NavbarCtrl);
 
-  NavbarCtrl.$inject = [];
+  NavbarCtrl.$inject = ['appFactory'];
 
-  function NavbarCtrl() {
+  function NavbarCtrl(appFactory) {
     var self = this;
 
+    self.goToAllDishes = appFactory.goToAllDishes;
+    self.goToGuestBill = appFactory.goToGuestBill;
+    self.goToAddDish = appFactory.goToAddDish;
+    self.goToHostBill = appFactory.goToHostBill;
 
   }
 
