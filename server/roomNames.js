@@ -11,7 +11,7 @@ module.exports =
   // })
   .tap(function(array) {
     _.times((300), function(n) {
-      array.push(_.kebabCase([_.sample(words, 2)]));
+      array.push(_.camelCase([_.sample(words, 2)]));
     });
   })
   .filter(function(word, index, self) {

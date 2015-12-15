@@ -18,7 +18,7 @@
       <div ng-repeat="dish in guestBill.getGuestDishes(guestBill.user_id, guestBill.data.dishes)">
         <div class="list-group-item">
           <!-- used to be h2, now h4: for selenium? -->
-          <h4 class="list-group-item-heading">{{_.capitalize(dish.name)}}</h4>
+          <h4 class="list-group-item-heading">{{_.map(dish.name.split(" "), _.capitalize).join(" ")}}</h4>
           <p class="list-group-item-text">Your portion: <strong>{{ guestBill.getDishIndivCost(dish) | currency }}</strong></p>
           <small>Total cost: <span>{{ dish.cost | currency }}</span></small>
         </div>
@@ -57,7 +57,7 @@
       <div class="panel panel-default" ng-if="!_.isEmpty(guestBill.data.billData) && !guestBill.isHost">
         <div class="panel-body">
           <h4 class="h4">Tax</h4 class="h4">
-          <p class="text-right h5">{{guestBill.guestTax | currency}}</p>
+          <p class="text-right h5">{{guestBill.getGuestTax() | currency}}</p>
         </div>
         <div class="panel-footer taxPercent">
           <small>You were charged {{ guestBill.data.billData.taxPercent }}% for tax.</small>
@@ -67,7 +67,7 @@
       <div class="panel panel-default" ng-if="!_.isEmpty(guestBill.data.billData) && !guestBill.isHost">
         <div class="panel-body">
           <h4 class="h4">Tip</h4 class="h4">
-          <p class="text-right h5">{{guestBill.guestTip | currency}}</p>
+          <p class="text-right h5">{{guestBill.getGuestTip() | currency}}</p>
         </div>
         <div class="panel-footer tipPercent">
           <small>Your host chose {{ guestBill.data.billData.tipPercent }}% for tip.</small>
@@ -77,7 +77,7 @@
 
       <div class="panel panel-default" ng-if="!_.isEmpty(guestBill.data.billData) && !guestBill.isHost">
         <div class="panel-heading"><h2 class="panel-title">Your Total</h2>
-          <p class="text-right h5">{{guestBill.guestGrandTotal | currency}}</p>
+          <p class="text-right h5">{{guestBill.getGuestGrandTotal() | currency}}</p>
         </div>
         <div class="panel-footer tipPercent">
           <small>Dinner Grand Total: {{  guestBill.data.billData.grandTotal | currency}}</small>
@@ -87,6 +87,7 @@
       <div class="panel panel-default" ng-if="!_.isEmpty(guestBill.data.billData) && !guestBill.isHost">
         <div class="panel-heading"><h2 class="panel-title">Pay with:</h2>
           <div>
+            <br>
             <a type="submit" class="payButton venmoEnabled" ng-href="https://venmo.com/{{guestBill.venmoUsername}}?txn=pay&amount={{guestBill.guestGrandTotal}}&audience=private"><img src="../../assets/venmo_logo_white.png" alt="Venmo" width="55px"></a>
             <button type="submit" class="payButton cashEnabled">Cash</button>
           </div>

@@ -32,7 +32,7 @@
     $scope.$on('billsSentToGuests', function() {
       self.data.billData = appFactory.data.billData;
       console.log("Bill received by guest", self.data.billData);
-      self.showGuestBill();
+      // self.showGuestBill();
     });
 
     if (appFactory.getSessStorage('isHost') === true && !_.isEmpty(appFactory.data.billData)) {
@@ -101,17 +101,29 @@
       );
     };
 
-    self.showGuestBill = function() {
-      self.guestTax = self.data.billData.taxPercent * self.getGuestTotal(self.data) * 0.01;
-      self.guestTip = self.data.billData.tipPercent * self.getGuestTotal(self.data) * 0.01;
-      self.guestGrandTotal = self.getGuestTotal(self.data) + (self.data.billData.taxPercent * self.getGuestTotal(self.data) * 0.01) + (self.data.billData.tipPercent * self.getGuestTotal(self.data) * 0.01);
+    self.getGuestTax = function() {
+      return self.data.billData.taxPercent * self.getGuestTotal(self.data) * 0.01;
     };
+
+    self.getGuestTip = function() {
+      return self.data.billData.tipPercent * self.getGuestTotal(self.data) * 0.01;
+    };
+
+    self.getGuestGrandTotal = function() {
+      return self.getGuestTotal(self.data) + (self.data.billData.taxPercent * self.getGuestTotal(self.data) * 0.01) + (self.data.billData.tipPercent * self.getGuestTotal(self.data) * 0.01);
+    };
+
+    // self.showGuestBill = function() {
+    //   self.guestTax();
+    //   self.guestTip();
+    //   self.guestGrandTotal();
+    // };
 
     // if bill was already sent to guest and the guest wasn't on the guestBill page
     // then they can get the data here
     if (!_.isEmpty(appFactory.data.billData)) {
       self.data.billData = appFactory.data.billData;
-      self.showGuestBill();
+      // self.showGuestBill();
     }
 
 

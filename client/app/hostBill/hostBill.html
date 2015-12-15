@@ -19,7 +19,7 @@
         <div class="list-group" ng-if="dish.users.length !== 0">
           <div class="list-group-item">
             <h4 class="list-group-item-heading">
-            {{ _.capitalize(dish.name)}}
+            {{ _.map(dish.name.split(" "), _.capitalize).join(" ")}}
             </h4>
 
             <p class="list-group-item-text">Total Cost: <strong>{{dish.cost | currency }}</strong></p>
