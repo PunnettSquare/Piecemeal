@@ -61,6 +61,10 @@ module.exports = function(grunt) {
           name: "piecemeal",
           charset: "UTF8"
         }
+      },
+      drop: {
+        pgdropdb: "piecemeal",
+        pgcreatedb: "piecemeal"
       }
     },
     // Task configuration
