@@ -11,9 +11,6 @@
 
     self.data = appFactory.data;
 
-    // self.getDishIndivCost = function(dish) {
-    //   return dish.cost / dish.users.length;
-    // };
     self.getDishIndivCost = appFactory.getDishIndivCost;
 
     self.getUsersByDish = appFactory.getUsersByDish;
@@ -25,7 +22,7 @@
     self.sendBillsToGuests = function() {
       self.tipSum = (self.getSubTotal(self.data.dishes) * self.tip * 0.01) + self.getSubTotal(self.data.dishes);
       self.taxSum = (self.getSubTotal(self.data.dishes) * self.tax * 0.01) + self.getSubTotal(self.data.dishes);
-      self.grandTotal = self.getSubTotal(self.data.dishes) + self.tax + self.tipSum;
+      self.grandTotal = self.getSubTotal(self.data.dishes) + (self.tip * 0.01 * self.getSubTotal(self.data.dishes)) + (self.tax * 0.01 * self.getSubTotal(self.data.dishes));
 
       socketFactory.emit('sendBillToGuests', {
         event_id: appFactory.getSessStorage('event_id'),
@@ -42,10 +39,9 @@
       self.billsSent = true;
     };
 
-    self.goToGuestBill = function() {
-      $location.path('/' + appFactory.getSessStorage('code') + '/guestBill');
-    };
-
+    self.goToAllDishes = appFactory.goToAllDishes;
+    self.goToGuestBill = appFactory.goToGuestBill;
+    self.goToAddDish = appFactory.goToAddDish;
+    self.goToHostBill = appFactory.goToHostBill;
   }
-
 })();
