@@ -9,14 +9,6 @@ module.exports = function (app, express, io) {
     extended: true
   }));
 
-  // app.use(cors({
-  //   allowedOrigins: [
-  //     'api.venmo.com'
-  //   ]
-  // }))
-
-  app.use(cors())
-
   app.use(bodyParser.json());
 
   var oauthRouter = express.Router();

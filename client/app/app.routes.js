@@ -53,6 +53,21 @@
           }
         }
       })
+      .state('dashboard', {
+        url: '/dashboard',
+        views: {
+          'navbar': {
+            templateUrl: 'components/navbar/navbar.html',
+            controller: 'NavbarCtrl',
+            controllerAs: 'navbar'
+          },
+          '@': {
+            templateUrl: 'app/dashboard/dashboard.html',
+            controller: 'DashboardCtrl',
+            controllerAs: 'dashboard'
+          }
+        }
+      })
       .state('404', {
         url: '/404',
         views: {

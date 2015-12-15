@@ -30,6 +30,28 @@ module.exports = {
       });
   },
 
+  createEventVenmo: function(db, code, user_id) {
+    return db('events').insert({
+      code: code,
+    })
+    .returning('id')
+    .then(function(event_id) {
+      return db('usersJoinEvents').insert({
+        user_id: user_id,
+        event_id: event_id[0],
+        host: true,
+        status: true
+      })
+      .returning('event_id');
+    })
+  },
+
+  findUser : function(db, venmoUsername) {
+    return db('users').where({
+      venmoUsername: venmoUsername })
+    .returning('id')
+  },
+
   addTipAndTax: function(db, event_id, taxPercent, tipPercent) {
     return db('events').where({
       'id': event_id

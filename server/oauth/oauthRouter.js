@@ -1,5 +1,6 @@
 var passport = require('passport');
 var VenmoStrategy = require('passport-venmo').Strategy;
+var session = require('express-session');
 if (process.env.PORT) {
   var venmoInfo = {id:process.env.VENMO_ID, secret: process.env.VENMO_SECRET}
 } else {
@@ -10,8 +11,9 @@ var db = require('../../db/db');
 var util = require('../utility');
 module.exports = function(app) {
 
+  app.use(cookieParser());  
+  app.use(session({secret:'green tree'}))
   app.use(passport.initialize());
-  app.use(cookieParser());
   app.use(passport.session());
   // app.use(function(req, res, next) {
   //   res.header("Access-Control-Allow-Origin", "*");
@@ -23,16 +25,16 @@ module.exports = function(app) {
   //   next();
   // });
 
-   // take name, and username
-
-
-
   passport.serializeUser(function (user, done) {
-    done(null, user);
+    done(null, user.id);
   });
 
   passport.deserializeUser(function (id, done) {
-    done(null, id);
+    db('users').where({
+          id: id })
+    .then(function(user) {
+      done(null, user);
+    })
   });
 
   passport.use(new VenmoStrategy({
@@ -42,12 +44,29 @@ module.exports = function(app) {
     },
     function(accessToken, refreshToken, profile, done) {
       console.log('profile', profile);
-      var user = {code: profile.username};
-      var code = util.generateCode();
+      var venmoUsername = profile.username;;
       // console.log('profile._json =', profile._json);
-      util.createEvent(db, profile.username, profile.displayName);
-      console.log('coming back from venmo oauth');
-      return done(null, user);
+      // util.createEvent(db, profile.username, profile.displayName)
+      util.findUser(db, venmoUsername)
+      .then(function(result) {
+        console.log('result =', result);
+        console.log('coming back from venmo oauth');
+        if (result.length === 0) {
+          db('users').insert({
+            venmoUsername: venmoUsername,
+            username: profile.displayName,
+            phone: profile.phone,
+            email: profile.email
+          })
+          .then(function(user_id) {
+            console.log(user_id);
+            return done(null, user_id[0])
+          })
+        } else {
+          return done(null, result[0]);
+        }
+      })
+
     }
   ));
 
@@ -60,12 +79,38 @@ module.exports = function(app) {
       'access_phone', 
       'access_balance', 
       'access_friends'], 
-      failureRedirect: '/' }), function() {});
+      failureRedirect: '/' }));
 
   app.get('/venmo/callback',
     passport.authenticate('venmo', { failureRedirect: '/' }),
     function(req, res) {
       console.log('req.user: ',req.user);
-      res.redirect('/#/oAuth');
+      console.log('req.session =', req.session);
+      res.redirect('/#/dashboard');
     });
+
+  app.get('/createEvent', function(req, res) {
+    console.log('req.user: ' , req.user);
+    console.log(req.session)
+    console.log('req.isAuthenticated() =', req.isAuthenticated());
+    var user_id = req.user[0].id;
+    var username = req.user[0].username;
+    if (req.isAuthenticated()) {
+      var code = util.generateCode()
+      util.createEventVenmo(db, code, user_id)
+      .then(function(event_id) {
+        var responseObject = {
+          event_id: event_id[0],
+          code:code,
+          user_id: user_id,
+          username: username
+          // venmoUsername: req.user[0].venmoUsername
+        }
+        console.log('responseObject =', responseObject);
+        res.send(responseObject);
+      })
+    } else {
+      res.end();
+    }
+  })
 }

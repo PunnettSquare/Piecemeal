@@ -14,14 +14,10 @@
     return services;
 
     function venmoLogin() {
-      return $http({
-          method: 'GET',
-          url: '/auth/venmo',
-          withCredentials: true,
-          headers : {
-             'Authorization': 'Basic bashe64usename:password'
-          }
-        })
+      // return $http({
+      //     method: 'GET',
+      //     url: '/auth/test',
+      //   })
     }
   }
 
