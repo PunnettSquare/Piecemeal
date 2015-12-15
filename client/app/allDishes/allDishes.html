@@ -10,7 +10,7 @@
 
       <h3>All Dishes</h3>
       <p>Hi, {{_.capitalize(allDishes.username)}}.
-      You are in room <strong class="code">{{allDishes.data.code}}</strong>.</p>
+      You have joined bill <strong class="code">{{allDishes.data.code}}</strong>.</p>
 
       <div ng-repeat="dish in allDishes.data.dishes">
         <div class="list-group" ng-if="dish.users.length !== 0">

@@ -1,3 +1,18 @@
-div {
-  border: 1px solid gray;
+.payButton {
+  border-radius: 3px;
+  border: 0;
+  padding: 8px 18px;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  width: 95px;
 }
+
+.venmoEnabled {
+  background-color: #3D95CE;
+}
+
+.cashEnabled {
+  background-color: #79C86C;
+}
+
