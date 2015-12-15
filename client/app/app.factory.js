@@ -7,9 +7,9 @@
   angular.module('Piecemeal')
     .factory('appFactory', appFactory);
 
-  appFactory.$inject = ['socketFactory', '$rootScope', '$window'];
+  appFactory.$inject = ['socketFactory', '$rootScope', '$window', '$location'];
 
-  function appFactory(socketFactory, $rootScope, $window) {
+  function appFactory(socketFactory, $rootScope, $window, $location) {
 
     var services = {
       initListeners: initListeners,
@@ -19,7 +19,11 @@
       getSessStorage: getSessStorage,
       arrayToSentence: arrayToSentence,
       getUsersByDish: getUsersByDish,
-      getDishIndivCost: getDishIndivCost
+      getDishIndivCost: getDishIndivCost,
+      goToAllDishes: goToAllDishes,
+      goToGuestBill: goToGuestBill,
+      goToAddDish: goToAddDish,
+      goToHostBill: goToHostBill
         // data: data
         // data.billData: billData
     };
@@ -83,6 +87,22 @@
           user.dishes.push(dishObj);
         }
       });
+    }
+
+    function goToAddDish() {
+      $location.path('/' + services.getSessStorage('code') + '/addDish');
+    }
+
+    function goToAllDishes() {
+      $location.path('/' + services.getSessStorage('code') + '/allDishes');
+    }
+
+    function goToGuestBill() {
+      $location.path('/' + services.getSessStorage('code') + '/guestBill');
+    }
+
+    function goToHostBill() {
+      $location.path('/' + services.getSessStorage('code') + '/hostBill');
     }
 
     function unshareDish(dish_id, user_id) {

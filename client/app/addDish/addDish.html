@@ -3,12 +3,10 @@
     <div class="col-md-12">
 
       <ul class="nav nav-tabs">
-        <li>
-        <a class="allDishes" ng-click="addDish.goToAllDishes()">All Dishes</a></li>
-        <li class="active">
-        <a ng-click="allDishes.goToAddDish()">Add Dish</a></li>
-        <li>
-        <a class="guestBill" ng-click="addDish.goToGuestBill()">Your Bill</a></li>
+        <li><a class="allDishes" ng-click="addDish.goToAllDishes()">All Dishes</a></li>
+        <li class="active"><a ng-click="allDishes.goToAddDish()">Add Dish</a></li>
+        <li><a class="guestBill" ng-click="addDish.goToGuestBill()">Your Bill</a></li>
+        <li><a class="hostBill" ng-show="addDish.isHost" ng-click="addDish.goToHostBill()" >Final Bill</a></li>
       </ul>
 
       <h3>Add Dish</h3>
@@ -21,14 +19,14 @@
               <label for="addDish">
                 Dish
               </label>
-              <input name="name" type="text" placeholder="Dish Name" ng-model="addDish.dishName" class="dishName form-control">
+              <input name="name" type="text" placeholder="Dish Name" ng-model="addDish.dishName" class="dishName form-control" required>
             </div>
 
             <div class="form-group">
               <label for="addDish">
                 Cost
               </label>
-              <input name="amount" type="number" placeholder="$0.00" ng-model="addDish.amount" class="dishCost form-control" id="addDish" aria-label="amount">
+              <input name="amount" type="number" placeholder="$0.00" ng-model="addDish.amount" class="dishCost form-control" id="addDish" aria-label="amount" required>
             </div>
 
             <div class="form-group">
@@ -44,15 +42,17 @@
               </p>
             </div>
 
-            <button type="submit" class="addDish btn btn-default" ng-click="addDish.addDish(addDish.dishName, addDish.amount)">
+            <button type="submit" ng-disabled="dishForm.amount.$error.required || dishForm.name.$error.required" ng-click="addDish.addDish(addDish.dishName, addDish.amount)" class="addDish btn btn-default" >
             Submit
             </button>
-
           </form>
 
+          <br>
+          <div class="alert alert-success alert-dismissible" role="alert" ng-show="addDish.addedDish">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            {{ addDish.previousDish }} added!
+          </div>
 
-        </div>
-        <div class="col-md-6">
         </div>
       </div>
     </div>

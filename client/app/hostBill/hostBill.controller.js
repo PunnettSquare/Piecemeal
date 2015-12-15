@@ -11,9 +11,6 @@
 
     self.data = appFactory.data;
 
-    // self.getDishIndivCost = function(dish) {
-    //   return dish.cost / dish.users.length;
-    // };
     self.getDishIndivCost = appFactory.getDishIndivCost;
 
     self.getUsersByDish = appFactory.getUsersByDish;
@@ -42,10 +39,9 @@
       self.billsSent = true;
     };
 
-    self.goToGuestBill = function() {
-      $location.path('/' + appFactory.getSessStorage('code') + '/guestBill');
-    };
-
+    self.goToAllDishes = appFactory.goToAllDishes;
+    self.goToGuestBill = appFactory.goToGuestBill;
+    self.goToAddDish = appFactory.goToAddDish;
+    self.goToHostBill = appFactory.goToHostBill;
   }
-
 })();
