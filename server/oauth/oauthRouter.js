@@ -1,6 +1,7 @@
 var passport = require('passport');
 var VenmoStrategy = require('passport-venmo').Strategy;
 var session = require('express-session');
+
 var callbackURL;
 if (process.env.PORT) {
   var venmoInfo = {id:process.env.VENMO_ID, secret: process.env.VENMO_SECRET}
