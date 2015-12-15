@@ -1,12 +1,18 @@
 <!-- <div class="navbar">
-      <h1>Piecemeal Navbar</h1>
+  <h1>Piecemeal Navbar</h1>
 </div> -->
 
+<div class="container-fluid" id="navbar">
+  <ul class="nav nav-tabs">
+    <li><a class="allDishes" ng-click="guestBill.goToAllDishes()">All Dishes</a></li>
+    <li><a ng-click="guestBill.goToAddDish()">Add Dish</a></li>
+    <li class="active"><a class="guestBill" ng-click="guestBill.goToGuestBill()">Your Bill</a></li>
+    <li><a class="hostBill" ng-show="guestBill.isHost" ng-click="guestBill.goToHostBill()" >Final Bill</a></li>
+  </ul>
+</div>
 
 
-
-
-<div class="container-fluid">
+<!-- <div class="container-fluid">
   <div class="row">
     <div class="col-md-12">
       <nav class="navbar navbar-default" role="navigation">
@@ -53,4 +59,4 @@
       </nav>
     </div>
   </div>
-</div>
+</div> -->

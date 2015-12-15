@@ -52,6 +52,7 @@
     "grunt-contrib-watch": "^0.6.1",
     "grunt-injector": "^0.6.1",
     "grunt-open": "^0.2.3",
+    "grunt-pg": "^0.3.1",
     "grunt-shell": "^1.1.2",
     "grunt-wiredep": "^2.0.0",
     "jasmine-core": "^2.4.1",

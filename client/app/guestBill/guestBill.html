@@ -3,14 +3,6 @@
     <div class="col-md-12">
 
 
-      <ul class="nav nav-tabs">
-        <!-- used to be 'button' -->
-        <li><a class="allDishes" ng-click="guestBill.goToAllDishes()">All Dishes</a></li>
-        <li><a ng-click="guestBill.goToAddDish()">Add Dish</a></li>
-        <li class="active"><a class="guestBill" ng-click="guestBill.goToGuestBill()">Your Bill</a></li>
-        <li><a class="hostBill" ng-show="guestBill.isHost" ng-click="guestBill.goToHostBill()" >Final Bill</a></li>
-      </ul>
-
       <h3>{{ _.capitalize(guestBill.username) }}'s Total Bill</h3>
 
 

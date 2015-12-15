@@ -53,6 +53,16 @@ module.exports = function(grunt) {
         ].join('&')
       }
     },
+
+    pgsql: {
+      options: {
+        db: {
+          host: "127.0.0.1",
+          name: "piecemeal",
+          charset: "UTF8"
+        }
+      }
+    },
     // Task configuration
     jshint: {
       options: {
