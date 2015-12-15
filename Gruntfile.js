@@ -43,7 +43,7 @@ module.exports = function(grunt) {
         command: [
           'psql',
           'nodemon scripts/server.js',
-          'node test/selenium/botPiecemealMichelle.js',
+          'node test/selenium/botPiecemealShort.js',
           'grunt watch'
         ].join('&')
       },

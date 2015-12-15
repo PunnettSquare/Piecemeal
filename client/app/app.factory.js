@@ -106,9 +106,12 @@
     }
 
     function unshareDish(dish_id, user_id) {
-      services.data.dishes.forEach(function(dish) {
+      services.data.dishes.forEach(function(dish, dishIndex) {
         if (dish.dish_id === dish_id) {
           dish.users.splice(dish.users.indexOf(user_id), 1);
+          if (dish.users.length === 0) {
+            services.data.dishes.splice(dishIndex, 1);
+          }
         }
       });
       services.data.users.forEach(function(user) {
