@@ -13,8 +13,6 @@ describe('Piecemeal', function() {
           return _.contains(obj.users, appFactoryMock.getSessStorage('user_id'));
         })
         .reduce(function(acc, current) {
-          console.log("calculateRunningTotal. acc: ", acc); 
-          console.log("calculateRunningTotal. current: ", current); 
           return acc + (Number(current.cost) / current.users.length);
         }, 0);
     }
@@ -155,7 +153,6 @@ describe('Piecemeal', function() {
 
     it("should calculate user's current total", function() { // actually in addDishFactory
       expect(controller.getGuestTotal(controller.data)).toEqual(14);
-      
     });
 
   });
@@ -194,28 +191,23 @@ describe('Piecemeal', function() {
   describe('AllDishesCtrl', function() {
 
     var controller;
+    var dish;
 
     beforeEach(function() {
       controller = $controller('AllDishesCtrl', { $scope: scopeMock, socketFactory: socketMock, appFactory: appFactoryMock});
+      dish = controller.data.dishes[0];
     });
 
-    it('listens for "joined"', function() {
+    it('should check to see if a user is on a dish', function() {
+      expect(controller.isOnDish(dish.users,7)).toBe(true);
     });
 
     // Bug: currently incorrectly returning 'false' instead of 'true':
-    // it('.shareDish emits "shareDish" with a dish object', function() {
-    //   controller.shareDish("burger", 10);
-    //   var testReceived = false;
+    it('.shareDish emits "shareDish" with a dish object', function() {
+      controller.shareDish(1, 7, [1,2]); // dish.dish_id, allDishes.user_id, dish.users
 
-    //   // Hacky way to check and update testReceived. socketMock.on can be used for the same thing once functional
-    //   if (socketMock.emits["shareDish"].name === "Burger" && socketMock.emits["shareDish"].cost === 10) {
-    //     testReceived = true;
-    //   }
-
-    //   expect(testReceived).toBe(true);
-    // });
-
-    it('.unshareDish emits "unshareDish" with a dish object', function() {
+      expect(socketMock.emits["shareDish"].dish_id).toBe(1);
+      expect(socketMock.emits["shareDish"].user_id).toBe(7);
     });
 
   });
@@ -264,9 +256,9 @@ var sockMock = function($rootScope){
     //     });
     //   });
     // };
-
+    console.log(".emit data: ", data); 
     this.emits[eventName] = data;
-    // console.log('socketMock.emits["addDish"] is: ', socketMock.emits["addDish"]); 
+    console.log('socketMock.emits["shareDish"] is: ', socketMock.emits["shareDish"]); 
   }
 
   //simulate an inbound message to the socket from the server (only called from the test)
