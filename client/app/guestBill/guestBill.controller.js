@@ -23,6 +23,11 @@
       });
     });
 
+    self.goToAllDishes = appFactory.goToAllDishes;
+    self.goToGuestBill = appFactory.goToGuestBill;
+    self.goToAddDish = appFactory.goToAddDish;
+    self.goToHostBill = appFactory.goToHostBill;
+
     // bill being sent while guest is on guestBill page for the first time
     $scope.$on('billsSentToGuests', function() {
       self.data.billData = appFactory.data.billData;
