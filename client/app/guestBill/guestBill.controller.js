@@ -16,7 +16,7 @@
 
     self.data = appFactory.data;
     self.data.billData = appFactory.data.billData;
-
+    self.venmoUsername = appFactory.data.venmoUsername;
     self.getGuestDishes = _.memoize(function(user_id, dishes) {
       return _.filter(dishes, function(obj, key) {
         return _.contains(obj.users, user_id);
