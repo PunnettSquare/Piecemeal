@@ -24,7 +24,6 @@
       appFactory.initListeners();
     }
     self.data = appFactory.data;
-    // When appFactory is updated, $rootScope is used as a bus to emit to user's allDishes controller $scope
 
     self.getUsersByDish = appFactory.getUsersByDish;
 
