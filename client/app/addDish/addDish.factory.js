@@ -18,6 +18,8 @@
           return _.contains(obj.users, appFactory.getSessStorage('user_id'));
         })
         .reduce(function(acc, current) {
+          console.log("calculateRunningTotal. acc: ", acc); 
+          console.log("calculateRunningTotal. current: ", current); 
           return acc + (Number(current.cost) / current.users.length);
         }, 0);
     }
