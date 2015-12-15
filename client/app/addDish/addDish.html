@@ -53,7 +53,7 @@
           <br>
           <div class="alert alert-success alert-dismissible" role="alert" ng-show="addDish.addedDish">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            {{ _.capitalize(addDish.previousDish) }} added!
+            {{ _.map(addDish.previousDish.split(" "), _.capitalize).join(" ") }} added!
           </div>
 
         </div>
