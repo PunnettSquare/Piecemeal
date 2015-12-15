@@ -14,7 +14,6 @@
 
     return services;
 
-
     function sendSessionUser(username) {
       return $http({
           method: 'POST',

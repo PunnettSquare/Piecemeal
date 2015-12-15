@@ -18,11 +18,11 @@ var _ = require('underscore');
 var url = 'localhost:8080/';
 
 setTimeout(function() {
- helpers.closeBrowser(Michelle);
- helpers.closeBrowser(Jason);
- helpers.closeBrowser(Justin);
- helpers.closeBrowser(Tiphanie);
-}, 20000)
+  // helpers.closeBrowser(Michelle);
+  helpers.closeBrowser(Jason);
+  helpers.closeBrowser(Justin);
+  // helpers.closeBrowser(Tiphanie);
+}, 40000);
 
 var roomCode;
 
@@ -38,9 +38,14 @@ helpers.makeRoom(webdriver, Michelle, 'Michelle', url)
         console.log(url);
       });
     helpers.joinRoom(webdriver, Jason, url, roomCode, 'Jason');
+    Jason.sleep(500);
     return helpers.joinRoom(webdriver, Justin, url, roomCode, 'Justin');
+    Justin.sleep(500);
   })
   .then(function() {
+    Justin.sleep(500);
+    Jason.sleep(500);
+    Michelle.sleep(500);
     return helpers.goToAddDish(webdriver, Michelle);
   })
 
@@ -56,6 +61,9 @@ helpers.makeRoom(webdriver, Michelle, 'Michelle', url)
       cost: '9.24'
     }];
     return Promise.all(_.map(dishes, function(dish) {
+      Justin.sleep(500);
+      Jason.sleep(500);
+      Michelle.sleep(500);
       return helpers.addDish(webdriver, Michelle, dish.name, dish.cost);
     }));
   })
@@ -74,6 +82,9 @@ helpers.makeRoom(webdriver, Michelle, 'Michelle', url)
       cost: '8.50'
     }];
     return Promise.all(_.map(dishes, function(dish) {
+      Justin.sleep(500);
+      Jason.sleep(500);
+      Michelle.sleep(500);
       return helpers.addDish(webdriver, Michelle, dish.name, dish.cost);
     }));
   })
@@ -92,11 +103,17 @@ helpers.makeRoom(webdriver, Michelle, 'Michelle', url)
       cost: '9.24'
     }];
     return Promise.all(_.map(dishes, function(dish) {
+      Justin.sleep(500);
+      Jason.sleep(500);
+      Michelle.sleep(500);
       return helpers.addDish(webdriver, Michelle, dish.name, dish.cost);
     }));
   })
   .then(function() {
     helpers.goToAllDishes(webdriver, Michelle);
+    Justin.sleep(500);
+    Jason.sleep(500);
+    Michelle.sleep(500);
     helpers.goToAllDishes(webdriver, Justin);
     return helpers.goToAllDishes(webdriver, Jason);
   })
@@ -107,14 +124,18 @@ helpers.makeRoom(webdriver, Michelle, 'Michelle', url)
     return Tiphanie.wait(webdriver.until.elementLocated(webdriver.By.css(".share")), 8 * 1000);
   })
   .then(function(share) {
+    Justin.sleep(500);
+    Jason.sleep(500);
+    Michelle.sleep(500);
     return share.click();
   })
   .then(function() {
     helpers.shareDishes(webdriver, Jason, 8);
+    Jason.sleep(500);
     helpers.shareDishes(webdriver, Justin, 8);
+    Justin.sleep(500);
     return helpers.shareDishes(webdriver, Tiphanie, 9);
-  })
-  // .then(function() {
-  //   Tiphanie.sleep(500);
-  //   return helpers.unshareDishes(webdriver, Tiphanie, 9);
-  // });
+  }); // .then(function() {
+//   Tiphanie.sleep(500);
+//   return helpers.unshareDishes(webdriver, Tiphanie, 9);
+// });
