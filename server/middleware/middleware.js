@@ -1,19 +1,13 @@
 var path = require('path');
 var bodyParser = require('body-parser');
 var morgan = require('morgan');
-var cors = require('express-cors');
+
 
 module.exports = function (app, express, io) {
 
   app.use(bodyParser.urlencoded({
     extended: true
   }));
-
-  // app.use(cors({
-  //   allowedOrigins: [
-  //     'api.venmo.com'
-  //   ]
-  // }))
 
   app.use(bodyParser.json());
 

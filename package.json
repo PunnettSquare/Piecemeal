@@ -7,7 +7,6 @@
     "start": "node server/server.js",
     "postinstall": "./node_modules/bower/bin/bower cache clean && ./node_modules/bower/bin/bower install",
     "test": "node test/selenium/botPiecemealMichelle.js"
-
   },
   "pre-commit": "lint",
   "repository": {
@@ -29,6 +28,7 @@
     "cookie-parser": "^1.4.0",
     "express": "^4.13.3",
     "express-cors": "0.0.3",
+    "express-session": "^1.12.1",
     "knex": "^0.9.0",
     "lodash": "^3.10.1",
     "matchdep": "^1.0.0",

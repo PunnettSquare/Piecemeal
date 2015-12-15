@@ -6,10 +6,11 @@
 
   OAuthCtrl.$inject = ['oAuthFactory'];
 
+
   function OAuthCtrl(oAuthFactory) {
     var self = this;
     self.venmoAuth = function () {
-      oAuthFactory.venmoLogin();
+      return oAuthFactory.venmoLogin();
     }
     
   }
