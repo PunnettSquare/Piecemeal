@@ -58,9 +58,11 @@ module.exports = function(app) {
             phone: profile.phone,
             email: profile.email
           })
-          .then(function(user_id) {
-            console.log(user_id);
-            return done(null, user_id[0])
+          .then(function() {
+            return util.findUser(db, venmoUsername)
+          })
+          .then(function(rows) {
+            return done(null, rows[0])
           })
         } else {
           return done(null, result[0]);
