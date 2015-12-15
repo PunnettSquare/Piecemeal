@@ -7,12 +7,11 @@ var connect = function(eventUrl, eventInfo, io, userObj) {
 
   var mealEvent = io.of(eventUrl);
   mealEvent.once('connection', function(socket) {
-    console.log('socket.id =', socket.id);
 
     // socket.on('userAdded', function(user) {
     //   socket.broadcast.emit('userAdded', user);
     // });
-    console.log('Socket connection made with server.', userObj.id);
+    console.log('Socket connection made with server: User', userObj.id, "socket id", socket.id);
 
     socket.emit('joined', eventInfo);
 

@@ -12,6 +12,6 @@ require('./middleware/middleware')(app, express, io);
 
 http.listen(port, function() {
 
-  console.log('server listening on', port, 'at', new Date());
+  console.log('Server listening on', port, 'at', new Date());
 
 });
