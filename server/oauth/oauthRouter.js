@@ -34,7 +34,7 @@ module.exports = function(app) {
   passport.use(new VenmoStrategy({
       clientID: venmoInfo.id,
       clientSecret: venmoInfo.secret,
-      callbackURL: "piecemeal.herokuapp.com/auth/venmo/callback"
+      callbackURL: callbackURL
     },
     function(accessToken, refreshToken, profile, done) {
       var venmoUsername = profile.username;;
