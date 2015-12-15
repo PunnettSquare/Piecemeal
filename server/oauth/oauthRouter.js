@@ -15,15 +15,6 @@ module.exports = function(app) {
   app.use(session({secret:'green tree'}))
   app.use(passport.initialize());
   app.use(passport.session());
-  // app.use(function(req, res, next) {
-  //   res.header("Access-Control-Allow-Origin", "*");
-  //   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  //   res.header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
-  //   if ('OPTIONS' == req.method) {
-  //     res.send(200);
-  //   }
-  //   next();
-  // });
 
   passport.serializeUser(function (user, done) {
     done(null, user.id);
@@ -43,14 +34,9 @@ module.exports = function(app) {
       callbackURL: "http://127.0.0.1:8080/auth/venmo/callback"
     },
     function(accessToken, refreshToken, profile, done) {
-      console.log('profile', profile);
       var venmoUsername = profile.username;;
-      // console.log('profile._json =', profile._json);
-      // util.createEvent(db, profile.username, profile.displayName)
       util.findUser(db, venmoUsername)
       .then(function(result) {
-        console.log('result =', result);
-        console.log('coming back from venmo oauth');
         if (result.length === 0) {
           db('users').insert({
             venmoUsername: venmoUsername,
@@ -92,9 +78,6 @@ module.exports = function(app) {
     });
 
   app.get('/createEvent', function(req, res) {
-    console.log('req.user: ' , req.user);
-    console.log(req.session)
-    console.log('req.isAuthenticated() =', req.isAuthenticated());
     var user_id = req.user[0].id;
     var username = req.user[0].username;
     if (req.isAuthenticated()) {
@@ -108,7 +91,6 @@ module.exports = function(app) {
           username: username
           // venmoUsername: req.user[0].venmoUsername
         }
-        console.log('responseObject =', responseObject);
         res.send(responseObject);
       })
     } else {

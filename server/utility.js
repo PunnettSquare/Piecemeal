@@ -49,7 +49,6 @@ module.exports = {
   findUser : function(db, venmoUsername) {
     return db('users').where({
       venmoUsername: venmoUsername })
-    .returning('id') //maybe remove this line?
   },
 
   addTipAndTax: function(db, event_id, taxPercent, tipPercent) {
