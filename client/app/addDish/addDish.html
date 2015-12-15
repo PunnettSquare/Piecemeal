@@ -2,12 +2,15 @@
   <div class="row">
     <div class="col-md-12">
 
+
+      <!-- REFACTOR TO NAVBAR LATER (need to do addClass('active') onClick) -->
       <ul class="nav nav-tabs">
         <li><a class="allDishes" ng-click="addDish.goToAllDishes()">All Dishes</a></li>
         <li class="active"><a ng-click="allDishes.goToAddDish()">Add Dish</a></li>
         <li><a class="guestBill" ng-click="addDish.goToGuestBill()">Your Bill</a></li>
         <li><a class="hostBill" ng-show="addDish.isHost" ng-click="addDish.goToHostBill()" >Final Bill</a></li>
       </ul>
+      <!-- /Navbar refactor -->
 
       <h3>Add Dish</h3>
 

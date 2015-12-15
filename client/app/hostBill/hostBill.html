@@ -2,12 +2,15 @@
   <div class="row">
     <div class="col-md-12">
 
+
+      <!-- REFACTOR TO NAVBAR LATER (need to do addClass('active') onClick) -->
       <ul class="nav nav-tabs">
         <li><a class="allDishes" ng-click="hostBill.goToAllDishes()">All Dishes</a></li>
         <li><a class="addDish" ng-click="hostBill.goToAddDish()">Add Dish</a></li>
         <li><a class="guestBill" ng-click="hostBill.goToGuestBill()">Your Bill</a></li>
         <li class="active"><a class="hostBill" ng-click="hostBill.goToHostBill()">Final Bill</a></li>
       </ul>
+      <!-- /Navbar refactor -->
 
       <h3>Your Event's Final Bill</h3>
 
