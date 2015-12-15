@@ -5,7 +5,6 @@ var callbackURL;
 if (process.env.PORT) {
   var venmoInfo = {id:process.env.VENMO_ID, secret: process.env.VENMO_SECRET}
   callbackURL = "https://piecemeal.herokuapp.com/auth/venmo/callback";
-  https://evening-springs-9993.herokuapp.com/
 } else {
   var venmoInfo = require('../../venmoApiKeys');
   callbackURL = 'http://127.0.0.1/auth/venmo/callback'
