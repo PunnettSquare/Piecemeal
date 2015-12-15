@@ -54,19 +54,19 @@ module.exports = function(grunt) {
       }
     },
 
-    pgsql: {
-      options: {
-        db: {
-          host: "127.0.0.1",
-          name: "piecemeal",
-          charset: "UTF8"
-        }
-      },
-      drop: {
-        pgdropdb: "piecemeal",
-        pgcreatedb: "piecemeal"
-      }
-    },
+    // pgsql: {
+    //   options: {
+    //     db: {
+    //       host: "127.0.0.1",
+    //       name: "piecemeal",
+    //       charset: "UTF8"
+    //     }
+    //   },
+    //   drop: {
+    //     pgdropdb: "piecemeal",
+    //     pgcreatedb: "piecemeal"
+    //   }
+    // },
     // Task configuration
     jshint: {
       options: {
