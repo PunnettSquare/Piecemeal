@@ -1,10 +1,11 @@
 var passport = require('passport');
 var VenmoStrategy = require('passport-venmo').Strategy;
 var session = require('express-session');
+
 var callbackURL;
 if (process.env.PORT) {
   var venmoInfo = {id:process.env.VENMO_ID, secret: process.env.VENMO_SECRET}
-  callbackURL = "piecemeal.herokuapp.com/auth/venmo/callback";
+  callbackURL = "https://piecemeal.herokuapp.com/auth/venmo/callback";
 } else {
   var venmoInfo = require('../../venmoApiKeys');
   callbackURL = 'http://127.0.0.1/auth/venmo/callback'
@@ -34,7 +35,7 @@ module.exports = function(app) {
   passport.use(new VenmoStrategy({
       clientID: venmoInfo.id,
       clientSecret: venmoInfo.secret,
-      callbackURL: "piecemeal.herokuapp.com/auth/venmo/callback"
+      callbackURL: callbackURL
     },
     function(accessToken, refreshToken, profile, done) {
       var venmoUsername = profile.username;;
@@ -75,8 +76,6 @@ module.exports = function(app) {
   app.get('/venmo/callback',
     passport.authenticate('venmo', { failureRedirect: '/' }),
     function(req, res) {
-      console.log('req.user: ',req.user);
-      console.log('req.session =', req.session);
       res.redirect('/#/dashboard');
     });
 

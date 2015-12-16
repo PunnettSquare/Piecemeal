@@ -10,6 +10,28 @@ module.exports = function(app, io) {
     res.sendStatus(200);
   });
 
+  app.get('/:code/refresh', function(req, res) {
+    var code = req.params.code
+    console.log('code =', code);
+    // query database for event id based on code
+    util.findEvent(db, code)
+      .then(function(event_id) {
+        //check for an event
+        console.log(event_id);
+        if (event_id.length !== 0) {
+          // retrieve the state of the event to send to socket
+          return util.gatherState(db, event_id[0].id, code) // real data
+          .then(function(eventInfo) {
+            console.log(eventInfo)
+            res.send(eventInfo);
+          });
+        }
+      })
+      .catch(function(err) {
+        throw err;
+      });
+  });
+
   app.post('/createEvent', function(req, res) {
     var username = req.body.username || 'Jerry';
     // Generate code
@@ -65,7 +87,7 @@ module.exports = function(app, io) {
       connections[user_id] = true;
       setTimeout(function() {
         connections[user_id] = false;
-      }, 8100);
+      }, 2000);
 
       // query database for event id based on code
       util.findEvent(db, code)
