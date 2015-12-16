@@ -16,6 +16,8 @@
     self.getUsersByDish = appFactory.getUsersByDish;
     self.logout = appFactory.logout;
 
+    self.tipType = 'percent';
+
     self.getSubTotal = function(dishes) {
       return _.sum(_.pluck(dishes, 'cost'));
     };
