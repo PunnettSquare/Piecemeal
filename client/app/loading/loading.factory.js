@@ -4,17 +4,24 @@
   angular.module('Piecemeal')
     .factory('loadingFactory', loadingFactory);
 
-  loadingFactory.$inject = [];
+  loadingFactory.$inject = ['$http'];
 
-  function loadingFactory() {
+  function loadingFactory($http) {
     var services = {
-      showLoading: showLoading
+      sendSessionUser: sendSessionUser
     };
 
     return services;
 
-    function showLoading() {
-
+    function sendSessionUser(username) {
+      return $http({
+          method: 'POST',
+          url: '/newUser',
+          data: username
+        })
+        .then(function(res) {
+          return res.data;
+        });
     }
   }
 
