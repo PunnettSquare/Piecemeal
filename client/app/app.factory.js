@@ -23,7 +23,10 @@
       goToAllDishes: goToAllDishes,
       goToGuestBill: goToGuestBill,
       goToAddDish: goToAddDish,
-      goToHostBill: goToHostBill
+      goToHostBill: goToHostBill,
+      goToHome: goToHome,
+      copySessData: copySessData,
+      logout: logout
         // data: data
         // data.billData: billData
     };
@@ -48,6 +51,12 @@
       }
     }
 
+    function copySessData(self) {
+      for (var prop in $window.sessionStorage) {
+        self[prop] = getSessStorage(prop);
+      }
+    }
+
     function getDishIndivCost(dish) {
       return dish.cost / dish.users.length;
     }
@@ -63,6 +72,26 @@
         var last = array.pop();
         return array.join(", ") + " and " + last;
       }
+    }
+
+    function goToAddDish() {
+      $location.path('/' + services.getSessStorage('code') + '/addDish');
+    }
+
+    function goToAllDishes() {
+      $location.path('/' + services.getSessStorage('code') + '/allDishes');
+    }
+
+    function goToGuestBill() {
+      $location.path('/' + services.getSessStorage('code') + '/guestBill');
+    }
+
+    function goToHostBill() {
+      $location.path('/' + services.getSessStorage('code') + '/hostBill');
+    }
+
+    function goToHome() {
+      $location.path('/home');
     }
 
     function addDish(dish) {
@@ -89,22 +118,6 @@
       });
     }
 
-    function goToAddDish() {
-      $location.path('/' + services.getSessStorage('code') + '/addDish');
-    }
-
-    function goToAllDishes() {
-      $location.path('/' + services.getSessStorage('code') + '/allDishes');
-    }
-
-    function goToGuestBill() {
-      $location.path('/' + services.getSessStorage('code') + '/guestBill');
-    }
-
-    function goToHostBill() {
-      $location.path('/' + services.getSessStorage('code') + '/hostBill');
-    }
-
     function unshareDish(dish_id, user_id) {
       services.data.dishes.forEach(function(dish, dishIndex) {
         if (dish.dish_id === dish_id) {
@@ -127,6 +140,14 @@
           user.dishes.splice(dishIndex, 1);
         }
       });
+    }
+
+    function logout() {
+      for (var prop in $window.sessionStorage) {
+        delete $window.sessionStorage[prop];
+      }
+      goToHome();
+      $window.location.reload();
     }
 
     function getUsersByDish(dish, users) {
@@ -183,18 +204,3 @@
     }
   }
 })();
-
-// Temporarily keep old version of socket setup for reference:
-
-// .controller('piecemealCtrl', function ($scope, socket) {
-
-// ** ------- Socket listeners ------- **
-
-// socket.forward('getDish', $scope);
-// $scope.$on('socket:getDish', function (e, data) {
-//   // do something. e.g. $scope.data = data
-// });
-
-// ** ------- Socket Emitters ------- **
-
-// Put these on other controllers

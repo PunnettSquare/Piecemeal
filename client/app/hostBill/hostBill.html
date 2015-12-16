@@ -2,13 +2,13 @@
   <div class="row">
     <div class="col-md-12">
 
-
       <!-- REFACTOR TO NAVBAR LATER (need to do addClass('active') onClick) -->
       <ul class="nav nav-tabs">
-        <li><a class="allDishes" ng-click="hostBill.goToAllDishes()">All Dishes</a></li>
-        <li><a class="addDish" ng-click="hostBill.goToAddDish()">Add Dish</a></li>
-        <li><a class="guestBill" ng-click="hostBill.goToGuestBill()">Your Bill</a></li>
-        <li class="active"><a class="hostBill" ng-click="hostBill.goToHostBill()">Final Bill</a></li>
+        <li><a class="allDishes" ui-sref="event.allDishes">All Dishes</a></li>
+        <li><a class="addDish" ui-sref="event.addDish">Add Dish</a></li>
+        <li><a class="guestBill" ui-sref="event.guestBill">Your Bill</a></li>
+        <li class="active"><a class="hostBill" ui-sref="event.hostBill">Final Bill</a></li>
+        <li><a class="logout" ng-click="hostBill.logout()">Logout</a></li>
       </ul>
       <!-- /Navbar refactor -->
 
@@ -116,12 +116,7 @@
         </div>
 
         <div>
-          <!-- ng-show="billForm.tip.$dirty && billForm.tax.$dirty"  -->
-          <!-- ng-show="!hostBill.billsSent && billForm.tax && billForm.tip" -->
           <button type="submit" ng-disabled="billForm.tax.$error.required || billForm.tip.$error.required" ng-click="hostBill.sendBillsToGuests()" class="sendBills btn btn-primary">Send Bills to Guests</button>
-          <!-- ng-hide="hostBill.billsSent && billForm.tax.$dirty &&billForm.tip.$dirty" -->
-          <!--         <button ng-show="hostBill.billsSent && hostBill.tax && hostBill.tip" class="sendBills btn btn-success" style="width:170px">Bills Sent Successfully!</button>
-          -->
         </div>
 
         <br>

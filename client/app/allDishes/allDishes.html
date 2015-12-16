@@ -5,16 +5,17 @@
 
       <!-- REFACTOR TO NAVBAR LATER (need to do addClass('active') onClick) -->
       <ul class="nav nav-tabs">
-        <li class="active"><a class="allDishes" ng-click="allDishes.goToAllDishes()">All Dishes</a></li>
-        <li><a class="addDish" ng-click="allDishes.goToAddDish()">Add Dish</a></li>
-        <li><a class="guestBill" ng-click="allDishes.goToGuestBill()">Your Bill</a></li>
-        <li><a class="hostBill" ng-click="allDishes.goToHostBill()" ng-show="allDishes.isHost" >Final Bill</a></li>
+        <li class="active"><a class="allDishes" ui-sref="event.allDishes">All Dishes</a></li>
+        <li><a class="addDish" ui-sref="event.addDish">Add Dish</a></li>
+        <li><a class="guestBill" ui-sref="event.guestBill">Your Bill</a></li>
+        <li><a class="hostBill" ui-sref="event.hostBill" ng-show="allDishes.isHost" >Final Bill</a></li>
+        <li><a class="logout" ng-click="allDishes.logout()">Logout</a></li>
       </ul>
       <!-- /Navbar refactor -->
 
       <h3>All Dishes</h3>
       <p>Hi, {{_.capitalize(allDishes.username)}}.
-      The code for this bill is: <strong class="code">{{allDishes.data.code}}</strong>.</p>
+      The code for this bill is <strong class="code">{{ _.capitalize(allDishes.code) }}</strong>.</p>
       <p>Give this code to everyone around the table so they can join the bill from their phones and add their own dishes.</p>
 
       <div ng-repeat="dish in allDishes.data.dishes">
@@ -33,26 +34,6 @@
             <button ng-click="allDishes.unshareDish(dish.dish_id, allDishes.user_id, dish.users)" class="unshare badge">Unshare</button>
           </div>
         </div>
-
-        <!--      <div class="list-group">
-          <a href="#" class="list-group-item active">Home</a>
-          <div class="list-group-item">
-            List header
-          </div>
-          <div class="list-group-item">
-            <h4 class="list-group-item-heading">
-            List group item heading
-            </h4>
-            <p class="list-group-item-text">
-              ...
-            </p>
-          </div>
-          <div class="list-group-item">
-            <span class="badge">14</span>Help
-          </div>
-          <a class="list-group-item active"><span class="badge">14</span>Help</a>
-        </div> -->
-
       </div>
     </div>
   </div>

@@ -9,12 +9,6 @@
         <div class="col-md-6">
           <form name="userInput">
 
-
-
-
-
-
-
             <!-- Enter Your Name -->
             <div>
               <!--Setup a bill-->
@@ -22,21 +16,23 @@
               <a ng-disabled="userInput.username.$error.required" value="Create room" class="createRoom btn btn-default" ui-sref="oAuth">
                 Create Bill
               </a>
+
             </div>
             <br>
+          </form>
+
+          <form name="userInput2">
 
             <!-- Enter a room code (as a guest) -->
             <div class="form-group">
               <h4>Or join an existing bill by entering the code</h4>
-              <input name="code" type="text" class="roomName form-control" placeholder="Enter code here" ng-model="url" id="roomCode" required>
+              <input name="code" type="text" class="roomName form-control" placeholder="Enter code here" ng-model="code" id="roomCode" required>
               <br>
-              <a name="submit" ng-disabled="userInput.username.$error.required || userInput.code.$error.required" type="submit" class="enterRoom btn btn-default" value="Enter Room" ui-sref="event.loading"> <!-- removed this attribute: ng-click="home.setSessionUser(username, false, url)" -->
-                Join Bill
-              </a>
-            </div>
+              <a name="submit" ng-disabled="userInput.username.$error.required || userInput.code.$error.required" type="submit" class="enterRoom btn btn-default" value="Enter Room" ng-click="home.setSessionUser(code)" ui-sref="event.loading">
+              Join Bill
+            </a>
 
-            <div ng-show="home.isError">Your entered room does not exist. Please try another.</div>
-
+          </div>
 
 
           <!-- </form> -->

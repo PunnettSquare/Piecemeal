@@ -5,10 +5,11 @@
 
       <!-- REFACTOR TO NAVBAR LATER (need to do addClass('active') onClick) -->
       <ul class="nav nav-tabs">
-        <li><a class="allDishes" ng-click="addDish.goToAllDishes()">All Dishes</a></li>
-        <li class="active"><a ng-click="allDishes.goToAddDish()">Add Dish</a></li>
-        <li><a class="guestBill" ng-click="addDish.goToGuestBill()">Your Bill</a></li>
-        <li><a class="hostBill" ng-show="addDish.isHost" ng-click="addDish.goToHostBill()" >Final Bill</a></li>
+        <li><a class="allDishes" ui-sref="event.allDishes">All Dishes</a></li>
+        <li class="active"><a ui-sref="event.addDish">Add Dish</a></li>
+        <li><a class="guestBill" ui-sref="event.guestBill">Your Bill</a></li>
+        <li><a class="hostBill" ng-show="addDish.isHost" ui-sref="event.hostBill">Final Bill</a></li>
+        <li><a class="logout" ng-click="addDish.logout()">Logout</a></li>
       </ul>
       <!-- /Navbar refactor -->
 

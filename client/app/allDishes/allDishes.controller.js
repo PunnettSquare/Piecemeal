@@ -4,17 +4,18 @@
   angular.module('Piecemeal')
     .controller('AllDishesCtrl', AllDishesCtrl);
 
-  AllDishesCtrl.$inject = ['socketFactory', '$location', 'appFactory', '$scope', 'allDishesFactory'];
+  AllDishesCtrl.$inject = ['socketFactory', 'appFactory', '$scope'];
 
-  function AllDishesCtrl(socketFactory, $location, appFactory, $scope, allDishesFactory) {
+  function AllDishesCtrl(socketFactory, appFactory, $scope) {
     var self = this;
 
-    self.user_id = appFactory.getSessStorage('user_id');
-    self.event_id = appFactory.getSessStorage('event_id');
-    self.username = appFactory.getSessStorage('username');
-    self.isHost = appFactory.getSessStorage('isHost');
+    self.data = appFactory.data;
 
-    $scope.$on('joined', function() { // $on does not work with `self`
+    appFactory.copySessData(self);
+    self.getUsersByDish = appFactory.getUsersByDish;
+    self.logout = appFactory.logout;
+
+    $scope.$on('joined', function() {
       self.data = appFactory.data;
       console.log("Joined the All Dishes room.");
     });
@@ -22,30 +23,8 @@
     if (!appFactory.data) {
       socketFactory.init();
       appFactory.initListeners();
+      self.data = appFactory.data;
     }
-    self.data = appFactory.data;
-
-    self.getUsersByDish = appFactory.getUsersByDish;
-
-    self.goToAllDishes = appFactory.goToAllDishes;
-    self.goToGuestBill = appFactory.goToGuestBill;
-    self.goToAddDish = appFactory.goToAddDish;
-    self.goToHostBill = appFactory.goToHostBill;
-
-    // self.getId = function(arrayOfIds, eventInfo) {
-    //   var usernames = arrayOfIds.map(function(id) {
-    //     var result;
-    //     eventInfo.users.forEach(function(user) {
-    //       if (user.id.toString() === id.toString()) {
-    //         result = _.capitalize(user.username);
-    //       }
-    //     });
-    //     if (result) {
-    //       return result;
-    //     }
-    //   });
-    //   return usernames.length === 1 ? usernames[0] : usernames.join(', ');
-    // };
 
     self.isOnDish = function(dishUsers, user_id) {
       var result = false;
