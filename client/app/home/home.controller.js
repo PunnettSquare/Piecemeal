@@ -12,7 +12,7 @@
 
     self.setSessionUser = function(code) {
       _.assign($window.sessionStorage, {
-        code: code,
+        code: code.toLowerCase(),
         isHost: false
       });
     };
