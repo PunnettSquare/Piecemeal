@@ -106,7 +106,21 @@
           }
         },
         resolve: {
-
+          getInfo: ['$http', 'appFactory', 'socketFactory', function($http, appFactory, socketFactory) {
+            if (!appFactory.data) {
+              socketFactory.init();
+              appFactory.initListeners();
+              return $http({
+                method: 'GET',
+                url: '/' + window.sessionStorage.code + '/refresh',
+              })
+              .then(function(data) {
+                console.log('data on resolve', data)
+                // appFactory.data = data.data;
+                return data.data;
+              })
+            }
+          }]
         }
       })
       .state('event.allDishes', {
@@ -152,7 +166,8 @@
             controllerAs: 'guestBill'
           }
         },
-        resolve: {}
+        resolve: {       
+        }
 
       })
       .state('event.hostReceipt', {
@@ -170,7 +185,6 @@
           }
         },
         resolve: {
-
         }
 
       })
@@ -189,7 +203,6 @@
           }
         },
         resolve: {
-
         }
 
       })
