@@ -8,16 +8,20 @@
 
   function oAuthFactory($http) {
     var services = {
-      venmoLogin: venmoLogin,
+      createEvent: createEvent
     };
 
     return services;
 
-    function venmoLogin() {
-      // return $http({
-      //     method: 'GET',
-      //     url: '/auth/test',
-      //   })
+    function createEvent(userObj) {
+      return $http({
+          method: 'POST',
+          url: '/createEvent',
+          data: userObj
+        })
+        .then(function(res) {
+          return res.data;
+        });
     }
   }
 

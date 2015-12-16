@@ -2,51 +2,54 @@
   <div class="row">
     <div class="col-md-12">
       <h1>
-      Piecemeal <small>The easiest way to split a bill.</small>
+      Piecemeal <small>The easiest way to split a bill and pay with<img src="../../assets/venmo_logo_blue.svg" alt="Venmo" width="85px"></small>
       </h1>
 
       <div class="row">
         <div class="col-md-6">
           <form name="userInput">
 
-            <!-- Enter Your Name -->
-            <div class="form-group">
-              <br>
-              <label for="name">Enter Name</label>
-              <input type="text" placeholder="Enter Your Name" ng-model="username" name="username" class="enterName form-control" required autofocus id="name" required>
-              <br>
 
-              <!-- Are you a host? Create button -->
-              <h4>Host?</h4>
-              <button type="submit" ng-disabled="userInput.username.$error.required" value="Create room" class="createRoom btn btn-default" ng-click="home.setSessionUser(username, true, null)">Create a Room</button>
+
+
+
+
+
+            <!-- Enter Your Name -->
+            <div>
+              <!--Setup a bill-->
+              <h4>Setup a bill to split with your friends</h4>
+              <a ng-disabled="userInput.username.$error.required" value="Create room" class="createRoom btn btn-default" ui-sref="oAuth">
+                Create Bill
+              </a>
             </div>
             <br>
 
             <!-- Enter a room code (as a guest) -->
             <div class="form-group">
-              <h4>Guest?</h4>
-              <label for="roomCode">Enter Room Code</label>
-              <input name="code" type="text" class="roomName form-control" placeholder="piecemeal.com/" ng-model="url" id="roomCode" required>
+              <h4>Or join an existing bill by entering the code</h4>
+              <input name="code" type="text" class="roomName form-control" placeholder="Enter code here" ng-model="url" id="roomCode" required>
               <br>
-              <button name="submit" ng-disabled="userInput.username.$error.required || userInput.code.$error.required" type="submit" class="enterRoom btn btn-default" value="Enter Room" ng-click="home.setSessionUser(username, false, url)">
-              Enter Room
-              </button>
+              <a name="submit" ng-disabled="userInput.username.$error.required || userInput.code.$error.required" type="submit" class="enterRoom btn btn-default" value="Enter Room" ui-sref="event.loading"> <!-- removed this attribute: ng-click="home.setSessionUser(username, false, url)" -->
+                Join Bill
+              </a>
             </div>
 
             <div ng-show="home.isError">Your entered room does not exist. Please try another.</div>
 
 
 
-          </form>
+          <!-- </form> -->
         </div>
 
         <br><br><br>
 
         <div class="col-md-6">
           <div class="jumbotron well">
-            <h2>About Piecemeal</h2>
-            <p>The easiest way to split a bill. Hosts can create a room and invite guests to join via room code. No login or downloading required.</p>
-            <p><a class="btn btn-primary btn-large" href="#">Learn more</a></p>
+            <h2>How Piecemeal works</h2>
+            <p>Everyone can join the same bill from their own phones by going to piecemeal.com and entering the unique code for this bill. No login or downloading required.</p>
+            <p>Add the dishes you ordered and share dishes with others. Tax and tip are divided proportionally. Everyone gets an itemized total.</p>
+            <p>Once the bill is split, automatic payment requests can optionally be sent through Venmo. Plus, if you use Piecemeal frequently, you can download the app to stay logged in through Venmo.</p>
           </div>
         </div>
 
