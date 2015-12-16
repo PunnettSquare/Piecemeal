@@ -21,7 +21,10 @@
         })
         .then(function(res) {
           return res.data;
-        });
+        })
+        .catch(function(err) {
+          console.log("Could not send username to server.");
+        })
     }
   }
 

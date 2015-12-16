@@ -4,15 +4,14 @@
   angular.module('Piecemeal')
     .controller('AllDishesCtrl', AllDishesCtrl);
 
-  AllDishesCtrl.$inject = ['socketFactory', '$location', 'appFactory', '$scope', 'allDishesFactory'];
+  AllDishesCtrl.$inject = ['socketFactory', 'appFactory', '$scope'];
 
-  function AllDishesCtrl(socketFactory, $location, appFactory, $scope, allDishesFactory) {
+  function AllDishesCtrl(socketFactory, appFactory, $scope) {
     var self = this;
 
-    self.user_id = appFactory.getSessStorage('user_id');
-    self.event_id = appFactory.getSessStorage('event_id');
-    self.username = appFactory.getSessStorage('username');
-    self.isHost = appFactory.getSessStorage('isHost');
+    self.data = appFactory.data;
+
+    appFactory.copySessData(self);
 
     $scope.$on('joined', function() { // $on does not work with `self`
       self.data = appFactory.data;
@@ -22,15 +21,13 @@
     if (!appFactory.data) {
       socketFactory.init();
       appFactory.initListeners();
+      self.data = appFactory.data;
     }
-    self.data = appFactory.data;
+
 
     self.getUsersByDish = appFactory.getUsersByDish;
 
-    self.goToAllDishes = appFactory.goToAllDishes;
-    self.goToGuestBill = appFactory.goToGuestBill;
-    self.goToAddDish = appFactory.goToAddDish;
-    self.goToHostBill = appFactory.goToHostBill;
+    self.logout = appFactory.logout;
 
     // self.getId = function(arrayOfIds, eventInfo) {
     //   var usernames = arrayOfIds.map(function(id) {

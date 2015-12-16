@@ -9,12 +9,13 @@
         <li><a class="addDish" ui-sref="event.addDish">Add Dish</a></li>
         <li><a class="guestBill" ui-sref="event.guestBill">Your Bill</a></li>
         <li><a class="hostBill" ui-sref="event.hostBill" ng-show="allDishes.isHost" >Final Bill</a></li>
+        <li><a class="logout" ng-click="allDishes.logout()">Logout</a></li>
       </ul>
       <!-- /Navbar refactor -->
 
       <h3>All Dishes</h3>
       <p>Hi, {{_.capitalize(allDishes.username)}}.
-      The code for this bill is: <strong class="code">{{allDishes.data.code}}</strong>.</p>
+      The code for this bill is: <strong class="code">{{allDishes.code}}</strong>.</p>
       <p>Give this code to everyone around the table so they can join the bill from their phones and add their own dishes.</p>
 
       <div ng-repeat="dish in allDishes.data.dishes">

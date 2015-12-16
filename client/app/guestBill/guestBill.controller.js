@@ -4,15 +4,12 @@
   angular.module('Piecemeal')
     .controller('GuestBillCtrl', GuestBillCtrl);
 
-  GuestBillCtrl.$inject = ['socketFactory', '$scope', 'appFactory', '$location', 'addDishFactory'];
+  GuestBillCtrl.$inject = ['$scope', 'appFactory', 'addDishFactory'];
 
-  function GuestBillCtrl(socketFactory, $scope, appFactory, $location, addDishFactory) {
+  function GuestBillCtrl($scope, appFactory, addDishFactory) {
     var self = this;
 
-    self.isHost = appFactory.getSessStorage('isHost');
-    self.username = appFactory.getSessStorage('username');
-    self.user_id = appFactory.getSessStorage('user_id');
-    self.event_id = appFactory.getSessStorage('event_id');
+    appFactory.copySessData(self);
 
     self.data = appFactory.data;
     self.data.billData = appFactory.data.billData;
@@ -23,11 +20,6 @@
       });
     });
 
-    self.goToAllDishes = appFactory.goToAllDishes;
-    self.goToGuestBill = appFactory.goToGuestBill;
-    self.goToAddDish = appFactory.goToAddDish;
-    self.goToHostBill = appFactory.goToHostBill;
-
     // bill being sent while guest is on guestBill page for the first time
     $scope.$on('billsSentToGuests', function() {
       self.data.billData = appFactory.data.billData;
@@ -35,7 +27,7 @@
       // self.showGuestBill();
     });
 
-    if (appFactory.getSessStorage('isHost') === true && !_.isEmpty(appFactory.data.billData)) {
+    if (self.isHost && !_.isEmpty(appFactory.data.billData)) {
       self.data.billData = appFactory.data.billData;
     }
 

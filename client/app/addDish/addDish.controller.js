@@ -4,36 +4,28 @@
   angular.module('Piecemeal')
     .controller('AddDishCtrl', AddDishCtrl);
 
-  AddDishCtrl.$inject = ['socketFactory', 'addDishFactory', '$location', 'appFactory', '$scope', 'getInfo'];
+  AddDishCtrl.$inject = ['socketFactory', 'addDishFactory', 'appFactory'];
 
-  function AddDishCtrl(socketFactory, addDishFactory, $location, appFactory, $scope, getInfo) {
-    console.log('getInfo =', getInfo);
+  function AddDishCtrl(socketFactory, addDishFactory, appFactory) {
+
     var self = this;
 
-    // When appFactory is updated, $rootScope is used as a bus to emit to user's allDishes controller $scope
+    appFactory.copySessData(self);
+
     self.data = appFactory.data;
 
-    if (!appFactory.data) {
-      self.data = getInfo;
-      appFactory.data = getInfo;
-    }
+    // if (!appFactory.data) {
+    //   self.data = getInfo;
+    //   appFactory.data = getInfo;
+    // }
 
-
-    // $scope.$on('joined', function() { // $on does not work with `self`
-    //   self.data = appFactory.data;
-    //   console.log("Joined the Add Dishes room.");
-    // });
-      // socketFactory.init();
-      // appFactory.initListeners();
-
-    self.isHost = appFactory.getSessStorage('isHost');
     self.addDish = function(name, cost) {
       var dish = {
         cost: Number(cost),
         name: name,
-        user_id: appFactory.getSessStorage('user_id'),
-        event_id: appFactory.getSessStorage('event_id'),
-        users: [appFactory.getSessStorage('user_id')]
+        user_id: self.user_id,
+        event_id: self.event_id,
+        users: [self.user_id]
       };
       socketFactory.emit('addDish', dish);
       self.userTotal += cost;
@@ -48,11 +40,6 @@
     };
 
     self.calcUserCurrentTotal(self.data);
-
-    self.goToAllDishes = appFactory.goToAllDishes;
-    self.goToGuestBill = appFactory.goToGuestBill;
-    self.goToAddDish = appFactory.goToAddDish;
-    self.goToHostBill = appFactory.goToHostBill;
   }
 
 })();
