@@ -27,7 +27,7 @@
           <p class="list-group-item-text" ng-if="dish.users.length !== 1">
           <small>You shared this with {{ guestBill.getOtherUsersByUsername(dish, guestBill.data.users, guestBill.user_id) }}.</small></p>
           <p class="list-group-item-text" ng-if="dish.users.length === 1">
-            <span>Only you ate this.</span>
+            <span><small>Only you ate this.</small></span>
           </p>
         </div>
         <br>
@@ -56,21 +56,21 @@
 
       <div class="panel panel-default" ng-if="!_.isEmpty(guestBill.data.billData) && !guestBill.isHost">
         <div class="panel-body">
-          <h4 class="h4">Tax</h4 class="h4">
-          <p class="text-right h5">{{guestBill.getGuestTax() | currency}}</p>
-        </div>
-        <div class="panel-footer taxPercent">
-          <small>You were charged {{ guestBill.data.billData.taxPercent }}% for tax.</small>
-        </div>
-      </div>
-
-      <div class="panel panel-default" ng-if="!_.isEmpty(guestBill.data.billData) && !guestBill.isHost">
-        <div class="panel-body">
           <h4 class="h4">Tip</h4 class="h4">
           <p class="text-right h5">{{guestBill.getGuestTip() | currency}}</p>
         </div>
         <div class="panel-footer tipPercent">
           <small>Your host chose {{ guestBill.data.billData.tipPercent }}% for tip.</small>
+        </div>
+      </div>
+
+      <div class="panel panel-default" ng-if="!_.isEmpty(guestBill.data.billData) && !guestBill.isHost">
+        <div class="panel-body">
+          <h4 class="h4">Tax</h4 class="h4">
+          <p class="text-right h5">{{guestBill.getGuestTax() | currency}}</p>
+        </div>
+        <div class="panel-footer taxPercent">
+          <small>You were charged {{ guestBill.data.billData.taxPercent }}% for tax.</small>
         </div>
       </div>
 
