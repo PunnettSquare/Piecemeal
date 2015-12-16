@@ -16,44 +16,22 @@
 
     // $window.sessionStorage should have: username, user_id, event code, event_id, and isHost
     self.setSessionUser = function(username, isHost, code) {
-      if (isHost) {
-        oAuthFactory.createEvent({
-            username: username
-          })
-          .then(function(data) {
-            _.assign($window.sessionStorage, {
-              username: username,
-              code: data.code,
-              isHost: true,
-              user_id: data.user_id,
-              event_id: data.event_id
-            });
-            $location.path('/' + data.code + '/allDishes');
-          })
-          .catch(function(err) {
-            console.log("Error in creating event.");
+      oAuthFactory.createEvent({
+          username: username
+        })
+        .then(function(data) {
+          _.assign($window.sessionStorage, {
+            username: username,
+            code: data.code,
+            isHost: true,
+            user_id: data.user_id,
+            event_id: data.event_id
           });
-      } else {
-        // code = code || 'testRoom'; // only for mock data
-        oAuthFactory.sendSessionUser(
-            _.assign($window.sessionStorage, {
-              username: username,
-              code: code,
-              isHost: false
-            }))
-          .then(function(userInfo) {
-            _.assign($window.sessionStorage, {
-              user_id: userInfo.user_id,
-              event_id: userInfo.event_id
-            });
-            $location.path('/' + code + '/allDishes');
-          })
-          .catch(function(err) {
-            console.log("Error: Could not send session user info.");
-            console.error(err);
-            self.isError = true;
-          });
-      }
+          $location.path('/' + data.code + '/allDishes');
+        })
+        .catch(function(err) {
+          console.log("Error in creating event.");
+        });
     };
     
   }
