@@ -8,14 +8,12 @@
 
   function LoadingCtrl($location, $window, loadingFactory) {
     var self = this;
+    var code = $window.location.hash.split("/")[1].toLowerCase();
 
     self.setSessionUser = function(username) {
-      var code = $window.location.hash.split("/")[1].toLowerCase();
       loadingFactory.sendSessionUser(
           _.assign($window.sessionStorage, {
-            username: username,
-            code: code,
-            isHost: false
+            username: username
           }))
         .then(function(userInfo) {
           _.assign($window.sessionStorage, {
@@ -25,7 +23,6 @@
           self.isSent = true;
           // setTimeout(function() {
             // window.location.hash = "#/" + code + "/allDishes"
-            $location.path('/' + code + '/allDishes');
           // }, 100);
         })
         .catch(function(err) {

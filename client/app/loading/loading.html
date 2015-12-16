@@ -12,7 +12,7 @@
           <input type="text" placeholder="Enter Your Name" ng-model="username" name="username" class="enterName form-control" required autofocus id="name" required>
           <br>
 
-          <button ng-show="!loading.isSent" type="submit" name="username" ng-disabled="userInput.username.$error.required" value="Create room" class="enterRoom btn btn-default" ng-click="loading.setSessionUser(username)">Enter Room</button>
+          <button ng-show="!loading.isSent" type="submit" name="username" ng-disabled="userInput.username.$error.required" value="Create room" class="enterRoom btn btn-default" ng-click="loading.setSessionUser(username)" ui-sref="event.allDishes">Enter Room</button>
           <br>
 
 

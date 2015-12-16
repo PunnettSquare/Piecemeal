@@ -19,11 +19,7 @@
       getSessStorage: getSessStorage,
       arrayToSentence: arrayToSentence,
       getUsersByDish: getUsersByDish,
-      getDishIndivCost: getDishIndivCost,
-      goToAllDishes: goToAllDishes,
-      goToGuestBill: goToGuestBill,
-      goToAddDish: goToAddDish,
-      goToHostBill: goToHostBill
+      getDishIndivCost: getDishIndivCost
         // data: data
         // data.billData: billData
     };
@@ -87,22 +83,6 @@
           user.dishes.push(dishObj);
         }
       });
-    }
-
-    function goToAddDish() {
-      $location.path('/' + services.getSessStorage('code') + '/addDish');
-    }
-
-    function goToAllDishes() {
-      $location.path('/' + services.getSessStorage('code') + '/allDishes');
-    }
-
-    function goToGuestBill() {
-      $location.path('/' + services.getSessStorage('code') + '/guestBill');
-    }
-
-    function goToHostBill() {
-      $location.path('/' + services.getSessStorage('code') + '/hostBill');
     }
 
     function unshareDish(dish_id, user_id) {
