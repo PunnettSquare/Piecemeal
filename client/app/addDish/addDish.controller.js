@@ -13,6 +13,7 @@
     appFactory.copySessData(self);
 
     self.data = appFactory.data;
+    self.logout = appFactory.logout;
 
     // if (!appFactory.data) {
     //   self.data = getInfo;
@@ -38,7 +39,6 @@
     self.calcUserCurrentTotal = function(data) {
       self.userTotal = addDishFactory.calculateRunningTotal(data);
     };
-
     self.calcUserCurrentTotal(self.data);
   }
 

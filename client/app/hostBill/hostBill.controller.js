@@ -12,10 +12,9 @@
     appFactory.copySessData(self);
 
     self.data = appFactory.data;
-
     self.getDishIndivCost = appFactory.getDishIndivCost;
-
     self.getUsersByDish = appFactory.getUsersByDish;
+    self.logout = appFactory.logout;
 
     self.getSubTotal = function(dishes) {
       return _.sum(_.pluck(dishes, 'cost'));
