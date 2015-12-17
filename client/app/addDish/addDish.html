@@ -17,22 +17,27 @@
 
       <div class="row">
         <div class="col-md-6">
-          <form role="form" name="dishForm">
 
+          <!-- Add dish name -->
+          <form role="form" name="dishForm">
             <div class="form-group">
               <label for="addDish">
                 Dish
               </label>
               <input name="name" type="text" placeholder="Dish Name" ng-model="addDish.dishName" class="dishName form-control" required autofocus>
             </div>
+            <!-- end dish name -->
 
+            <!-- start dish cost -->
             <div class="form-group">
               <label for="addDish">
                 Cost
               </label>
               <input name="amount" type="number" placeholder="$0.00" ng-model="addDish.amount" class="dishCost form-control" id="addDish" aria-label="amount" required>
             </div>
+            <!-- end dish cost -->
 
+            <!-- dish summary: cost & total so far-->
             <div class="form-group">
               <p class="help-block">
                 This dish costs
@@ -45,17 +50,21 @@
                 and your total so far is <strong><span id="currency-default">{{addDish.userTotal | currency}}</span></strong>.
               </p>
             </div>
+            <!-- dish summary -->
 
+            <!-- submit the form -->
             <button type="submit" ng-disabled="dishForm.amount.$error.required || dishForm.name.$error.required" ng-click="addDish.addDish(addDish.dishName, addDish.amount)" class="addDish btn btn-default" >
             Submit
             </button>
           </form>
 
           <br>
+          <!-- alert for successful adds -->
           <div class="alert alert-success alert-dismissible" role="alert" ng-show="addDish.addedDish">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             {{ _.map(addDish.previousDish.split(" "), _.capitalize).join(" ") }} added!
           </div>
+          <!-- end alert -->
 
         </div>
       </div>
