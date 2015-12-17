@@ -43,15 +43,21 @@
             <p class="text-right h4">{{ hostBill.getSubTotal(hostBill.data.dishes) | currency}}</p>
           </div>
         </div>
-        <!-- TIP -->
+        <!-- TIP INPUT-->
         <div class="panel panel-default">
           <div class="panel-heading">
             <h1 class="panel-title">Tip</h1>
             <br>
             <div class="input-group">
-              <input class="tipPercent form-control" name="tip" type="number" step="any" ng-model="hostBill.tip" placeholder="0%" min="0" aria-label="tip" required>
-              <span class="input-group-addon">%</span>
+              <input class="tipPercent form-control" name="tip" type="number" step="any" ng-model="hostBill.tip" placeholder="0" min="0" aria-label="tip" required>
+              <label class="active input-group-addon">
+                <input type="radio" ng-model="hostBill.tipType" value="percent" /> %
+              </label>
+              <label class="input-group-addon">
+                <input type="radio" ng-model="hostBill.tipType" value="dollar" /> $
+              </label>
             </div>
+            <!-- DISPLAY TIP -->
             <div class="tip">
               <p class="help-block text-right">
                 Your added tip:
@@ -60,7 +66,7 @@
                   {{ 0 + hostBill.tip | currency }}
                 </span>
                 <span ng-show="billForm.tip.$dirty" id="currency-default">
-                  {{ hostBill.tip * 0.01 * hostBill.getSubTotal(hostBill.data.dishes) | currency}}
+                  {{ hostBill.getTip() | currency}}
                 </span>
                 </strong>
               </p>
@@ -110,12 +116,11 @@
               </span>
               <span ng-show="billForm.tip.$dirty && billForm.tax.$pristine">
                 {{ hostBill.getSubTotal(hostBill.data.dishes) +
-                (hostBill.tip * 0.01 * hostBill.getSubTotal(hostBill.data.dishes)) | currency }}
+                hostBill.getTip() | currency }}
               </span>
               <span ng-show="billForm.tip.$dirty && billForm.tax.$dirty">
                 {{ hostBill.getSubTotal(hostBill.data.dishes) +
-                (hostBill.tip * 0.01 * hostBill.getSubTotal(hostBill.data.dishes)) +
-                (hostBill.getTax()) | currency }}
+                hostBill.getTip() + hostBill.getTax() | currency }}
               </span>
             </p>
           </div>

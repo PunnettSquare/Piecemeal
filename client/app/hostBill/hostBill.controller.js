@@ -16,8 +16,25 @@
     self.getUsersByDish = appFactory.getUsersByDish;
     self.logout = appFactory.logout;
 
-    self.test=function(){console.log("test"); };
+    self.tipType = 'percent';
     self.taxType = 'percent';
+
+    self.getTip = function() {
+      if (self.tipType === 'dollar') {
+        return self.tip;
+      } else if (self.tipType === 'percent') {
+        return self.tip * 0.01 * self.getSubTotal(self.data.dishes);
+      }
+    };
+
+    self.getTipPercent = function() {
+      if (self.tipType === 'dollar') {
+        var num = self.tip/self.getSubTotal(self.data.dishes) * 100;
+        return Math.round(num * 100) / 100; // round to 2 decimal places
+      } else if (self.tipType === 'percent') {
+        return self.tip;
+      }
+    };
 
     self.getTax = function() {
       if (self.taxType === 'dollar') {
@@ -29,8 +46,6 @@
 
     self.getTaxPercent = function() {
       if (self.taxType === 'dollar') {
-        console.log("getSubTotal: ", self.getSubTotal(self.data.dishes)); 
-        console.log("self.tax: ", self.tax); 
         var num = self.tax/self.getSubTotal(self.data.dishes) * 100;
         return Math.round(num * 100) / 100; // round to 2 decimal places
       } else if (self.taxType === 'percent') {
@@ -43,7 +58,7 @@
     };
 
     self.sendBillsToGuests = function() {
-      self.grandTotal = self.getSubTotal(self.data.dishes) + (self.tip * 0.01 * self.getSubTotal(self.data.dishes)) + (self.getTax());
+      self.grandTotal = self.getSubTotal(self.data.dishes) + self.getTip() + self.getTax();
 
       socketFactory.emit('sendBillToGuests', {
         event_id: self.event_id,
@@ -52,7 +67,7 @@
         host_id: self.user_id,
         subTotal: self.getSubTotal(self.data.dishes),
         taxPercent: self.getTaxPercent(),
-        tipPercent: self.tip,
+        tipPercent: self.getTipPercent(),
         grandTotal: self.grandTotal
       });
       self.billsSent = true;
