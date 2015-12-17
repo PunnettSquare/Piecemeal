@@ -198,7 +198,7 @@
         services.data.billData = data;
         $rootScope.$broadcast('billsSentToGuests');
         // $rootScope.$broadcast('billsSentToGuests', data);
-        $rootScope.$apply();
+        // $rootScope.$apply();
       });
 
     }
