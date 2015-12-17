@@ -36,14 +36,14 @@
       </div>
 
       <form role="form" name="billForm">
-
+        <!-- SUBTOTAL -->
         <div class="panel panel-default">
           <div class="panel-heading">
             <h1 class="panel-title">Subtotal</h1>
             <p class="text-right h4">{{ hostBill.getSubTotal(hostBill.data.dishes) | currency}}</p>
           </div>
         </div>
-
+        <!-- TIP -->
         <div class="panel panel-default">
           <div class="panel-heading">
             <h1 class="panel-title">Tip</h1>
@@ -68,12 +68,12 @@
           </div>
         </div>
 
-
+        <!-- TAX INPUT -->
         <div class="panel panel-default">
           <div class="panel-heading">
             <h1 class="panel-title">Tax</h1>
 
-<!--             <div class="btn-group" data-toggle="buttons">
+   <!--          <div class="btn-group" data-toggle="buttons">
               <label class="btn btn-primary active">
                 <input type="checkbox" autocomplete="off" checked> %
               </label>
@@ -82,23 +82,35 @@
               </label>
             </div> -->
 
-            <label><input type="radio" ng-model="hostBill.tipType" value="dollar" /> $</label>
-            <label><input type="radio" ng-model="hostBill.tipType" value="percent" /> %</label>
+            <!-- <span class="btn-group" data-toggle="buttons"> -->
+              <!-- <label class="btn btn-primary active">
+                <input type="radio" ng-model="hostBill.taxType" value="percent" /> %
+              </label>
+              <label class="btn btn-primary">
+                <input type="radio" ng-model="hostBill.taxType" value="dollar" /> $
+              </label> -->
+            <!-- </span> -->
             
-            <span ng-if="hostBill.tipType === 'percent'">
-              <div class="input-group" ng>
-                <input class="taxPercent form-control" name="tax" type="number" ng-model="hostBill.tax" placeholder="0%" min="0" max="1000" aria-label="tax" required>
-                <span class="input-group-addon">%</span>
-              </div>
-            </span>
+            <!-- <span ng-if="hostBill.taxType === 'percent'"> -->
+              <span class="input-group" ng>
+                <input class="taxPercent form-control" name="tax" type="number" ng-model="hostBill.tax" placeholder="0" min="0" max="10000" aria-label="tax" required>
+                <label class="active input-group-addon">
+                  <input type="radio" ng-model="hostBill.taxType" value="percent" /> %
+                </label>
+                <label class="input-group-addon">
+                  <input type="radio" ng-model="hostBill.taxType" value="dollar" /> $
+                </label>
+              </span>
+            <!-- </span> -->
 
-            <span ng-if="hostBill.tipType === 'dollar'">
-              <div class="input-group" ng>
-                <input class="taxDollar form-control" name="tax" type="number" ng-model="hostBill.tax" placeholder="$0" min="0" max="1000" aria-label="tax" required>
+  <!--           <span ng-if="hostBill.taxType === 'dollar'">
+              <span class="input-group" ng>
+                <input class="taxDollar form-control" name="tax" type="number" ng-model="hostBill.tax" placeholder="$0" min="0" max="10000" aria-label="tax" required>
                 <span class="input-group-addon">$</span>
-              </div>
-            </span>
+              </span>
+            </span> -->
 
+            <!-- DISPLAY TAX -->
             <div class="tax">
               <p class="help-block text-right">
                 Your added tax:
@@ -106,12 +118,15 @@
                 <span ng-show="billForm.tax.$pristine">
                   {{ 0 + hostBill.tax | currency }}
                 </span>
-                <span ng-show="billForm.tax.$dirty && hostBill.tipType === 'percent'" id="currency-default">
+                <span ng-show="billForm.tax.$dirty" id="currency-default">
+                  {{ hostBill.getTax() | currency}}
+                </span>
+<!--                 <span ng-show="billForm.tax.$dirty && hostBill.taxType === 'percent'" id="currency-default">
                   {{ hostBill.tax * 0.01 * hostBill.getSubTotal(hostBill.data.dishes) | currency}}
                 </span>
-                <span ng-show="billForm.tax.$dirty && hostBill.tipType === 'dollar'" id="currency-default">
+                <span ng-show="billForm.tax.$dirty && hostBill.taxType === 'dollar'" id="currency-default">
                   {{ hostBill.tax | currency}}
-                </span>
+                </span> -->
                 </strong>
               </p>
             </div>
@@ -134,8 +149,13 @@
               <span ng-show="billForm.tip.$dirty && billForm.tax.$dirty">
                 {{ hostBill.getSubTotal(hostBill.data.dishes) +
                 (hostBill.tip * 0.01 * hostBill.getSubTotal(hostBill.data.dishes)) +
-                (hostBill.tax * 0.01 * hostBill.getSubTotal(hostBill.data.dishes)) | currency }}
+                (hostBill.getTax()) | currency }}
               </span>
+              <!-- <span ng-show="billForm.tip.$dirty && billForm.tax.$dirty && hostBill.taxType === 'dollar'">
+                {{ hostBill.getSubTotal(hostBill.data.dishes) +
+                (hostBill.tip * 0.01 * hostBill.getSubTotal(hostBill.data.dishes)) +
+                hostBill.tax | currency }}
+              </span> -->
             </p>
           </div>
         </div>

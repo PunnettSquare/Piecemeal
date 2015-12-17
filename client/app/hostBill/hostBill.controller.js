@@ -16,7 +16,26 @@
     self.getUsersByDish = appFactory.getUsersByDish;
     self.logout = appFactory.logout;
 
-    self.tipType = 'percent';
+    self.test=function(){console.log("test"); };
+    self.taxType = 'percent';
+
+    self.getTax = function() {
+      if (self.taxType === 'dollar') {
+        return self.tax;
+      } else if (self.taxType === 'percent') {
+        return self.tax * 0.01;
+      }
+    };
+
+    // self.updateTax = function (taxType) {
+    //   if (taxType === 'dollar') {
+    //     console.log('dollarrr'); 
+    //     self.tax = self.taxEntry;
+    //   } else if (taxType === 'percent') {
+    //     console.log('percennnnt'); 
+    //     self.tax = self.taxEntry * 0.01;
+    //   }
+    // };
 
     self.getSubTotal = function(dishes) {
       return _.sum(_.pluck(dishes, 'cost'));
