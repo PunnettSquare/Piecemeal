@@ -141,11 +141,9 @@ module.exports = {
   gatherEvents: function(db, user_id) {
     return module.exports.getUsersEvents(db, user_id)
     .then(function(ids) {
-      console.log('ids =', ids);
       return module.exports.getCodes(db, ids);
     })
     .then(function(arrays) {
-      console.log('arrays =', arrays);
       return Promise.all(_.map(arrays, function(idCodeArray) {
         return module.exports.gatherState(db, idCodeArray[0], idCodeArray[1]);
       }))

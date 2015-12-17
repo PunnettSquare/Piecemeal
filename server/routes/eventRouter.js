@@ -123,10 +123,6 @@ module.exports = function(app, io) {
     }
   });
 
-  util.gatherEvents(db, 1)
-  .then(function(data) {
-    console.log(data)
-  })
 
   // uncomment this to populate an empty database with dummy data from ./generateData.js
   // comment it out again after one run of this file
