@@ -23,28 +23,27 @@
       if (self.taxType === 'dollar') {
         return self.tax;
       } else if (self.taxType === 'percent') {
-        return self.tax * 0.01;
+        return self.tax * 0.01 * self.getSubTotal(self.data.dishes);
       }
     };
 
-    // self.updateTax = function (taxType) {
-    //   if (taxType === 'dollar') {
-    //     console.log('dollarrr'); 
-    //     self.tax = self.taxEntry;
-    //   } else if (taxType === 'percent') {
-    //     console.log('percennnnt'); 
-    //     self.tax = self.taxEntry * 0.01;
-    //   }
-    // };
+    self.getTaxPercent = function() {
+      if (self.taxType === 'dollar') {
+        console.log("getSubTotal: ", self.getSubTotal(self.data.dishes)); 
+        console.log("self.tax: ", self.tax); 
+        var num = self.tax/self.getSubTotal(self.data.dishes) * 100;
+        return Math.round(num * 100) / 100; // round to 2 decimal places
+      } else if (self.taxType === 'percent') {
+        return self.tax;
+      }
+    };
 
     self.getSubTotal = function(dishes) {
       return _.sum(_.pluck(dishes, 'cost'));
     };
 
     self.sendBillsToGuests = function() {
-      self.tipSum = (self.getSubTotal(self.data.dishes) * self.tip * 0.01) + self.getSubTotal(self.data.dishes);
-      self.taxSum = (self.getSubTotal(self.data.dishes) * self.tax * 0.01) + self.getSubTotal(self.data.dishes);
-      self.grandTotal = self.getSubTotal(self.data.dishes) + (self.tip * 0.01 * self.getSubTotal(self.data.dishes)) + (self.tax * 0.01 * self.getSubTotal(self.data.dishes));
+      self.grandTotal = self.getSubTotal(self.data.dishes) + (self.tip * 0.01 * self.getSubTotal(self.data.dishes)) + (self.getTax());
 
       socketFactory.emit('sendBillToGuests', {
         event_id: self.event_id,
@@ -52,10 +51,9 @@
         hostUsername: self.username,
         host_id: self.user_id,
         subTotal: self.getSubTotal(self.data.dishes),
-        taxPercent: self.tax,
+        taxPercent: self.getTaxPercent(),
         tipPercent: self.tip,
-        tipSum: self.tipSum,
-        taxSum: self.taxSum,
+        taxType: self.taxType,
         grandTotal: self.grandTotal
       });
       self.billsSent = true;

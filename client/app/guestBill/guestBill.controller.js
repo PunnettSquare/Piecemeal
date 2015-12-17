@@ -53,7 +53,11 @@
     };
 
     self.getGuestTax = function() {
-      return self.data.billData.taxPercent * self.getGuestTotal(self.data) * 0.01;
+      if (self.data.billData.taxType === 'percent') {
+        return self.data.billData.taxPercent * self.getGuestTotal(self.data) * 0.01;
+      } else if (self.data.billData.taxType === 'dollar') {
+        return self.data.billData.taxPercent * self.getGuestTotal(self.data) * 0.01;
+      }
     };
 
     self.getGuestTip = function() {
@@ -61,7 +65,7 @@
     };
 
     self.getGuestGrandTotal = function() {
-      return self.getGuestTotal(self.data) + (self.data.billData.taxPercent * self.getGuestTotal(self.data) * 0.01) + (self.data.billData.tipPercent * self.getGuestTotal(self.data) * 0.01);
+      return self.getGuestTotal(self.data) + (self.getGuestTax()) + (self.data.billData.tipPercent * self.getGuestTotal(self.data) * 0.01);
     };
 
   }
