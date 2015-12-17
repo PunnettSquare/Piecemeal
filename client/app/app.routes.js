@@ -7,13 +7,24 @@
   config.$inject = ['$stateProvider', '$urlRouterProvider'];
 
   function config($stateProvider, $urlRouterProvider) {
-
     var usernameCache = {};
+
+    var getInfoOnRefresh = function($http) {
+      if (!usernameCache[window.sessionStorage.user_id]) {
+        usernameCache[window.sessionStorage.user_id] = true;
+        return $http({
+          method: 'POST',
+          url: '/' + window.sessionStorage.code,
+          data: {
+            user_id: parseInt(window.sessionStorage.user_id)
+          }
+        });
+      }
+    };
 
     console.log('window.sessionStorage =', window.sessionStorage);
     $urlRouterProvider.otherwise(function($injector) {
       var state = $injector.get('$state');
-      // use $window.$$path if we stop using window.sessionStorage
       if (!window.sessionStorage.username || window.sessionStorage.username === "undefined") {
         state.go('home');
         // state.go('404');
@@ -89,6 +100,7 @@
             controller: 'NavbarCtrl',
             controllerAs: 'navbar'
           }
+
         }
       })
       .state('event.addDish', {
@@ -101,21 +113,7 @@
           }
         },
         resolve: {
-          // getInfo: ['$http', 'appFactory', 'socketFactory', function($http, appFactory, socketFactory) {
-          //   if (!appFactory.data) {
-          //     socketFactory.init();
-          //     appFactory.initListeners();
-          //     return $http({
-          //       method: 'GET',
-          //       url: '/' + window.sessionStorage.code + '/refresh',
-          //     })
-          //     .then(function(data) {
-          //       console.log('data on resolve', data)
-          //       // appFactory.data = data.data;
-          //       return data.data;
-          //     })
-          //   }
-          // }]
+          getEventInfo: ['$http', getInfoOnRefresh]
         }
       })
       .state('event.allDishes', {
@@ -128,18 +126,7 @@
           }
         },
         resolve: {
-          getEventInfo: ['$http', function($http) {
-            if (!usernameCache[window.sessionStorage.user_id]) {
-              usernameCache[window.sessionStorage.user_id] = true;
-              return $http({
-                method: 'POST',
-                url: '/' + window.sessionStorage.code,
-                data: {
-                  user_id: parseInt(window.sessionStorage.user_id)
-                }
-              });
-            }
-          }]
+          getEventInfo: ['$http', getInfoOnRefresh]
         }
       })
       .state('event.guestBill', {
@@ -151,8 +138,9 @@
             controllerAs: 'guestBill'
           }
         },
-        resolve: {}
-
+        resolve: {
+          getEventInfo: ['$http', getInfoOnRefresh]
+        }
       })
       .state('event.hostReceipt', {
         url: '/hostReceipt',
@@ -175,7 +163,9 @@
             controllerAs: 'hostBill'
           }
         },
-        resolve: {}
+        resolve: {
+          getEventInfo: ['$http', getInfoOnRefresh]
+        }
       })
       .state('event.loading', {
         url: '/loading',
@@ -185,6 +175,9 @@
             controller: 'LoadingCtrl',
             controllerAs: 'loading'
           }
+        },
+        resolve: {
+
         }
       });
   }
