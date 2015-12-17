@@ -14,7 +14,8 @@
     return services;
 
     function calculateRunningTotal(data) {
-      return _.filter(data.dishes, function(obj, key) {
+      // Initialize to 0 if appFactory.data hasn't loaded yet
+      return (!data) ? 0 : _.filter(data.dishes, function(obj, key) {
           return _.contains(obj.users, appFactory.getSessStorage('user_id'));
         })
         .reduce(function(acc, current) {
@@ -22,5 +23,4 @@
         }, 0);
     }
   }
-
 })();
