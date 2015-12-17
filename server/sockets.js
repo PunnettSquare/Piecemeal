@@ -69,7 +69,7 @@ var connect = function(eventUrl, eventInfo, io, userObj) {
       // console.log("sendBillToGuests event heard from server!", data.taxPercent, data.tipPercent);
       socket.broadcast.emit('billsSentToGuests', data);
 
-      util.addTipAndTax(db, data.event_id, data.taxPercent, data.tipPercent)
+      util.addTipAndTax(db, data.event_id, data.taxPercent, data.tipPercent, data.feePercent, data.discountPercent)
         .catch(function(err) {
           throw err;
         });
