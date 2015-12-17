@@ -36,7 +36,7 @@
 
       <br>
 
-      <!-- Start their Subtotal -->
+      <!-- Start SUBTOTAL -->
       <div class="panel panel-default">
         <div class="panel-heading">
           <h2 class="panel-title h1">Your Subtotal
@@ -44,6 +44,7 @@
 
           </h2>
         </div>
+        <!-- CONDITIONAL -->
         <div class="panel-footer" ng-if="guestBill.data.billData.tipPercent === 0 && guestBill.data.billData.taxPercent === 0 && !guestBill.isHost">
           <p>The host has not entered the tax and tip yet. Please wait for your bill to be finalized before proceeding with payment.</p>
           <div>
@@ -78,7 +79,22 @@
       </div>
       <!-- end tax -->
 
-      <!-- start grand total -->
+      <!-- FEE OR DISCOUNT -->
+      <div class="panel panel-default" ng-if="!_.isEmpty(guestBill.data.billData) && !guestBill.isHost && (guestBill.data.billData.fee !== 0 || !guestBill.data.billData.discount !==0)">
+        <div class="panel-body">
+          <h4 class="h4">Fee or Discount</h4 class="h4">
+          <p class="text-right h5" nf-if="guestBill.data.billData.fee !== 0">Fee: {{guestBill.getGuestFee() | currency}}</p>
+          <p class="text-right h5" nf-if="guestBill.data.billData.discount !== 0">Discount: {{guestBill.getGuestDiscount() | currency}}</p>
+        </div>
+        <div class="panel-footer">
+          <small>
+            Percent of subtotal: 
+            {{ guestBill.data.billData.feePercent }}% Fee and
+            {{ guestBill.data.billData.discountPercent }}% Discount</small>
+        </div>
+      </div>
+
+      <!-- Start TOTALS -->
       <div class="panel panel-default" ng-if="guestBill.data.billData.tipPercent !== 0 && guestBill.data.billData.taxPercent !== 0 && !guestBill.isHost">
         <div class="panel-heading"><h2 class="panel-title">Your Total</h2>
           <p class="text-right h5">{{guestBill.getGuestGrandTotal() | currency}}</p>
@@ -87,7 +103,7 @@
           <small>Dinner Grand Total: {{  guestBill.getGrandTotal(guestBill.data.dishes, guestBill.data.billData) | currency}}</small>
         </div> -->
       </div>
-      <!-- end grand total -->
+      <!-- end totals -->
 
       <!-- start payment option -->
       <div class="panel panel-default" ng-if="guestBill.data.billData.tipPercent !== 0 && guestBill.data.billData.taxPercent !== 0 && !guestBill.isHost">
