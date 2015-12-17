@@ -53,11 +53,7 @@
     };
 
     self.getGuestTax = function() {
-      if (self.data.billData.taxType === 'percent') {
-        return self.data.billData.taxPercent * self.getGuestTotal(self.data) * 0.01;
-      } else if (self.data.billData.taxType === 'dollar') {
-        return self.data.billData.taxPercent * self.getGuestTotal(self.data) * 0.01;
-      }
+      return self.data.billData.taxPercent * self.getGuestTotal(self.data) * 0.01;
     };
 
     self.getGuestTip = function() {

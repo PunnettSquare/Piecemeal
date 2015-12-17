@@ -53,7 +53,6 @@
         subTotal: self.getSubTotal(self.data.dishes),
         taxPercent: self.getTaxPercent(),
         tipPercent: self.tip,
-        taxType: self.taxType,
         grandTotal: self.grandTotal
       });
       self.billsSent = true;
