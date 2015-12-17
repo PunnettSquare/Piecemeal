@@ -8,23 +8,23 @@
 
   function AllDishesCtrl(socketFactory, appFactory, $scope) {
     var self = this;
-
-    self.data = appFactory.data;
-
     appFactory.copySessData(self);
-    self.getUsersByDish = appFactory.getUsersByDish;
-    self.logout = appFactory.logout;
 
+    // load data on page refresh
     $scope.$on('joined', function() {
       self.data = appFactory.data;
       console.log("Joined the All Dishes room.");
     });
 
+    // load data when *not* on page refresh
+    self.data = appFactory.data;
+
     if (!appFactory.data) {
       socketFactory.init();
       appFactory.initListeners();
-      self.data = appFactory.data;
     }
+
+    self.getUsersByDish = appFactory.getUsersByDish;
 
     self.isOnDish = function(dishUsers, user_id) {
       var result = false;
@@ -55,5 +55,7 @@
         appFactory.unshareDish(dish_id, user_id);
       }
     };
+
+    self.logout = appFactory.logout;
   }
 })();

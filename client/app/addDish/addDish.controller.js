@@ -4,21 +4,33 @@
   angular.module('Piecemeal')
     .controller('AddDishCtrl', AddDishCtrl);
 
-  AddDishCtrl.$inject = ['socketFactory', 'addDishFactory', 'appFactory'];
+  AddDishCtrl.$inject = ['socketFactory', 'addDishFactory', 'appFactory', '$scope'];
 
-  function AddDishCtrl(socketFactory, addDishFactory, appFactory) {
+  function AddDishCtrl(socketFactory, addDishFactory, appFactory, $scope) {
 
     var self = this;
-
     appFactory.copySessData(self);
 
-    self.data = appFactory.data;
-    self.logout = appFactory.logout;
+    // load data on page refresh
+    $scope.$on('joined', function() {
+      self.data = appFactory.data;
+      console.log("Joined the Add Dish room.");
+      self.calcUserCurrentTotal(self.data);
+    });
 
-    // if (!appFactory.data) {
-    //   self.data = getInfo;
-    //   appFactory.data = getInfo;
-    // }
+    // load data when *not* on page refresh
+    self.data = appFactory.data;
+
+    self.calcUserCurrentTotal = function(data) {
+      self.userTotal = addDishFactory.calculateRunningTotal(data);
+    };
+
+    if (!appFactory.data) {
+      socketFactory.init();
+      appFactory.initListeners();
+    } else {
+      self.calcUserCurrentTotal(self.data);
+    }
 
     self.addDish = function(name, cost) {
       var dish = {
@@ -36,10 +48,8 @@
       self.previousDish = name;
     };
 
-    self.calcUserCurrentTotal = function(data) {
-      self.userTotal = addDishFactory.calculateRunningTotal(data);
-    };
-    self.calcUserCurrentTotal(self.data);
+    self.logout = appFactory.logout;
+
   }
 
 })();
