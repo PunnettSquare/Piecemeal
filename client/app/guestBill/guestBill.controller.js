@@ -75,8 +75,17 @@
       return (!self.data) ? 0 : self.data.billData.tipPercent * self.getGuestTotal(self.data) * 0.01;
     };
 
+    self.getGuestFee = function () {
+      return self.data.billData.feePercent * self.getGuestTotal(self.data) * 0.01;
+    };
+
+    self.getGuestDiscount = function () {
+      return self.data.billData.discountPercent * self.getGuestTotal(self.data) * 0.01;
+    };
+
     self.getGuestGrandTotal = function() {
-      return (!self.data) ? 0 : self.getGuestTotal(self.data) + (self.data.billData.taxPercent * self.getGuestTotal(self.data) * 0.01) + (self.data.billData.tipPercent * self.getGuestTotal(self.data) * 0.01);
+      return (!self.data) ? 0 : self.getGuestTotal(self.data) + self.getGuestTax() + self.getGuestTip()
+      + self.getGuestFee() - self.getGuestDiscount();
     };
 
     self.logout = appFactory.logout;
