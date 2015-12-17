@@ -19,7 +19,7 @@
             <h3 class="card-title">Proceed without logging in</h3>
             <form name="userInput">
               <input type="text" placeholder="Enter your name here" required ng-model="username" name="username" class="enterName form-control" id="name">
-              <button type="submit" ng-disabled="userInput.username.$error.required" ng-click="oAuth.setSessionUser(username, true, null)" class="btn btn-primary" ng-disabled="userInput.username.$error.required">Create Bill</button>
+              <button type="submit" ng-disabled="userInput.username.$error.required" ng-click="oAuth.setSessionUser(username, true, null)" class="btn btn-primary createBill" ng-disabled="userInput.username.$error.required">Create Bill</button>
             </form>
           </div>
         </div>

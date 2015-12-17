@@ -4,14 +4,32 @@
   angular.module('Piecemeal')
   .controller('DashboardCtrl', DashboardCtrl);
 
-  DashboardCtrl.$inject = ['dashboardFactory', '$window', '$location'];
+  DashboardCtrl.$inject = ['dashboardFactory', '$window', '$location', 'appFactory'];
 
-  function DashboardCtrl(dashboardFactory, $window, $location) {
+  function DashboardCtrl(dashboardFactory, $window, $location, appFactory) {
     var self = this;
+
+    self.getUsers = function(users) {
+      return appFactory.arrayToSentence(users.map(function(userObj) {
+        return userObj.username;
+      }));
+    };
+
+    self.getDishNames = function(bill) {
+      return appFactory.arrayToSentence(bill.dishes.map(function(dish) {
+        return dish.name;
+      }));
+    }
+
+    // dashboardFactory.getBills()
+    // .then(function(data) {
+    //   self.allBills = data.data;
+    //   console.log(data);
+    // })
+
     dashboardFactory.createEvent()
     .then(function(data) {
       data = data.data;
-      console.log('data in dashboard', data);
       _.assign($window.sessionStorage, {
         username: data.username,
         code: data.code,

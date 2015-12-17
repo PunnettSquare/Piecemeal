@@ -8,7 +8,7 @@ if (process.env.PORT) {
   callbackURL = "https://piecemeal.herokuapp.com/auth/venmo/callback";
 } else {
   var venmoInfo = require('../../venmoApiKeys');
-  callbackURL = 'http://127.0.0.1/auth/venmo/callback'
+  callbackURL = 'http://127.0.0.1:8080/auth/venmo/callback'
 }
 var cookieParser = require('cookie-parser');
 var db = require('../../db/db');
@@ -98,5 +98,18 @@ module.exports = function(app) {
     } else {
       res.end();
     }
-  })
+  });
+
+
+  app.get('/getBills', function(req, res) {
+    var user_id = req.user[0].id;
+    var username = req.user[0].username;
+    if (req.isAuthenticated()) {
+      util.gatherEvents(db, user_id)
+      .then(function(data) {
+        res.send(data);
+      })
+    }
+
+  });
 }

@@ -1,4 +1,6 @@
 "use strict";
+var _ = require('underscore');
+var count = 0;
 var run = function() {
 
   var helpers = require('./helpers');
@@ -25,6 +27,38 @@ var run = function() {
       return helpers.goToPage(webdriver, array[0], array[1]);
     }))
   })
+  // .then(function() {
+  //   var directions = [
+  //     [hostBrowser, 'allDishes'],
+  //     [guestOne, 'hostBill'],
+  //     [guestTwo, 'hostBill'],
+  //     [guestThree, 'guestBill'],
+  //   ]
+  //   return Promise.all(_.map(directions, function(array) {
+  //     return helpers.goToPage(webdriver, array[0], array[1]);
+  //   }))
+  // })
+  // .then(function() {
+  //   var directions = [
+  //     [guestOne, 'allDishes'],
+  //     [guestTwo, 'allDishes'],
+  //     [guestThree, 'allDishes'],
+  //   ]
+  //   return Promise.all(_.map(directions, function(array) {
+  //     return helpers.goToPage(webdriver, array[0], array[1]);
+  //   }))
+  // })
+  // .then(function() {
+  //   var directions = [
+  //     [hostBrowser, 'guestBill'],
+  //     [guestOne, 'hostBill'],
+  //     [guestTwo, 'hostBill'],
+  //     [guestThree, 'guestBill'],
+  //   ]
+  //   return Promise.all(_.map(directions, function(array) {
+  //     return helpers.goToPage(webdriver, array[0], array[1]);
+  //   }))
+  // })
   // .then(function() {
   //   return helpers.setTipAndTax(webdriver, hostBrowser, tipInput, taxInput)
   // })
@@ -92,74 +126,34 @@ var run = function() {
   //   }
   // })
   .then(function() {
-    helpers.closeBrowser(guestOne);
-    helpers.closeBrowser(guestTwo);
-    helpers.closeBrowser(guestThree);
-    return helpers.checkDuplication(webdriver, hostBrowser)
+    return Promise.all(_.map([guestOne, guestTwo, guestThree, hostBrowser], function(browser) {
+      return helpers.checkDuplication(webdriver, browser);
+    }));
+  })
+  .then(function(duplications) {
+    duplications.forEach(function(duplication) {
+      if (duplication) {
+        count++;
+      }
+    });
+    return;
   })
 
 }
-var count = 0;
-run()
-.then(function(duplication) {
-  if (duplication) {
-    count++
-  }
-  return run()
+
+var times = [];
+for (var i = 0; i < 100; i++) {
+  times.push(i);
+}
+
+Promise.all(_.map(times, function(time) {
+  return run();
+}))
+.then(function() {
+  console.log('Duplication found ' + count + '/' + times.length  + ' times')
 })
-.then(function(duplication) {
-  if (duplication) {
-    count++
-  }
-  return run()
-})
-.then(function(duplication) {
-  if (duplication) {
-    count++
-  }
-  return run()
-})
-.then(function(duplication) {
-  if (duplication) {
-    count++
-  }
-  return run()
-})
-.then(function(duplication) {
-  if (duplication) {
-    count++
-  }
-  return run()
-})
-.then(function(duplication) {
-  if (duplication) {
-    count++
-  }
-  return run()
-})
-.then(function(duplication) {
-  if (duplication) {
-    count++
-  }
-  return run()
-})
-.then(function(duplication) {
-  if (duplication) {
-    count++
-  }
-  return run()
-})
-.then(function(duplication) {
-  if (duplication) {
-    count++
-  }
-  return run()
-})
-.then(function(duplication) {
-  if (duplication) {
-    count++
-  }
-  console.log('Duplication found ' + count+ '/10 times')
+.catch(function(err) {
+  console.error(err);
 })
 
 

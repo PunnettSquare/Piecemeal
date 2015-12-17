@@ -22,17 +22,26 @@ clickLink: function (link) {
   browser.quit();
  },
 
- joinRoom : function (webdriver, browser, url, roomCode, name) {
-  browser.get(url)
-  return browser.wait(webdriver.until.elementLocated(webdriver.By.css(".enterName")), 8 * 1000)
+ makePiecemeal: function (browser, url) {
+  return browser.get(url)
+ },
+
+ joinRoom : function (webdriver, browser, billCode, name) {
+  return browser.wait(webdriver.until.elementLocated(webdriver.By.css(".enterCode")), 8000)
   .then(function(element) {
-    return element.sendKeys(name);
+    return element.sendKeys(billCode);
   })
   .then(function() {
-    return browser.findElement(webdriver.By.className('roomName'));
+    return browser.findElement(webdriver.By.className('enterRoom'));
+  })
+  .then(function(button) {
+    return button.click();
+  })
+  .then(function() {
+    return browser.wait(webdriver.until.elementLocated(webdriver.By.css(".enterName")), 8000)
   })
   .then(function(input) {
-    return input.sendKeys(roomCode);
+    return input.sendKeys(name);
   })
   .then(function() {
     return browser.findElement(webdriver.By.className('enterRoom'));
@@ -43,7 +52,7 @@ clickLink: function (link) {
  },
 
 addDish : function (webdriver, browser, name, cost) {
-  return browser.wait(webdriver.until.elementLocated(webdriver.By.css("input.dishName")), 8 * 1000)
+  return browser.wait(webdriver.until.elementLocated(webdriver.By.css("input.dishName")), 8000)
   .then(function(element) {
     return element.sendKeys(name);
   })
@@ -160,7 +169,7 @@ goToAllDishes : function (webdriver, browser) {
           return module.exports['goTo' + _.capitalize(navigationFunction)](webdriver, browser)
           .then(function() {
             if (shortest[index+1]) {
-              return browser.wait(webdriver.until.elementLocated(webdriver.By.css('.' + shortest[index+1])), 8 * 1000);
+              return browser.wait(webdriver.until.elementLocated(webdriver.By.css('.' + shortest[index+1])), 8000);
             } else {
               return
             }
@@ -202,20 +211,24 @@ goToAllDishes : function (webdriver, browser) {
     })
   })
  },
- makeRoom: function(webdriver, browser, name, url) {
-  return browser.get(url)
+ makeRoom: function(webdriver, browser, name) {
+  return browser.wait(webdriver.until.elementLocated(webdriver.By.css(".createRoom")), 8000)
+  .then(function(element) {
+    return element.click()
+  })
   .then(function() {
-    browser.sleep(1000);
-    return browser.wait(webdriver.until.elementLocated(webdriver.By.css(".enterName")), 8 * 1000)
+    return browser.wait(webdriver.until.elementLocated(webdriver.By.css(".enterName")), 8000)
+
+    return browser.findElement(webdriver.By.className('createRoom'))
   })
   .then(function(element) {
     return element.sendKeys(name);
   })
   .then(function() {
-    return browser.findElement(webdriver.By.className('createRoom'))
+    return browser.findElement(webdriver.By.className('createBill'))
   })
-  .then(function(button) {
-    return button.click()
+  .then(function(element) {
+    return element.click();
   })
   .then(function() {
     browser.sleep(4000);
