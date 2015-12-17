@@ -35,13 +35,14 @@
 
       <br>
 
-
+      <!-- SUBTOTAL -->
       <div class="panel panel-default">
         <div class="panel-heading">
           <h2 class="panel-title h1">Your Subtotal
           <p class="text-right h5">{{guestBill.getGuestTotal(guestBill.data) | currency}}</p>
           </h2>
         </div>
+        <!-- CONDITIONAL -->
         <div class="panel-footer" ng-if="_.isEmpty(guestBill.data.billData) && !guestBill.isHost">
           <p>The host has not entered the tax and tip yet. Please wait for your bill to be finalized before proceeding with payment.</p>
           <div>
@@ -51,6 +52,7 @@
         </div>
       </div>
 
+      <!-- TIP -->
       <div class="panel panel-default" ng-if="!_.isEmpty(guestBill.data.billData) && !guestBill.isHost">
         <div class="panel-body">
           <h4 class="h4">Tip</h4 class="h4">
@@ -61,6 +63,7 @@
         </div>
       </div>
 
+      <!-- TAX -->
       <div class="panel panel-default" ng-if="!_.isEmpty(guestBill.data.billData) && !guestBill.isHost">
         <div class="panel-body">
           <h4 class="h4">Tax</h4 class="h4">
@@ -71,7 +74,22 @@
         </div>
       </div>
 
+      <!-- FEE OR DISCOUNT -->
+      <div class="panel panel-default" ng-if="!_.isEmpty(guestBill.data.billData) && !guestBill.isHost && (guestBill.data.billData.fee !== 0 || !guestBill.data.billData.discount !==0)">
+        <div class="panel-body">
+          <h4 class="h4">Fee or Discount</h4 class="h4">
+          <p class="text-right h5" nf-if="guestBill.data.billData.fee !== 0">Fee: {{guestBill.getGuestFee() | currency}}</p>
+          <p class="text-right h5" nf-if="guestBill.data.billData.discount !== 0">Discount: {{guestBill.getGuestDiscount() | currency}}</p>
+        </div>
+        <div class="panel-footer">
+          <small>
+            Percent of subtotal: 
+            {{ guestBill.data.billData.feePercent }}% Fee and
+            {{ guestBill.data.billData.discountPercent }}% Discount</small>
+        </div>
+      </div>
 
+      <!-- TOTALS -->
       <div class="panel panel-default" ng-if="!_.isEmpty(guestBill.data.billData) && !guestBill.isHost">
         <div class="panel-heading"><h2 class="panel-title">Your Total</h2>
           <p class="text-right h5">{{guestBill.getGuestGrandTotal() | currency}}</p>
@@ -80,7 +98,8 @@
           <small>Dinner Grand Total: {{  guestBill.data.billData.grandTotal | currency}}</small>
         </div>
       </div>
-
+      
+      <!-- PAYMENT OPTIONS -->
       <div class="panel panel-default" ng-if="!_.isEmpty(guestBill.data.billData) && !guestBill.isHost">
         <div class="panel-heading"><h2 class="panel-title">Pay with:</h2>
           <div>
