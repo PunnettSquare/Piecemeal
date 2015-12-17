@@ -4,17 +4,22 @@ var _ = require('underscore');
 module.exports = function(helpers, webdriver, hostBrowser, guestOne, guestTwo, guestThree, url, timeToClose) {
 
 	"use strict";
-
-	// setTimeout(function() {
-	// 	helpers.closeBrowser(hostBrowser);
-	// 	helpers.closeBrowser(guestOne);
-	// 	helpers.closeBrowser(guestTwo);
-	// 	helpers.closeBrowser(guestThree);
-	// }, timeToClose)
+	// if (timeToClose) {
+	// 	setTimeout(function() {
+	// 		helpers.closeBrowser(hostBrowser);
+	// 		helpers.closeBrowser(guestOne);
+	// 		helpers.closeBrowser(guestTwo);
+	// 		helpers.closeBrowser(guestThree);
+	// 	}, timeToClose)
+	// }
 
 	var roomCode;
-
-	return helpers.makeRoom(webdriver, hostBrowser, 'Host', url)
+	return Promise.all(_.map([hostBrowser, guestOne, guestTwo, guestThree], function(browser) {
+		return helpers.makePiecemeal(browser, url);
+	}))
+	.then(function() {
+		return helpers.makeRoom(webdriver, hostBrowser, 'Host')
+	})
 	.then(function(code) {
 		roomCode = code;
 	})
@@ -22,8 +27,10 @@ module.exports = function(helpers, webdriver, hostBrowser, guestOne, guestTwo, g
 		hostBrowser.getCurrentUrl()
 		.then(function(url) {
 		})
-		helpers.joinRoom(webdriver, guestOne, url, roomCode, 'guestOne');
-		return helpers.joinRoom(webdriver, guestTwo, url, roomCode, 'guestTwo');
+		return Promise.all([
+			helpers.joinRoom(webdriver, guestOne, roomCode, 'guestOne'),
+		  helpers.joinRoom(webdriver, guestTwo, roomCode, 'guestTwo')
+		  ]);
 	})
 	.then(function() {
 		return helpers.goToAddDish(webdriver, hostBrowser);
@@ -67,7 +74,7 @@ module.exports = function(helpers, webdriver, hostBrowser, guestOne, guestTwo, g
 		return helpers.goToAllDishes(webdriver, guestOne);
 	})
 	.then(function() {
-		return helpers.joinRoom(webdriver, guestThree, url, roomCode, 'guestThree');
+		return helpers.joinRoom(webdriver, guestThree, roomCode, 'guestThree');
 	})
 	.then(function() {
 		return guestThree.wait(webdriver.until.elementLocated(webdriver.By.css(".share")), 8 * 1000)
@@ -87,3 +94,5 @@ module.exports = function(helpers, webdriver, hostBrowser, guestOne, guestTwo, g
 
 
 }
+
+

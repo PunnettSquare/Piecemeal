@@ -23,7 +23,10 @@
     }
 
     function getBills() {
-      
+      return $http({
+        method: 'GET',
+        url: '/auth/getBills'
+      })
     }
   }
 

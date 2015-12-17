@@ -32,9 +32,10 @@ module.exports = function(app, io) {
       });
   });
 
+
   app.get('/:code', function(req, res) {
     res.redirect('/#/' + req.params.code.toLowerCase() + '/loading' );
-  }) 
+  }); 
 
   app.post('/createEvent', function(req, res) {
     var username = req.body.username || 'Jerry';
@@ -121,6 +122,7 @@ module.exports = function(app, io) {
         });
     }
   });
+
 
   // uncomment this to populate an empty database with dummy data from ./generateData.js
   // comment it out again after one run of this file

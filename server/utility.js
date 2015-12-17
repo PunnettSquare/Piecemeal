@@ -138,6 +138,37 @@ module.exports = {
 
   },
 
+  gatherEvents: function(db, user_id) {
+    return module.exports.getUsersEvents(db, user_id)
+    .then(function(ids) {
+      return module.exports.getCodes(db, ids);
+    })
+    .then(function(arrays) {
+      return Promise.all(_.map(arrays, function(idCodeArray) {
+        return module.exports.gatherState(db, idCodeArray[0], idCodeArray[1]);
+      }))
+    });
+  },
+
+  gatherBillInfo: function (db, event_id) {
+    // return    db.select().from('events').innerJoin('usersJoinEvents', 'events.event_id', 'usersJoinEvents.event_id')
+  },
+
+  getCodes: function (db, ids) {
+    return Promise.all(_.map(ids, function(id) {
+      return db('events').where({
+        id: id.event_id
+      }).returning('code')
+      .then(function(data) {
+        return [id.event_id, data[0].code];
+      });
+    }));
+  },
+
+  getUsersEvents: function(db, user_id) {
+    return db.select('event_id').from('usersJoinEvents').where('usersJoinEvents.user_id', user_id);
+  },
+
   gatherState: function(db, event_id, code) {
     var state = {
       event_id: event_id,

@@ -13,7 +13,7 @@
             <div>
               <!--Setup a bill-->
               <h4>Setup a bill to split with your friends</h4>
-              <a ng-disabled="userInput.username.$error.required" value="Create room" class="createRoom btn btn-default" ui-sref="oAuth">
+              <a class="createRoom" value="Create room" class="createRoom btn btn-default" ui-sref="oAuth">
                 Create Bill
               </a>
 
@@ -26,7 +26,7 @@
             <!-- Enter a room code (as a guest) -->
             <div class="form-group">
               <h4>Or join an existing bill by entering the code</h4>
-              <input name="code" type="text" class="roomName form-control" placeholder="Enter code here" ng-model="code" id="roomCode" required>
+              <input name="code" type="text" class="enterCode form-control" placeholder="Enter code here" ng-model="code" id="roomCode" required>
               <br>
               <button name="submit" ng-disabled="userInput2.code.$error.required" type="submit" class="enterRoom btn btn-default" value="Enter Room" ng-click="home.setSessionUser(code)" ui-sref="event.loading">
               Join Bill
