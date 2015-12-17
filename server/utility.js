@@ -108,7 +108,34 @@ module.exports = {
     return db('usersJoinDishes').where({
       user_id: user_id,
       dish_id: dish_id
-    }).del();
+    }).del()
+    .then(function() {
+      return db('usersJoinDishes').where({
+        dish_id: dish_id
+      })
+      .returning('id')
+    })
+    .then(function(ids) {
+      if (ids.length === 0) {
+        return db('dishes').where({
+          id: dish_id
+        }).del()
+      } else {
+        return; 
+      }
+    })
+  },
+
+  removeDish: function(db, dish_id) {
+    return db('usersJoinDishes').where({
+      dish_id: dish_id
+    }).del()
+    .then(function() {
+      return db('dishes').where({
+        dish_id: dish_id
+      }).del()
+    })
+
   },
 
   gatherState: function(db, event_id, code) {
