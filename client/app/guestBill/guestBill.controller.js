@@ -61,7 +61,7 @@
     };
 
     self.getGuestGrandTotal = function() {
-      return self.getGuestTotal(self.data) + (self.data.billData.taxPercent * self.getGuestTotal(self.data) * 0.01) + (self.data.billData.tipPercent * self.getGuestTotal(self.data) * 0.01);
+      return self.getGuestTotal(self.data) + (self.getGuestTax()) + (self.data.billData.tipPercent * self.getGuestTotal(self.data) * 0.01);
     };
 
   }
