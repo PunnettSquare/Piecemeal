@@ -49,7 +49,7 @@
             <h1 class="panel-title">Tip</h1>
             <br>
             <div class="input-group">
-              <input class="tipPercent form-control" name="tip" type="number" ng-model="hostBill.tip" placeholder="0%" min="0" aria-label="tip" required>
+              <input class="tipPercent form-control" name="tip" type="number" step="any" ng-model="hostBill.tip" placeholder="0%" min="0" aria-label="tip" required>
               <span class="input-group-addon">%</span>
             </div>
             <div class="tip">
@@ -73,68 +73,34 @@
           <div class="panel-heading">
             <h1 class="panel-title">Tax</h1>
 
-   <!--          <div class="btn-group" data-toggle="buttons">
-              <label class="btn btn-primary active">
-                <input type="checkbox" autocomplete="off" checked> %
-              </label>
-              <label class="btn btn-primary">
-                <input type="checkbox" autocomplete="off"> $
-              </label>
-            </div> -->
-
-            <!-- <span class="btn-group" data-toggle="buttons"> -->
-              <!-- <label class="btn btn-primary active">
+            <span class="input-group" ng>
+              <input class="taxPercent form-control" name="tax" type="number" step="any" ng-model="hostBill.tax" placeholder="0" min="0" max="10000" aria-label="tax" required />
+              <label class="active input-group-addon">
                 <input type="radio" ng-model="hostBill.taxType" value="percent" /> %
               </label>
-              <label class="btn btn-primary">
+              <label class="input-group-addon">
                 <input type="radio" ng-model="hostBill.taxType" value="dollar" /> $
-              </label> -->
-            <!-- </span> -->
-            
-            <!-- <span ng-if="hostBill.taxType === 'percent'"> -->
-              <span class="input-group" ng>
-                <input class="taxPercent form-control" name="tax" type="number" ng-model="hostBill.tax" placeholder="0" min="0" max="10000" aria-label="tax" required>
-                <label class="active input-group-addon">
-                  <input type="radio" ng-model="hostBill.taxType" value="percent" /> %
-                </label>
-                <label class="input-group-addon">
-                  <input type="radio" ng-model="hostBill.taxType" value="dollar" /> $
-                </label>
-              </span>
-            <!-- </span> -->
-
-  <!--           <span ng-if="hostBill.taxType === 'dollar'">
-              <span class="input-group" ng>
-                <input class="taxDollar form-control" name="tax" type="number" ng-model="hostBill.tax" placeholder="$0" min="0" max="10000" aria-label="tax" required>
-                <span class="input-group-addon">$</span>
-              </span>
-            </span> -->
+              </label>
+            </span>
 
             <!-- DISPLAY TAX -->
             <div class="tax">
               <p class="help-block text-right">
                 Your added tax:
                 <strong>
-                <span ng-show="billForm.tax.$pristine">
-                  {{ 0 + hostBill.tax | currency }}
-                </span>
-                <span ng-show="billForm.tax.$dirty" id="currency-default">
-                  {{ hostBill.getTax() | currency}}
-                </span>
-<!--                 <span ng-show="billForm.tax.$dirty && hostBill.taxType === 'percent'" id="currency-default">
-                  {{ hostBill.tax * 0.01 * hostBill.getSubTotal(hostBill.data.dishes) | currency}}
-                </span>
-                <span ng-show="billForm.tax.$dirty && hostBill.taxType === 'dollar'" id="currency-default">
-                  {{ hostBill.tax | currency}}
-                </span> -->
+                  <span ng-show="billForm.tax.$pristine">
+                    {{ 0 + hostBill.tax | currency }}
+                  </span>
+                  <span ng-show="billForm.tax.$dirty" id="currency-default">
+                    {{ hostBill.getTax() | currency}}
+                  </span>
                 </strong>
               </p>
             </div>
           </div>
         </div>
 
-        <!-- TO DO: Update grand total with $ tip amount. also, add an alert saying tip and tax needed until dirty/entered data. also, enable switching back and forth to keep amount updated -->
-
+        <!-- GRAND TOTAL -->
         <div class="panel panel-default">
           <div class="panel-heading">
             <h1 class="h1 panel-title">Grand Total</h1>
