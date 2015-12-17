@@ -4,17 +4,24 @@
   angular.module('Piecemeal')
     .controller('HostBillCtrl', HostBillCtrl);
 
-  HostBillCtrl.$inject = ['appFactory', 'socketFactory'];
+  HostBillCtrl.$inject = ['appFactory', 'socketFactory', '$scope'];
 
-  function HostBillCtrl(appFactory, socketFactory) {
+  function HostBillCtrl(appFactory, socketFactory, $scope) {
     var self = this;
 
     appFactory.copySessData(self);
 
+    // load data on page refresh
+    $scope.$on('joined', function() {
+      self.data = appFactory.data;
+      self.getDishIndivCost = appFactory.getDishIndivCost;
+    });
+
+    // load data when *not* on page refresh
     self.data = appFactory.data;
+
     self.getDishIndivCost = appFactory.getDishIndivCost;
     self.getUsersByDish = appFactory.getUsersByDish;
-    self.logout = appFactory.logout;
 
     self.tipType = 'percent';
     self.taxType = 'percent';
@@ -72,5 +79,7 @@
       });
       self.billsSent = true;
     };
+
+    self.logout = appFactory.logout;
   }
 })();
