@@ -12,11 +12,12 @@
       </ul>
       <!-- /Navbar refactor -->
 
+
       <h3>{{ _.capitalize(guestBill.username) }}'s Total Bill</h3>
 
+      <!-- Start list of dishes they ate -->
       <div ng-repeat="dish in guestBill.getGuestDishes(guestBill.user_id, guestBill.data.dishes)">
         <div class="list-group-item">
-          <!-- used to be h2, now h4: for selenium? -->
           <h4 class="list-group-item-heading">{{_.map(dish.name.split(" "), _.capitalize).join(" ")}}</h4>
           <p class="list-group-item-text">Your portion: <strong>{{ guestBill.getDishIndivCost(dish) | currency }}</strong></p>
           <small>Total cost: <span>{{ dish.cost | currency }}</span></small>
@@ -30,16 +31,17 @@
           </p>
         </div>
         <br>
-
       </div>
+      <!-- end list of dishes they ate -->
 
       <br>
 
-
+      <!-- Start their Subtotal -->
       <div class="panel panel-default">
         <div class="panel-heading">
           <h2 class="panel-title h1">Your Subtotal
           <p class="text-right h5">{{guestBill.getGuestTotal(guestBill.data) | currency}}</p>
+
           </h2>
         </div>
         <div class="panel-footer" ng-if="_.isEmpty(guestBill.data.billData) && !guestBill.isHost">
@@ -50,7 +52,9 @@
           </div>
         </div>
       </div>
+      <!-- End subtotal -->
 
+      <!-- Start tip -->
       <div class="panel panel-default" ng-if="!_.isEmpty(guestBill.data.billData) && !guestBill.isHost">
         <div class="panel-body">
           <h4 class="h4">Tip</h4 class="h4">
@@ -60,7 +64,9 @@
           <small>Your host chose {{ guestBill.data.billData.tipPercent }}% for tip.</small>
         </div>
       </div>
+      <!-- end tip -->
 
+      <!-- start tax -->
       <div class="panel panel-default" ng-if="!_.isEmpty(guestBill.data.billData) && !guestBill.isHost">
         <div class="panel-body">
           <h4 class="h4">Tax</h4 class="h4">
@@ -70,17 +76,22 @@
           <small>You were charged {{ guestBill.data.billData.taxPercent }}% for tax.</small>
         </div>
       </div>
+      <!-- end tax -->
 
-
+      <!-- start grand total -->
       <div class="panel panel-default" ng-if="!_.isEmpty(guestBill.data.billData) && !guestBill.isHost">
         <div class="panel-heading"><h2 class="panel-title">Your Total</h2>
           <p class="text-right h5">{{guestBill.getGuestGrandTotal() | currency}}</p>
         </div>
         <div class="panel-footer tipPercent">
-          <small>Dinner Grand Total: {{  guestBill.data.billData.grandTotal | currency}}</small>
+        <small>Dinner Grand Total: {{  guestBill.getGrandTotal(guestBill.data.dishes, guestBill.data) | currency}}</small>
+
+          <!-- <small>Dinner Grand Total: {{  guestBill.data.billData.grandTotal | currency}}</small> -->
         </div>
       </div>
+      <!-- end grand total -->
 
+      <!-- start payment option -->
       <div class="panel panel-default" ng-if="!_.isEmpty(guestBill.data.billData) && !guestBill.isHost">
         <div class="panel-heading"><h2 class="panel-title">Pay with:</h2>
           <div>
@@ -90,6 +101,7 @@
           </div>
         </div>
       </div>
+      <!-- end payment option -->
     </div>
   </div>
 </div>

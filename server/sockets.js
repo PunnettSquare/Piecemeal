@@ -11,7 +11,7 @@ var connect = function(eventUrl, eventInfo, io, userObj) {
     // socket.on('userAdded', function(user) {
     //   socket.broadcast.emit('userAdded', user);
     // });
-    console.log('Socket connection made with server: User', userObj.id, "socket id", socket.id);
+    console.log('Socket connection made with server: User', userObj.id, "socket id", socket.id, "on event URL", eventUrl);
 
     socket.emit('joined', eventInfo);
 
