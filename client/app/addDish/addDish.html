@@ -47,7 +47,8 @@
                 <span ng-show="dishForm.amount.$dirty" id="currency-default">
                   {{ 0 + addDish.amount | currency}}
                 </span></strong>
-                and your total so far is <strong><span id="currency-default">{{addDish.userTotal | currency}}</span></strong>.
+                <!--                 and your total so far is <strong><span id="currency-default">{{addDish.userTotal | currency}}</span></strong>. -->
+                and your total so far is <strong><span id="currency-default">{{addDish.calcUserCurrentTotal(addDish.data) | currency}}</span></strong>.
               </p>
             </div>
             <!-- dish summary -->

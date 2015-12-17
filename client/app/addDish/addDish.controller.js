@@ -22,7 +22,7 @@
     self.data = appFactory.data;
 
     self.calcUserCurrentTotal = function(data) {
-      self.userTotal = addDishFactory.calculateRunningTotal(data);
+      return (!data) ? 0 : addDishFactory.calculateRunningTotal(data);
     };
 
     if (!appFactory.data) {
@@ -41,7 +41,7 @@
         users: [self.user_id]
       };
       socketFactory.emit('addDish', dish);
-      self.userTotal += cost;
+      // self.userTotal += cost;
       self.amount = '';
       self.dishName = '';
       self.addedDish = true;

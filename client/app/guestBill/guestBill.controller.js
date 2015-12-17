@@ -50,6 +50,10 @@
       return addDishFactory.calculateRunningTotal(data);
     };
 
+    self.getGrandTotal = function(dishes, billData) {
+      return _.sum(_.pluck(dishes, 'cost')) + billData.tipPercent + billData.taxPercent;
+    };
+
     self.getOtherUsersByUsername = function(dish, users, user_id) {
       return appFactory.arrayToSentence(
         _(dish.users).filter(function(id) {
