@@ -20,6 +20,11 @@
     // load data when *not* on page refresh
     self.data = appFactory.data;
 
+    if (!appFactory.data) {
+      socketFactory.init();
+      appFactory.initListeners();
+    }
+
     self.getDishIndivCost = appFactory.getDishIndivCost;
     self.getUsersByDish = appFactory.getUsersByDish;
 
@@ -44,6 +49,9 @@
     };
 
     self.getTax = function() {
+      if (!self.data) {
+        return 0;
+      }
       if (self.taxType === 'dollar') {
         return self.tax;
       } else if (self.taxType === 'percent') {
@@ -52,8 +60,11 @@
     };
 
     self.getTaxPercent = function() {
+      if (!self.data) {
+        return 0;
+      }
       if (self.taxType === 'dollar') {
-        var num = self.tax/self.getSubTotal(self.data.dishes) * 100;
+        var num = self.tax / self.getSubTotal(self.data.dishes) * 100;
         return Math.round(num * 100) / 100; // round to 2 decimal places
       } else if (self.taxType === 'percent') {
         return self.tax;
