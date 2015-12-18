@@ -83,12 +83,18 @@
     };
 
     self.getFeePercent = function () {
+      if (!self.data) {
+        return 0;
+      }
       var subtotal = self.getSubTotal(self.data.dishes);
       var num = self.fee/subtotal * 100;
       return Math.round(num * 100) / 100; // round to 2 decimal places
     };
 
     self.getDiscountPercent = function () {
+      if (!self.data) {
+        return 0;
+      }
       var subtotal = self.getSubTotal(self.data.dishes);
       var num = self.discount/subtotal * 100;
       return Math.round(num * 100) / 100; // round to 2 decimal places
