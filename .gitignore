@@ -5,3 +5,4 @@ dbInfo.js
 venmoApiKeys.js
 client/.DS_Store
 .DS_Store
+dist/
