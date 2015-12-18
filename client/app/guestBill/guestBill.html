@@ -84,9 +84,7 @@
           <p class="text-right h5">{{guestBill.getGuestGrandTotal() | currency}}</p>
         </div>
         <div class="panel-footer tipPercent">
-        <small>Dinner Grand Total: {{  guestBill.getGrandTotal(guestBill.data.dishes, guestBill.data) | currency}}</small>
-
-          <!-- <small>Dinner Grand Total: {{  guestBill.data.billData.grandTotal | currency}}</small> -->
+          <small>Dinner Grand Total: {{  guestBill.getGrandTotal(guestBill.data.dishes, guestBill.data.billData) | currency}}</small>
         </div>
       </div>
       <!-- end grand total -->

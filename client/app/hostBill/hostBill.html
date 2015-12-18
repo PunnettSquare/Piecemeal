@@ -63,7 +63,7 @@
                 Your added tip:
                 <strong>
                 <span ng-show="billForm.tip.$pristine">
-                  {{ 0 + hostBill.tip | currency }}
+                  {{ 0 + hostBill.repopulateTip(hostBill.data.billData) * hostBill.getSubTotal(hostBill.data.dishes) | currency }}
                 </span>
                 <span ng-show="billForm.tip.$dirty" id="currency-default">
                   {{ hostBill.getTip() | currency}}
@@ -94,12 +94,12 @@
               <p class="help-block text-right">
                 Your added tax:
                 <strong>
-                  <span ng-show="billForm.tax.$pristine">
-                    {{ 0 + hostBill.tax | currency }}
-                  </span>
-                  <span ng-show="billForm.tax.$dirty" id="currency-default">
-                    {{ hostBill.getTax() | currency}}
-                  </span>
+                <span ng-show="billForm.tax.$pristine">
+                  {{ 0 + hostBill.repopulateTax(hostBill.data.billData) * hostBill.getSubTotal(hostBill.data.dishes) | currency }}
+                </span>
+                <span ng-show="billForm.tax.$dirty" id="currency-default">
+                  {{ hostBill.getTax() | currency}}
+                </span>
                 </strong>
               </p>
             </div>

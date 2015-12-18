@@ -193,7 +193,7 @@
         unshareDish(data.dish_id, data.user_id);
       });
 
-      socketFactory.on('billsSentToGuests', function(data) { //why is this socket.on?
+      socketFactory.on('billsSentToGuests', function(data) {
         console.log("Heard 'billsSentToGuests' in appFactory.data:", data);
         services.data.billData = data;
         $rootScope.$broadcast('billsSentToGuests');

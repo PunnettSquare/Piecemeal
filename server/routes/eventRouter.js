@@ -32,9 +32,9 @@ module.exports = function(app, io) {
   //     });
   // });
 
-  // app.get('/:code', function(req, res) {
-  //   res.redirect('/#/' + req.params.code.toLowerCase() + '/loading' );
-  // })
+  app.get('/:code', function(req, res) {
+    res.redirect('/#/' + req.params.code.toLowerCase() + '/loading');
+  });
 
   app.post('/createEvent', function(req, res) {
     var username = req.body.username || 'Jerry';

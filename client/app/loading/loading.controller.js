@@ -17,6 +17,7 @@
     self.setSessionUser = function(username) {
       loadingFactory.sendSessionUser(
           _.assign($window.sessionStorage, {
+            isHost: false,
             username: username
           }))
         .then(function(userInfo) {
