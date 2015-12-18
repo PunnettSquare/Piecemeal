@@ -8,7 +8,7 @@
 
   function NavbarCtrl(appFactory) {
     var self = this;
-
+    self.logout = appFactory.logout;
     self.goToAllDishes = appFactory.goToAllDishes;
     self.goToGuestBill = appFactory.goToGuestBill;
     self.goToAddDish = appFactory.goToAddDish;
