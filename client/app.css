@@ -15,3 +15,14 @@
 .cashEnabled {
   background-color: #79C86C;
 }
+
+.logoSpacing {
+  margin: 5gi0px;
+}
+
+/*Gets rid of tiny increment buttons on number inputs*/
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}

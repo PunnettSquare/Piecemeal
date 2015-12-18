@@ -48,6 +48,7 @@
       return addDishFactory.calculateRunningTotal(data);
     };
 
+//remove
     self.getGrandTotal = function(dishes, billData) {
       return (!self.data) ?  0 : _.sum(_.pluck(dishes, 'cost')) + self.getGuestTip() + self.getGuestTax();
     };

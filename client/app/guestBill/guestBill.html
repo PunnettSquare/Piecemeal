@@ -114,11 +114,18 @@
           <div>
             <br>
             <a type="submit" class="payButton venmoEnabled" ng-href="https://venmo.com/{{guestBill.venmoUsername}}?txn=pay&amount={{guestBill.getGuestGrandTotal()}}&audience=private&note=Bill+split+with+Piecemeal.+piecemeal.herokuapp.com"><img src="../../assets/venmo_logo_white.png" alt="Venmo" width="55px"></a>
-            <button type="submit" class="payButton cashEnabled">Cash</button>
+            <button type="submit" class="payButton cashEnabled" ng-click="guestBill.paymentChosen='cash'">Cash</button>
           </div>
         </div>
       </div>
       <!-- end payment option -->
+
+      <!-- Payment Choice Confirmation -->
+      <div class="alert alert-success alert-dismissible" role="alert" ng-show="guestBill.paymentChosen">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        We have notified the host that you will be paying with cash.
+      </div>
+
     </div>
   </div>
 </div>
