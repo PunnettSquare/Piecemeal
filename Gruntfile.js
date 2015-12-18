@@ -22,13 +22,58 @@ module.exports = function(grunt) {
       client: 'client',
       server: 'server',
       dist: 'dist',
-      css: ['<=% project.client%>/app/**/*.scss'],
+      // <%= project.client %>/app/app.scss
+      sass: ['<%= project.client %>/app/**/*.scss'],
+      // css: ['<%= project.client %>/app.css'],
       js: ['<%= project.client %>/app/app.module.js',
         '<%= project.client %>/app/app.routes.js',
         '<%= project.client %>/app/app.socket.init.js',
         '<%= project.client %>/{app,components}/**/!(*.spec|*.mock).js'
       ],
       test: 'test'
+    },
+
+    tag: {
+      banner: '/*!\n' +
+        ' * <%= pkg.name %>\n' +
+        ' * <%= pkg.title %>\n' +
+        ' * <%= pkg.url %>\n' +
+        ' * @author <%= pkg.author %>\n' +
+        ' * @version <%= pkg.version %>\n' +
+        ' * Copyright <%= pkg.copyright %>. <%= pkg.license %> licensed.\n' +
+        ' */\n'
+    },
+
+    clean: ['dist/'],
+
+    concat: {
+      options: {
+        stripBanners: true,
+        banner: '<%= tag.banner %>'
+      },
+      dist: {
+        src: ['<%= project.client %>/app/app.module.js',
+          '<%= project.client %>/app/app.routes.js',
+          '<%= project.client %>/app/socket.module.js',
+          '<%= project.client %>/app/app.factory.js',
+          '{.tmp,<%= project.client %>}/{app,components}/**/!(*.spec|*.mock).js',
+          // 'knexfile.js',
+          // 'venmoApiKeys.js',
+          '!test'
+        ],
+        dest: '<%= project.dist %>/js/scripts.min.js'
+      }
+    },
+
+    uglify: {
+      options: {
+        banner: '<%= tag.banner %>'
+      },
+      dist: {
+        files: {
+          '<%= project.dist %>/js/scripts.min.js': '<%= project.dist %>/js/scripts.min.js'
+        }
+      }
     },
 
     shell: {
@@ -81,14 +126,6 @@ module.exports = function(grunt) {
       },
       test: {
         src: ['<%= project.test %>/**/*.js']
-      }
-    },
-
-    uglify: {
-      dist: {
-        files: {
-          '<%= project.dist %>/js/scripts.min.js': '<%= project.js %>'
-        }
       }
     },
 
@@ -148,12 +185,12 @@ module.exports = function(grunt) {
       }
     },
 
-    karma: {
-      unit: {
-        configFile: 'karma.conf.js',
-        singleRun: true
-      }
-    },
+    // karma: {
+    //   unit: {
+    //     configFile: 'karma.conf.js',
+    //     singleRun: true
+    //   }
+    // },
 
     // mochaTest: {
     //   options: {
@@ -171,23 +208,42 @@ module.exports = function(grunt) {
 
     // Compiles Sass to CSS
     sass: {
+      options: {
+        style: "expanded",
+        sourcemap: "none",
+        noCache: true
+      },
       dev: {
-        options: {
-          style: "expanded",
-          update: true,
-          sourcemap: "none",
-          noCache: true
-        },
         files: {
-          '<%= project.client%>/app.css': '<%= project.client %>/app/app.scss'
+          '<%= project.client %>/app.css': '<%= project.client %>/app/app.scss'
         }
       },
       dist: {
+        files: {
+          '<%= project.dist %>/style.css': '<%= project.client %>/app/app.scss'
+        }
+      }
+    },
+
+    copy: {
+      files: {
+        cwd: '<%= project.client %>',
+        src: ['**/*.html'],
+        dest: '<%= project.dist %>/static/',
+        expand: true
+      }
+    },
+
+    cssmin: {
+      options: {
+        banner: '<%= tag.banner %>'
+      },
+      dist: {
         options: {
-          style: 'expanded'
+          banner: '<%= tag.banner %>'
         },
         files: {
-          '<%= project.dist %>/css/style.css': '<%= project.css %>'
+          '<%= project.dist %>/css/style.css': '<%= project.dist %>/css/style.css'
         }
       }
     },
@@ -287,6 +343,7 @@ module.exports = function(grunt) {
             ['<%= project.client %>/app/app.module.js',
               '<%= project.client %>/app/app.routes.js',
               '<%= project.client %>/app/socket.module.js',
+              '<%= project.client %>/app/app.factory.js',
               '{.tmp,<%= project.client %>}/{app,components}/**/!(*.spec|*.mock).js'
             ]
           ]
@@ -311,6 +368,15 @@ module.exports = function(grunt) {
           ]
         }
       },
+
+      // cdnify:  {
+      //   options: {
+      //     cdn: require('google-cdn-data')
+      //   },
+      //   dist: {
+      //     html: [' <%= project.dist %>/index.html']
+      //   }
+      // },
 
       // Inject component css into index.html
       css: {
@@ -338,6 +404,8 @@ module.exports = function(grunt) {
   grunt.registerTask('start', ['open', 'watch']);
   grunt.registerTask('testIndiv', ['shell:testIndiv']);
   grunt.registerTask('testDup', ['shell:dupTest']);
+  grunt.registerTask('build', ['jshint', 'injector:scripts', 'injector:sass', 'injector:css']);
+  grunt.registerTask('dist', ['clean', 'concat', 'uglify', 'sass', 'cssmin']);
   // grunt.registerTask('test', ['wiredep', 'karma']);
   // grunt.registerTask('build', ['injector:scripts', 'sass', 'injector:sass', 'wiredep']);
 };

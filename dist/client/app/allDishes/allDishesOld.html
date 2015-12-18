@@ -1,0 +1,33 @@
+<!-- <div id="allDishes" ng-cloak>
+
+  <button class="addDish" ng-click="allDishes.goToAddDish()">Add Dish</button>
+  <h1>All Dishes</h1>
+
+  <p>Hi, {{_.capitalize(allDishes.username)}}.
+  You are in room <strong class="code">{{allDishes.data.code}}</strong>.</p>
+
+  <div ng-repeat="dish in allDishes.data.dishes">
+    <div ng-if="dish.users.length !== 0">
+      <h3>{{ _.map(dish.name.split(" "), _.capitalize).join(" ") }}</h3>
+      <p>
+        Cost: {{dish.cost | currency }}
+      </p>
+      <span>
+        {{ allDishes.getUsersByDish(dish, allDishes.data.users) }} got this.
+        <small>
+        User IDs: {{ dish.users }}
+        </small>
+      </span>
+
+      <br><br>
+
+      <button ng-click="allDishes.shareDish(dish.dish_id, allDishes.user_id, dish.users)" class="share">
+      Share
+      </button>
+      <button ng-click="allDishes.unshareDish(dish.dish_id, allDishes.user_id, dish.users)" class="unshare">
+      Unshare
+      </button>
+    </div>
+  </div>
+</div>
+-->

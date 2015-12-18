@@ -1,0 +1,33 @@
+<div class="container-fluid" id="loading" ng-cloak>
+
+  <div class="row">
+    <div class="col-md-6">
+      <form name="userInput">
+        <!-- <h3>Loading!</h3> -->
+
+        <!-- Enter Your Name -->
+        <div class="form-group">
+          <br>
+          <label for="name">Enter Name</label>
+          <input type="text" placeholder="Enter Your Name" ng-model="username" name="username" class="enterName form-control" required autofocus id="name" required>
+          <br>
+
+          <button ng-show="!loading.isSent" type="submit" name="username" ng-disabled="userInput.username.$error.required" value="Enter room" class="enterRoom btn btn-default" ng-click="loading.setSessionUser(username)">Enter Room</button>
+          <br>
+
+
+          <div class="spinner" style="position:relative; left:2em">
+            <loading ng-if="loading.isSent"></loading>
+          </div>
+          <br>
+          <div ng-show="loading.isError">Your entered room does not exist. Please try again.</div>
+
+
+        </form>
+      </div>
+    </form>
+    <br><br><br>
+
+
+  </div>
+</div>
