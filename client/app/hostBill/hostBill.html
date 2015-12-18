@@ -40,7 +40,7 @@
         <div class="panel panel-default">
           <div class="panel-heading">
             <h1 class="panel-title">Subtotal</h1>
-            <p class="text-right h4">{{ hostBill.getSubTotal(hostBill.data.dishes) | currency}}</p>
+            <p class="help-block text-right h4">{{ hostBill.getSubTotal(hostBill.data.dishes) | currency}}</p>
           </div>
         </div>
         <!-- TIP INPUT-->
@@ -78,6 +78,7 @@
         <div class="panel panel-default">
           <div class="panel-heading">
             <h1 class="panel-title">Tax</h1>
+            <br>
 
             <span class="input-group" ng>
               <input class="taxPercent form-control" name="tax" type="number" step="any" ng-model="hostBill.tax" placeholder="0" min="0" max="10000" aria-label="tax" required />
@@ -106,10 +107,19 @@
           </div>
         </div>
 
+        <!-- Start TAX/FEE OPTION -->
+        <div class="text-right">
+          <a href="" ng-click="!hostBill.feeOption ? hostBill.feeOption = true : hostBill.feeOption = false">Add a fee</a> | 
+          <a href="" ng-click="!hostBill.discountOption ? hostBill.discountOption = true : hostBill.discountOption = false">Add a discount</a>
+        </div>
+        <!-- End tax/fee option -->
+
         <!-- FEES -->
-        <div class="panel panel-default">
+        <div class="panel panel-default" ng-show="hostBill.feeOption">
           <div class="panel-heading">
             <h1 class="panel-title">Add Fee</h1>
+            <br>
+
             <span class="input-group" ng>
               <input class="form-control" name="fee" type="number" step="any" ng-model="hostBill.fee" placeholder="0" min="0" aria-label="fee" />
               <label class="active input-group-addon">+ $</label>
@@ -132,9 +142,11 @@
         </div>
 
         <!-- DISCOUNT -->
-        <div class="panel panel-default">
+        <div class="panel panel-default" ng-show="hostBill.discountOption">
           <div class="panel-heading">
             <h1 class="panel-title">Add Discount</h1>
+            <br>
+
             <span class="input-group" ng>
               <input class="form-control" name="discount" type="number" step="any" ng-model="hostBill.discount" placeholder="0" min="0" aria-label="discount" />
               <label class="active input-group-addon">- $</label>
@@ -160,7 +172,7 @@
         <div class="panel panel-default">
           <div class="panel-heading">
             <h1 class="h1 panel-title">Grand Total</h1>
-            <p class="help-block text-right">
+            <p class="text-right h4">
               <span ng-show="billForm.tip.$pristine && billForm.tip.$pristine">
                 {{ hostBill.getSubTotal(hostBill.data.dishes) 
                 + (hostBill.repopulateTip(hostBill.data.billData) * 0.01 * hostBill.getSubTotal(hostBill.data.dishes)) 
