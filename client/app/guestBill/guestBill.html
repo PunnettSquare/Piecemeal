@@ -80,17 +80,20 @@
       <!-- end tax -->
 
       <!-- FEE OR DISCOUNT -->
-      <div class="panel panel-default" ng-if="!_.isEmpty(guestBill.data.billData) && !guestBill.isHost && (guestBill.data.billData.fee !== 0 || !guestBill.data.billData.discount !==0)">
+      <div class="panel panel-default" ng-if="!_.isEmpty(guestBill.data.billData) && !guestBill.isHost && (guestBill.data.billData.feePercent || guestBill.data.billData.discountPercent)">
         <div class="panel-body">
           <h4 class="h4">Fee or Discount</h4 class="h4">
-          <p class="text-right h5" nf-if="guestBill.data.billData.fee !== 0">Fee: {{guestBill.getGuestFee() | currency}}</p>
-          <p class="text-right h5" nf-if="guestBill.data.billData.discount !== 0">Discount: {{guestBill.getGuestDiscount() | currency}}</p>
+          <p class="text-right h5" ng-show="guestBill.data.billData.feePercent">Fee: {{guestBill.getGuestFee() | currency}}</p>
+          <p class="text-right h5" ng-show="guestBill.data.billData.discountPercent">Discount: {{guestBill.getGuestDiscount() | currency}}</p>
         </div>
         <div class="panel-footer">
           <small>
             Percent of subtotal: 
-            {{ guestBill.data.billData.feePercent }}% Fee and
-            {{ guestBill.data.billData.discountPercent }}% Discount</small>
+            <span ng-show="guestBill.data.billData.feePercent">{{ guestBill.data.billData.feePercent }}% Fee</span>
+            <span ng-show="guestBill.data.billData.discountPercent && guestBill.data.billData.feePercent">
+             and 
+            </span>
+            <span ng-show="guestBill.data.billData.discountPercent">{{ guestBill.data.billData.discountPercent }}% Discount </span></small>
         </div>
       </div>
 
