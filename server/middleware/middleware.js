@@ -15,11 +15,12 @@ module.exports = function (app, express, io) {
 
   var eventRouter = express.Router();
 
+  app.use(morgan('dev')); // doesn't log the annoying static GET requests
+
   app.use('/', express.static(path.join(__dirname, '../../client/')));
 
   // app.use('/', express.static(path.join(__dirname, '../../dist/client')));
 
-  app.use(morgan('dev')); // doesn't log the annoying static GET requests
 
   app.use('/auth', oauthRouter);
 
