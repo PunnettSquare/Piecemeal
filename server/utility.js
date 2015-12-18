@@ -1,6 +1,7 @@
 var _ = require('underscore');
 var roomNames = require('./roomNames.js');
 var counter = 0; // for room names
+var incrementer = 0;
 
 module.exports = {
   createEvent: function(db, code, username) {
@@ -262,9 +263,14 @@ module.exports = {
 
   generateCode: function() {
     if (counter === roomNames.length) {
-      throw new Error("Ran out of food room names! Please add more.");
+      incrementer++;
+      counter = 0;
     }
-    return roomNames[counter++];
+    if (incrementer > 0) {
+      return roomNames[counter++] + incrementer;
+    } else {
+      return roomNames[counter++];
+    }
   },
 
   findDishArray: function(usersDishesArray) {
