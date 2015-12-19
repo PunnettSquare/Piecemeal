@@ -33,7 +33,7 @@ module.exports = {
 
   createEventVenmo: function(db, code, user_id) {
     return db('events').insert({
-        code: code,
+        code: code
       })
       .returning('id')
       .then(function(event_id) {

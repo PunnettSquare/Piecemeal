@@ -226,6 +226,21 @@ module.exports = function(grunt) {
       }
     },
 
+    htmlmin: {
+      options: {
+        removeComments: true,
+        collapseWhitespace: true,
+        removeEmptyElements: true,
+        minifyCss: true
+      },
+      files: {
+        cwd: '<%= project.client %>',
+        src: ['**/*.html', '!index.html', '!**/*Old.html'],
+        dest: '<%= project.dist %>/client',
+        expand: true
+      }
+    },
+
     copy: {
       files: {
         cwd: '<%= project.client %>',
@@ -395,6 +410,6 @@ module.exports = function(grunt) {
   grunt.registerTask('testIndiv', ['shell:testIndiv']);
   grunt.registerTask('testDup', ['shell:dupTest']);
   grunt.registerTask('build', ['jshint', 'wiredep', 'injector:scripts', 'injector:sass', 'injector:css']);
-  grunt.registerTask('dist', ['clean', 'concat', 'uglify', 'sass', 'cssmin', 'copy']); // cdnify
+  grunt.registerTask('dist', ['clean', 'concat', 'uglify', 'sass', 'cssmin', 'copy', 'htmlmin']); // cdnify
   // grunt.registerTask('test', ['wiredep', 'karma', 'mochaTest']);
 };

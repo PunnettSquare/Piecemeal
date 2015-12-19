@@ -7,8 +7,7 @@
   homeFactory.$inject = ['$http'];
 
   function homeFactory($http) {
-    var services = {
-    };
+    var services = {};
 
     return services;
   }
