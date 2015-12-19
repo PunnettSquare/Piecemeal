@@ -188,7 +188,7 @@ module.exports = function(grunt) {
       },
       dist: {
         files: {
-          '<%= project.dist %>/client/scripts.min.js': '<%= project.dist %>/scripts.min.js'
+          '<%= project.dist %>/client/scripts.min.js': '<%= project.dist %>/client/scripts.min.js'
         }
       }
     },
