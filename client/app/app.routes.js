@@ -147,7 +147,7 @@
         views: {
           '@': {
             templateUrl: 'app/hostReceipt/hostReceipt.html',
-            controller: 'HostReceipt',
+            controller: 'HostReceiptCtrl',
             controllerAs: 'hostReceipt'
           }
         },
