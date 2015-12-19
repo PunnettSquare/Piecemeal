@@ -14,13 +14,13 @@
       return oAuthFactory.venmoLogin();
     };
 
-    // $window.sessionStorage should have: username, user_id, event code, event_id, and isHost
+    // $window.localStorage should have: username, user_id, event code, event_id, and isHost
     self.setSessionUser = function(username, isHost, code) {
       oAuthFactory.createEvent({
           username: username
         })
         .then(function(data) {
-          _.assign($window.sessionStorage, {
+          _.assign($window.localStorage, {
             username: username,
             code: data.code,
             isHost: true,

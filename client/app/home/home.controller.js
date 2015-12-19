@@ -11,7 +11,7 @@
     var self = this;
 
     self.setSessionUser = function(code) {
-      _.assign($window.sessionStorage, {
+      _.assign($window.localStorage, {
         code: code.toLowerCase(),
         isHost: false
       });

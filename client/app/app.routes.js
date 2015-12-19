@@ -10,22 +10,22 @@
     var usernameCache = {};
 
     var getInfoOnRefresh = function($http) {
-      if (!usernameCache[window.sessionStorage.user_id]) {
-        usernameCache[window.sessionStorage.user_id] = true;
+      if (!usernameCache[window.localStorage.user_id]) {
+        usernameCache[window.localStorage.user_id] = true;
         return $http({
           method: 'POST',
-          url: '/' + window.sessionStorage.code,
+          url: '/' + window.localStorage.code,
           data: {
-            user_id: parseInt(window.sessionStorage.user_id)
+            user_id: parseInt(window.localStorage.user_id)
           }
         });
       }
     };
 
-    console.log('window.sessionStorage =', window.sessionStorage);
+    console.log('window.localStorage =', window.localStorage);
     $urlRouterProvider.otherwise(function($injector) {
       var state = $injector.get('$state');
-      if (!window.sessionStorage.username || window.sessionStorage.username === "undefined") {
+      if (!window.localStorage.username || window.localStorage.username === "undefined") {
         state.go('home');
         // state.go('404');
       } else {

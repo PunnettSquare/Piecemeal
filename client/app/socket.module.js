@@ -23,7 +23,7 @@
     return services;
 
     function init() {
-      var ioRoom = $window.location.origin + '/' + $window.sessionStorage.code;
+      var ioRoom = $window.location.origin + '/' + $window.localStorage.code;
       $window.socket = io(ioRoom);
     }
 
