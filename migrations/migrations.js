@@ -15,6 +15,8 @@ exports.up = function(knex, Promise) {
       table.string('code');
       table.decimal('taxPercent');
       table.decimal('tipPercent');
+      table.decimal('feePercent');
+      table.decimal('discountPercent');
     }),
 
     knex.schema.createTable('dishes', function(table) {

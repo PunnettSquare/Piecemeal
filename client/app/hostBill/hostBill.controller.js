@@ -32,6 +32,8 @@
 
     self.tipType = 'percent';
     self.taxType = 'percent';
+    self.fee = 0;
+    self.discount = 0;
 
     self.getTip = function() {
       if (!self.data) {
@@ -80,12 +82,30 @@
       }
     };
 
+    self.getFeePercent = function () {
+      if (!self.data) {
+        return 0;
+      }
+      var subtotal = self.getSubTotal(self.data.dishes);
+      var num = self.fee/subtotal * 100;
+      return Math.round(num * 100) / 100; // round to 2 decimal places
+    };
+
+    self.getDiscountPercent = function () {
+      if (!self.data) {
+        return 0;
+      }
+      var subtotal = self.getSubTotal(self.data.dishes);
+      var num = self.discount/subtotal * 100;
+      return Math.round(num * 100) / 100; // round to 2 decimal places
+    };
+
     self.getSubTotal = function(dishes) {
       return _.sum(_.pluck(dishes, 'cost'));
     };
 
     self.getGrandTotal = function() {
-      return self.getSubTotal(self.data.dishes) + self.getTip() + self.getTax();
+      return self.getSubTotal(self.data.dishes) + self.getTip() + self.getTax() + self.fee - self.discount;
     };
 
     self.sendBillsToGuests = function() {
@@ -97,6 +117,8 @@
         subTotal: self.getSubTotal(self.data.dishes),
         taxPercent: self.getTaxPercent(),
         tipPercent: self.getTipPercent(),
+        feePercent: self.getFeePercent(),
+        discountPercent: self.getDiscountPercent(),
         grandTotal: self.getGrandTotal()
       });
       self.billsSent = true;

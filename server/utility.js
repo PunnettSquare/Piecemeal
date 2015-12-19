@@ -52,12 +52,14 @@ module.exports = {
       venmoUsername: venmoUsername })
   },
 
-  addTipAndTax: function(db, event_id, taxPercent, tipPercent) {
+  addTipAndTax: function(db, event_id, taxPercent, tipPercent, feePercent, discountPercent) {
     return db('events').where({
       'id': event_id
     }).update({
       taxPercent: taxPercent,
-      tipPercent: tipPercent
+      tipPercent: tipPercent,
+      feePercent: feePercent,
+      discountPercent: discountPercent
     });
   },
 
