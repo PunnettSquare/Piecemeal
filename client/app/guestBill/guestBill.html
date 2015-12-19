@@ -40,7 +40,7 @@
       <div class="panel panel-default">
         <div class="panel-heading">
           <h2 class="panel-title h1">Your Subtotal
-          <p class="text-right h5">{{guestBill.getGuestTotal(guestBill.data) | currency}}</p>
+          <p class="text-right h5">{{guestBill.getGuestSubtotal(guestBill.data) | currency}}</p>
 
           </h2>
         </div>
@@ -103,7 +103,9 @@
           <p class="text-right h5">{{guestBill.getGuestGrandTotal() | currency}}</p>
         </div>
 <!--         <div class="panel-footer tipPercent">
-          <small>Dinner Grand Total: {{  guestBill.getGrandTotal(guestBill.data.dishes, guestBill.data.billData) | currency}}</small>
+          All Subtotal: {{guestBill.getAllSubtotal(guestBill.data.dishes);}}
+          <small>Dinner Grand Total: {{  guestBill.getGrandTotal(guestBill.data.dishes, guestBill.data.billData) | currency}}
+          </small>
         </div> -->
       </div>
       <!-- end totals -->
