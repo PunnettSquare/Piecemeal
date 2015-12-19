@@ -15,14 +15,14 @@ module.exports = function(grunt) {
   };
 
   grunt.initConfig({
-    // Metadata
     pkg: grunt.file.readJSON('package.json'),
 
     project: {
       client: 'client',
       server: 'server',
       dist: 'dist',
-      css: ['<=% project.client%>/app/**/*.scss'],
+      sass: ['<%= project.client %>/app/**/*.scss'],
+      css: ['<%= project.client %>/app.css'],
       js: ['<%= project.client %>/app/app.module.js',
         '<%= project.client %>/app/app.routes.js',
         '<%= project.client %>/app/app.socket.init.js',
@@ -31,42 +31,18 @@ module.exports = function(grunt) {
       test: 'test'
     },
 
-    shell: {
-      dupTest: {
-        command: [
-          'psql',
-          'nodemon scripts/server.js',
-          'node test/selenium/duplicationTests.js'
-        ].join('&')
-      },
-      testIndiv: {
-        command: [
-          'psql',
-          'nodemon scripts/server.js',
-          'node test/selenium/botPiecemealShort.js',
-          'grunt watch'
-        ].join('&')
-      },
-      start: {
-        command: [
-          'psql',
-          'nodemon scripts/server.js',
-        ].join('&')
-      }
+    tag: {
+      banner: '/*!\n' +
+        ' * <%= pkg.name %>\n' +
+        ' * <%= pkg.title %>\n' +
+        ' * <%= pkg.url %>\n' +
+        ' * @author <%= pkg.author %>\n' +
+        ' * @version <%= pkg.version %>\n' +
+        ' * Copyright <%= pkg.copyright %>. <%= pkg.license %> licensed.\n' +
+        ' */\n'
     },
 
-    // pgdb: {
-    //   redo: {
-    //     options: {
-    //       connection: 'postgres://admin:admin@localhost/piecemeal',
-    //       sql: [
-    //         'DROP DATABASE piecemeal;',
-    //         'CREATE DATABASE piecemeal;'
-    //       ]
-    //     }
-    //   }
-    // },
-
+    // ******* BUILD ******* //
     jshint: {
       options: {
         jshintrc: '_.jshintrc'
@@ -81,14 +57,6 @@ module.exports = function(grunt) {
       },
       test: {
         src: ['<%= project.test %>/**/*.js']
-      }
-    },
-
-    uglify: {
-      dist: {
-        files: {
-          '<%= project.dist %>/js/scripts.min.js': '<%= project.js %>'
-        }
       }
     },
 
@@ -128,6 +96,171 @@ module.exports = function(grunt) {
       // }
     },
 
+    injector: {
+      options: {
+
+      },
+      // Inject application script files into index.html (doesn't include bower)
+      scripts: {
+        options: {
+          transform: function(filePath) {
+            filePath = filePath.replace('/client/', '');
+            filePath = filePath.replace('/.tmp/', '');
+            return '<script src="' + filePath + '"></script>';
+          },
+          starttag: '<!-- injector:js -->',
+          endtag: '<!-- endinjector -->'
+        },
+        files: {
+          '<%= project.client %>/index.html': [
+            ['<%= project.client %>/app/app.module.js',
+              '<%= project.client %>/app/app.routes.js',
+              '<%= project.client %>/app/socket.module.js',
+              '<%= project.client %>/app/app.factory.js',
+              '{.tmp,<%= project.client %>}/{app,components}/**/!(*.spec|*.mock).js'
+            ]
+          ]
+        }
+      },
+
+      // Inject component scss into app.scss
+      sass: {
+        options: {
+          transform: function(filePath) {
+            filePath = filePath.replace('/client/app/', '');
+            filePath = filePath.replace('/client/components/', '../components/');
+            return '@import \'' + filePath + '\';';
+          },
+          starttag: '// injector',
+          endtag: '// endinjector'
+        },
+        files: {
+          '<%= project.client %>/app/app.scss': [
+            '<%= project.client %>/{app,components}/**/*.{scss,sass}',
+            '!<%= project.client %>/app/app.scss'
+          ]
+        }
+      },
+
+      // Inject component css into index.html
+      css: {
+        options: {
+          transform: function(filePath) {
+            filePath = filePath.replace('/client/', '');
+            filePath = filePath.replace('/.tmp/', '');
+            return '<link rel="stylesheet" href="' + filePath + '">';
+          },
+          starttag: '<!-- injector:css -->',
+          endtag: '<!-- endinjector -->'
+        },
+        files: {
+          '<%= project.client %>/index.html': [
+            '<%= project.client %>/app.css'
+          ]
+        }
+      }
+    },
+
+    // ********** DIST ******* //
+
+    clean: ['dist/'],
+
+    concat: {
+      options: {
+        stripBanners: true,
+        banner: '<%= tag.banner %>'
+      },
+      dist: {
+        src: ['<%= project.client %>/app/app.module.js',
+          '<%= project.client %>/app/app.routes.js',
+          '<%= project.client %>/app/socket.module.js',
+          '<%= project.client %>/app/app.factory.js',
+          '{.tmp,<%= project.client %>}/{app,components}/**/!(*.spec|*.mock).js',
+          '!test'
+        ],
+        dest: '<%= project.dist %>/client/scripts.min.js'
+      }
+    },
+
+    uglify: {
+      options: {
+        banner: '<%= tag.banner %>'
+      },
+      dist: {
+        files: {
+          '<%= project.dist %>/client/scripts.min.js': '<%= project.dist %>/client/scripts.min.js'
+        }
+      }
+    },
+
+    // Compiles Sass to CSS
+    sass: {
+      options: {
+        style: "expanded",
+        sourcemap: "none",
+        noCache: true
+      },
+      dev: {
+        files: {
+          '<%= project.client %>/app.css': '<%= project.client %>/app/app.scss'
+        }
+      },
+      dist: {
+        files: {
+          '<%= project.dist %>/client/style.css': '<%= project.client %>/app/app.scss'
+        }
+      }
+    },
+
+    cssmin: {
+      options: {
+        banner: '<%= tag.banner %>'
+      },
+      dist: {
+        options: {
+          banner: '<%= tag.banner %>'
+        },
+        files: {
+          '<%= project.dist %>/client/style.css': '<%= project.dist %>/client/style.css'
+        }
+      }
+    },
+
+    htmlmin: {
+      options: {
+        removeComments: true,
+        collapseWhitespace: true,
+        removeEmptyElements: true,
+        minifyCss: true
+      },
+      files: {
+        cwd: '<%= project.client %>',
+        src: ['**/*.html', '!index.html', '!**/*Old.html'],
+        dest: '<%= project.dist %>/client',
+        expand: true
+      }
+    },
+
+    copy: {
+      files: {
+        cwd: '<%= project.client %>',
+        src: ['**/*.html', '!**/*Old.html'],
+        dest: '<%= project.dist %>/client/',
+        expand: true
+      }
+    },
+
+    // cdnify:  {
+    //   options: {
+    //     cdn: require('google-cdn-data')
+    //   },
+    //   dist: {
+    //     html: [' <%= project.dist %>/index.html']
+    //   }
+    // }
+
+    // *********** DEV *********
+
     connect: {
       options: {
         port: 8080,
@@ -148,53 +281,30 @@ module.exports = function(grunt) {
       }
     },
 
-    karma: {
-      unit: {
-        configFile: 'karma.conf.js',
-        singleRun: true
-      }
-    },
-
-    // mochaTest: {
-    //   options: {
-    //     reporter: 'spec',
-    //     require: 'mocha.conf.js',
-    //     timeout: 5000 // set default mocha spec timeout
-    //   },
-    //   unit: {
-    //     src: ['<%= project.server %>/**/*.spec.js']
-    //   },
-    //   integration: {
-    //     src: ['<%= project.server %>/**/*.integration.js']
-    //   }
-    // },
-
-    // Compiles Sass to CSS
-    sass: {
-      dev: {
-        options: {
-          style: "expanded",
-          update: true,
-          sourcemap: "none",
-          noCache: true
-        },
-        files: {
-          '<%= project.client%>/app.css': '<%= project.client %>/app/app.scss'
-        }
+    shell: {
+      dupTest: {
+        command: [
+          'psql',
+          'nodemon scripts/server.js',
+          'node test/selenium/duplicationTests.js'
+        ].join('&')
       },
-      dist: {
-        options: {
-          style: 'expanded'
-        },
-        files: {
-          '<%= project.dist %>/css/style.css': '<%= project.css %>'
-        }
+      testIndiv: {
+        command: [
+          'psql',
+          'nodemon scripts/server.js',
+          'node test/selenium/botPiecemealShort.js',
+          'grunt watch'
+        ].join('&')
+      },
+      start: {
+        command: [
+          'psql',
+          'nodemon scripts/server.js',
+        ].join('&')
       }
     },
 
-    // nodeunit: {
-    //   files: ['test/**/*_test.js']
-    // },
     watch: {
       // all: {
       //   files: ['<%= project.client %>{,*/}**/*.*',
@@ -256,7 +366,6 @@ module.exports = function(grunt) {
       // gruntfile: {
       //   files: ['Gruntfile.js']
       // },
-
       // express: {
       //   files: ['<%= project.server %>/**/*.{js,json}'],
       //   tasks: ['express:dev', 'wait'],
@@ -267,69 +376,31 @@ module.exports = function(grunt) {
       // },
 
     },
-    injector: {
-      options: {
 
-      },
-      // Inject application script files into index.html (doesn't include bower)
-      scripts: {
-        options: {
-          transform: function(filePath) {
-            filePath = filePath.replace('/client/', '');
-            filePath = filePath.replace('/.tmp/', '');
-            return '<script src="' + filePath + '"></script>';
-          },
-          starttag: '<!-- injector:js -->',
-          endtag: '<!-- endinjector -->'
-        },
-        files: {
-          '<%= project.client %>/index.html': [
-            ['<%= project.client %>/app/app.module.js',
-              '<%= project.client %>/app/app.routes.js',
-              '<%= project.client %>/app/socket.module.js',
-              '{.tmp,<%= project.client %>}/{app,components}/**/!(*.spec|*.mock).js'
-            ]
-          ]
-        }
-      },
+    // ********* TEST *********
 
-      // Inject component scss into app.scss
-      sass: {
-        options: {
-          transform: function(filePath) {
-            filePath = filePath.replace('/client/app/', '');
-            filePath = filePath.replace('/client/components/', '../components/');
-            return '@import \'' + filePath + '\';';
-          },
-          starttag: '// injector',
-          endtag: '// endinjector'
-        },
-        files: {
-          '<%= project.client %>/app/app.scss': [
-            '<%= project.client %>/{app,components}/**/*.{scss,sass}',
-            '!<%= project.client %>/app/app.scss'
-          ]
-        }
-      },
-
-      // Inject component css into index.html
-      css: {
-        options: {
-          transform: function(filePath) {
-            filePath = filePath.replace('/client/', '');
-            filePath = filePath.replace('/.tmp/', '');
-            return '<link rel="stylesheet" href="' + filePath + '">';
-          },
-          starttag: '<!-- injector:css -->',
-          endtag: '<!-- endinjector -->'
-        },
-        files: {
-          '<%= project.client %>/index.html': [
-            '<%= project.client %>/app.css'
-          ]
-        }
-      }
-    }
+    // karma: {
+    //   unit: {
+    //     configFile: 'karma.conf.js',
+    //     singleRun: true
+    //   }
+    // },
+    // mochaTest: {
+    //   options: {
+    //     reporter: 'spec',
+    //     require: 'mocha.conf.js',
+    //     timeout: 5000 // set default mocha spec timeout
+    //   },
+    //   unit: {
+    //     src: ['<%= project.server %>/**/*.spec.js']
+    //   },
+    //   integration: {
+    //     src: ['<%= project.server %>/**/*.integration.js']
+    //   }
+    // },
+    // nodeunit: {
+    //   files: ['test/**/*_test.js']
+    // },
 
   });
 
@@ -338,6 +409,7 @@ module.exports = function(grunt) {
   grunt.registerTask('start', ['open', 'watch']);
   grunt.registerTask('testIndiv', ['shell:testIndiv']);
   grunt.registerTask('testDup', ['shell:dupTest']);
-  // grunt.registerTask('test', ['wiredep', 'karma']);
-  // grunt.registerTask('build', ['injector:scripts', 'sass', 'injector:sass', 'wiredep']);
+  grunt.registerTask('build', ['jshint', 'wiredep', 'injector:scripts', 'injector:sass', 'injector:css']);
+  grunt.registerTask('dist', ['clean', 'concat', 'uglify', 'sass', 'cssmin', 'copy', 'htmlmin']); // cdnify
+  // grunt.registerTask('test', ['wiredep', 'karma', 'mochaTest']);
 };

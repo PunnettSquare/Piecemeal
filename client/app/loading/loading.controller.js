@@ -11,12 +11,13 @@
 
     if (!$window.sessionStorage.getItem('code')) {
       var path = $location.path().split('/');
-      $window.sessionStorage.setItem('code', path[path.length-2]);
+      $window.sessionStorage.setItem('code', path[path.length - 2]);
     }
 
     self.setSessionUser = function(username) {
       loadingFactory.sendSessionUser(
           _.assign($window.sessionStorage, {
+            isHost: false,
             username: username
           }))
         .then(function(userInfo) {

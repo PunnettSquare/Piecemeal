@@ -8,7 +8,7 @@ describe('Piecemeal', function() {
 
   var $controller;
   var addDishFactoryMock = {
-    calculateRunningTotal: function (data) {
+    calculateRunningTotal: function(data) {
       return _.filter(data.dishes, function(obj, key) {
           return _.contains(obj.users, appFactoryMock.getSessStorage('user_id'));
         })
@@ -18,95 +18,95 @@ describe('Piecemeal', function() {
     }
   };
   var appFactoryMock = {
-        getSessStorage: function (prop) {
-          if (prop === "user_id") {
-            return 8; // jackson, not host
-          }
-        },
-        initListeners : function() {},
-        arrayToSentence: function (array) {
-          array = _.map(array, _.capitalize);
-          if (array.length === 1) {
-            return array[0];
-          }
-          if (array.length === 2) {
-            return array.join(" and ");
-          } else {
-            var last = array.pop();
-            return array.join(", ") + " and " + last;
-          }
-        },
-        shareDish: function () {},
-        getDishIndivCost: function (dish) {
-          return dish.cost / dish.users.length;
-        },
-        data: {
-          billData: {
-            code: "bread",
-            event_id: 3,
-            grandTotal: 47.8,
-            hostUsername: "fawn",
-            host_id: 7,
-            subTotal: 18,
-            taxPercent: 10,
-            taxSum: 19.8,
-            tipPercent: 10,
-            tipSum: 19.8
-          },
-          code: "bread",
-          dishes: [{
-            cost: 8,
-            dish_id: 5,
-            name: "ramen",
-            user_id: 7,
-            users: [7, 8]
-          }, {
-            cost: 10,
-            dish_id: 6,
-            name: "burger",
-            user_id: 8,
-            users: [8]
-          }],
-          event_id: 3,
-          users: [{
-            dishes: [{
-              cost: 8,
-              dish_id: 5,
-              name: "ramen",
-              user_id: 7,
-              users: [7, 8]
-            }],
-            host: true,
-            id: 7,
-            status: true,
-            username: "fawn"
-          }, {
-            dishes: [{
-              cost: 8,
-              dish_id: 5,
-              name: "ramen",
-              user_id: 7,
-              users: [7, 8]
-            }, {
-              cost: 10,
-              dish_id: 6,
-              name: "burger",
-              user_id: 8,
-              users: [8]
-            }],
-            host: false,
-            id: 8,
-            status: false,
-            username: "jackson"
-          }]
-        }
-      };
-
-  var scopeMock = {
-    $on: function () {}
+    getSessStorage: function(prop) {
+      if (prop === "user_id") {
+        return 8; // jackson, not host
+      }
+    },
+    initListeners: function() {},
+    arrayToSentence: function(array) {
+      array = _.map(array, _.capitalize);
+      if (array.length === 1) {
+        return array[0];
+      }
+      if (array.length === 2) {
+        return array.join(" and ");
+      } else {
+        var last = array.pop();
+        return array.join(", ") + " and " + last;
+      }
+    },
+    shareDish: function() {},
+    getDishIndivCost: function(dish) {
+      return dish.cost / dish.users.length;
+    },
+    data: {
+      billData: {
+        code: "bread",
+        event_id: 3,
+        grandTotal: 47.8,
+        hostUsername: "fawn",
+        host_id: 7,
+        subTotal: 18,
+        taxPercent: 10,
+        taxSum: 19.8,
+        tipPercent: 10,
+        tipSum: 19.8
+      },
+      code: "bread",
+      dishes: [{
+        cost: 8,
+        dish_id: 5,
+        name: "ramen",
+        user_id: 7,
+        users: [7, 8]
+      }, {
+        cost: 10,
+        dish_id: 6,
+        name: "burger",
+        user_id: 8,
+        users: [8]
+      }],
+      event_id: 3,
+      users: [{
+        dishes: [{
+          cost: 8,
+          dish_id: 5,
+          name: "ramen",
+          user_id: 7,
+          users: [7, 8]
+        }],
+        host: true,
+        id: 7,
+        status: true,
+        username: "fawn"
+      }, {
+        dishes: [{
+          cost: 8,
+          dish_id: 5,
+          name: "ramen",
+          user_id: 7,
+          users: [7, 8]
+        }, {
+          cost: 10,
+          dish_id: 6,
+          name: "burger",
+          user_id: 8,
+          users: [8]
+        }],
+        host: false,
+        id: 8,
+        status: false,
+        username: "jackson"
+      }]
+    }
   };
 
-  beforeEach(inject(function(_$controller_, $rootScope){
+  var scopeMock = {
+    $on: function() {}
+  };
+
+  beforeEach(inject(function(_$controller_, $rootScope) {
     // Angular mock injector unwraps the underscores (_) from around the parameter names when matching
     $controller = _$controller_;
     socketMock = new sockMock($rootScope);
@@ -116,7 +116,11 @@ describe('Piecemeal', function() {
     var controller, dishMock;
 
     beforeEach(function() {
-      controller = $controller('HostBillCtrl', { $scope: scopeMock, socketFactory: socketMock, appFactory: appFactoryMock});
+      controller = $controller('HostBillCtrl', {
+        $scope: scopeMock,
+        socketFactory: socketMock,
+        appFactory: appFactoryMock
+      });
 
       // can optionally use dishMock instead of appFactoryMock.data.dishes[0] below for simplicity
       // dishMock = {
@@ -139,7 +143,12 @@ describe('Piecemeal', function() {
     var guestsDishes;
 
     beforeEach(function() {
-      controller = $controller('GuestBillCtrl', { $scope: scopeMock, socketFactory: socketMock, appFactory: appFactoryMock, addDishFactory: addDishFactoryMock});
+      controller = $controller('GuestBillCtrl', {
+        $scope: scopeMock,
+        socketFactory: socketMock,
+        appFactory: appFactoryMock,
+        addDishFactory: addDishFactoryMock
+      });
     });
 
     it("should get Guest's dishes", function() {
@@ -157,21 +166,25 @@ describe('Piecemeal', function() {
 
   });
 
-
   describe('AddDishCtrl', function() {
     var controller, addDishFactory;
 
     beforeEach(function() {
       addDishFactory = {
-        calculateRunningTotal: function () {}
+        calculateRunningTotal: function() {}
       };
       appFactory = {
-        getSessStorage: function () {},
-        initListeners : function() {},
-        shareDish: function () {}
+        getSessStorage: function() {},
+        initListeners: function() {},
+        shareDish: function() {}
       };
 
-      controller = $controller('AddDishCtrl', { $scope: scopeMock, socketFactory: socketMock, addDishFactory: addDishFactory, appFactory: appFactory});
+      controller = $controller('AddDishCtrl', {
+        $scope: scopeMock,
+        socketFactory: socketMock,
+        addDishFactory: addDishFactory,
+        appFactory: appFactory
+      });
     });
 
     it('should emit "addDish" and a dish object', function() {
@@ -194,17 +207,21 @@ describe('Piecemeal', function() {
     var dish;
 
     beforeEach(function() {
-      controller = $controller('AllDishesCtrl', { $scope: scopeMock, socketFactory: socketMock, appFactory: appFactoryMock});
+      controller = $controller('AllDishesCtrl', {
+        $scope: scopeMock,
+        socketFactory: socketMock,
+        appFactory: appFactoryMock
+      });
       dish = controller.data.dishes[0];
     });
 
     it('should check to see if a user is on a dish', function() {
-      expect(controller.isOnDish(dish.users,7)).toBe(true);
+      expect(controller.isOnDish(dish.users, 7)).toBe(true);
     });
 
     // Bug: currently incorrectly returning 'false' instead of 'true':
     it('.shareDish emits "shareDish" with a dish object', function() {
-      controller.shareDish(1, 7, [1,2]); // dish.dish_id, allDishes.user_id, dish.users
+      controller.shareDish(1, 7, [1, 2]); // dish.dish_id, allDishes.user_id, dish.users
 
       expect(socketMock.emits["shareDish"].dish_id).toBe(1);
       expect(socketMock.emits["shareDish"].user_id).toBe(7);
@@ -219,7 +236,7 @@ https://github.com/hackify/hackify-server/blob/master/test/controllers.test.js
 https://github.com/nullivex/angular-socket.io-mock
 */
 // When finished with tests, move this out of global scope, and into the Piecemeal describe block at top
-var sockMock = function($rootScope){
+var sockMock = function($rootScope) {
   this.events = {};
   this.emits = {};
 
@@ -228,8 +245,8 @@ var sockMock = function($rootScope){
   };
 
   // intercept 'on' calls and capture the callbacks
-  this.on = function(eventName, callback){
-    console.log("socketMock hears eventName: ", eventName); 
+  this.on = function(eventName, callback) {
+    console.log("socketMock hears eventName: ", eventName);
     console.log("socketMock listener has this callback: ", callback); // to see whole callback: callback.toString()
 
     if (!this.events[eventName]) {
@@ -237,16 +254,16 @@ var sockMock = function($rootScope){
     }
     this.events[eventName].push(callback);
     callback(this.emits[eventName]);
-    
-    console.log("socketMock has updated this.events to: ", this.events); 
-    console.log('passing socketMock.emits[eventName] to callback in this.on: ', this.emits[eventName]); 
+
+    console.log("socketMock has updated this.events to: ", this.events);
+    console.log('passing socketMock.emits[eventName] to callback in this.on: ', this.emits[eventName]);
   };
 
   // intercept 'emit' calls from the client and record them to assert against in the test
 
-    this.emit = function(eventName, data){
-      // console.log("socketMock is emitting! eventName: ", eventName); 
-      // console.log("socketMock is emitting this data: ", data); 
+  this.emit = function(eventName, data) {
+    // console.log("socketMock is emitting! eventName: ", eventName);
+    // console.log("socketMock is emitting this data: ", data);
 
     // cut original code:
     // if(this.events[eventName]){
@@ -256,38 +273,37 @@ var sockMock = function($rootScope){
     //     });
     //   });
     // };
-    console.log(".emit data: ", data); 
+    console.log(".emit data: ", data);
     this.emits[eventName] = data;
-    console.log('socketMock.emits["shareDish"] is: ', socketMock.emits["shareDish"]); 
-  }
-
+    console.log('socketMock.emits["shareDish"] is: ', socketMock.emits["shareDish"]);
+  };
   //simulate an inbound message to the socket from the server (only called from the test)
-  this.receive = function(eventName){
+  this.receive = function(eventName) {
     var args = Array.prototype.slice.call(arguments, 1);
 
-    if(this.events[eventName]){
-      angular.forEach(this.events[eventName], function(callback){
+    if (this.events[eventName]) {
+      angular.forEach(this.events[eventName], function(callback) {
         $rootScope.$apply(function() {
           callback.apply(this, args);
         });
       });
-    };
+    }
   };
 
 };
 
-  // socketMock test format:
+// socketMock test format:
 
-  // it("emits and receives messages", function(){
-  //   var testReceived = false;
+// it("emits and receives messages", function(){
+//   var testReceived = false;
 
-  //   socket.on("test", function(data){
-  //     testReceived = true;
-  //   });
+//   socket.on("test", function(data){
+//     testReceived = true;
+//   });
 
-  //   socket.emit("test", { info: "test" });
-  //   expect(testReceived).toBe(true);
-  // });
+//   socket.emit("test", { info: "test" });
+//   expect(testReceived).toBe(true);
+// });
 
 /*
 // ANGULAR EXAMPLE

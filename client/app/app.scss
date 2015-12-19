@@ -1,13 +1,30 @@
 // injector
 @import 'addDish/addDish.scss';
 @import 'allDishes/allDishes.scss';
+@import 'dashboard/dashboard.scss';
 @import 'guestBill/guestBill.scss';
 @import 'home/home.scss';
 @import 'hostBill/hostBill.scss';
 @import 'hostReceipt/hostReceipt.scss';
 @import 'loading/loading.scss';
+@import 'oAuth/oAuth.scss';
 // endinjector
 
-div {
-    border: 1px solid gray;
+.payButton {
+  border-radius: 3px;
+  border: 0;
+  padding: 8px 18px;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  width: 95px;
 }
+
+.venmoEnabled {
+  background-color: #3D95CE;
+}
+
+.cashEnabled {
+  background-color: #79C86C;
+}
+

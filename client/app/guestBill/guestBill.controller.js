@@ -31,7 +31,6 @@
 
     $scope.$on('billsSentToGuests', function() {
       self.data.billData = appFactory.data.billData;
-      console.log("Bill received by guest", self.data.billData);
     });
 
     // self.getGuestDishes = _.memoize(function(user_id, dishes) {
@@ -39,7 +38,6 @@
     //     return _.contains(obj.users, user_id);
     //   });
     // });
-    // depending on pass by reference - so don't use memoize
     self.getGuestDishes = function(user_id, dishes) {
       return (!self.data) ? [] : _.filter(dishes, function(obj, key) {
         return _.contains(obj.users, user_id);
@@ -51,7 +49,7 @@
     };
 
     self.getGrandTotal = function(dishes, billData) {
-      return _.sum(_.pluck(dishes, 'cost')) + billData.tipPercent + billData.taxPercent;
+      return (!self.data) ? 0 : _.sum(_.pluck(dishes, 'cost')) + billData.tipPercent + billData.taxPercent;
     };
 
     self.getOtherUsersByUsername = function(dish, users, user_id) {

@@ -2,7 +2,7 @@
   'use strict';
 
   angular.module('Piecemeal')
-  .factory('dashboardFactory', dashboardFactory);
+    .factory('dashboardFactory', dashboardFactory);
 
   dashboardFactory.$inject = ['$http'];
 
@@ -18,15 +18,14 @@
       return $http({
         method: 'GET',
         url: '/auth/createEvent'
-      })
-
+      });
     }
 
     function getBills() {
       return $http({
         method: 'GET',
         url: '/auth/getBills'
-      })
+      });
     }
   }
 

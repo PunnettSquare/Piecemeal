@@ -2,8 +2,7 @@ var path = require('path');
 var bodyParser = require('body-parser');
 var morgan = require('morgan');
 
-
-module.exports = function (app, express, io) {
+module.exports = function(app, express, io) {
 
   app.use(bodyParser.urlencoded({
     extended: true
@@ -17,7 +16,9 @@ module.exports = function (app, express, io) {
 
   app.use('/', express.static(path.join(__dirname, '../../client/')));
 
-  app.use(morgan('dev')); // doesn't log the annoying static GET requests
+  app.use(morgan('dev'));
+
+  // app.use('/', express.static(path.join(__dirname, '../../dist/client')));
 
   app.use('/auth', oauthRouter);
 
@@ -28,4 +29,3 @@ module.exports = function (app, express, io) {
   require('../routes/eventRouter')(eventRouter, io);
 
 };
-
