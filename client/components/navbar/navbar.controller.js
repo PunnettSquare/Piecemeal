@@ -16,10 +16,10 @@
     }
     
     self.logout = appFactory.logout;
-    self.goToAllDishes = appFactory.goToAllDishes;
-    self.goToGuestBill = appFactory.goToGuestBill;
-    self.goToAddDish = appFactory.goToAddDish;
-    self.goToHostBill = appFactory.goToHostBill;
+    // self.goToAllDishes = appFactory.goToAllDishes;
+    // self.goToGuestBill = appFactory.goToGuestBill;
+    // self.goToAddDish = appFactory.goToAddDish;
+    // self.goToHostBill = appFactory.goToHostBill;
 
   }
 
