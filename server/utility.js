@@ -31,6 +31,19 @@ module.exports = {
       });
   },
 
+  checkCode: function (db, code) {
+    return db('events').where({
+      code:code
+    })
+    .then(function(data) {
+      if (data.length === 0) {
+        return false;
+      } else {
+        return true;  
+      }
+    })
+  },
+
   createEventVenmo: function(db, code, user_id) {
     return db('events').insert({
         code: code

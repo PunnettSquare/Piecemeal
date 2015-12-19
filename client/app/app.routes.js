@@ -25,7 +25,7 @@
     console.log('window.localStorage =', window.localStorage);
     $urlRouterProvider.otherwise(function($injector) {
       var state = $injector.get('$state');
-      if (!window.localStorage.username || window.localStorage.username === "undefined") {
+      if (!window.localStorage.getItem('username') || window.localStorage.getItem('username') === "undefined") {
         state.go('home');
         // state.go('404');
       } else {

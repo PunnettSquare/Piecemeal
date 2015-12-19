@@ -27,6 +27,13 @@ module.exports = function(app, io) {
       });
   });
 
+  app.get('/checkCode/:code', function (req, res) {
+    util.checkCode(db, req.params.code)
+    .then(function(billExists) {
+      res.send(billExists);
+    })
+  })
+
   app.post('/newUser', function(req, res) {
     var username = req.body.username || 'Jerry';
     var code = req.body.code || 'testRoom';
