@@ -112,7 +112,9 @@
             <h1 class="h1 panel-title">Grand Total</h1>
             <p class="help-block text-right">
               <span ng-show="billForm.tip.$pristine && billForm.tip.$pristine">
-                {{ hostBill.getSubTotal(hostBill.data.dishes) | currency}}
+                {{ hostBill.getSubTotal(hostBill.data.dishes) 
+                + (hostBill.repopulateTip(hostBill.data.billData) * 0.01 * hostBill.getSubTotal(hostBill.data.dishes)) 
+                + (hostBill.repopulateTax(hostBill.data.billData) * 0.01 * hostBill.getSubTotal(hostBill.data.dishes))| currency}}
               </span>
               <span ng-show="billForm.tip.$dirty && billForm.tax.$pristine">
                 {{ hostBill.getSubTotal(hostBill.data.dishes) +
@@ -131,7 +133,7 @@
         </div>
 
         <br>
-        <div class="alert alert-success alert-dismissible" role="alert" ng-show="hostBill.billsSent">
+        <div class="alert alert-success alert-dismissible" role="alert" ng-show="!hostBill.billsSent">
           <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
           Bills sent successfully!
         </div>
