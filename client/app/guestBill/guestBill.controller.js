@@ -49,16 +49,8 @@
     };
 
     self.getGrandTotal = function(dishes, billData) {
-      if (!self.data) {
-        return 0
-      } else {
-      console.log("billData: ", dishes); 
-      return _.sum(_.pluck(dishes, 'cost')) + self.getGuestTip() + self.getGuestTax();
-
-      // return _.sum(_.pluck(dishes, 'cost')) + billData.tipPercent + billData.taxPercent;
-        
+      return (!self.data) ?  0 : return _.sum(_.pluck(dishes, 'cost')) + self.getGuestTip() + self.getGuestTax();
       }
-      // return (!self.data) ? 0 : 
     };
 
     self.getOtherUsersByUsername = function(dish, users, user_id) {
