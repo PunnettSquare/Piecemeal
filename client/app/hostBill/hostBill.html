@@ -66,7 +66,7 @@
                   {{ 0 + hostBill.repopulateTip(hostBill.data.billData) * 0.01 * hostBill.getSubTotal(hostBill.data.dishes) | currency }}
                 </span>
                 <span ng-show="billForm.tip.$dirty" id="currency-default">
-                  {{ hostBill.getTip() | currency}}
+                  {{ hostBill.getTip('dollar') | currency}}
                 </span>
                 </strong>
               </p>
@@ -98,9 +98,9 @@
                 <span ng-show="billForm.tax.$pristine">
                   {{ 0 + hostBill.repopulateTax(hostBill.data.billData) * 0.01 * hostBill.getSubTotal(hostBill.data.dishes) | currency }}
                 </span>
-                <span ng-show="billForm.tax.$dirty" id="currency-default">
-                  {{ hostBill.getTax() | currency}}
-                </span>
+                  <span ng-show="billForm.tax.$dirty" id="currency-default">
+                    {{ hostBill.getTax('dollar') | currency}}
+                  </span>
                 </strong>
               </p>
             </div>
@@ -130,10 +130,10 @@
                 Fee as percent of subtotal: 
                 <strong>
                   <span ng-show="billForm.fee.$pristine">
-                    {{ 0 + hostBill.getFeePercent()}}%
+                    {{ 0 + hostBill.getFeeOrDiscountPercent('fee')}}%
                   </span>
                   <span ng-show="billForm.fee.$dirty" id="currency-default">
-                    {{ hostBill.getFeePercent()}}%
+                    {{ hostBill.getFeeOrDiscountPercent('fee')}}%
                   </span>
                 </strong>
               </p>
@@ -157,10 +157,10 @@
                 Discount as percent of subtotal: 
                 <strong>
                   <span ng-show="billForm.discount.$pristine">
-                    {{ 0 + hostBill.getDiscountPercent()}}%
+                    {{ 0 + hostBill.getFeeOrDiscountPercent('discount')}}%
                   </span>
                   <span ng-show="billForm.discount.$dirty" id="currency-default">
-                    {{ hostBill.getDiscountPercent()}}%
+                    {{ hostBill.getFeeOrDiscountPercent('discount')}}%
                   </span>
                 </strong>
               </p>
@@ -182,11 +182,11 @@
               </span>
               <span ng-show="billForm.tip.$dirty && billForm.tax.$pristine">
                 {{ hostBill.getSubTotal(hostBill.data.dishes) +
-                hostBill.getTip() + hostBill.fee - hostBill.discount | currency }}
+                hostBill.getTip('dollar') + hostBill.fee - hostBill.discount | currency }}
               </span>
               <span ng-show="billForm.tip.$dirty && billForm.tax.$dirty">
                 {{ hostBill.getSubTotal(hostBill.data.dishes) +
-                hostBill.getTip() + hostBill.getTax() + hostBill.fee - hostBill.discount | currency }}
+                hostBill.getTip('dollar') + hostBill.getTax('dollar') + hostBill.fee - hostBill.discount | currency }}
               </span>
             </p>
           </div>

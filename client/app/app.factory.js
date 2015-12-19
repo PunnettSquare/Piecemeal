@@ -26,12 +26,17 @@
       goToHostBill: goToHostBill,
       goToHome: goToHome,
       copySessData: copySessData,
-      logout: logout
+      logout: logout,
+      getUsers: getUsers
         // data: data
         // data.billData: billData
     };
 
     return services;
+
+    function getUsers() {
+      console.log("services data: ", services.data);
+    };
 
     function getSessStorage(prop) {
       if (prop === "code") {
