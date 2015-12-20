@@ -146,10 +146,7 @@
         </div>
 
         <!-- DISCOUNT -->
-        <!-- <div class="panel panel-default" ng-show="hostBill.discountOption  || hostBill.data.billData.discountPercent""> -->
-        <!-- add: || hostBill.data.billData.discountPerecent -->
-
-        <div class="panel panel-default">
+        <div class="panel panel-default" ng-show="hostBill.discountOption || hostBill.data.billData.discountPercent">
           <div class="panel-heading">
             <h1 class="panel-title">Add Discount</h1>
             <br>
@@ -161,15 +158,19 @@
             <!-- DISPLAY DISCOUNT -->
             <div class="discount">
               <p class="help-block text-right">
-                Discount as percent of subtotal: 
-                <strong>
-                  <span ng-show="billForm.discount.$pristine">
-                    {{ 0 + hostBill.getFeeOrDiscountPercent('discount')}}%
-                  </span>
-                  <span ng-show="billForm.discount.$dirty" id="currency-default">
-                    {{ hostBill.getFeeOrDiscountPercent('discount')}}%
-                  </span>
-                </strong>
+
+                <span ng-show="billForm.discount.$pristine">
+                  Your added discount: 
+                  <strong>
+                  {{ 0 + hostBill.repopulateDiscount(hostBill.data.billData) * 0.01 * hostBill.getSubTotal(hostBill.data.dishes) | currency }}
+                  </strong>
+                </span>
+                <span ng-show="billForm.discount.$dirty" id="currency-default">
+                  Discount as percent of subtotal: 
+                  <strong>
+                  {{ hostBill.getFeeOrDiscountPercent('discount')}}%
+                  </strong>
+                </span>
               </p>
             </div>
           </div>
