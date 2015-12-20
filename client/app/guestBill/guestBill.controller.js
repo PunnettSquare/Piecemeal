@@ -76,25 +76,18 @@
     };
 
     self.getGuestFee = function () {
-      return self.data.billData.feePercent * self.getGuestSubtotal(self.data) * 0.01;
+      return (!self.data) ? 0 : self.data.billData.feePercent * self.getGuestSubtotal(self.data) * 0.01;
     };
 
     self.getGuestDiscount = function () {
-      return self.data.billData.discountPercent * self.getGuestSubtotal(self.data) * 0.01;
+      return (!self.data) ? 0 : self.data.billData.discountPercent * self.getGuestSubtotal(self.data) * 0.01;
     };
-
-    //remove?
-
-    // self.getGuestTotal = function(data) {
-    //   return addDishFactory.calculateRunningTotal(data);
-    // };
 
     self.getGuestSubtotal = function(data) {
       return addDishFactory.calculateRunningTotal(data);
     };
 
     self.getGuestGrandTotal = function() {
-
       // return (!self.data) ? 0 : Math.round(
       //   (self.getGuestTotal(self.data) 
       //     + (self.data.billData.taxPercent * self.getGuestTotal(self.data) * 0.01) 
@@ -114,35 +107,15 @@
       return (!self.data) ? 0 : _.sum(_.pluck(dishes, 'cost'));
     };
 
-
-    //remove?
+    //remove:
     // self.getGrandTotal = function(dishes, billData) {
     //   return (!self.data) ?  0 : return _.sum(_.pluck(dishes, 'cost')) + self.getGuestTip() + self.getGuestTax();
     //   }
     // };
 
-    self.getGrandTotal = function(dishes, billData) {
-
-      // return (!self.data) ? 0 : _.sum(_.pluck(dishes, 'cost')) + billData.tipPercent + billData.taxPercent;
-      // return (!self.data) ? 0 : _.sum(_.pluck(dishes, 'cost')) + self.getGuestTip() + self.getGuestTax()
-      // + self.getGuestFee() + self.getGuestDiscount(); //get host tip
-      return (!self.data) ? 0 : self.data.billData.grandTotal;
-      
-      // return (!self.data) ? 0 : (function () {
-      //   var subtotal = _.sum(_.pluck(dishes, 'cost'));
-      //   console.log("subtotal: ", subtotal);  
-      //   console.log("billData: ", billData); 
-      //   console.log("billData.taxPercent: ", billData.taxPercent); 
-      //   console.log("billData.tipPercent * subtotal * 0.01: ", billData.tipPercent * subtotal *0.01); 
-      //   return subtotal 
-      //   + (billData.tipPercent * subtotal * 0.01) 
-      //   + (billData.taxPercent * subtotal * 0.01)
-      //   + self.getGuestFee() 
-      //   - self.getGuestDiscount()
-      // })();
-    };
-
     self.logout = appFactory.logout;
 
-  }
+  };
+
+
 })();
