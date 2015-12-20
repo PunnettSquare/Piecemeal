@@ -32,8 +32,6 @@
 
     self.tipType = 'percent';
     self.taxType = 'percent';
-    self.fee = 0;
-    self.discount = 0;
 
     self.repopulateTip = function(billData) {
       return (!billData) ? 0 : billData.tipPercent;
@@ -41,6 +39,14 @@
 
     self.repopulateTax = function(billData) {
       return (!billData) ? 0 : billData.taxPercent;
+    };
+
+    self.repopulateFee = function(billData) {
+      return (!billData) ? 0 : billData.feePercent;
+    };
+
+    self.repopulateDiscount = function(billData) {
+      return (!billData) ? 0 : billData.discountPercent;
     };
 
     self.getTip = function (dollarOrPercent) {
