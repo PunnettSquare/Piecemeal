@@ -115,7 +115,7 @@
         <!-- End FEE/DISCOUNT option -->
 
         <!-- FEES -->
-        <div class="panel panel-default" ng-show="hostBill.feeOption">
+        <div class="panel panel-default" ng-show="hostBill.feeOption || hostBill.data.billData.feePercent">
           <div class="panel-heading">
             <h1 class="panel-title">Add Fee</h1>
             <br>
@@ -127,22 +127,29 @@
             <!-- DISPLAY FEE -->
             <div class="fee">
               <p class="help-block text-right">
-                Fee as percent of subtotal: 
-                <strong>
-                  <span ng-show="billForm.fee.$pristine">
-                    {{ 0 + hostBill.getFeeOrDiscountPercent('fee')}}%
-                  </span>
-                  <span ng-show="billForm.fee.$dirty" id="currency-default">
-                    {{ hostBill.getFeeOrDiscountPercent('fee')}}%
-                  </span>
-                </strong>
+                <span ng-show="billForm.fee.$pristine">
+                  <!-- {{ 0 + hostBill.repopulateFee(hostBill.data.billData) }}% -->
+                  Your added fee: 
+                  <strong>
+                  {{ 0 + hostBill.repopulateFee(hostBill.data.billData) * 0.01 * hostBill.getSubTotal(hostBill.data.dishes) | currency }}
+                  </strong>
+                </span>
+                <span ng-show="billForm.fee.$dirty" id="currency-default">
+                  Fee as percent of subtotal: 
+                  <strong>
+                  {{ hostBill.getFeeOrDiscountPercent('fee')}}%
+                  </strong>
+                </span>
               </p>
             </div>
           </div>
         </div>
 
         <!-- DISCOUNT -->
-        <div class="panel panel-default" ng-show="hostBill.discountOption">
+        <!-- <div class="panel panel-default" ng-show="hostBill.discountOption  || hostBill.data.billData.discountPercent""> -->
+        <!-- add: || hostBill.data.billData.discountPerecent -->
+
+        <div class="panel panel-default">
           <div class="panel-heading">
             <h1 class="panel-title">Add Discount</h1>
             <br>
