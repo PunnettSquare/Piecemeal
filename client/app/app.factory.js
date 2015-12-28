@@ -33,10 +33,11 @@
     };
 
     return services;
-
-    function getUsers() {
-      console.log("services data: ", services.data);
-    };
+    
+    // Possible new function for hostReceipt
+    //function getUsers() {
+    //  console.log("services data: ", services.data);
+    //};
 
     function getSessStorage(prop) {
       if (prop === "code") {
