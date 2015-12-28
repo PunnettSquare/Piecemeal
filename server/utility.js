@@ -53,12 +53,14 @@ module.exports = {
     });
   },
 
-  addTipAndTax: function(db, event_id, taxPercent, tipPercent) {
+  addTipAndTax: function(db, event_id, taxPercent, tipPercent, feePercent, discountPercent) {
     return db('events').where({
       'id': event_id
     }).update({
       taxPercent: taxPercent,
-      tipPercent: tipPercent
+      tipPercent: tipPercent,
+      feePercent: feePercent,
+      discountPercent: discountPercent
     });
   },
 
@@ -176,10 +178,12 @@ module.exports = {
       code: code,
       billData: {}
     };
-    return module.exports.findTipAndTax(db, event_id)
-      .then(function(tipTaxObj) {
-        state.billData.tipPercent = Number(tipTaxObj[0].tipPercent);
-        state.billData.taxPercent = Number(tipTaxObj[0].taxPercent);
+    return module.exports.findBillAmendments(db, event_id)
+      .then(function(amendmentsObj) {
+        state.billData.tipPercent = Number(amendmentsObj[0].tipPercent);
+        state.billData.taxPercent = Number(amendmentsObj[0].taxPercent);
+        state.billData.feePercent = Number(amendmentsObj[0].feePercent);
+        state.billData.discountPercent = Number(amendmentsObj[0].discountPercent);
       }).then(function() {
         return module.exports.findEventUsers(db, event_id)
           .then(function(users) {
@@ -247,8 +251,8 @@ module.exports = {
       }); // TODO only get dishes associated with the event
   },
 
-  findTipAndTax: function(db, event_id) {
-    return db('events').select('tipPercent', 'taxPercent')
+  findBillAmendments: function(db, event_id) {
+    return db('events').select('tipPercent', 'taxPercent', 'feePercent', 'discountPercent')
       .where('id', event_id);
   },
 
