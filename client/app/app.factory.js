@@ -153,7 +153,8 @@
         delete $window.localStorage[prop];
       }
       goToHome();
-      $window.location.reload();
+      //remove after testing
+      // $window.location.reload();
     }
 
     function getUsersByDish(dish, users) {
