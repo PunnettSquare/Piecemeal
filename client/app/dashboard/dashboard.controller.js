@@ -30,7 +30,7 @@
     dashboardFactory.createEvent()
       .then(function(data) {
         data = data.data;
-        _.assign($window.sessionStorage, {
+        _.assign($window.localStorage, {
           username: data.username,
           code: data.code,
           isHost: true,

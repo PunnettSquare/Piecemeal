@@ -9,24 +9,24 @@
   function LoadingCtrl($location, $window, loadingFactory, appFactory, $timeout) {
     var self = this;
 
-    if (!$window.sessionStorage.getItem('code')) {
+    if (!$window.localStorage.getItem('code')) {
       var path = $location.path().split('/');
-      $window.sessionStorage.setItem('code', path[path.length - 2]);
+      $window.localStorage.setItem('code', path[path.length - 2]);
     }
 
     self.setSessionUser = function(username) {
       loadingFactory.sendSessionUser(
-          _.assign($window.sessionStorage, {
+          _.assign($window.localStorage, {
             isHost: false,
             username: username
           }))
         .then(function(userInfo) {
-          _.assign($window.sessionStorage, {
+          _.assign($window.localStorage, {
             user_id: userInfo.user_id,
             event_id: userInfo.event_id
           });
           self.isSent = true;
-          $location.path('/' + $window.sessionStorage.code + '/allDishes');
+          $location.path('/' + $window.localStorage.code + '/allDishes');
           // $timeout(function() {
           //   window.location.hash = "#/" + code + "/allDishes";
           // }, 1000);

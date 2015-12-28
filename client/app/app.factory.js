@@ -35,24 +35,24 @@
 
     function getSessStorage(prop) {
       if (prop === "code") {
-        return $window.sessionStorage.code;
+        return $window.localStorage.code;
       }
       if (prop === "event_id") {
-        return parseInt($window.sessionStorage.event_id);
+        return parseInt($window.localStorage.event_id);
       }
       if (prop === "isHost") {
-        return ($window.sessionStorage.isHost === "false") ? false : true;
+        return ($window.localStorage.isHost === "false") ? false : true;
       }
       if (prop === "user_id") {
-        return parseInt($window.sessionStorage.user_id);
+        return parseInt($window.localStorage.user_id);
       }
       if (prop === "username") {
-        return $window.sessionStorage.username;
+        return $window.localStorage.username;
       }
     }
 
     function copySessData(self) {
-      for (var prop in $window.sessionStorage) {
+      for (var prop in $window.localStorage) {
         self[prop] = getSessStorage(prop);
       }
     }
@@ -143,8 +143,8 @@
     }
 
     function logout() {
-      for (var prop in $window.sessionStorage) {
-        delete $window.sessionStorage[prop];
+      for (var prop in $window.localStorage) {
+        delete $window.localStorage[prop];
       }
       goToHome();
       $window.location.reload();

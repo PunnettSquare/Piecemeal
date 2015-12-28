@@ -4,17 +4,28 @@
   angular.module('Piecemeal')
     .controller('HomeCtrl', HomeCtrl);
 
-  HomeCtrl.$inject = ['$window'];
+  HomeCtrl.$inject = ['$window', 'homeFactory', '$location'];
 
-  function HomeCtrl($window) {
+  function HomeCtrl($window, homeFactory, $location) {
 
     var self = this;
 
+    self.incorrectCode = false;
+
     self.setSessionUser = function(code) {
-      _.assign($window.sessionStorage, {
-        code: code.toLowerCase(),
-        isHost: false
-      });
+      homeFactory.checkCode(code)
+      .then(function(validCode) {
+        console.log(validCode.data)
+        if (validCode.data) {
+          _.assign($window.localStorage, {
+            code: code.toLowerCase(),
+            isHost: false
+          });
+          $location.path('/' + $window.localStorage.code + '/loading');
+        } else {
+          self.incorrectCode = true;
+        }
+      })
     };
 
   }

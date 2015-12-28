@@ -49,8 +49,7 @@
     };
 
     self.getGrandTotal = function(dishes, billData) {
-      return (!self.data) ?  0 : return _.sum(_.pluck(dishes, 'cost')) + self.getGuestTip() + self.getGuestTax();
-      }
+      return (!self.data) ?  0 : _.sum(_.pluck(dishes, 'cost')) + self.getGuestTip() + self.getGuestTax();
     };
 
     self.getOtherUsersByUsername = function(dish, users, user_id) {
@@ -75,7 +74,7 @@
     };
 
     self.getGuestGrandTotal = function() {
-      return (!self.data) ? 0 : self.getGuestTotal(self.data) + (self.data.billData.taxPercent * self.getGuestTotal(self.data) * 0.01) + (self.data.billData.tipPercent * self.getGuestTotal(self.data) * 0.01);
+      return (!self.data) ? 0 : Math.round((self.getGuestTotal(self.data) + (self.data.billData.taxPercent * self.getGuestTotal(self.data) * 0.01) + (self.data.billData.tipPercent * self.getGuestTotal(self.data) * 0.01))*100)/100;
     };
 
     self.logout = appFactory.logout;
