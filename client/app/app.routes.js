@@ -36,12 +36,12 @@
     $stateProvider
       .state('home', {
         url: '/home',
-        views: {
-          'navbar': {
-            templateUrl: 'components/navbar/navbar.html',
-            controller: 'NavbarCtrl',
-            controllerAs: 'navbar'
-          },
+        views: { 
+        //   'navbar': { // may not need navbar for homepage. Therefore avoid the issue of double logos
+        //     templateUrl: 'components/navbar/navbar.html',
+        //     controller: 'NavbarCtrl',
+        //     controllerAs: 'navbar'
+        //   },
           '@': {
             templateUrl: 'app/home/home.html',
             controller: 'HomeCtrl',
@@ -147,7 +147,7 @@
         views: {
           '@': {
             templateUrl: 'app/hostReceipt/hostReceipt.html',
-            controller: 'HostReceipt',
+            controller: 'HostReceiptCtrl',
             controllerAs: 'hostReceipt'
           }
         },

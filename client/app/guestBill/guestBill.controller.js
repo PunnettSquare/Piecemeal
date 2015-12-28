@@ -44,10 +44,12 @@
       });
     };
 
+//remove?
     self.getGuestTotal = function(data) {
       return addDishFactory.calculateRunningTotal(data);
     };
 
+//remove
     self.getGrandTotal = function(dishes, billData) {
       return (!self.data) ?  0 : _.sum(_.pluck(dishes, 'cost')) + self.getGuestTip() + self.getGuestTax();
     };
@@ -66,18 +68,54 @@
     };
 
     self.getGuestTax = function() {
-      return (!self.data) ? 0 : self.data.billData.taxPercent * self.getGuestTotal(self.data) * 0.01;
+      return (!self.data) ? 0 : self.data.billData.taxPercent * self.getGuestSubtotal(self.data) * 0.01;
     };
 
     self.getGuestTip = function() {
-      return (!self.data) ? 0 : self.data.billData.tipPercent * self.getGuestTotal(self.data) * 0.01;
+      return (!self.data) ? 0 : self.data.billData.tipPercent * self.getGuestSubtotal(self.data) * 0.01;
+    };
+
+    self.getGuestFee = function () {
+      return (!self.data) ? 0 : self.data.billData.feePercent * self.getGuestSubtotal(self.data) * 0.01;
+    };
+
+    self.getGuestDiscount = function () {
+      return (!self.data) ? 0 : self.data.billData.discountPercent * self.getGuestSubtotal(self.data) * 0.01;
+    };
+
+    self.getGuestSubtotal = function(data) {
+      return addDishFactory.calculateRunningTotal(data);
     };
 
     self.getGuestGrandTotal = function() {
-      return (!self.data) ? 0 : Math.round((self.getGuestTotal(self.data) + (self.data.billData.taxPercent * self.getGuestTotal(self.data) * 0.01) + (self.data.billData.tipPercent * self.getGuestTotal(self.data) * 0.01))*100)/100;
+      // return (!self.data) ? 0 : Math.round(
+      //   (self.getGuestTotal(self.data) 
+      //     + (self.data.billData.taxPercent * self.getGuestTotal(self.data) * 0.01) 
+      //     + (self.data.billData.tipPercent * self.getGuestTotal(self.data) * 0.01)
+      //   )*100)/100;
+
+      return (!self.data) ? 0 : Math.round((
+        self.getGuestTotal(self.data) 
+      + self.getGuestTax() 
+      + self.getGuestTip()
+      + self.getGuestFee() 
+      - self.getGuestDiscount()
+      )*100)/100;
     };
+
+    self.getAllSubtotal = function (dishes) {
+      return (!self.data) ? 0 : _.sum(_.pluck(dishes, 'cost'));
+    };
+
+    //remove:
+    // self.getGrandTotal = function(dishes, billData) {
+    //   return (!self.data) ?  0 : _.sum(_.pluck(dishes, 'cost')) + self.getGuestTip() + self.getGuestTax();
+    //   }
+    // };
 
     self.logout = appFactory.logout;
 
-  }
+  };
+
+
 })();
