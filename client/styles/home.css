@@ -1,0 +1,21 @@
+.file-field .file-path-wrapper { /* overrides default materialize for Enter Code field */
+  overflow: hidden;
+  padding-right: 10px; /*right*/
+}
+
+.file-field .btn, .file-field .btn-large { /* overrides default materialize for joinButton */
+  float: right; /*switch to right; below included for clarity*/
+  height: 3rem;
+  line-height: 3rem;
+}
+
+.createButton {
+  height: 3rem;
+  line-height: 3rem;
+}
+
+@media (max-width: 600px) {
+  .shrink {
+    font-size: 1.4rem;
+  }
+}

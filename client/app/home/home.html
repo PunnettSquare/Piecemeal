@@ -1,22 +1,4 @@
-<style>
-
-.file-field .file-path-wrapper { /* overrides default materialize for Enter Code field */
-  overflow: hidden;
-  padding-right: 10px; /*right*/
-}
-
-.file-field .btn, .file-field .btn-large { /* overrides default materialize for joinButton */
-  float: right; /*switch to right; below included for clarity*/
-  height: 3rem;
-  line-height: 3rem;
-}
-
-.createButton {
-  height: 3rem;
-  line-height: 3rem;
-}
-
-</style>
+<link rel="stylesheet" href="../../styles/home.css">
 
 <div class="section no-pad-bot" id="index-banner">
   <div class="container">
@@ -41,7 +23,7 @@
         <div class="col s12 m6">
             <form name="userInput">
               <div>
-                <h5 class="center light">
+                <h5 class="center light shrink">
                   Setup a bill to split with your friends
                 </h5>
 
@@ -60,8 +42,8 @@
           <div class="row">
 
             <form name="userInput2">
-              <h5 class="center light">
-                Or join an existing bill by entering the code
+              <h5 class="center light shrink">
+                Or enter the code to join an existing bill
               </h5>
               <div class="file-field input-field homeButton">
                 <button class="btn enterRoom waves-effect waves-light teal lighten-1 validate" ng-disabled="userInput2.code.$error.required" ng-click="home.setSessionUser(code)" type="submit" name="joinBill">
