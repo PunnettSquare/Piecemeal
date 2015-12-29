@@ -71,7 +71,7 @@ module.exports = {
   },
 
   goToAddDish: function(webdriver, browser) {
-    return browser.findElement(webdriver.By.className('addDish'))
+    return browser.findElement(webdriver.By.className('button--addDish'))
       .then(function(button) {
         return button.click();
       });
@@ -116,7 +116,7 @@ module.exports = {
       hostBill: {
         connections: ['guestBill']
       }
-    }
+    };
     var alreadyOnPage = false;
     var routes = [];
     var findPageRoute = function(webdriver, browser, pageName, route, visited, currentPage) {
@@ -204,41 +204,40 @@ module.exports = {
           if (index < number) {
             button.click();
           }
-        })
-      })
+        });
+      });
   },
   makeRoom: function(webdriver, browser, name) {
     return browser.wait(webdriver.until.elementLocated(webdriver.By.css(".createRoom")), 8000)
       .then(function(element) {
-        return element.click()
+        return element.click();
       })
       .then(function() {
-        return browser.wait(webdriver.until.elementLocated(webdriver.By.css(".enterName")), 8000)
-
-        return browser.findElement(webdriver.By.className('createRoom'))
+        return browser.wait(webdriver.until.elementLocated(webdriver.By.css(".enterName")), 8000);
+        return browser.findElement(webdriver.By.className('createRoom'));
       })
       .then(function(element) {
         return element.sendKeys(name);
       })
       .then(function() {
-        return browser.findElement(webdriver.By.className('createBill'))
+        return browser.findElement(webdriver.By.className('createBill'));
       })
       .then(function(element) {
         return element.click();
       })
       .then(function() {
         browser.sleep(4000);
-        return browser.wait(webdriver.until.elementLocated(webdriver.By.css("strong.code")), 10000)
+        return browser.wait(webdriver.until.elementLocated(webdriver.By.css("strong.code")), 10000);
       })
       .then(function(element) {
         return element.getText();
-      })
+      });
   },
 
   setTipAndTax: function(webdriver, browser, tip, tax) {
     return browser.wait(webdriver.until.elementLocated(webdriver.By.css(".tipPercent")), 10000)
       .then(function(element) {
-        return element.sendKeys(tip)
+        return element.sendKeys(tip);
       })
       .then(function() {
         return browser.findElement(webdriver.By.className('taxPercent'));
@@ -251,36 +250,36 @@ module.exports = {
       })
       .then(function(button) {
         button.click();
-      })
+      });
   },
 
   getTip: function(webdriver, browser) {
     return browser.wait(webdriver.until.elementLocated(webdriver.By.css(".tipPercent")), 10000)
       .then(function(element) {
-        return element.getText()
-      })
+        return element.getText();
+      });
   },
 
   getTax: function(webdriver, browser) {
     return browser.wait(webdriver.until.elementLocated(webdriver.By.css(".taxPercent")), 10000)
       .then(function(element) {
-        return element.getText()
-      })
+        return element.getText();
+      });
   },
 
   checkDuplication: function(webdriver, browser) {
 
     return module.exports.goToPage(webdriver, browser, 'allDishes')
       .then(function() {
-        return browser.wait(webdriver.until.elementLocated(webdriver.By.css(".sharedBy")), 10000)
+        return browser.wait(webdriver.until.elementLocated(webdriver.By.css(".sharedBy")), 10000);
       })
       .then(function() {
-        return browser.findElements(webdriver.By.className('sharedBy'))
+        return browser.findElements(webdriver.By.className('sharedBy'));
       })
       .then(function(data) {
         return Promise.all(data.map(function(element) {
           return element.getText();
-        }))
+        }));
       })
       .then(function(sharedStrings) {
         var result;

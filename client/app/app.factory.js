@@ -27,17 +27,17 @@
       goToHome: goToHome,
       copySessData: copySessData,
       logout: logout,
-      getUsers: getUsers
-        // data: data
-        // data.billData: billData
+      // getUsers: getUsers
+      // data: data
+      // data.billData: billData
     };
 
     return services;
 
-    function getUsers() {
-      console.log("services data: ", services.data);
-      // Work in progress potentially for host Receipt
-    };
+    // function getUsers() {
+    //   console.log("services data: ", services.data);
+    //   // Work in progress potentially for host Receipt
+    // };
 
     function getSessStorage(prop) {
       if (prop === "code") {
@@ -153,7 +153,7 @@
         delete $window.localStorage[prop];
       }
       goToHome();
-      setTimeout(function () {
+      setTimeout(function() {
         $window.location.reload();
       }, 1);
     }

@@ -36,12 +36,12 @@
     $stateProvider
       .state('home', {
         url: '/home',
-        views: { 
-        //   'navbar': { // may not need navbar for homepage. Therefore avoid the issue of double logos
-        //     templateUrl: 'components/navbar/navbar.html',
-        //     controller: 'NavbarCtrl',
-        //     controllerAs: 'navbar'
-        //   },
+        views: {
+          //   'navbar': { // may not need navbar for homepage. Therefore avoid the issue of double logos
+          //     templateUrl: 'components/navbar/navbar.html',
+          //     controller: 'NavbarCtrl',
+          //     controllerAs: 'navbar'
+          //   },
           '@': {
             templateUrl: 'app/home/home.html',
             controller: 'HomeCtrl',
@@ -79,19 +79,6 @@
           }
         }
       })
-      .state('404', {
-        url: '/404',
-        views: {
-          'navbar': {
-            templateUrl: 'components/navbar/navbar.html',
-            controller: 'NavbarCtrl',
-            controllerAs: 'navbar'
-          },
-          '@': {
-            templateUrl: '404.html'
-          }
-        }
-      })
       .state('event', {
         url: '/:id',
         views: {
@@ -103,19 +90,19 @@
 
         }
       })
-      .state('event.addDish', {
-        url: '/addDish',
-        views: {
-          '@': {
-            templateUrl: 'app/addDish/addDish.html',
-            controller: 'AddDishCtrl',
-            controllerAs: 'addDish'
-          }
-        },
-        resolve: {
-          getEventInfo: ['$http', getInfoOnRefresh]
-        }
-      })
+      // .state('event.addDish', {
+      //   url: '/addDish',
+      //   views: {
+      //     '@': {
+      //       templateUrl: 'app/addDish/addDish.html',
+      //       controller: 'AddDishCtrl',
+      //       controllerAs: 'addDish'
+      //     }
+      //   },
+      //   resolve: {
+      //     getEventInfo: ['$http', getInfoOnRefresh]
+      //   }
+      // })
       .state('event.allDishes', {
         url: '/allDishes',
         views: {

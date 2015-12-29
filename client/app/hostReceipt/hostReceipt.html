@@ -5,7 +5,6 @@
       <!-- REFACTOR TO NAVBAR LATER (need to do addClass('active') onClick) -->
       <ul class="nav nav-tabs">
         <li><a class="allDishes" ui-sref="event.allDishes">All Dishes</a></li>
-        <li><a class="addDish" ui-sref="event.addDish">Add Dish</a></li>
         <li><a class="guestBill" ui-sref="event.guestBill">Your Bill</a></li>
         <li class="active"><a class="hostBill" ui-sref="event.hostBill">Final Bill</a></li>
         <!-- <li><a class="logout" ng-click="hostReceipt.logout()">Logout</a></li> -->
@@ -15,18 +14,18 @@
       <h3>Track Payments</h3>
 
       <table id="mytable" class="table table-bordred table-striped">
-                   
+
         <thead>
           <th>Name</th>
           <th>Will Pay</th>
           <th>Payment Method</th>
         </thead>
         <tbody>
-    
-<!--           <tr ng-Repeat="user in hostReceipt.data.users">
-          <td>{{user.name}}}</td>
-          <td>{{user.}}</td>
-          <td>{{user.paymentMethod}}</td>
+
+          <!--   <tr ng-Repeat="user in hostReceipt.data.users">
+            <td>{{user.name}}}</td>
+            <td>{{user.}}</td>
+            <td>{{user.paymentMethod}}</td>
           </tr> -->
         </tbody>
 

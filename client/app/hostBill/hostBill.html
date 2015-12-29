@@ -5,7 +5,6 @@
       <!-- REFACTOR TO NAVBAR LATER (need to do addClass('active') onClick) -->
       <ul class="nav nav-tabs">
         <li><a class="allDishes" ui-sref="event.allDishes">All Dishes</a></li>
-        <li><a class="addDish" ui-sref="event.addDish">Add Dish</a></li>
         <li><a class="guestBill" ui-sref="event.guestBill">Your Bill</a></li>
         <li class="active"><a class="hostBill" ui-sref="event.hostBill">Final Bill</a></li>
         <!-- <li><a class="logout" ng-click="hostBill.logout()">Logout</a></li> -->
@@ -98,9 +97,9 @@
                 <span ng-show="billForm.tax.$pristine">
                   {{ 0 + hostBill.repopulateTax(hostBill.data.billData) * 0.01 * hostBill.getSubTotal(hostBill.data.dishes) | currency }}
                 </span>
-                  <span ng-show="billForm.tax.$dirty" id="currency-default">
-                    {{ hostBill.getTax('dollar') | currency}}
-                  </span>
+                <span ng-show="billForm.tax.$dirty" id="currency-default">
+                  {{ hostBill.getTax('dollar') | currency}}
+                </span>
                 </strong>
               </p>
             </div>
@@ -109,7 +108,7 @@
 
         <!-- Start FEE/DISCOUNT OPTION -->
         <div class="text-right">
-          <a href="" ng-click="!hostBill.feeOption ? hostBill.feeOption = true : hostBill.feeOption = false">Add a fee</a> | 
+          <a href="" ng-click="!hostBill.feeOption ? hostBill.feeOption = true : hostBill.feeOption = false">Add a fee</a> |
           <a href="" ng-click="!hostBill.discountOption ? hostBill.discountOption = true : hostBill.discountOption = false">Add a discount</a>
         </div>
         <!-- End FEE/DISCOUNT option -->
@@ -129,13 +128,13 @@
               <p class="help-block text-right">
                 <span ng-show="billForm.fee.$pristine">
                   <!-- {{ 0 + hostBill.repopulateFee(hostBill.data.billData) }}% -->
-                  Your added fee: 
+                  Your added fee:
                   <strong>
                   {{ 0 + hostBill.repopulateFee(hostBill.data.billData) * 0.01 * hostBill.getSubTotal(hostBill.data.dishes) | currency }}
                   </strong>
                 </span>
                 <span ng-show="billForm.fee.$dirty" id="currency-default">
-                  Fee as percent of subtotal: 
+                  Fee as percent of subtotal:
                   <strong>
                   {{ hostBill.getFeeOrDiscountPercent('fee')}}%
                   </strong>
@@ -160,13 +159,13 @@
               <p class="help-block text-right">
 
                 <span ng-show="billForm.discount.$pristine">
-                  Your added discount: 
+                  Your added discount:
                   <strong>
                   {{ 0 + hostBill.repopulateDiscount(hostBill.data.billData) * 0.01 * hostBill.getSubTotal(hostBill.data.dishes) | currency }}
                   </strong>
                 </span>
                 <span ng-show="billForm.discount.$dirty" id="currency-default">
-                  Discount as percent of subtotal: 
+                  Discount as percent of subtotal:
                   <strong>
                   {{ hostBill.getFeeOrDiscountPercent('discount')}}%
                   </strong>
@@ -182,8 +181,8 @@
             <h1 class="h1 panel-title">Grand Total</h1>
             <p class="text-right h4">
               <span ng-show="billForm.tip.$pristine && billForm.tip.$pristine">
-                {{ hostBill.getSubTotal(hostBill.data.dishes) 
-                + (hostBill.repopulateTip(hostBill.data.billData) * 0.01 * hostBill.getSubTotal(hostBill.data.dishes)) 
+                {{ hostBill.getSubTotal(hostBill.data.dishes)
+                + (hostBill.repopulateTip(hostBill.data.billData) * 0.01 * hostBill.getSubTotal(hostBill.data.dishes))
                 + (hostBill.repopulateTax(hostBill.data.billData) * 0.01 * hostBill.getSubTotal(hostBill.data.dishes))
                 + hostBill.fee - hostBill.discount | currency}}
                 <!-- CHECK FEE AND DISCOUNT FOR PERSISTANCE -->
