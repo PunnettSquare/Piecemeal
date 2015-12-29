@@ -35,8 +35,8 @@ module.exports = function(app, io) {
   })
 
   app.post('/newUser', function(req, res) {
-    var username = req.body.username || 'Jerry';
-    var code = req.body.code || 'testRoom';
+    var username = req.body.username;
+    var code = req.body.code;
     var host = req.body.host || false;
     var event_id;
 

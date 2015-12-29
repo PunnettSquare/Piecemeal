@@ -10,10 +10,6 @@
   function OAuthCtrl(oAuthFactory, $window, $location) {
     var self = this;
 
-    self.venmoAuth = function () {
-      return oAuthFactory.venmoLogin();
-    };
-
     // $window.localStorage should have: username, user_id, event code, event_id, and isHost
     self.setSessionUser = function(username, isHost, code) {
       oAuthFactory.createEvent({

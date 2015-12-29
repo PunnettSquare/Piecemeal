@@ -39,7 +39,8 @@ module.exports = {
       if (data.length === 0) {
         return false;
       } else {
-        return true;  
+        data[0].isValid = true;
+        return data[0];
       }
     })
   },
