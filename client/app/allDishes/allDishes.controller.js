@@ -56,6 +56,13 @@
       }
     };
 
-    self.logout = appFactory.logout;
+      $('.modal-trigger').leanModal({
+          opacity: .7, // Opacity of modal background
+          in_duration: 210, // Transition in duration
+          out_duration: 210, // Transition out duration
+        }
+      );
+
+
   }
 })();

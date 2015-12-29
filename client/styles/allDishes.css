@@ -1,33 +1,28 @@
-div.top {
-margin: 0 0.3rem;
+header {
+    margin: 0 0.3rem;
 }
 
-span.button {
-position: absolute;
-top: 0;
-right: 0;
+.button {
+    position: absolute;
+    top: 0;
+    right: 0;
 }
 
-.btn {
-padding: 0 0rem;
+.button__background {
+    padding: 0 0rem;
+    padding-bottom: 8rem;
 }
 
-div.waves-effect.waves-light.btn {
-padding-bottom: 8rem;
+.button--edit {
+    padding-top: 1.5rem;
+    padding-right: 0.5rem;
+    padding-bottom: 1.5rem;
+    padding-left: 0.5rem;
+    font-size: 2.5rem;
 }
 
-.btn i {
-font-size: 2.5rem;
+.button--addDish {
+    position: fixed;
+    right: 0.5em;
+    bottom: 0.6em;
 }
-
-span i.material-icons {
-padding-top: 1.5rem;
-padding-bottom: 1.5rem;
-padding-left: 0.5rem;
-padding-right: 0.5rem;
-}
-
-.secondary-content {
-border: 1px solid grey;
-}
-

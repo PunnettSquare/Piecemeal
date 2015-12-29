@@ -1,28 +1,3 @@
-<!-- <div id="addDish" class="modal">
-  <div class="modal-content">
-    <h5>Add A Dish</h5>
-    <form role="form" name="dishForm">
-      <div class="input-field">
-        <input name="name" type="text" placeholder="Dish Name" ng-model="addDish.dishName" class="dishName form-control" required autofocus>
-        <input name="amount" type="number" step="0.01" placeholder="$ 0.00" ng-model="addDish.amount" class="dishCost form-control" id="addDish" aria-label="amount" required>
-      </div>
-      This dish costs
-      <strong><span ng-show="dishForm.amount.$pristine">
-        {{ 0 + addDish.amount | currency}}
-      </span>
-      <span ng-show="dishForm.amount.$dirty" id="currency-default">
-        {{ 0 + addDish.amount | currency}}
-      </span></strong>
-      and your total so far is <strong><span id="currency-default">{{addDish.calcUserCurrentTotal(addDish.data) | currency}}</span></strong>.
-    </form>
-  </div>
-
-  <div class="modal-footer">
-    <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Agree</a>
-  </div>
-</div> -->
-
-
 <div class="container-fluid" id="addDish" ng-cloak>
   <div class="row">
     <div class="col-md-12">
@@ -72,6 +47,7 @@
                 <span ng-show="dishForm.amount.$dirty" id="currency-default">
                   {{ 0 + addDish.amount | currency}}
                 </span></strong>
+                <!--                 and your total so far is <strong><span id="currency-default">{{addDish.userTotal | currency}}</span></strong>. -->
                 and your total so far is <strong><span id="currency-default">{{addDish.calcUserCurrentTotal(addDish.data) | currency}}</span></strong>.
               </p>
             </div>

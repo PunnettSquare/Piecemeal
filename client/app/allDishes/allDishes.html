@@ -11,28 +11,31 @@
 
 <div class="row" id="allDishes" ng-cloak>
   <div class="col s12">
-    <div class="top">
+    <header>
       <h5>All Dishes</h5>
       <div class="divider"></div>
       <p>Hi, {{_.capitalize(allDishes.username)}}.
       The code for this bill is <strong class="code">{{ allDishes.code }}</strong>.</p>
       <p>Give this code to everyone around the table so they can join the bill from their phones and add their own dishes.</p>
-    </div>
+    </header>
 
     <ul class="collection" ng-repeat="dish in allDishes.data.dishes">
       <li class="collection-item" ng-if="dish.users.length !== 0">
-        <span>{{ _.map(dish.name.split(" "), _.capitalize).join(" ") }}</span>
+        {{ _.map(dish.name.split(" "), _.capitalize).join(" ") }}
         <br>
-        <span>Cost: {{dish.cost | currency }}</span>
+        Cost: {{dish.cost | currency }}
         <br>
-        <span><small class="sharedBy">{{ allDishes.getUsersByDish(dish, allDishes.data.users) }} got this.</small></span>
+        <small class="sharedBy">{{ allDishes.getUsersByDish(dish, allDishes.data.users) }} got this.</small>
         <span class="button">
-          <div class="waves-effect waves-light btn">
-            <i class="material-icons share" ng-hide="allDishes.isOnDish(dish.users, allDishes.user_id)" ng-click="allDishes.shareDish(dish.dish_id, allDishes.user_id, dish.users)">add_circle_outline</i>
-            <i class="material-icons unshare" ng-show="allDishes.isOnDish(dish.users, allDishes.user_id)" ng-click="allDishes.unshareDish(dish.dish_id, allDishes.user_id, dish.users)">clear</i>
+          <div class="button__background waves-effect waves-light btn">
+            <i class="material-icons button--edit share" ng-hide="allDishes.isOnDish(dish.users, allDishes.user_id)" ng-click="allDishes.shareDish(dish.dish_id, allDishes.user_id, dish.users)">add_circle_outline</i>
+            <i class="material-icons button--edit unshare" ng-show="allDishes.isOnDish(dish.users, allDishes.user_id)" ng-click="allDishes.unshareDish(dish.dish_id, allDishes.user_id, dish.users)">clear</i>
           </div>
         </span>
       </li>
     </ul>
+
+
+    <a class="button--addDish btn-floating btn-large waves-effect waves-light btn red modal-trigger" data-target="addDish"><i class="material-icons">add</i></a>
   </div>
 </div>
