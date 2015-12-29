@@ -15,7 +15,6 @@
     self.setSessionUser = function(code) {
       homeFactory.checkCode(code.toLowerCase())
       .then(function(validCode) {
-        console.log(validCode.data)
         if (validCode.data) {
           _.assign($window.localStorage, {
             code: code.toLowerCase(),
@@ -25,7 +24,7 @@
         } else {
           self.incorrectCode = true;
         }
-      })
+      });
     };
 
   }
