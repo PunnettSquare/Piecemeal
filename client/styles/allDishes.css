@@ -33,12 +33,12 @@ header {
 }
 
 .modal__box {
-    padding: 1em 1em 0.7em 1em;
+    padding: 1em 1em 0.2em 1em;
 }
 
 .modal__title {
     margin-bottom: -0.1em;
-
+    margin-top: 0.3em;
     text-align: center;
 }
 
