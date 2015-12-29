@@ -54,7 +54,7 @@
       height: 64px;
     }
   }
-  
+
 </style>
 
 <script type="text/javascript">
@@ -68,7 +68,7 @@
     <!-- <a href="#!" class="brand-logo">Piecemeal</a> -->
       <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
       <ul class="right hide-on-med-and-down">
-        <li><a class="logout" ng-if="navbar.isLoggedIn()" ng-click="navbar.logout()">Leave room</a></li>
+        <li><a class="logout" ng-if="navbar.isLoggedIn()" ng-click="navbar.logout()">Leave room</a></li> <!-- disappears at tablet size; should disappear at mobile -->
       </ul>
       <ul class="side-nav" id="mobile-demo">
         <li class="active"><a class="allDishes" ui-sref="event.allDishes">All Dishes</a></li>
