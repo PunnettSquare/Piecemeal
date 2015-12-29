@@ -1,48 +1,36 @@
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<style>
-.material-icons {
-font-size: 38px;
-}
+<link rel="stylesheet" href="../../styles/allDishes.css">
 
-span.button {
-  position: absolute;
-  top: 0;
-  right: 8px;
-}
-
-</style>
-
-
-<!-- REFACTOR TO NAVBAR LATER (need to do addClass('active') onClick) -->
-<ul class="nav nav-tabs">
+<!-- REFACTOR TO NAVBAR LATER -->
+<ul>
   <li class="active"><a class="allDishes" ui-sref="event.allDishes">All Dishes</a></li>
   <li><a class="addDish" ui-sref="event.addDish">Add Dish</a></li>
   <li><a class="guestBill" ui-sref="event.guestBill">Your Bill</a></li>
   <li><a class="hostBill" ui-sref="event.hostBill" ng-show="allDishes.isHost" >Final Bill</a></li>
-  <!-- <li><a class="logout" ng-click="allDishes.logout()">Logout</a></li> -->
 </ul>
 <!-- /Navbar refactor -->
 
 <div class="row" id="allDishes" ng-cloak>
   <div class="col s12">
-    <h3>All Dishes</h3>
-    <div class="divider"></div>
-    <p>Hi, {{_.capitalize(allDishes.username)}}.
-    The code for this bill is <strong class="code">{{ allDishes.code }}</strong>.</p>
-    <p>Give this code to everyone around the table so they can join the bill from their phones and add their own dishes.</p>
-
+    <div class="top">
+      <h5>All Dishes</h5>
+      <div class="divider"></div>
+      <p>Hi, {{_.capitalize(allDishes.username)}}.
+      The code for this bill is <strong class="code">{{ allDishes.code }}</strong>.</p>
+      <p>Give this code to everyone around the table so they can join the bill from their phones and add their own dishes.</p>
+    </div>
 
     <ul class="collection" ng-repeat="dish in allDishes.data.dishes">
-      <li class="collection-item avatar" ng-if="dish.users.length !== 0">
-        <i class="material-icons circle">local_cafe</i>
-        <span class="title">{{ _.map(dish.name.split(" "), _.capitalize).join(" ") }}</span>
-        <p>Cost: {{dish.cost | currency }}</p>
+      <li class="collection-item" ng-if="dish.users.length !== 0">
+        <span>{{ _.map(dish.name.split(" "), _.capitalize).join(" ") }}</span>
+        <br>
+        <span>Cost: {{dish.cost | currency }}</span>
+        <br>
         <span><small class="sharedBy">{{ allDishes.getUsersByDish(dish, allDishes.data.users) }} got this.</small></span>
         <span class="button">
-          <button class="waves-effect waves-light btn" type="submit">
-          <i class="material-icons" ng-click="allDishes.shareDish(dish.dish_id, allDishes.user_id, dish.users)" class="share">add_circle_outline</i>
-          </button>
-          <!-- <i class="material-icons" ng-click="allDishes.unshareDish(dish.dish_id, allDishes.user_id, dish.users)" class="unshare">clear</i> -->
+          <div class="waves-effect waves-light btn">
+            <i class="material-icons share" ng-hide="allDishes.isOnDish(dish.users, allDishes.user_id)" ng-click="allDishes.shareDish(dish.dish_id, allDishes.user_id, dish.users)">add_circle_outline</i>
+            <i class="material-icons unshare" ng-show="allDishes.isOnDish(dish.users, allDishes.user_id)" ng-click="allDishes.unshareDish(dish.dish_id, allDishes.user_id, dish.users)">clear</i>
+          </div>
         </span>
       </li>
     </ul>

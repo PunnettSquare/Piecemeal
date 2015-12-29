@@ -13,7 +13,7 @@
     self.incorrectCode = false;
 
     self.setSessionUser = function(code) {
-      homeFactory.checkCode(code)
+      homeFactory.checkCode(code.toLowerCase())
       .then(function(validCode) {
         console.log(validCode.data)
         if (validCode.data) {
