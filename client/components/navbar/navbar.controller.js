@@ -11,6 +11,8 @@
 
     var self = this;
 
+    self.logout = appFactory.logout;
+
     self.isLoggedIn = function () {
       return $window.localStorage.getItem('username');
     };
