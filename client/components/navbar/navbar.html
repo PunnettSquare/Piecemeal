@@ -65,7 +65,7 @@
 
 <nav>
     <div class="nav-wrapper teal lighten-1">
-    <!-- <a href="#!" class="brand-logo">Piecemeal</a> -->
+    <a href="#!" class="brand-logo">Piecemeal</a>
       <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
       <ul class="right hide-on-med-and-down">
         <li><a class="logout" ng-if="navbar.isLoggedIn()" ng-click="navbar.logout()">Leave room</a></li> <!-- disappears at tablet size; should disappear at mobile -->
@@ -74,8 +74,20 @@
         <li class="active"><a class="allDishes" ui-sref="event.allDishes">All Dishes</a></li>
         <li><a class="guestBill" ui-sref="event.guestBill">Your Bill</a></li>
         <li><a class="hostBill" ui-sref="event.hostBill" ng-show="navbar.isHost">Final Bill</a></li>
-        <li><a class="logout" ng-if="navbar.isLoggedIn()" ng-click="navbar.logout()">Leave room</a></li>
+        <li><a class="leaveBill" ng-if="navbar.isLoggedIn()" ng-click="navbar.logout()">Leave Bill</a></li>
+        <li><a class="logout" ng-if="navbar.isLoggedIn() && navbar.isHost" ng-click="navbar.logout()">LogOut</a></li> <!-- show only to host -->
       </ul>
     </div>
   </nav>
 <!-- Note: Hide navbar on oauth page for now -->
+<!-- Slide sidebar in from right? -->
+
+<nav>
+  <div class="nav-wrapper">
+    <div class="col s12">
+      <a href="#!" class="breadcrumb">First</a>
+      <a href="#!" class="breadcrumb">Second</a>
+      <a href="#!" class="breadcrumb">Third</a>
+    </div>
+  </div>
+</nav>

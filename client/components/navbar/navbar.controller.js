@@ -9,13 +9,15 @@
   function NavbarCtrl(appFactory, $window) {
 
     var self = this;
-    appFactory.copySessData(self);
 
-    self.logout = appFactory.logout;
+    appFactory.copySessData(self); //copy session data to scope
 
     self.isLoggedIn = function() {
       return $window.localStorage.getItem('username');
-    };
+    }
+    
+    self.logout = appFactory.logout; // remove this line from other controllers
   }
+
 
 })();
