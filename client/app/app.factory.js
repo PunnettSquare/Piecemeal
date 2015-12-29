@@ -150,7 +150,9 @@
 
     function logout() {
       for (var prop in $window.localStorage) {
-        delete $window.localStorage[prop];
+        if (prop !== 'username' || prop !== 'venmoUsername') {
+          delete $window.localStorage[prop];
+        }
       }
       goToHome();
       setTimeout(function() {
