@@ -18,11 +18,84 @@ header {
     padding-right: 0.5rem;
     padding-bottom: 1.5rem;
     padding-left: 0.5rem;
+
     font-size: 2.5rem;
 }
 
 .button--addDish {
     position: fixed;
-    right: 0.5em;
-    bottom: 0.6em;
+    right: 1rem;
+    bottom: 1rem;
 }
+
+.modal {
+    border-radius: 0.4em;
+}
+
+.modal__box {
+    padding: 1em 1em 0.7em 1em;
+}
+
+.modal__title {
+    margin-bottom: -0.1em;
+
+    text-align: center;
+}
+
+.modal__input--dish.input-field.col.s8 {
+    padding-right: 0.2em;
+    padding-bottom: 0.3em;
+    padding-left: 0.5em;
+}
+
+.modal__input--cost.input-field.col.s4 {
+    padding-right: 0.5em;
+    padding-bottom: 0.3em;
+    padding-left: 0.2em;
+}
+
+.modal--costInfo {
+    margin: 0 0.3rem;
+}
+
+.modal__div--success {
+    margin: 0.6em 0 0.4em;
+
+    border-radius: 0.5em;
+}
+
+.modal__text--success {
+    padding: 0.5em 0.8em;
+    margin: 0;
+
+    text-decoration: bold;
+}
+
+.modal-footer {
+    padding-right: 1em;
+}
+
+#modal-footer {
+    padding-right: 1em;
+    margin-bottom: 0.1em;
+}
+
+/*@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
+}
+
+.fadeOut {
+    -webkit-animation-name: fadeOut;
+            animation-name: fadeOut;
+    -webkit-animation-duration: 2s;
+            animation-duration: 2s;
+
+    -webkit-animation-fill-mode: both;
+            animation-fill-mode: both;
+}*/

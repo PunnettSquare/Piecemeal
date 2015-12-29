@@ -7,7 +7,6 @@
       <!-- REFACTOR TO NAVBAR LATER (need to do addClass('active') onClick) -->
       <ul class="nav nav-tabs">
         <li><a class="allDishes" ui-sref="event.allDishes">All Dishes</a></li>
-        <li><a ui-sref="event.addDish">Add Dish</a></li>
         <li class="active"><a class="guestBill" ui-sref="event.guestBill">Your Bill</a></li>
         <li><a class="hostBill" ng-show="guestBill.isHost" ui-sref="event.hostBill">Final Bill</a></li>
         <!-- <li><a class="logout" ng-click="guestBill.logout()">Logout</a></li> -->
@@ -90,12 +89,12 @@
         </div>
         <div class="panel-footer">
           <small>
-            Percent of subtotal: 
-            <span ng-show="guestBill.data.billData.feePercent">{{ guestBill.data.billData.feePercent }}% Fee</span>
-            <span ng-show="guestBill.data.billData.discountPercent && guestBill.data.billData.feePercent">
-             and 
-            </span>
-            <span ng-show="guestBill.data.billData.discountPercent">{{ guestBill.data.billData.discountPercent }}% Discount </span></small>
+          Percent of subtotal:
+          <span ng-show="guestBill.data.billData.feePercent">{{ guestBill.data.billData.feePercent }}% Fee</span>
+          <span ng-show="guestBill.data.billData.discountPercent && guestBill.data.billData.feePercent">
+            and
+          </span>
+          <span ng-show="guestBill.data.billData.discountPercent">{{ guestBill.data.billData.discountPercent }}% Discount </span></small>
         </div>
       </div>
 
@@ -104,7 +103,7 @@
         <div class="panel-heading"><h2 class="panel-title">Your Total</h2>
           <p class="text-right h5">{{guestBill.getGuestGrandTotal() | currency}}</p>
         </div>
-<!--         <div class="panel-footer tipPercent">
+        <!--         <div class="panel-footer tipPercent">
           All Subtotal: {{guestBill.getAllSubtotal(guestBill.data.dishes);}}
           <small>Dinner Grand Total: {{  guestBill.getGrandTotal(guestBill.data.dishes, guestBill.data.billData) | currency}}
           </small>

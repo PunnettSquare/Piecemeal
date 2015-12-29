@@ -90,19 +90,19 @@
 
         }
       })
-      .state('event.addDish', {
-        url: '/addDish',
-        views: {
-          '@': {
-            templateUrl: 'app/addDish/addDish.html',
-            controller: 'AddDishCtrl',
-            controllerAs: 'addDish'
-          }
-        },
-        resolve: {
-          getEventInfo: ['$http', getInfoOnRefresh]
-        }
-      })
+      // .state('event.addDish', {
+      //   url: '/addDish',
+      //   views: {
+      //     '@': {
+      //       templateUrl: 'app/addDish/addDish.html',
+      //       controller: 'AddDishCtrl',
+      //       controllerAs: 'addDish'
+      //     }
+      //   },
+      //   resolve: {
+      //     getEventInfo: ['$http', getInfoOnRefresh]
+      //   }
+      // })
       .state('event.allDishes', {
         url: '/allDishes',
         views: {
