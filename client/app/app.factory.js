@@ -150,11 +150,14 @@
 
     function logout() {
       for (var prop in $window.localStorage) {
-        delete $window.localStorage[prop];
+        if (prop !== 'username' || prop !== 'venmoUsername') {
+          delete $window.localStorage[prop];
+        }
       }
       goToHome();
-      //remove after testing
-      // $window.location.reload();
+      setTimeout(function () {
+        $window.location.reload();
+      }, 1);
     }
 
     function getUsersByDish(dish, users) {

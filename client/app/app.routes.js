@@ -25,7 +25,9 @@
     console.log('window.localStorage =', window.localStorage);
     $urlRouterProvider.otherwise(function($injector) {
       var state = $injector.get('$state');
-      if (!window.localStorage.getItem('username') || window.localStorage.getItem('username') === "undefined") {
+      //changed to code from username for persistent venmo sessions
+      //TODO test edge cases
+      if (!window.localStorage.getItem('code') || window.localStorage.getItem('code') === "undefined") {
         state.go('home');
         // state.go('404');
       } else {
