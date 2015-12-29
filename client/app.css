@@ -1,28 +1,11 @@
-.payButton {
-  border-radius: 3px;
-  border: 0;
-  padding: 8px 18px;
-  color: white;
-  font-weight: bold;
-  font-size: 18px;
-  width: 95px;
-}
-
-.venmoEnabled {
-  background-color: #3D95CE;
-}
-
-.cashEnabled {
-  background-color: #79C86C;
-}
-
-.logoSpacing {
-  margin: 50px;
-}
-
 /*Gets rid of tiny increment buttons on number inputs*/
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
+}
+
+/*Same thing as "light" class*/
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 300;
 }
