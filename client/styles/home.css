@@ -1,3 +1,8 @@
+.logoSpacing {
+  margin: 6rem 2rem 2rem 2rem;
+  max-width: 65%;
+}
+
 .file-field .file-path-wrapper { /* overrides default materialize for Enter Code field */
   overflow: hidden;
   padding-right: 10px; /*right*/
@@ -19,4 +24,10 @@
   .shrink {
     font-size: 1.4rem;
   }
+
+  .logoSpacing {
+    margin: 4rem 1rem 1rem 1rem;
+    max-width: 65%;
+  }
+
 }

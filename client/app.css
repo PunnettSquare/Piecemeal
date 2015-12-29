@@ -16,10 +16,6 @@
   background-color: #79C86C;
 }
 
-.logoSpacing {
-  margin: 50px;
-}
-
 /*Gets rid of tiny increment buttons on number inputs*/
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {

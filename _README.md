@@ -22,6 +22,14 @@
 
 > Some usage instructions
 
+Starting grunt, server and app:
+`grunt init`
+
+Starting PostGreSQL
+`psql`
+`drop database piecemeal;` if you need to clear db first
+`create database piecemeal;`
+
 ## Requirements
 
 - Node 0.10.x
