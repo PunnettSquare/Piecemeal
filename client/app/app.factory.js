@@ -153,8 +153,9 @@
         delete $window.localStorage[prop];
       }
       goToHome();
-      //remove after testing
-      // $window.location.reload();
+      setTimeout(function () {
+        $window.location.reload();
+      }, 1);
     }
 
     function getUsersByDish(dish, users) {
