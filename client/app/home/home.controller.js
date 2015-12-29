@@ -13,19 +13,28 @@
     self.incorrectCode = false;
 
     self.setSessionUser = function(code) {
+      code = code.toLowerCase();
       homeFactory.checkCode(code.toLowerCase())
       .then(function(validCode) {
-        if (validCode.data) {
+        if (validCode.data.isValid) {
           _.assign($window.localStorage, {
-            code: code.toLowerCase(),
+            code: code,
             isHost: false
           });
-          $location.path('/' + $window.localStorage.code + '/loading');
+          //check if user has recently authenticated with venmo
+          if ($window.localStorage.venmoUsername) {
+            //if so send them directly into room, using their stored username
+            $window.localStorage.event_id = validCode.data.id;
+            $location.path('/' + code + '/allDishes');
+          } else {
+            $location.path('/' + $window.localStorage.code + '/loading');
+          }
         } else {
           self.incorrectCode = true;
         }
       });
     };
+
     self.oAuth = function () {
       // check if venmousername is defined
       if ($window.localStorage.venmoUsername) {
