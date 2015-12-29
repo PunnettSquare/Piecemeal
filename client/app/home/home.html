@@ -1,35 +1,28 @@
 <style>
 
-/*.file-field {
-  position: relative;
-}*/
-
-.file-field .file-path-wrapper { /*right*/
+.file-field .file-path-wrapper { /* overrides default materialize for Enter Code field */
   overflow: hidden;
-  padding-right: 10px;
+  padding-right: 10px; /*right*/
 }
 
-/*.file-field input.file-path {
-  width: 100%;
-}*/
-
-.file-field .btn, .file-field .btn-large {
-  float: right; /*right*/
+.file-field .btn, .file-field .btn-large { /* overrides default materialize for joinButton */
+  float: right; /*switch to right; below included for clarity*/
   height: 3rem;
   line-height: 3rem;
 }
 
-/*.file-field span {
-  cursor: pointer;
-}*/
+.createButton {
+  height: 3rem;
+  line-height: 3rem;
+}
 
 </style>
 
 <div class="section no-pad-bot" id="index-banner">
   <div class="container">
     <br><br>
-    <!-- LOGO: height 50 for mobile -->
-    <object class=".img-fluid logoSpacing" type="image/svg+xml" data="../../assets/piecemealLogo.svg">Piecemeal</object>
+    <!-- LOGO: height 50 for mobile; LATER: check to see if logoSpacing is pulling from Bootstrap somewhere -->
+    <object class="logoSpacing" type="image/svg+xml" data="../../assets/piecemealLogo.svg">Piecemeal</object>
             <!-- <img src="../../assets/piecemealLogo.svg" height="30"/> -->
     <!-- <h1 class="header center teal-text text-lighten-1">Piecemeal</h1> -->
     <div class="row center">
@@ -52,8 +45,8 @@
                   Setup a bill to split with your friends
                 </h5>
 
-                <div class="row center">
-                  <button ui-sref="oAuth" class="createRoom btn waves-effect waves-light teal lighten-1" type="submit" name="createBill">Create Bill
+                <div class="row center input-field">
+                  <button ui-sref="oAuth" class="createButton createRoom btn waves-effect waves-light teal lighten-1" type="submit" name="createBill">Create Bill
                     <i class="material-icons right">send</i>
                   </button>
                 </div>
@@ -70,7 +63,7 @@
               <h5 class="center light">
                 Or join an existing bill by entering the code
               </h5>
-              <div class="file-field input-field">
+              <div class="file-field input-field homeButton">
                 <button class="btn enterRoom waves-effect waves-light teal lighten-1 validate" ng-disabled="userInput2.code.$error.required" ng-click="home.setSessionUser(code)" type="submit" name="joinBill">
                   <span>Join Bill</span>
                   <i class="material-icons right">send</i>
