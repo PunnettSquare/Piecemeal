@@ -1,13 +1,27 @@
 <style>
-.inline {
-  display: inline;
+
+/*.file-field {
+  position: relative;
+}*/
+
+.file-field .file-path-wrapper { /*right*/
+  overflow: hidden;
+  padding-right: 10px;
 }
 
-.inlineInput {
-  display: inline-block;
-  /*overflow: hidden;*/
-  width: 60%;
+/*.file-field input.file-path {
+  width: 100%;
+}*/
+
+.file-field .btn, .file-field .btn-large {
+  float: right; /*right*/
+  height: 3rem;
+  line-height: 3rem;
 }
+
+/*.file-field span {
+  cursor: pointer;
+}*/
 
 </style>
 
@@ -51,26 +65,25 @@
         <!-- Enter a room code (as a guest) -->
         <div class="col s12 m6">
           <div class="row">
+
             <form name="userInput2">
               <h5 class="center light">
                 Or join an existing bill by entering the code
               </h5>
-
-              <div class="input-field inlineInput">
-                <input name="code" id="roomCode" type="text" class="validate enterCode inlineInput" ng-model="code">
-                <label for="roomCode">Enter Code</label>
+              <div class="file-field input-field">
+                <button class="btn enterRoom waves-effect waves-light teal lighten-1 validate" ng-disabled="userInput2.code.$error.required" ng-click="home.setSessionUser(code)" type="submit" name="joinBill">
+                  <span>Join Bill</span>
+                  <i class="material-icons right">send</i>
+                </button>
+                <div class="file-path-wrapper">
+                  <input name="code" id="roomCode" type="text" class="validate enterCode inlineInput" ng-model="code" required>
+                  <label for="roomCode">Enter Code</label>
+                </div>
               </div>
-
-              <!-- <input name="code" type="text" class="enterCode form-control" placeholder="Enter code here" ng-model="code" id="roomCode" required>
-              <br> -->
-              <button class="inline right enterRoom btn waves-effect waves-light teal lighten-1" ng-disabled="userInput2.code.$error.required" ng-click="home.setSessionUser(code)" type="submit" name="joinBill">Join Bill
-                <i class="material-icons right">send</i>
-              </button>
-              
             </form>
 
             <!-- Later: Style into alert -->
-            <div ng-if="home.incorrectCode">
+            <div ng-if="home.incorrectCode" class="center">
               Your entered room does not exist. Please try again.
             </div>
 
