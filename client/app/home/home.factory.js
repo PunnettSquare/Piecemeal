@@ -8,7 +8,8 @@
 
   function homeFactory($http) {
     var services = {
-      checkCode: checkCode
+      checkCode: checkCode,
+      createEvent: createEvent
     };
 
     function checkCode(code) {
@@ -17,6 +18,15 @@
         url: '/checkCode/' + code
       })
     }
+
+    function createEvent(data) {
+      return $http({
+        method: 'POST',
+        url: '/auth/createEvent',
+        data: data
+      });
+    }
+
     return services;
   }
 

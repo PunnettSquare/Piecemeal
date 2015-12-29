@@ -150,7 +150,7 @@
 
     function logout() {
       for (var prop in $window.localStorage) {
-        if (prop !== 'username' || prop !== 'venmoUsername') {
+        if (prop !== 'username' && prop !== 'venmoUsername' && prop !== 'user_id') {
           delete $window.localStorage[prop];
         }
       }
