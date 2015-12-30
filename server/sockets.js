@@ -60,7 +60,7 @@ var connect = function(eventUrl, eventInfo, io, userObj) {
       console.log("Server heard: SendBillToGuests with tip", data.tipPercent, "and tax", data.taxPercent, " and fee ", data.feePercent, " and discount ", data.discountPercent);
       socket.broadcast.emit('billsSentToGuests', data);
 
-      util.addTipAndTax(db, data.event_id, data.taxPercent, data.tipPercent, data.feePercent, data.discountPercent)
+      util.addTipAndTax(db, data.event_id, data.taxPercent, data.tipPercent, data.feePercent, data.discountPercent, data.billSent)
         .catch(function(err) {
           throw err;
         });

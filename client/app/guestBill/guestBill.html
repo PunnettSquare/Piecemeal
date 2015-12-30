@@ -49,7 +49,7 @@
       </ul>
 
       <!-- Before host has sent tip/tax -->
-      <ul class="collection receipt__item" ng-if="!guestBill.billSent && !guestBill.isHost">
+      <ul class="collection receipt__item" ng-if="!guestBill.data.billData.billSent && !guestBill.isHost">
         <li class="collection-item">
           <div class="receipt__tiptax">
             The host hasn't entered tax and tip yet. Please wait for your bill to be finalized before proceeding with payment.
@@ -63,7 +63,7 @@
 
 
       <!-- Start tip -->
-      <ul class="collection receipt__item" ng-if="guestBill.billSent && !guestBill.isHost">
+      <ul class="collection receipt__item" ng-if="guestBill.data.billData.billSent && !guestBill.isHost">
         <li class="collection-item">
           <h5 class="receipt__title">Tip
           <span class="receipt__item--number">
@@ -81,7 +81,7 @@
 
 
       <!-- start tax -->
-      <ul class="collection receipt__item" ng-if="guestBill.billSent && !guestBill.isHost">
+      <ul class="collection receipt__item" ng-if="guestBill.data.billData.billSent && !guestBill.isHost">
         <li class="collection-item">
           <h5 class="receipt__title">Tax
           <span class="receipt__item--number">
@@ -98,7 +98,7 @@
 
 
       <!-- FEE OR DISCOUNT -->
-      <ul class="collection receipt__item" ng-if="!_.isEmpty(guestBill.data.billData) && guestBill.billSent && !guestBill.isHost && (guestBill.data.billData.feePercent || guestBill.data.billData.discountPercent)">
+      <ul class="collection receipt__item" ng-if="!_.isEmpty(guestBill.data.billData) && guestBill.data.billData.billSent && !guestBill.isHost && (guestBill.data.billData.feePercent || guestBill.data.billData.discountPercent)">
         <li class="collection-item">
           <h5 class="receipt__title">Fee or Discount</h5>
           <h6 ng-show="guestBill.data.billData.feePercent">
@@ -128,7 +128,7 @@
       </ul>
 
       <!-- Start TOTALS -->
-      <ul class="collection receipt__item" ng-if="guestBill.billSent && !guestBill.isHost">
+      <ul class="collection receipt__item" ng-if="guestBill.data.billData.billSent && !guestBill.isHost">
         <li class="collection-item">
 
           <h5 class="receipt__title"><strong>Your Total</strong>
@@ -147,9 +147,7 @@
         </ul>
 
 
-
-
-        <ul class="collection receipt__item" ng-if="guestBill.billSent && !guestBill.isHost">
+        <ul class="collection receipt__item" ng-if="guestBill.data.billData.billSent && !guestBill.isHost">
           <li class="collection-item">
             <div class="receipt__tiptax">
               <h5 class="receipt__tiptax">Pay with:</h5>
