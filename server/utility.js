@@ -67,14 +67,15 @@ module.exports = {
     });
   },
 
-  addTipAndTax: function(db, event_id, taxPercent, tipPercent, feePercent, discountPercent) {
+  addTipAndTax: function(db, event_id, taxPercent, tipPercent, feePercent, discountPercent, billSent) {
     return db('events').where({
       'id': event_id
     }).update({
       taxPercent: taxPercent,
       tipPercent: tipPercent,
       feePercent: feePercent,
-      discountPercent: discountPercent
+      discountPercent: discountPercent,
+      billSent: billSent
     });
   },
 
@@ -198,6 +199,7 @@ module.exports = {
         state.billData.taxPercent = Number(amendmentsObj[0].taxPercent);
         state.billData.feePercent = Number(amendmentsObj[0].feePercent);
         state.billData.discountPercent = Number(amendmentsObj[0].discountPercent);
+        state.billData.billSent = amendmentsObj[0].billSent;
       }).then(function() {
         return module.exports.findEventUsers(db, event_id)
           .then(function(users) {
@@ -266,7 +268,7 @@ module.exports = {
   },
 
   findBillAmendments: function(db, event_id) {
-    return db('events').select('tipPercent', 'taxPercent', 'feePercent', 'discountPercent')
+    return db('events').select('tipPercent', 'taxPercent', 'feePercent', 'discountPercent', 'billSent')
       .where('id', event_id);
   },
 

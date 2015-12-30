@@ -15,6 +15,7 @@
       self.data = appFactory.data;
       console.log("Joined the All Dishes room.");
       self.calcUserCurrentTotal(self.data);
+
     });
 
     // load data when *not* on page refresh

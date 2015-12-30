@@ -125,10 +125,10 @@
         tipPercent: self.getTip('percent'),
         feePercent: self.getFeeOrDiscountPercent('fee'),
         discountPercent: self.getFeeOrDiscountPercent('discount'),
-        grandTotal: self.getGrandTotal()
+        grandTotal: self.getGrandTotal(),
+        billSent: true
       });
       self.billsSent = true;
-      window.localStorage.billSent = true;
     };
 
     self.logout = appFactory.logout;

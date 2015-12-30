@@ -17,6 +17,7 @@ exports.up = function(knex, Promise) {
       table.decimal('tipPercent');
       table.decimal('feePercent');
       table.decimal('discountPercent');
+      table.boolean('billSent');
     }),
 
     knex.schema.createTable('dishes', function(table) {
