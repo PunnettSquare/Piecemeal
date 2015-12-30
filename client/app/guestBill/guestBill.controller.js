@@ -4,9 +4,9 @@
   angular.module('Piecemeal')
     .controller('GuestBillCtrl', GuestBillCtrl);
 
-  GuestBillCtrl.$inject = ['$scope', 'appFactory', 'addDishFactory', 'socketFactory'];
+  GuestBillCtrl.$inject = ['$scope', 'appFactory', 'allDishesFactory', 'socketFactory'];
 
-  function GuestBillCtrl($scope, appFactory, addDishFactory, socketFactory) {
+  function GuestBillCtrl($scope, appFactory, allDishesFactory, socketFactory) {
     var self = this;
     appFactory.copySessData(self);
 
@@ -44,14 +44,14 @@
       });
     };
 
-//remove?
+    //remove?
     self.getGuestTotal = function(data) {
-      return addDishFactory.calculateRunningTotal(data);
+      return allDishesFactory.calculateRunningTotal(data);
     };
 
-//remove
+    //remove
     self.getGrandTotal = function(dishes, billData) {
-      return (!self.data) ?  0 : _.sum(_.pluck(dishes, 'cost')) + self.getGuestTip() + self.getGuestTax();
+      return (!self.data) ? 0 : _.sum(_.pluck(dishes, 'cost')) + self.getGuestTip() + self.getGuestTax();
     };
 
     self.getOtherUsersByUsername = function(dish, users, user_id) {
@@ -75,35 +75,31 @@
       return (!self.data) ? 0 : self.data.billData.tipPercent * self.getGuestSubtotal(self.data) * 0.01;
     };
 
-    self.getGuestFee = function () {
+    self.getGuestFee = function() {
       return (!self.data) ? 0 : self.data.billData.feePercent * self.getGuestSubtotal(self.data) * 0.01;
     };
 
-    self.getGuestDiscount = function () {
+    self.getGuestDiscount = function() {
       return (!self.data) ? 0 : self.data.billData.discountPercent * self.getGuestSubtotal(self.data) * 0.01;
     };
 
     self.getGuestSubtotal = function(data) {
-      return addDishFactory.calculateRunningTotal(data);
+      return allDishesFactory.calculateRunningTotal(data);
     };
 
     self.getGuestGrandTotal = function() {
       // return (!self.data) ? 0 : Math.round(
-      //   (self.getGuestTotal(self.data) 
-      //     + (self.data.billData.taxPercent * self.getGuestTotal(self.data) * 0.01) 
+      //   (self.getGuestTotal(self.data)
+      //     + (self.data.billData.taxPercent * self.getGuestTotal(self.data) * 0.01)
       //     + (self.data.billData.tipPercent * self.getGuestTotal(self.data) * 0.01)
       //   )*100)/100;
 
       return (!self.data) ? 0 : Math.round((
-        self.getGuestTotal(self.data) 
-      + self.getGuestTax() 
-      + self.getGuestTip()
-      + self.getGuestFee() 
-      - self.getGuestDiscount()
-      )*100)/100;
+        self.getGuestTotal(self.data) + self.getGuestTax() + self.getGuestTip() + self.getGuestFee() - self.getGuestDiscount()
+      ) * 100) / 100;
     };
 
-    self.getAllSubtotal = function (dishes) {
+    self.getAllSubtotal = function(dishes) {
       return (!self.data) ? 0 : _.sum(_.pluck(dishes, 'cost'));
     };
 
@@ -112,10 +108,6 @@
     //   return (!self.data) ?  0 : _.sum(_.pluck(dishes, 'cost')) + self.getGuestTip() + self.getGuestTax();
     //   }
     // };
-
-    self.logout = appFactory.logout;
-
   };
-
 
 })();

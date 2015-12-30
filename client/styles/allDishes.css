@@ -2,15 +2,31 @@ header {
     margin: 0 0.3rem;
 }
 
+.sharedBy {
+    padding-right: 1em;
+
+    font-size: 0.85em;
+    line-height: inherit;
+}
+
 .button {
     position: absolute;
     top: 0;
     right: 0;
+    border-radius: 0.8rem;
+    height: 100%;
+}
+
+ul.collection {
+    border-radius: 0.8rem;
 }
 
 .button__background {
     padding: 0 0rem;
-    padding-bottom: 8rem;
+    /*padding-bottom: 8rem;*/
+    height: 100%;
+    border-top-right-radius: 0.8rem;
+    border-bottom-right-radius: 0.8rem;
 }
 
 .button--edit {
@@ -37,8 +53,9 @@ header {
 }
 
 .modal__title {
-    margin-bottom: -0.1em;
     margin-top: 0.3em;
+    margin-bottom: -0.1em;
+
     text-align: center;
 }
 

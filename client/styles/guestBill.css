@@ -1,17 +1,53 @@
 .payButton {
-  border-radius: 3px;
-  border: 0;
-  padding: 8px 18px;
-  color: white;
-  font-weight: bold;
-  font-size: 18px;
-  width: 95px;
+    width: 95px;
+    padding: 8px 18px;
+
+    font-size: 18px;
+    font-weight: bold;
+
+    color: white;
+    border: 0;
+    border-radius: 3px;
 }
 
 .venmoEnabled {
-  background-color: #3D95CE;
+    background-color: #3d95ce;
 }
 
 .cashEnabled {
-  background-color: #79C86C;
+    background-color: #79c86c;
+}
+
+
+
+
+
+.dish__item:last-child {
+    margin-bottom: 2rem;
+}
+
+.receipt__item--number {
+    float: right;
+
+    font-size: 1.3rem;
+}
+
+.receipt__title,
+.dish__title {
+    margin: 0.3rem 0;
+
+    font-size: 1.3rem;
+}
+
+.dish__item {
+    border-radius: 0.7rem;
+}
+
+.receipt__item {
+    border-radius: 0.7rem;
+}
+
+.receipt__subtitle,
+.dish__item--shared {
+    font-size: 0.85rem;
 }

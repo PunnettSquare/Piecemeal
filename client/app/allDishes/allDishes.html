@@ -1,16 +1,5 @@
 <link rel="stylesheet" href="../../styles/allDishes.css">
 
-<!-- REFACTOR TO NAVBAR LATER -->
-<ul>
-  <li class="active"><a class="allDishes" ui-sref="event.allDishes">All Dishes</a></li>
-  <li><a class="addDish" ui-sref="event.addDish">Add Dish</a></li>
-  <li><a class="guestBill" ui-sref="event.guestBill">Your Bill</a></li>
-  <li><a class="hostBill" ui-sref="event.hostBill" ng-show="allDishes.isHost" >Final Bill</a></li>
-</ul>
-<!-- /Navbar refactor -->
-
-
-
 <div class="row" id="allDishes" ng-cloak>
   <div class="col s12">
 
@@ -30,15 +19,15 @@
         <br>
         Cost: {{dish.cost | currency }}
         <br>
-        <small class="sharedBy">{{ allDishes.getUsersByDish(dish, allDishes.data.users) }} got this.</small>
+        <div class="sharedBy">{{ allDishes.getUsersByDish(dish, allDishes.data.users) }} got this.</div>
 
         <!-- Share/unshare buttons -->
-        <span class="button">
+        <div class="button">
           <div class="button__background waves-effect waves-light btn">
             <i class="material-icons button--edit share" ng-hide="allDishes.isOnDish(dish.users, allDishes.user_id)" ng-click="allDishes.shareDish(dish.dish_id, allDishes.user_id, dish.users)">add_circle_outline</i>
             <i class="material-icons button--edit unshare" ng-show="allDishes.isOnDish(dish.users, allDishes.user_id)" ng-click="allDishes.unshareDish(dish.dish_id, allDishes.user_id, dish.users)">clear</i>
           </div>
-        </span>
+        </div>
       </li>
     </ul>
 

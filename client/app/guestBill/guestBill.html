@@ -1,119 +1,162 @@
 <link rel="stylesheet" href="../../styles/guestBill.css">
 
-<div class="container-fluid" id="guestBill" ng-cloak>
-  <div class="row">
-    <div class="col-md-12">
+<div class="row" id="allDishes" ng-cloak>
+  <div class="col s12">
 
-      <!-- REFACTOR TO NAVBAR LATER (need to do addClass('active') onClick) -->
-      <ul class="nav nav-tabs">
-        <li><a class="allDishes" ui-sref="event.allDishes">All Dishes</a></li>
-        <li class="active"><a class="guestBill" ui-sref="event.guestBill">Your Bill</a></li>
-        <li><a class="hostBill" ng-show="guestBill.isHost" ui-sref="event.hostBill">Final Bill</a></li>
-        <!-- <li><a class="logout" ng-click="guestBill.logout()">Logout</a></li> -->
+    <!-- Header -->
+    <header>
+      <h5>{{ _.capitalize(guestBill.username) }}'s Total Bill</h5>
+      <div class="divider"></div>
+    </header>
+
+    <section>
+      <!-- Dish items -->
+      <ul class="dish__item collection" ng-repeat="dish in guestBill.getGuestDishes(guestBill.user_id, guestBill.data.dishes)">
+        <li class="collection-item" ng-if="dish.users.length !== 0">
+          <h5 class="dish__title">{{_.map(dish.name.split(" "), _.capitalize).join(" ")}}</h5>
+          Your portion: <strong>{{ guestBill.getDishIndivCost(dish) | currency }}</strong>
+          <br>
+          Total cost: <span>{{ dish.cost | currency }}</span>
+          <br>
+          <span ng-if="dish.users.length !== 1" class="dish__item--shared">You shared this with {{ guestBill.getOtherUsersByUsername(dish, guestBill.data.users, guestBill.user_id) }}.</span>
+          <span ng-if="dish.users.length === 1" class="dish__item--shared">Only you ate this.</span>
+        </li>
       </ul>
-      <!-- /Navbar refactor -->
+    </section>
+    <!-- end list of dishes they ate -->
 
 
-      <h3>{{ _.capitalize(guestBill.username) }}'s Total Bill</h3>
 
-      <!-- Start list of dishes they ate -->
-      <div ng-repeat="dish in guestBill.getGuestDishes(guestBill.user_id, guestBill.data.dishes)">
-        <div class="list-group-item">
-          <h4 class="list-group-item-heading">{{_.map(dish.name.split(" "), _.capitalize).join(" ")}}</h4>
-          <p class="list-group-item-text">Your portion: <strong>{{ guestBill.getDishIndivCost(dish) | currency }}</strong></p>
-          <small>Total cost: <span>{{ dish.cost | currency }}</span></small>
-        </div>
+    <!-- START RECEIPT -->
+    <section>
 
-        <div class="list-group-item">
-          <p class="list-group-item-text" ng-if="dish.users.length !== 1">
-          <small>You shared this with {{ guestBill.getOtherUsersByUsername(dish, guestBill.data.users, guestBill.user_id) }}.</small></p>
-          <p class="list-group-item-text" ng-if="dish.users.length === 1">
-            <span><small>Only you ate this.</small></span>
-          </p>
-        </div>
-        <br>
-      </div>
-      <!-- end list of dishes they ate -->
+      <!-- Your Subtotal -->
+      <ul class="collection receipt__item">
+        <li class="collection-item">
+          <h5 class="receipt__title"><strong>Your Subtotal</strong>
+          <span class="receipt__item--number">
+            {{guestBill.getGuestSubtotal(guestBill.data) | currency}}
+          </span>
+          </h5>
+        </li>
+      </ul>
 
-      <br>
-
-      <!-- Start SUBTOTAL -->
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h2 class="panel-title h1">Your Subtotal
-          <p class="text-right h5">{{guestBill.getGuestSubtotal(guestBill.data) | currency}}</p>
-
-          </h2>
-        </div>
-        <!-- CONDITIONAL -->
-        <div class="panel-footer" ng-if="guestBill.data.billData.tipPercent === 0 && guestBill.data.billData.taxPercent === 0 && !guestBill.isHost">
-          <p>The host has not entered the tax and tip yet. Please wait for your bill to be finalized before proceeding with payment.</p>
-          <div>
-            <button type="submit" class="payButton"><img src="../../assets/venmo_logo_white.png" alt="Venmo" width="55px"></button>
-            <button type="submit" class="payButton">Cash</button>
+      <!-- Before host has sent tip/tax -->
+      <ul class="collection receipt__item" ng-if="guestBill.data.billData.tipPercent === 0 && guestBill.data.billData.taxPercent === 0 && !guestBill.isHost">
+        <li class="collection-item">
+          <div class="receipt__tiptax">
+            The host has not entered the tax and tip yet. Please wait for your bill to be finalized before proceeding with payment.
+            <div>
+              <button type="submit" class="payButton"><img src="../../assets/venmo_logo_white.png" alt="Venmo" width="55px"></button>
+              <button type="submit" class="payButton">Cash</button>
+            </div>
           </div>
-        </div>
-      </div>
-      <!-- End subtotal -->
+        </li>
+      </ul>
+
 
       <!-- Start tip -->
-      <div class="panel panel-default" ng-if="guestBill.data.billData.tipPercent !== 0 && guestBill.data.billData.taxPercent !== 0 && !guestBill.isHost">
-        <div class="panel-body">
-          <h4 class="h4">Tip</h4 class="h4">
-          <p class="text-right h5">{{guestBill.getGuestTip() | currency}}</p>
-        </div>
-        <div class="panel-footer tipPercent">
-          <small>Your host chose {{ guestBill.data.billData.tipPercent }}% for tip.</small>
-        </div>
-      </div>
-      <!-- end tip -->
+      <ul class="collection receipt__item" ng-if="!guestBill.isHost">
+        <li class="collection-item">
+          <!-- <div ng-if="guestBill.data.billData.tipPercent !== 0 && guestBill.data.billData.taxPercent !== 0 && !guestBill.isHost"> -->
+          <h5 class="receipt__title">Tip
+          <span class="receipt__item--number">
+            {{guestBill.getGuestTip() | currency}}
+          </span>
+          </h5>
+
+          <div class="receipt__subtitle tipPercent">
+            Your host chose {{ guestBill.data.billData.tipPercent }}% for tip.
+          </div>
+          <!-- </div> -->
+        </li>
+        <!-- end tip -->
+      </ul>
+
+
 
       <!-- start tax -->
-      <div class="panel panel-default" ng-if="guestBill.data.billData.tipPercent !== 0 && guestBill.data.billData.taxPercent !== 0 && !guestBill.isHost">
-        <div class="panel-body">
-          <h4 class="h4">Tax</h4 class="h4">
-          <p class="text-right h5">{{guestBill.getGuestTax() | currency}}</p>
-        </div>
-        <div class="panel-footer taxPercent">
-          <small>You were charged {{ guestBill.data.billData.taxPercent }}% for tax.</small>
-        </div>
-      </div>
-      <!-- end tax -->
+      <ul class="collection receipt__item" ng-if="!guestBill.isHost">
+        <li class="collection-item">
+          <!-- <div ng-if="guestBill.data.billData.tipPercent !== 0 && guestBill.data.billData.taxPercent !== 0 && !guestBill.isHost"> -->
+          <h5 class="receipt__title">Tax
+          <span class="receipt__item--number">
+            {{guestBill.getGuestTax() | currency}}
+          </span>
+          </h5>
+
+          <div class="receipt__subtitle taxPercent">
+            You were charged {{ guestBill.data.billData.taxPercent }}% for tax.
+          </div>
+          <!-- </div> -->
+          <!-- end tax -->
+        </li>
+      </ul>
+
 
       <!-- FEE OR DISCOUNT -->
-      <div class="panel panel-default" ng-if="!_.isEmpty(guestBill.data.billData) && !guestBill.isHost && (guestBill.data.billData.feePercent || guestBill.data.billData.discountPercent)">
-        <div class="panel-body">
-          <h4 class="h4">Fee or Discount</h4 class="h4">
-          <p class="text-right h5" ng-show="guestBill.data.billData.feePercent">Fee: {{guestBill.getGuestFee() | currency}}</p>
-          <p class="text-right h5" ng-show="guestBill.data.billData.discountPercent">Discount: {{guestBill.getGuestDiscount() | currency}}</p>
-        </div>
-        <div class="panel-footer">
-          <small>
-          Percent of subtotal:
+      <ul class="collection receipt__item" ng-if="!_.isEmpty(guestBill.data.billData) && !guestBill.isHost && (guestBill.data.billData.feePercent || guestBill.data.billData.discountPercent)">
+        <li class="collection-item">
+          <h5 class="receipt__title">Fee or Discount</h5>
+          <h6 ng-show="guestBill.data.billData.feePercent">
+          Fee:
+          <span class="receipt__item--number">
+            +{{guestBill.getGuestFee() | currency}}
+          </span>
+          </h6>
+          <span class="receipt__subtitle" ng-show="guestBill.data.billData.feePercent">(+{{ guestBill.data.billData.feePercent | number:0 }}% of subtotal)</span>
+
+          <!-- <span ng-show="guestBill.data.billData.discountPercent && guestBill.data.billData.feePercent">
+            and
+          </span> -->
+
+          <h6 ng-show="guestBill.data.billData.discountPercent">
+          Discount:
+          <span class="receipt__item--number">
+            -{{guestBill.getGuestDiscount() | currency}}
+          </span>
+          </h6>
+          <span class="receipt__subtitle" ng-show="guestBill.data.billData.discountPercent">(-{{ guestBill.data.billData.discountPercent | number:0 }}% of subtotal)</span>
+
+
+          <!-- Percent of subtotal:
           <span ng-show="guestBill.data.billData.feePercent">{{ guestBill.data.billData.feePercent }}% Fee</span>
           <span ng-show="guestBill.data.billData.discountPercent && guestBill.data.billData.feePercent">
             and
           </span>
-          <span ng-show="guestBill.data.billData.discountPercent">{{ guestBill.data.billData.discountPercent }}% Discount </span></small>
-        </div>
-      </div>
+          <span ng-show="guestBill.data.billData.discountPercent">{{ guestBill.data.billData.discountPercent }}% Discount </span> -->
+        </li>
+      </ul>
 
       <!-- Start TOTALS -->
-      <div class="panel panel-default" ng-if="guestBill.data.billData.tipPercent !== 0 && guestBill.data.billData.taxPercent !== 0 && !guestBill.isHost">
-        <div class="panel-heading"><h2 class="panel-title">Your Total</h2>
-          <p class="text-right h5">{{guestBill.getGuestGrandTotal() | currency}}</p>
-        </div>
-        <!--         <div class="panel-footer tipPercent">
-          All Subtotal: {{guestBill.getAllSubtotal(guestBill.data.dishes);}}
-          <small>Dinner Grand Total: {{  guestBill.getGrandTotal(guestBill.data.dishes, guestBill.data.billData) | currency}}
-          </small>
-        </div> -->
-      </div>
-      <!-- end totals -->
+      <ul class="collection receipt__item" ng-if="!guestBill.isHost">
+        <li class="collection-item">
+
+          <!-- <div ng-if="guestBill.data.billData.tipPercent !== 0 && guestBill.data.billData.taxPercent !== 0 && !guestBill.isHost"> -->
+          <h5 class="receipt__title"><strong>Your Total</strong>
+          <span class="receipt__item--number">
+            {{guestBill.getGuestGrandTotal() | currency}}
+          </span>
+          </h5>
+
+          <!--   <div class="tipPercent">
+            All Subtotal: {{guestBill.getAllSubtotal(guestBill.data.dishes);}}
+            <small>Dinner Grand Total: {{  guestBill.getGrandTotal(guestBill.data.dishes, guestBill.data.billData) | currency}}
+            </small>
+          </div> -->
+          <!-- </div> -->
+          <!-- end totals -->
+        </li>
+      </ul>
+
+
+
+
+
 
       <!-- start payment option -->
       <div class="panel panel-default" ng-if="guestBill.data.billData.tipPercent !== 0 && guestBill.data.billData.taxPercent !== 0 && !guestBill.isHost">
-        <div class="panel-heading"><h2 class="panel-title">Pay with:</h2>
+        <div><h5>Pay with:</h5>
           <div>
             <br>
             <a type="submit" class="payButton venmoEnabled" ng-href="https://venmo.com/{{guestBill.venmoUsername}}?txn=pay&amount={{guestBill.getGuestGrandTotal()}}&audience=private&note=Bill+split+with+Piecemeal.+piecemeal.herokuapp.com"><img src="../../assets/venmo_logo_white.png" alt="Venmo" width="55px"></a>
@@ -128,7 +171,7 @@
         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         We have notified the host that you will be paying with cash.
       </div>
-
-    </div>
+    </section>
   </div>
+
 </div>

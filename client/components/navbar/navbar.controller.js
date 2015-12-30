@@ -10,6 +10,7 @@
   function NavbarCtrl(appFactory, $window) {
 
     var self = this;
+    appFactory.copySessData(self);
 
     self.logout = appFactory.logout;
 
