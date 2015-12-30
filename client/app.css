@@ -26,10 +26,10 @@ ul.pagination {
   align-items: center;
 }
 
-.pag__button:first-child {
+.pag__button--prev {
   margin-left: -1em;
 }
-.pag__button:last-child {
+.pag__button--next {
   margin-right: -1em;
 }
 
