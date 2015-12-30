@@ -10,18 +10,16 @@
     </header>
 
     <section>
-      <h5>Your Dishes</h5>
       <!-- Dish items -->
       <ul class="dish__item collection" ng-repeat="dish in guestBill.getGuestDishes(guestBill.user_id, guestBill.data.dishes)">
         <li class="collection-item" ng-if="dish.users.length !== 0">
-          {{_.map(dish.name.split(" "), _.capitalize).join(" ")}}
-          <br>
+          <h5 class="dish__title">{{_.map(dish.name.split(" "), _.capitalize).join(" ")}}</h5>
           Your portion: <strong>{{ guestBill.getDishIndivCost(dish) | currency }}</strong>
           <br>
           Total cost: <span>{{ dish.cost | currency }}</span>
           <br>
-          <span ng-if="dish.users.length !== 1">You shared this with {{ guestBill.getOtherUsersByUsername(dish, guestBill.data.users, guestBill.user_id) }}.</span>
-          <span ng-if="dish.users.length === 1">Only you ate this.</span>
+          <span ng-if="dish.users.length !== 1" class="dish__item--shared">You shared this with {{ guestBill.getOtherUsersByUsername(dish, guestBill.data.users, guestBill.user_id) }}.</span>
+          <span ng-if="dish.users.length === 1" class="dish__item--shared">Only you ate this.</span>
         </li>
       </ul>
     </section>
@@ -31,16 +29,15 @@
 
     <!-- START RECEIPT -->
     <section>
-      <h5>Your Receipt</h5>
 
       <!-- Your Subtotal -->
       <ul class="collection receipt__item">
         <li class="collection-item">
-          <h6 class="receipt__title"><strong>Your Subtotal</strong>
+          <h5 class="receipt__title"><strong>Your Subtotal</strong>
           <span class="receipt__item--number">
             {{guestBill.getGuestSubtotal(guestBill.data) | currency}}
           </span>
-          </h6>
+          </h5>
         </li>
       </ul>
 
@@ -62,11 +59,11 @@
       <ul class="collection receipt__item" ng-if="!guestBill.isHost">
         <li class="collection-item">
           <!-- <div ng-if="guestBill.data.billData.tipPercent !== 0 && guestBill.data.billData.taxPercent !== 0 && !guestBill.isHost"> -->
-          <h6 class="receipt__title">Tip
+          <h5 class="receipt__title">Tip
           <span class="receipt__item--number">
             {{guestBill.getGuestTip() | currency}}
           </span>
-          </h6>
+          </h5>
 
           <div class="receipt__subtitle tipPercent">
             Your host chose {{ guestBill.data.billData.tipPercent }}% for tip.
@@ -82,11 +79,11 @@
       <ul class="collection receipt__item" ng-if="!guestBill.isHost">
         <li class="collection-item">
           <!-- <div ng-if="guestBill.data.billData.tipPercent !== 0 && guestBill.data.billData.taxPercent !== 0 && !guestBill.isHost"> -->
-          <h6 class="receipt__title">Tax
+          <h5 class="receipt__title">Tax
           <span class="receipt__item--number">
             {{guestBill.getGuestTax() | currency}}
           </span>
-          </h6>
+          </h5>
 
           <div class="receipt__subtitle taxPercent">
             You were charged {{ guestBill.data.billData.taxPercent }}% for tax.
@@ -100,7 +97,7 @@
       <!-- FEE OR DISCOUNT -->
       <ul class="collection receipt__item" ng-if="!_.isEmpty(guestBill.data.billData) && !guestBill.isHost && (guestBill.data.billData.feePercent || guestBill.data.billData.discountPercent)">
         <li class="collection-item">
-          <h6 class="receipt__title">Fee or Discount</h6>
+          <h5 class="receipt__title">Fee or Discount</h5>
           <h6 ng-show="guestBill.data.billData.feePercent">
           Fee:
           <span class="receipt__item--number">
