@@ -159,7 +159,7 @@
         <div><h5>Pay with:</h5>
           <div>
             <br>
-            <a type="submit" class="payButton venmoEnabled" ng-href="https://venmo.com/{{guestBill.venmoUsername}}?txn=pay&amount={{guestBill.getGuestGrandTotal()}}&audience=private&note=Bill+split+with+Piecemeal.+piecemeal.herokuapp.com"><img src="../../assets/venmo_logo_white.png" alt="Venmo" width="55px"></a>
+            <a type="submit" class="payButton venmoEnabled" ng-href="venmo://paycharge?txn=pay&amount={{guestBill.getGuestGrandTotal()}}&audience=private&note=Bill+split+with+Piecemeal.+piecemeal.herokuapp.com&recipients={{guestBill.venmoUsername}}"><img src="../../assets/venmo_logo_white.png" alt="Venmo" width="55px"></a>
             <button type="submit" class="payButton cashEnabled" ng-click="guestBill.paymentChosen='cash'">Cash</button>
           </div>
         </div>
