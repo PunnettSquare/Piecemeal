@@ -32,3 +32,8 @@ ul.pagination {
 .pag__button:last-child {
   margin-right: -1em;
 }
+
+li.pag__space {
+  width: 100px;
+  height: 33px;
+}
