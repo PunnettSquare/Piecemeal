@@ -1,13 +1,14 @@
 (function() {
   'use strict';
-
   angular.module('Piecemeal')
     .config(config);
 
-  config.$inject = ['$stateProvider', '$urlRouterProvider'];
+  config.$inject = ['$stateProvider', '$urlRouterProvider', '$compileProvider'];
 
-  function config($stateProvider, $urlRouterProvider) {
+  function config($stateProvider, $urlRouterProvider, $compileProvider) {
     var usernameCache = {};
+
+    $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|chrome-extension|venmo):/);
 
     var getInfoOnRefresh = function($http) {
       if (!usernameCache[window.localStorage.user_id]) {
