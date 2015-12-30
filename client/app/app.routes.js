@@ -26,7 +26,7 @@
     $urlRouterProvider.otherwise(function($injector) {
       var state = $injector.get('$state');
       //changed to code from username for persistent venmo sessions
-      //TODO test edge cases
+      // TODO test edge cases
       if (!window.localStorage.getItem('code') || window.localStorage.getItem('code') === "undefined") {
         state.go('home');
         // state.go('404');
