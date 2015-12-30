@@ -17,13 +17,19 @@
   <div class="col s12">
 
     <section>
+      <br>
       <!-- Dish items -->
       <ul class="dish__item collection" ng-repeat="dish in guestBill.getGuestDishes(guestBill.user_id, guestBill.data.dishes)">
         <li class="collection-item" ng-if="dish.users.length !== 0">
-          <h5 class="dish__title">{{_.map(dish.name.split(" "), _.capitalize).join(" ")}}</h5>
-          Your portion: <strong>{{ guestBill.getDishIndivCost(dish) | currency }}</strong>
-          <br>
-          Total cost: <span>{{ dish.cost | currency }}</span>
+          <h5 class="dish__title">{{_.map(dish.name.split(" "), _.capitalize).join(" ")}}
+          <span class="dish__item--cost">
+            {{ guestBill.getDishIndivCost(dish) | currency }}
+          </span>
+          </h5>
+          <!-- Your portion: <strong>{{ guestBill.getDishIndivCost(dish) | currency }}</strong> -->
+          <span class="dish__item--total">
+            Total cost: {{ dish.cost | currency }}
+          </span>
           <br>
           <span ng-if="dish.users.length !== 1" class="dish__item--shared">You shared this with {{ guestBill.getOtherUsersByUsername(dish, guestBill.data.users, guestBill.user_id) }}.</span>
           <span ng-if="dish.users.length === 1" class="dish__item--shared">Only you ate this.</span>

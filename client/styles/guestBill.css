@@ -2,6 +2,19 @@
     margin-bottom: 2rem;
 }
 
+.dish__item--cost {
+    float: right;
+
+    font-size: 1rem;
+
+    font-weight: 500;
+/*    color: teal;*/
+}
+
+.dish__item--total {
+    font-size: 0.9rem;
+}
+
 .receipt__item--number {
     float: right;
 
@@ -23,7 +36,7 @@
     width: 8.5rem;
     padding: 8px 18px;
 
-    font-size: 18px;
+    font-size: 1.2rem;
     font-weight: bold;
 
     color: white;

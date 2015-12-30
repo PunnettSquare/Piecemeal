@@ -3,10 +3,17 @@ header {
 }
 
 .sharedBy {
-    padding-right: 1em;
-
     font-size: 0.85em;
     line-height: inherit;
+}
+
+#dish__item {
+    padding-right: 3em;
+}
+
+.dish__item--cost {
+    float: right;
+    font-weight: 450;
 }
 
 .button {
@@ -21,6 +28,7 @@ header {
 
 ul.collection {
     border-radius: 0.8rem;
+
 }
 
 .button__background {
@@ -33,9 +41,9 @@ ul.collection {
 }
 
 .button--edit {
-    padding-top: 1.5rem;
+    position: relative;
+    top: 23%;
     padding-right: 0.5rem;
-    padding-bottom: 1.5rem;
     padding-left: 0.5rem;
 
     font-size: 2.5rem;
