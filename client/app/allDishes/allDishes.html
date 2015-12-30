@@ -1,15 +1,5 @@
 <link rel="stylesheet" href="../../styles/allDishes.css">
 
-<!-- REFACTOR TO NAVBAR LATER -->
-<ul>
-  <li class="active"><a class="allDishes" ui-sref="event.allDishes">All Dishes</a></li>
-  <li><a class="guestBill" ui-sref="event.guestBill">Your Bill</a></li>
-  <li><a class="hostBill" ui-sref="event.hostBill" ng-show="allDishes.isHost" >Final Bill</a></li>
-</ul>
-<!-- /Navbar refactor -->
-
-
-
 <div class="row" id="allDishes" ng-cloak>
   <div class="col s12">
 
@@ -29,7 +19,7 @@
         <br>
         Cost: {{dish.cost | currency }}
         <br>
-        <small class="sharedBy">{{ allDishes.getUsersByDish(dish, allDishes.data.users) }} got this.</small>
+        <div class="sharedBy">{{ allDishes.getUsersByDish(dish, allDishes.data.users) }} got this.</div>
 
         <!-- Share/unshare buttons -->
         <span class="button">

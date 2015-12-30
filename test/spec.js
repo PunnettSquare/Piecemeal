@@ -7,7 +7,7 @@ beforeEach(module('Piecemeal'));
 describe('Piecemeal', function() {
 
   var $controller;
-  var addDishFactoryMock = {
+  var allDishesFactoryMock = {
     calculateRunningTotal: function(data) {
       return _.filter(data.dishes, function(obj, key) {
           return _.contains(obj.users, appFactoryMock.getSessStorage('user_id'));
@@ -147,7 +147,7 @@ describe('Piecemeal', function() {
         $scope: scopeMock,
         socketFactory: socketMock,
         appFactory: appFactoryMock,
-        addDishFactory: addDishFactoryMock
+        allDishesFactory: allDishesFactoryMock
       });
     });
 
@@ -160,17 +160,17 @@ describe('Piecemeal', function() {
       expect(controller.getOtherUsersByUsername(guestsDishes[0], controller.data.users, controller.user_id)).toEqual('Fawn');
     });
 
-    it("should calculate user's current total", function() { // actually in addDishFactory
+    it("should calculate user's current total", function() { // actually in allDishesFactory
       expect(controller.getGuestTotal(controller.data)).toEqual(14);
     });
 
   });
 
   describe('AddDishCtrl', function() {
-    var controller, addDishFactory;
+    var controller, allDishesFactory;
 
     beforeEach(function() {
-      addDishFactory = {
+      allDishesFactory = {
         calculateRunningTotal: function() {}
       };
       appFactory = {
@@ -182,7 +182,7 @@ describe('Piecemeal', function() {
       controller = $controller('AddDishCtrl', {
         $scope: scopeMock,
         socketFactory: socketMock,
-        addDishFactory: addDishFactory,
+        allDishesFactory: allDishesFactory,
         appFactory: appFactory
       });
     });

@@ -72,9 +72,8 @@
       </ul>
       <ul class="side-nav" id="mobile-demo">
         <li class="active"><a class="allDishes" ui-sref="event.allDishes">All Dishes</a></li>
-        <li><a class="addDish" href="#" ui-sref="event.addDish">Add Dish</a></li>
         <li><a class="guestBill" ui-sref="event.guestBill">Your Bill</a></li>
-        <li><a class="hostBill" ui-sref="event.hostBill" ng-show="allDishes.isHost" >Final Bill</a></li>
+        <li><a class="hostBill" ui-sref="event.hostBill" ng-show="navbar.isHost">Final Bill</a></li>
         <li><a class="logout" ng-if="navbar.isLoggedIn()" ng-click="navbar.logout()">Leave room</a></li>
       </ul>
     </div>

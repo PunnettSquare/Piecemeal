@@ -2,10 +2,21 @@ header {
     margin: 0 0.3rem;
 }
 
+.sharedBy {
+    padding-right: 1em;
+
+    font-size: 0.8em;
+    line-height: inherit;
+}
+
 .button {
     position: absolute;
     top: 0;
     right: 0;
+}
+
+ul.collection {
+    border-radius: 0.8rem;
 }
 
 .button__background {
@@ -37,8 +48,9 @@ header {
 }
 
 .modal__title {
-    margin-bottom: -0.1em;
     margin-top: 0.3em;
+    margin-bottom: -0.1em;
+
     text-align: center;
 }
 

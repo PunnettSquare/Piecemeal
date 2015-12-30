@@ -15,3 +15,25 @@
 .cashEnabled {
   background-color: #79C86C;
 }
+
+
+.dish__item:last-child{
+	margin-bottom: 2rem;
+}
+
+.receipt__item--number {
+	float: right;
+	font-size: small;
+}
+
+.dish__item {
+	border-radius: 0.7rem;
+}
+
+.receipt__item {
+	border-radius: 0.7rem;
+}
+
+.receipt__subtitle {
+	font-size: 0.8rem;
+}
