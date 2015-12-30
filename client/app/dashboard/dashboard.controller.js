@@ -35,7 +35,8 @@
           code: data.code,
           isHost: true,
           user_id: data.user_id,
-          event_id: data.event_id
+          event_id: data.event_id,
+          venmoUsername: data.venmoUsername
         });
         $location.path('/' + data.code + '/allDishes');
       })

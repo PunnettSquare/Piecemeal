@@ -99,14 +99,28 @@ module.exports = function(app) {
             event_id: event_id[0],
             code: code,
             user_id: user_id,
-            username: username
-              // venmoUsername: req.user[0].venmoUsername
+            username: username,
+            venmoUsername: req.user[0].venmoUsername
           };
           res.send(responseObject);
         });
     } else {
       res.end();
     }
+  });
+
+  app.post('/createEvent', function(req, res) {
+    var user_id = req.body.id;
+    var username = req.body.username; 
+    var code = util.generateCode();
+    util.createEventVenmo(db, code, user_id)
+    .then(function(event_id) {
+      var responseObject = {
+        event_id: event_id[0],
+        code: code
+      };
+      res.send(responseObject);
+    });
   });
 
   app.get('/getBills', function(req, res) {
