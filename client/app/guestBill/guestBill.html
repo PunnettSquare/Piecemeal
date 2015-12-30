@@ -42,13 +42,13 @@
       </ul>
 
       <!-- Before host has sent tip/tax -->
-      <ul class="collection receipt__item" ng-if="guestBill.data.billData.tipPercent === 0 && guestBill.data.billData.taxPercent === 0 && !guestBill.isHost">
+      <ul class="collection receipt__item" ng-if="!guestBill.billSent && !guestBill.isHost">
         <li class="collection-item">
           <div class="receipt__tiptax">
-            The host has not entered the tax and tip yet. Please wait for your bill to be finalized before proceeding with payment.
-            <div>
-              <button type="submit" class="payButton"><img src="../../assets/venmo_logo_white.png" alt="Venmo" width="55px"></button>
-              <button type="submit" class="payButton">Cash</button>
+            The host hasn't entered tax and tip yet. Please wait for your bill to be finalized before proceeding with payment.
+            <div class="button__div--payment">
+              <button type="submit" class="button--payButton"><img src="../../assets/venmo_logo_white.png" alt="Venmo" width="55px"></button>
+              <button type="submit" class="button--payButton">Cash</button>
             </div>
           </div>
         </li>
@@ -56,9 +56,8 @@
 
 
       <!-- Start tip -->
-      <ul class="collection receipt__item" ng-if="!guestBill.isHost">
+      <ul class="collection receipt__item" ng-if="guestBill.billSent && !guestBill.isHost">
         <li class="collection-item">
-          <!-- <div ng-if="guestBill.data.billData.tipPercent !== 0 && guestBill.data.billData.taxPercent !== 0 && !guestBill.isHost"> -->
           <h5 class="receipt__title">Tip
           <span class="receipt__item--number">
             {{guestBill.getGuestTip() | currency}}
@@ -68,17 +67,15 @@
           <div class="receipt__subtitle tipPercent">
             Your host chose {{ guestBill.data.billData.tipPercent }}% for tip.
           </div>
-          <!-- </div> -->
         </li>
-        <!-- end tip -->
       </ul>
+      <!-- end tip -->
 
 
 
       <!-- start tax -->
-      <ul class="collection receipt__item" ng-if="!guestBill.isHost">
+      <ul class="collection receipt__item" ng-if="guestBill.billSent && !guestBill.isHost">
         <li class="collection-item">
-          <!-- <div ng-if="guestBill.data.billData.tipPercent !== 0 && guestBill.data.billData.taxPercent !== 0 && !guestBill.isHost"> -->
           <h5 class="receipt__title">Tax
           <span class="receipt__item--number">
             {{guestBill.getGuestTax() | currency}}
@@ -88,14 +85,13 @@
           <div class="receipt__subtitle taxPercent">
             You were charged {{ guestBill.data.billData.taxPercent }}% for tax.
           </div>
-          <!-- </div> -->
           <!-- end tax -->
         </li>
       </ul>
 
 
       <!-- FEE OR DISCOUNT -->
-      <ul class="collection receipt__item" ng-if="!_.isEmpty(guestBill.data.billData) && !guestBill.isHost && (guestBill.data.billData.feePercent || guestBill.data.billData.discountPercent)">
+      <ul class="collection receipt__item" ng-if="!_.isEmpty(guestBill.data.billData) && guestBill.billSent && !guestBill.isHost && (guestBill.data.billData.feePercent || guestBill.data.billData.discountPercent)">
         <li class="collection-item">
           <h5 class="receipt__title">Fee or Discount</h5>
           <h6 ng-show="guestBill.data.billData.feePercent">
@@ -105,10 +101,6 @@
           </span>
           </h6>
           <span class="receipt__subtitle" ng-show="guestBill.data.billData.feePercent">(+{{ guestBill.data.billData.feePercent | number:0 }}% of subtotal)</span>
-
-          <!-- <span ng-show="guestBill.data.billData.discountPercent && guestBill.data.billData.feePercent">
-            and
-          </span> -->
 
           <h6 ng-show="guestBill.data.billData.discountPercent">
           Discount:
@@ -129,10 +121,9 @@
       </ul>
 
       <!-- Start TOTALS -->
-      <ul class="collection receipt__item" ng-if="!guestBill.isHost">
+      <ul class="collection receipt__item" ng-if="guestBill.billSent && !guestBill.isHost">
         <li class="collection-item">
 
-          <!-- <div ng-if="guestBill.data.billData.tipPercent !== 0 && guestBill.data.billData.taxPercent !== 0 && !guestBill.isHost"> -->
           <h5 class="receipt__title"><strong>Your Total</strong>
           <span class="receipt__item--number">
             {{guestBill.getGuestGrandTotal() | currency}}
@@ -143,35 +134,34 @@
             All Subtotal: {{guestBill.getAllSubtotal(guestBill.data.dishes);}}
             <small>Dinner Grand Total: {{  guestBill.getGrandTotal(guestBill.data.dishes, guestBill.data.billData) | currency}}
             </small>
-          </div> -->
-          <!-- </div> -->
-          <!-- end totals -->
-        </li>
-      </ul>
+            <!-- </div> -->
+            <!-- end totals -->
+          </li>
+        </ul>
 
 
 
 
+        <ul class="collection receipt__item" ng-if="guestBill.billSent && !guestBill.isHost">
+          <li class="collection-item">
+            <div class="receipt__tiptax">
+              <h5 class="receipt__tiptax">Pay with:</h5>
+              <div class="button__div--payment">
+                <a type="submit" class="button--payButton venmoEnabled" ng-href="venmo://paycharge?txn=pay&amount={{guestBill.getGuestGrandTotal()}}&audience=private&note=Bill%20split%20with%20Piecemeal.%20piecemeal.herokuapp.com&recipients={{guestBill.venmoUsername}}"><img src="../../assets/venmo_logo_white.png" alt="Venmo" width="55px"></a>
+                <button type="submit" class="button--payButton cashEnabled" ng-click="guestBill.paymentChosen='cash'">Cash</button>
+              </div>
 
+            </div>
+          </li>
+        </ul>
 
-      <!-- start payment option -->
-      <div class="panel panel-default" ng-if="guestBill.data.billData.tipPercent !== 0 && guestBill.data.billData.taxPercent !== 0 && !guestBill.isHost">
-        <div><h5>Pay with:</h5>
-          <div>
-            <br>
-            <a type="submit" class="payButton venmoEnabled" ng-href="venmo://paycharge?txn=pay&amount={{guestBill.getGuestGrandTotal()}}&audience=private&note=Bill%20split%20with%20Piecemeal.%20piecemeal.herokuapp.com&recipients={{guestBill.venmoUsername}}"><img src="../../assets/venmo_logo_white.png" alt="Venmo" width="55px"></a>
-            <button type="submit" class="payButton cashEnabled" ng-click="guestBill.paymentChosen='cash'">Cash</button>
-          </div>
+        <!-- end payment option -->
+
+        <!-- Payment Choice Confirmation -->
+        <div class="alert__notify" ng-show="guestBill.paymentChosen">
+          We have notified the host that you will be paying with cash.
         </div>
-      </div>
-      <!-- end payment option -->
+      </section>
+    </div>
 
-      <!-- Payment Choice Confirmation -->
-      <div class="alert alert-success alert-dismissible" role="alert" ng-show="guestBill.paymentChosen">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        We have notified the host that you will be paying with cash.
-      </div>
-    </section>
   </div>
-
-</div>

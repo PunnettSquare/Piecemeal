@@ -55,6 +55,9 @@
       if (prop === "username") {
         return $window.localStorage.username;
       }
+      if (prop === "billSent") {
+        return ($window.localStorage.billSent === "true") ? true : false;
+      }
     }
 
     function copySessData(self) {
@@ -206,6 +209,7 @@
       socketFactory.on('billsSentToGuests', function(data) {
         console.log("Heard 'billsSentToGuests' in appFactory.data:", data);
         services.data.billData = data;
+
         $rootScope.$broadcast('billsSentToGuests');
         // $rootScope.$broadcast('billsSentToGuests', data);
         // $rootScope.$apply();

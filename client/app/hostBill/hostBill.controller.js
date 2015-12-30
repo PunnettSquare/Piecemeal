@@ -25,6 +25,7 @@
       appFactory.initListeners();
     } else {
       self.billsSent = true;
+
     }
 
     self.getDishIndivCost = appFactory.getDishIndivCost;
@@ -127,6 +128,7 @@
         grandTotal: self.getGrandTotal()
       });
       self.billsSent = true;
+      window.localStorage.billSent = true;
     };
 
     self.logout = appFactory.logout;
