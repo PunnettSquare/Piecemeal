@@ -31,6 +31,8 @@
 
     $scope.$on('billsSentToGuests', function() {
       self.data.billData = appFactory.data.billData;
+      window.localStorage.billSent = true;
+      self.billSent = true;
     });
 
     // self.getGuestDishes = _.memoize(function(user_id, dishes) {

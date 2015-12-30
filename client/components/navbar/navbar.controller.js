@@ -2,10 +2,9 @@
   'use strict';
 
   angular.module('Piecemeal')
-  .controller('NavbarCtrl', NavbarCtrl);
+    .controller('NavbarCtrl', NavbarCtrl);
 
   NavbarCtrl.$inject = ['appFactory', '$window'];
-
 
   function NavbarCtrl(appFactory, $window) {
 
@@ -14,7 +13,7 @@
 
     self.logout = appFactory.logout;
 
-    self.isLoggedIn = function () {
+    self.isLoggedIn = function() {
       return $window.localStorage.getItem('username');
     };
   }
