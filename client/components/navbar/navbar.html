@@ -20,9 +20,8 @@
       <li class="active"><a class="allDishes" ui-sref="event.allDishes">All Dishes</a></li>
       <li><a class="guestBill" ui-sref="event.guestBill">Your Bill</a></li>
       <li><a class="hostBill" ui-sref="event.hostBill" ng-show="navbar.isHost" >Final Bill</a></li>
-      <li><a class="leaveBill" ng-click="navbar.logout()">Leave Bill</a></li>
       <li><a class="leaveBill" ng-if="navbar.isLoggedIn()" ng-click="navbar.logout()">Leave Bill</a></li>
-      <li><a class="logout" ng-if="navbar.isLoggedIn() && navbar.isHost" ng-click="navbar.logout()">Log Out</a></li>
+      <li><a class="logout" ng-if="navbar.isLoggedIn() && navbar.isHost" ng-click="navbar.logout()">Log Out</a></li> <!-- Need to update this with new function, and perhaps only show on certain pages? -->
     </ul>
   </div>
 </nav>
