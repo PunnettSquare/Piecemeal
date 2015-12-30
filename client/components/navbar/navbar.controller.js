@@ -17,9 +17,6 @@
     };
     
     self.logout = appFactory.logout; // remove this line from other controllers
-
-    // self.routes = $state.get();
-    // self.test = "test";
   }
 
 

@@ -12,7 +12,8 @@
     <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
     <ul class="right hide-on-med-and-down">
       <li><a class="leaveBill" ng-if="navbar.isLoggedIn()" ng-click="navbar.logout()">Leave Bill</a></li> 
-      <li><a class="logout" ng-if="navbar.isHost" ng-click="navbar.logout()">Log Out</a></li> <!-- removed 'ng-if="navbar.isLoggedIn() && "' so that on homepage will still show this even if not logged in to a particular room? -->
+      <li><a class="logout" ng-if="navbar.isHost" ng-click="navbar.logout()">Log Out</a></li> 
+      <!-- removed 'ng-if="navbar.isLoggedIn() && "' so that on homepage will still show this even if not logged in to a particular room? -->
       <!-- disappears at tablet size; should disappear at mobile only -->
     </ul>
     <ul class="side-nav" id="mobile-demo">
