@@ -5,7 +5,7 @@
   <li class="waves-effect pag__button"><i class="material-icons">chevron_left</i> <a class="pag__button--text" ui-sref="event.allDishes">All Dishes</a></li>
   <li id="pag__title--current"><h5>Your Bill</h5></li>
   <li class="waves-effect pag__button" ng-show="guestBill.isHost"><a class="pag__button--text" ui-sref="event.hostBill">Finalize Bill <i class="material-icons">chevron_right</i></a></li>
-  <li class="pag__space"></li>
+  <li class="pag__space" ng-show="!guestBill.isHost"></li>
   <!-- Can conditionally show space above or leave bill flow below after bill is sent and payment is selected. If not, remove later
   <li class="waves-effect pag__button" ng-if="!guestBill.isHost" ng-click="guestBill.logout()"><a class="pag__button--text">Leave Bill <i class="material-icons">chevron_right</i></a></li> -->
 
