@@ -23,24 +23,43 @@ h1, h2, h3, h4, h5, h6 {
   font-size: 1rem;
 }
 
+
 #pag__title--current {
   margin: 0;
 }
 
+
 ul.pagination {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-around; /*between*/
   align-items: center;
 }
 
-.pag__button--prev {
+/*.pag__button--prev {
   margin-left: -1em;
 }
-.pag__button--next {
-  margin-right: -1em;
-}
+*/
+
+
+/*.pag__button--next {
+ margin-right: 0;
+}*/
 
 li.pag__space {
   width: 100px;
   height: 33px;
+}
+
+.pag__button--prev i {
+  margin-left: -1rem;
+  padding: 0;
+}
+
+.pag__button--next i {
+  margin-right: -1rem;
+  padding: 0;
+}
+
+* {
+  /*border: 1px solid grey;*/
 }

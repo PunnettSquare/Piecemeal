@@ -8,7 +8,7 @@
 
   function HostBillCtrl(appFactory, socketFactory, $scope) {
     var self = this;
-
+    
     appFactory.copySessData(self);
 
     // load data on page refresh
@@ -31,8 +31,13 @@
     self.getDishIndivCost = appFactory.getDishIndivCost;
     self.getUsersByDish = appFactory.getUsersByDish;
 
-    self.tipType = 'percent';
-    self.taxType = 'percent';
+    self.tipType = {
+      value : 'percent'
+    };
+
+    self.taxType = {
+      value : 'percent'
+    };
 
     self.repopulateTip = function(billData) {
       return (!billData) ? 0 : billData.tipPercent;
@@ -55,14 +60,14 @@
         return 0;
       }
 
-      if (self.tipType === 'dollar') {
+      if (self.tipType.value === 'dollar') {
         if (dollarOrPercent === 'dollar') {
           return self.tip;
         } else if (dollarOrPercent === 'percent') {
           var num = self.tip / self.getSubTotal(self.data.dishes) * 100;
           return Math.round(num * 100) / 100; // round to 2 decimal places
         }
-      } else if (self.tipType === 'percent') {
+      } else if (self.tipType.value === 'percent') {
         if (dollarOrPercent === 'dollar') {
           return self.tip * 0.01 * self.getSubTotal(self.data.dishes);
         } else if (dollarOrPercent === 'percent') {
@@ -76,14 +81,14 @@
         return 0;
       }
 
-      if (self.taxType === 'dollar') {
+      if (self.taxType.value === 'dollar') {
         if (dollarOrPercent === 'dollar') {
           return self.tax;
         } else if (dollarOrPercent === 'percent') {
           var num = self.tax / self.getSubTotal(self.data.dishes) * 100;
           return Math.round(num * 100) / 100; // round to 2 decimal places
         }
-      } else if (self.taxType === 'percent') {
+      } else if (self.taxType.value === 'percent') {
         if (dollarOrPercent === 'dollar') {
           return self.tax * 0.01 * self.getSubTotal(self.data.dishes);
         } else if (dollarOrPercent === 'percent') {
