@@ -31,18 +31,18 @@ module.exports = {
       });
   },
 
-  checkCode: function (db, code) {
+  checkCode: function(db, code) {
     return db('events').where({
-      code:code
-    })
-    .then(function(data) {
-      if (data.length === 0) {
-        return false;
-      } else {
-        data[0].isValid = true;
-        return data[0];
-      }
-    })
+        code: code
+      })
+      .then(function(data) {
+        if (data.length === 0) {
+          return false;
+        } else {
+          data[0].isValid = true;
+          return data[0];
+        }
+      })
   },
 
   createEventVenmo: function(db, code, user_id) {
