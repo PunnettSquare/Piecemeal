@@ -1,17 +1,17 @@
+<!-- PAGINATION -->
+<ul class="pagination">
+  <li class="waves-effect pag__button--prev"><i class="material-icons">chevron_left</i><a class="pag__button--text" ui-sref="event.guestBill">Your Bill</a></li>
+  <li id="pag__title--current"><h5>Final Bill</h5></li>
+  <!-- <li class="waves-effect pag__button--next"><a class="pag__button--text" ui-sref="event.hostBill">Receipt<i class="material-icons">chevron_right</i></a></li> -->
+  <!-- Enable above and disable below when hostReceipt is ready -->
+  <li class="pag__space"></li>
+</ul>
+<div class="divider"></div>
+<!-- End Pagination -->
+
 <div class="container-fluid" id="hostBill" ng-cloak>
   <div class="row">
     <div class="col-md-12">
-
-      <!-- REFACTOR TO NAVBAR LATER (need to do addClass('active') onClick) -->
-      <ul class="nav nav-tabs">
-        <li><a class="allDishes" ui-sref="event.allDishes">All Dishes</a></li>
-        <li><a class="guestBill" ui-sref="event.guestBill">Your Bill</a></li>
-        <li class="active"><a class="hostBill" ui-sref="event.hostBill">Final Bill</a></li>
-        <!-- <li><a class="logout" ng-click="hostBill.logout()">Logout</a></li> -->
-      </ul>
-      <!-- /Navbar refactor -->
-
-      <h3>Your Event's Final Bill</h3>
 
       <div ng-repeat="dish in hostBill.data.dishes">
 

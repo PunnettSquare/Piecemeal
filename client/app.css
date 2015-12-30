@@ -9,3 +9,31 @@ input::-webkit-inner-spin-button {
 h1, h2, h3, h4, h5, h6 {
   font-weight: 300;
 }
+
+/*PAGINATION*/
+
+.pag__button--text {
+  font-size: 1rem;
+}
+
+#pag__title--current {
+  margin: 0;
+}
+
+ul.pagination {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.pag__button--prev {
+  margin-left: -1em;
+}
+.pag__button--next {
+  margin-right: -1em;
+}
+
+li.pag__space {
+  width: 100px;
+  height: 33px;
+}

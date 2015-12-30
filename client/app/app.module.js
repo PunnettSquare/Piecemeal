@@ -3,6 +3,3 @@ angular.module('Piecemeal', ['ui.router', 'ngMessages'])
   .run(function($rootScope) {
     $rootScope._ = window._;
   });
-// .config(function($locationProvider) {
-//   $locationProvider.html5Mode(true);
-// });

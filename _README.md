@@ -24,6 +24,7 @@
 
 Starting grunt, server and app:
 `grunt init`
+`grunt start` for live reload
 
 Starting PostGreSQL
 `psql`
