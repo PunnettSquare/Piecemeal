@@ -14,9 +14,12 @@
 
     self.isLoggedIn = function() {
       return $window.localStorage.getItem('username');
-    }
+    };
     
     self.logout = appFactory.logout; // remove this line from other controllers
+
+    // self.routes = $state.get();
+    // self.test = "test";
   }
 
 

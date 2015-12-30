@@ -1,61 +1,4 @@
-<!-- SIMPLE PLACEHOLDER FOR NAVBAR - NOT THE DONE THING -->
-<!-- <nav>
-  <div class="nav-wrapper teal lighten-1"> -->
-    <!-- <a href="#!" class="brand-logo">Piecemeal</a> -->
-    <!-- <a href="#" data-activates="sideMenu" class="button-collapse"><i class="material-icons">menu</i></a> -->
-   <!--  <div class="col s12">
-      <a href="#!" class="breadcrumb">First</a>
-      <a href="#!" class="breadcrumb">Second</a>
-      <a href="#!" class="breadcrumb">Third</a>
-    </div> -->
-<!--     <ul id="nav-mobile" class="right hide-on-med-and-down">
-      <li class="active"><a class="allDishes" ui-sref="event.allDishes">All Dishes</a></li>
-      <li><a class="addDish" href="#" ui-sref="event.addDish">Add Dish</a></li>
-      <li><a class="guestBill" ui-sref="event.guestBill">Your Bill</a></li>
-      <li><a class="hostBill" ui-sref="event.hostBill" ng-show="allDishes.isHost" >Final Bill</a></li>
-      <li><a class="logout" ng-if="navbar.isLoggedIn()" ng-click="navbar.logout()">Leave room</a></li>
-    </ul>
-    <ul id="sideMenu" class="sidenav">
-      <li class="active"><a class="allDishes" ui-sref="event.allDishes">All Dishes</a></li>
-      <li><a class="addDish" href="#" ui-sref="event.addDish">Add Dish</a></li>
-      <li><a class="guestBill" ui-sref="event.guestBill">Your Bill</a></li>
-      <li><a class="hostBill" ui-sref="event.hostBill" ng-show="allDishes.isHost" >Final Bill</a></li>
-      <li><a class="logout" ng-if="navbar.isLoggedIn()" ng-click="navbar.logout()">Leave room</a></li>
-    </ul>
-  </div>
-</nav> -->
-
-<style>
-  @media only screen and (min-width: 993px) {
-    nav a.button-collapse {
-      display: inline-block;
-    }
-  }
-
-  nav .button-collapse {
-    float: right;
-    position: relative;
-    z-index: 1;
-    height: 56px;
-  }
-
-  nav .button-collapse i {
-    font-size: 2.7rem;
-    height: 56px;
-    line-height: 56px;
-  }
-
-  @media only screen and (min-width: 601px) {
-    nav, nav .nav-wrapper i, nav a.button-collapse, nav a.button-collapse i {
-      height: 64px;
-      line-height: 64px;
-    }
-    .navbar-fixed {
-      height: 64px;
-    }
-  }
-
-</style>
+<link rel="stylesheet" href="../../styles/navbar.css">
 
 <script type="text/javascript">
   $( document ).ready(function(){
@@ -64,30 +7,21 @@
 </script>
 
 <nav>
-    <div class="nav-wrapper teal lighten-1">
-    <a href="#!" class="brand-logo">Piecemeal</a>
-      <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
-      <ul class="right hide-on-med-and-down">
-        <li><a class="logout" ng-if="navbar.isLoggedIn()" ng-click="navbar.logout()">Leave room</a></li> <!-- disappears at tablet size; should disappear at mobile -->
-      </ul>
-      <ul class="side-nav" id="mobile-demo">
-        <li class="active"><a class="allDishes" ui-sref="event.allDishes">All Dishes</a></li>
-        <li><a class="guestBill" ui-sref="event.guestBill">Your Bill</a></li>
-        <li><a class="hostBill" ui-sref="event.hostBill" ng-show="navbar.isHost">Final Bill</a></li>
-        <li><a class="leaveBill" ng-if="navbar.isLoggedIn()" ng-click="navbar.logout()">Leave Bill</a></li>
-        <li><a class="logout" ng-if="navbar.isLoggedIn() && navbar.isHost" ng-click="navbar.logout()">LogOut</a></li> <!-- show only to host -->
-      </ul>
-    </div>
-  </nav>
-<!-- Note: Hide navbar on oauth page for now -->
-<!-- Slide sidebar in from right? -->
-
-<nav>
-  <div class="nav-wrapper">
-    <div class="col s12">
-      <a href="#!" class="breadcrumb">First</a>
-      <a href="#!" class="breadcrumb">Second</a>
-      <a href="#!" class="breadcrumb">Third</a>
-    </div>
+  <div class="nav-wrapper teal lighten-1">
+  <a href="#" class="wordmark">Piecemeal</a> <!-- add padding -->
+    <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+    <ul class="right hide-on-med-and-down">
+      <li><a class="leaveBill" ng-if="navbar.isLoggedIn()" ng-click="navbar.logout()">Leave Bill</a></li> 
+      <li><a class="logout" ng-if="navbar.isHost" ng-click="navbar.logout()">Log Out</a></li> <!-- removed 'ng-if="navbar.isLoggedIn() && "' so that on homepage will still show this even if not logged in to a particular room? -->
+      <!-- disappears at tablet size; should disappear at mobile only -->
+    </ul>
+    <ul class="side-nav" id="mobile-demo">
+      <li class="active"><a class="allDishes" ui-sref="event.allDishes">All Dishes</a></li>
+      <li><a class="guestBill" ui-sref="event.guestBill">Your Bill</a></li>
+      <li><a class="hostBill" ui-sref="event.hostBill" ng-show="navbar.isHost" >Final Bill</a></li>
+      <li><a class="leaveBill" ng-click="navbar.logout()">Leave Bill</a></li>
+      <li><a class="leaveBill" ng-if="navbar.isLoggedIn()" ng-click="navbar.logout()">Leave Bill</a></li>
+      <li><a class="logout" ng-if="navbar.isLoggedIn() && navbar.isHost" ng-click="navbar.logout()">Log Out</a></li>
+    </ul>
   </div>
 </nav>

@@ -9,3 +9,27 @@ input::-webkit-inner-spin-button {
 h1, h2, h3, h4, h5, h6 {
   font-weight: 300;
 }
+
+/*
+.pag__button {
+  font-size: 1rem;
+}
+
+#pag__title--current {
+  margin: 0;
+
+}
+
+ul.pagination {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+
+.button--allDishes:first-child {
+  margin-left: -1rem;
+}
+.button--allDishes:last-child {
+  margin-right: -1rem;
+}*/

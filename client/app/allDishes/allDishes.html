@@ -1,5 +1,6 @@
 <link rel="stylesheet" href="../../styles/allDishes.css">
 
+<<<<<<< HEAD
 <div class="row" id="allDishes" ng-cloak>
   <div class="col s12">
 
@@ -7,6 +8,21 @@
     <header>
       <h5>All Dishes</h5>
       <div class="divider"></div>
+=======
+<!-- PAGINATION -->
+<ul class="pagination">
+  <li class="pag__space"></li>
+  <!-- <li class="waves-effect button--allDishes"><i class="material-icons">chevron_left</i> <a class="pag__button" ui-sref="event.allDishes">All Dishes</a></li> -->
+  <li id="pag__title--current"><h5>All Dishes</h5></li>
+  <li class="waves-effect button--allDishes"><a class="pag__button" ui-sref="event.guestBill">Your Bill <i class="material-icons">chevron_right</i></a></li>
+</ul>
+<div class="divider"></div>
+<!-- End Pagination -->
+
+<div class="row" id="allDishes" ng-cloak>
+  <div class="col s12">
+    <div class="top">
+>>>>>>> Add navbar and pagination
       <p>Hi, {{_.capitalize(allDishes.username)}}.
       The code for this bill is <strong class="code">{{ allDishes.code }}</strong>.</p>
       <p>Give this code to everyone around the table so they can join the bill from their phones and add their own dishes.</p>

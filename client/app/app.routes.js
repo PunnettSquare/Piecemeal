@@ -39,12 +39,22 @@
     $stateProvider
       .state('home', {
         url: '/home',
+<<<<<<< HEAD
         views: {
           //   'navbar': { // may not need navbar for homepage. Therefore avoid the issue of double logos
           //     templateUrl: 'components/navbar/navbar.html',
           //     controller: 'NavbarCtrl',
           //     controllerAs: 'navbar'
           //   },
+=======
+        views: { 
+          // add navbar or unique navbar back in later for logout option
+          // 'navbar': {
+          //   templateUrl: 'components/navbar/navbar.html',
+          //   controller: 'NavbarCtrl',
+          //   controllerAs: 'navbar'
+          // },
+>>>>>>> Add navbar and pagination
           '@': {
             templateUrl: 'app/home/home.html',
             controller: 'HomeCtrl',
@@ -55,11 +65,6 @@
       .state('oAuth', {
         url: '/oAuth',
         views: {
-          'navbar': {
-            templateUrl: 'components/navbar/navbar.html',
-            controller: 'NavbarCtrl',
-            controllerAs: 'navbar'
-          },
           '@': {
             templateUrl: 'app/oAuth/oAuth.html',
             controller: 'OAuthCtrl',
