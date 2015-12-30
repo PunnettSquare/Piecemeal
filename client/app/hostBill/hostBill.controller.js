@@ -50,7 +50,7 @@
       return (!billData) ? 0 : billData.discountPercent;
     };
 
-    self.getTip = function (dollarOrPercent) {
+    self.getTip = function(dollarOrPercent) {
       if (!self.data) {
         return 0;
       }
@@ -71,7 +71,7 @@
       }
     };
 
-    self.getTax = function (dollarOrPercent) {
+    self.getTax = function(dollarOrPercent) {
       if (!self.data) {
         return 0;
       }
@@ -92,16 +92,16 @@
       }
     };
 
-    self.getFeeOrDiscountPercent = function (feeOrDiscount) {
+    self.getFeeOrDiscountPercent = function(feeOrDiscount) {
       if (!self.data) {
         return 0;
       }
       var subtotal = self.getSubTotal(self.data.dishes);
 
       if (feeOrDiscount === 'fee') {
-        var num = self.fee/subtotal * 100;
+        var num = self.fee / subtotal * 100;
       } else if (feeOrDiscount === 'discount') {
-        var num = self.discount/subtotal * 100;
+        var num = self.discount / subtotal * 100;
       }
       return Math.round(num * 100) / 100; // round to 2 decimal places
     };

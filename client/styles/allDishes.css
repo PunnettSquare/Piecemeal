@@ -13,8 +13,10 @@ header {
     position: absolute;
     top: 0;
     right: 0;
-    border-radius: 0.8rem;
+
     height: 100%;
+
+    border-radius: 0.8rem;
 }
 
 ul.collection {
@@ -22,9 +24,10 @@ ul.collection {
 }
 
 .button__background {
-    padding: 0 0rem;
     /*padding-bottom: 8rem;*/
     height: 100%;
+    padding: 0 0rem;
+
     border-top-right-radius: 0.8rem;
     border-bottom-right-radius: 0.8rem;
 }
