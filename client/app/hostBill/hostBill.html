@@ -49,12 +49,10 @@
         <li class="collection-item"> <!-- spacing -->
           <h5 class="dish__title">Tip</h5>
           <!-- tip input -->
-          <div>
+          <div class="input">
             <input class="tipPercent" name="tip" type="number" step="any" ng-model="hostBill.tip" placeholder="0" min="0" aria-label="tip" required>
           </div>
           <!-- Tip switch -->
-              hostBill.tipType.value: {{hostBill.tipType.value}}<br/>
-              self.tip: {{hostBill.tip}}
           <div class="switch">
             <label>
               %
@@ -77,7 +75,10 @@
               </strong>
             </p>
           </div>
-
+          <!-- end display tip -->
+          <!-- start sandbox -->
+                    
+          <!-- end sandbox -->
         </li>
       </ul>
 
@@ -117,31 +118,30 @@
       </ul>
 
         <!-- Start FEE/DISCOUNT OPTION -->
-        <div class="text-right">
-          <a href="" ng-click="!hostBill.feeOption ? hostBill.feeOption = true : hostBill.feeOption = false">Add a fee</a> |
-          <a href="" ng-click="!hostBill.discountOption ? hostBill.discountOption = true : hostBill.discountOption = false">Add a discount</a>
+        <div class="center-align">
+          <a class="amendment--link" href="" ng-click="!hostBill.feeOption ? hostBill.feeOption = true : hostBill.feeOption = false">Add a fee</a> |
+          <a class="amendment--link" href="" ng-click="!hostBill.discountOption ? hostBill.discountOption = true : hostBill.discountOption = false">Add a discount</a>
         </div>
         <!-- End FEE/DISCOUNT option -->
 
-        <!-- FEES -->
-        <div class="panel panel-default" ng-show="hostBill.feeOption || hostBill.data.billData.feePercent">
-          <div class="panel-heading">
-            <h1 class="panel-title">Add Fee</h1>
-            <br>
-
-            <span class="input-group" ng>
-              <input class="form-control" name="fee" type="number" step="any" ng-model="hostBill.fee" placeholder="0" min="0" aria-label="fee" />
-              <label class="active input-group-addon">+ $</label>
-            </span>
-            <!-- DISPLAY FEE -->
-            <div class="fee">
-              <p class="help-block text-right">
+        <!-- FEES-->
+        <ul class="collection receipt__item" ng-show="hostBill.feeOption || hostBill.data.billData.feePercent"> <!-- border -->
+          <li class="collection-item"> <!-- spacing -->
+            <h5 class="dish__title">Add Fee</h5>
+            <!-- fee input -->
+            <div class="row">
+              <form class="col s12">
+                <div class="input-field">
+                  <i class="material-icons prefix">$</i>
+                  <input name="fee" id="icon_prefix" type="number" class="validate" step="any" ng-model="hostBill.fee" placeholder="0" min="0" aria-label="fee">
+                  <!-- <label for="icon_prefix">Add Fee</label>  -->
+                </div>
+              </form>
+            <!-- fee display -->
+              <strong>
                 <span ng-show="billForm.fee.$pristine">
-                  <!-- {{ 0 + hostBill.repopulateFee(hostBill.data.billData) }}% -->
-                  Your added fee:
-                  <strong>
+                Your added fee:
                   {{ 0 + hostBill.repopulateFee(hostBill.data.billData) * 0.01 * hostBill.getSubTotal(hostBill.data.dishes) | currency }}
-                  </strong>
                 </span>
                 <span ng-show="billForm.fee.$dirty" id="currency-default">
                   Fee as percent of subtotal:
@@ -149,30 +149,30 @@
                   {{ hostBill.getFeeOrDiscountPercent('fee')}}%
                   </strong>
                 </span>
-              </p>
+              </strong>
             </div>
-          </div>
-        </div>
 
-        <!-- DISCOUNT -->
-        <div class="panel panel-default" ng-show="hostBill.discountOption || hostBill.data.billData.discountPercent">
-          <div class="panel-heading">
-            <h1 class="panel-title">Add Discount</h1>
-            <br>
+          </li>
+        </ul>
 
-            <span class="input-group" ng>
-              <input class="form-control" name="discount" type="number" step="any" ng-model="hostBill.discount" placeholder="0" min="0" aria-label="discount" />
-              <label class="active input-group-addon">- $</label>
-            </span>
-            <!-- DISPLAY DISCOUNT -->
-            <div class="discount">
-              <p class="help-block text-right">
-
+        <!-- DISCOUNT-->
+        <ul class="collection receipt__item" ng-show="hostBill.discountOption || hostBill.data.billData.discountPercent"> <!-- border -->
+          <li class="collection-item"> <!-- spacing -->
+            <h5 class="dish__title">Add Discount</h5>
+            <!-- discount input -->
+            <div class="row">
+              <form class="col s12">
+                <div class="input-field">
+                  <i class="material-icons prefix">$</i>
+                  <input name="discount" id="icon_prefix" type="number" class="validate" step="any" ng-model="hostBill.discount" placeholder="0" min="0" aria-label="discount">
+                  <!-- <label for="icon_prefix">Add Discount</label>  -->
+                </div>
+              </form>
+            <!-- discount display -->
+              <strong>
                 <span ng-show="billForm.discount.$pristine">
-                  Your added discount:
-                  <strong>
+                Your added discount:
                   {{ 0 + hostBill.repopulateDiscount(hostBill.data.billData) * 0.01 * hostBill.getSubTotal(hostBill.data.dishes) | currency }}
-                  </strong>
                 </span>
                 <span ng-show="billForm.discount.$dirty" id="currency-default">
                   Discount as percent of subtotal:
@@ -180,22 +180,22 @@
                   {{ hostBill.getFeeOrDiscountPercent('discount')}}%
                   </strong>
                 </span>
-              </p>
+              </strong>
             </div>
-          </div>
-        </div>
 
-        <!-- GRAND TOTAL -->
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h1 class="h1 panel-title">Grand Total</h1>
-            <p class="text-right h4">
-              <span ng-show="billForm.tip.$pristine && billForm.tip.$pristine">
+          </li>
+        </ul>
+
+        <!--  GRAND TOTAL -->
+        <ul class="collection receipt__item">
+          <li class="collection-item">
+            <h5 class="receipt__title"><strong>Grand Total</strong>
+            <span class="receipt__item--number right">
+              <span ng-show="billForm.tip.$pristine && billForm.tax.$pristine">
                 {{ hostBill.getSubTotal(hostBill.data.dishes)
                 + (hostBill.repopulateTip(hostBill.data.billData) * 0.01 * hostBill.getSubTotal(hostBill.data.dishes))
                 + (hostBill.repopulateTax(hostBill.data.billData) * 0.01 * hostBill.getSubTotal(hostBill.data.dishes))
                 + hostBill.fee - hostBill.discount | currency}}
-                <!-- CHECK FEE AND DISCOUNT FOR PERSISTANCE -->
               </span>
               <span ng-show="billForm.tip.$dirty && billForm.tax.$pristine">
                 {{ hostBill.getSubTotal(hostBill.data.dishes) +
@@ -205,20 +205,17 @@
                 {{ hostBill.getSubTotal(hostBill.data.dishes) +
                 hostBill.getTip('dollar') + hostBill.getTax('dollar') + hostBill.fee - hostBill.discount | currency }}
               </span>
-            </p>
-          </div>
+            </span>
+            </h5>
+          </li>
+        </ul>
+      
+        <div class="row center-align">
+          <span ng-show="billForm.tip.$pristine || billForm.tax.$pristine">
+            Please enter tax and tip.
+          </span>
+          <button type="submit" ng-disabled="billForm.tax.$error.required || billForm.tip.$error.required" ng-click="hostBill.sendBillAndAlert()" class="sendBills btn">Send Bills to Guests</button>
         </div>
-
-        <div>
-          <button type="submit" ng-disabled="billForm.tax.$error.required || billForm.tip.$error.required" ng-click="hostBill.sendBillsToGuests()" class="sendBills btn btn-primary">Send Bills to Guests</button>
-        </div>
-
-        <br>
-        <div class="alert alert-success alert-dismissible" role="alert" ng-show="!hostBill.billsSent">
-          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          Bills sent successfully!
-        </div>
-
 
       </form>
       <br>

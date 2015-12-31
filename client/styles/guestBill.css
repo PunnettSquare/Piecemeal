@@ -69,14 +69,14 @@ h5.receipt__tiptax {
     margin-top: 0;
 }
 
-.alert__notify {
+/*.alert__notify {
     padding: 1rem;
     margin: 0 0.3rem;
 
     color: #3c763d;
     border-radius: 1rem;
     background-color: #dff0d8;
-}
+}*/
 
 .button__div--payment {
     display: flex;

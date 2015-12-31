@@ -136,6 +136,11 @@
       self.billsSent = true;
     };
 
+    self.sendBillAndAlert = function () {
+      self.sendBillsToGuests();
+      Materialize.toast('Bills sent successfully!', 4000);
+    };
+
     self.logout = appFactory.logout;
   }
 })();
