@@ -17,7 +17,7 @@
     };
     
     self.logout = appFactory.logout; // remove this line from other controllers
-  }
 
+  }
 
 })();

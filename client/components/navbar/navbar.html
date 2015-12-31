@@ -8,20 +8,19 @@
 
 <nav>
   <div class="nav-wrapper teal lighten-1">
-  <a href="#" class="wordmark">Piecemeal</a> <!-- add padding -->
+  <a href="#" class="wordmark">Piecemeal</a>
     <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
     <ul class="right hide-on-med-and-down">
       <li><a class="leaveBill" ng-if="navbar.isLoggedIn()" ng-click="navbar.logout()">Leave Bill</a></li> 
-      <li><a class="logout" ng-if="navbar.isHost" ng-click="navbar.logout()">Log Out</a></li> 
-      <!-- removed 'ng-if="navbar.isLoggedIn() && "' so that on homepage will still show this even if not logged in to a particular room? -->
       <!-- disappears at tablet size; should disappear at mobile only -->
+      <!-- <li><a class="logout" ng-if="navbar.isHost" ng-click="navbar.logout()">Log Out</a></li> --> 
+      <!-- Recreate logout-only navbar for home only -->
     </ul>
     <ul class="side-nav" id="mobile-demo">
       <li class="active"><a class="allDishes" ui-sref="event.allDishes">All Dishes</a></li>
       <li><a class="guestBill" ui-sref="event.guestBill">Your Bill</a></li>
       <li><a class="hostBill" ui-sref="event.hostBill" ng-show="navbar.isHost" >Final Bill</a></li>
       <li><a class="leaveBill" ng-if="navbar.isLoggedIn()" ng-click="navbar.logout()">Leave Bill</a></li>
-      <li><a class="logout" ng-if="navbar.isLoggedIn() && navbar.isHost" ng-click="navbar.logout()">Log Out</a></li> <!-- Need to update this with new function, and perhaps only show on certain pages? -->
     </ul>
   </div>
 </nav>

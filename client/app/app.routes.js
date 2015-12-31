@@ -40,12 +40,11 @@
       .state('home', {
         url: '/home',
         views: { 
-          // avoid the issue of double logos. but add navbar or unique navbar back in later for logout option?
-          // 'navbar': {
-          //   templateUrl: 'components/navbar/navbar.html',
-          //   controller: 'NavbarCtrl',
-          //   controllerAs: 'navbar'
-          // },
+          'navbar': {
+            templateUrl: 'components/navbar/homeNavbar.html',
+            controller: 'NavbarCtrl',
+            controllerAs: 'homeNavbar'
+          },
           '@': {
             templateUrl: 'app/home/home.html',
             controller: 'HomeCtrl',
