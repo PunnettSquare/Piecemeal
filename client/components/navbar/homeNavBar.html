@@ -8,10 +8,10 @@
 
 <!-- only see navbar if you're a loggedin host -->
 <!-- add condition for loggedin -->
-<nav ng-if="navbar.isHost"> 
+<nav ng-if="homeNavbar.isVenmo"> 
   <div class="nav-wrapper teal lighten-1">
     <ul class="right">
-      <li><a class="logout" ng-click="navbar.logout()">Log Out</a></li>  
+      <li><a class="logout" ng-click="homeNavbar.logoutVenmo()">Log Out</a></li>  
       <!-- update to new logout func -->
     </ul>
   </div>

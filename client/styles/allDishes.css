@@ -130,4 +130,6 @@ ul.collection {
             animation-fill-mode: both;
 }*/
 
-
+.code {
+    float: right;
+}

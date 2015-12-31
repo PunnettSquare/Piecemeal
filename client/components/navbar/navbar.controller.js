@@ -9,7 +9,13 @@
   function NavbarCtrl(appFactory, $window) {
 
     var self = this;
+    self.isVenmo = $window.localStorage.venmoUsername;
 
+    self.logoutVenmo = function () {
+      $window.localStorage.clear();
+      self.isVenmo = false;
+    }
+    self.test="test";
     appFactory.copySessData(self); //copy session data to scope
 
     self.isLoggedIn = function() {
