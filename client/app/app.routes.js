@@ -10,7 +10,12 @@
 
     $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|chrome-extension|venmo):/);
 
-    var getInfoOnRefresh = function($http) {
+    var getInfoOnRefresh = function ($http, $location) {
+      console.log()
+      if (!window.localStorage.code || window.location.hash.split("/")[1] !== window.location.code) {
+        $locaion.path('/home');
+        return;
+      }
       if (!usernameCache[window.localStorage.user_id]) {
         usernameCache[window.localStorage.user_id] = true;
         return $http({
@@ -24,7 +29,7 @@
     };
 
     console.log('window.localStorage =', window.localStorage);
-    $urlRouterProvider.otherwise(function($injector) {
+    $urlRouterProvider.otherwise(function ($injector) {
       var state = $injector.get('$state');
       //changed to code from username for persistent venmo sessions
       // TODO test edge cases
@@ -128,18 +133,18 @@
           getEventInfo: ['$http', getInfoOnRefresh]
         }
       })
-      .state('event.hostReceipt', {
-        url: '/hostReceipt',
-        views: {
-          '@': {
-            templateUrl: 'app/hostReceipt/hostReceipt.html',
-            controller: 'HostReceiptCtrl',
-            controllerAs: 'hostReceipt'
-          }
-        },
-        resolve: {}
+      // .state('event.hostReceipt', {
+      //   url: '/hostReceipt',
+      //   views: {
+      //     '@': {
+      //       templateUrl: 'app/hostReceipt/hostReceipt.html',
+      //       controller: 'HostReceiptCtrl',
+      //       controllerAs: 'hostReceipt'
+      //     }
+      //   },
+      //   resolve: {}
 
-      })
+      // })
       .state('event.hostBill', {
         url: '/hostBill',
         views: {
