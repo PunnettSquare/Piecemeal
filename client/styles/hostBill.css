@@ -2,16 +2,6 @@
      Switch
 ***************/
 
-/*Switch on ($). remove later*/
-.switch label input[type=checkbox]:checked + .lever {
-  background-color: #84c7c1;
-}
-
-.switch label input[type=checkbox]:checked + .lever:after {
-  background-color: #26a69a;
-}
-/*end switch on*/
-
 /*Switch start off*/
 .switch label .lever {
   content: "";
@@ -46,18 +36,14 @@
   color: #26a69a;
 }
 
-
 .switch {
   padding-top: 0.5rem;
   display: inline-block;
   float: right;
 }
+
 /*.input {
   display: inline-block;
   float: left;
   width: 65%;
 }*/
-
-* {
-  /*border: 1px solid grey;*/
-}

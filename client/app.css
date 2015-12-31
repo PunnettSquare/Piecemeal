@@ -2,8 +2,6 @@ body {
 	box-sizing: border-box;
 }
 
-
-
 /*Gets rid of tiny increment buttons on number inputs*/
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
@@ -11,11 +9,11 @@ input::-webkit-inner-spin-button {
     margin: 0;
 }
 
-
 /*Same thing as "light" class*/
 h1, h2, h3, h4, h5, h6 {
   font-weight: 300;
 }
+
 
 /*PAGINATION*/
 
@@ -23,11 +21,9 @@ h1, h2, h3, h4, h5, h6 {
   font-size: 1rem;
 }
 
-
 #pag__title--current {
   margin: 0;
 }
-
 
 ul.pagination {
   display: flex;
@@ -39,7 +35,6 @@ ul.pagination {
   margin-left: -1em;
 }
 */
-
 
 /*.pag__button--next {
  margin-right: 0;
