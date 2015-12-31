@@ -4,9 +4,9 @@
   angular.module('Piecemeal')
     .controller('GuestBillCtrl', GuestBillCtrl);
 
-  GuestBillCtrl.$inject = ['$scope', 'appFactory', 'allDishesFactory', 'socketFactory'];
+  GuestBillCtrl.$inject = ['$scope', 'appFactory', 'allDishesFactory', 'socketFactory', '$timeout'];
 
-  function GuestBillCtrl($scope, appFactory, allDishesFactory, socketFactory) {
+  function GuestBillCtrl($scope, appFactory, allDishesFactory, socketFactory, $timeout) {
     var self = this;
     appFactory.copySessData(self);
 
@@ -105,6 +105,12 @@
 
     self.cashAlert = function () {
       Materialize.toast('We have notified the host that you will be<br>paying with cash.', 4000);
+    };
+
+    self.venmoAlert = function () {
+      $timeout(function(){
+        Materialize.toast('Venmo app required.', 4000);
+      }, 1000)
     };
 
     //remove:
