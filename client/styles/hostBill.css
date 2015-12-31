@@ -1,0 +1,49 @@
+/***************
+     Switch
+***************/
+
+/*Switch start off*/
+.switch label .lever {
+  content: "";
+  display: inline-block;
+  position: relative;
+  width: 40px;
+  height: 15px;
+  background-color: #84c7c1; /*teal*/
+  border-radius: 15px;
+  margin-right: 10px;
+  transition: background 0.3s ease;
+  vertical-align: middle;
+  margin: 0 16px;
+}
+
+.switch label .lever:after {
+  content: "";
+  position: absolute;
+  display: inline-block;
+  width: 21px;
+  height: 21px;
+  background-color: #26a69a; /*teal head*/
+  border-radius: 21px;
+  box-shadow: 0 1px 3px 1px rgba(0, 0, 0, 0.4);
+  left: -5px;
+  top: -3px;
+  transition: left 0.3s ease, background .3s ease, box-shadow 0.1s ease;
+}
+/*end switch start off*/
+
+.amendment--link {
+  color: #26a69a;
+}
+
+.switch {
+  padding-top: 0.5rem;
+  display: inline-block;
+  float: right;
+}
+
+/*.input {
+  display: inline-block;
+  float: left;
+  width: 65%;
+}*/

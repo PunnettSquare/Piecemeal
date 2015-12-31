@@ -152,26 +152,36 @@
           </li>
         </ul>
 
-
+        <!-- OPTIONAL feature: can add class:  `&& !guestBill.paid`. when guestBill.paid is false, this will show-->
         <ul class="collection receipt__item" ng-if="guestBill.data.billData.billSent && !guestBill.isHost">
           <li class="collection-item">
             <div class="receipt__tiptax">
               <h5 class="receipt__tiptax">Pay with:</h5>
               <div class="button__div--payment">
                 <a type="submit" class="button--payButton venmoEnabled" ng-href="venmo://paycharge?txn=pay&amount={{guestBill.getGuestGrandTotal()}}&audience=private&note=Bill%20split%20with%20Piecemeal.%20piecemeal.herokuapp.com&recipients={{guestBill.venmoUsername}}"><img src="../../assets/venmo_logo_white.png" alt="Venmo" width="55px"></a>
-                <button type="submit" class="button--payButton cashEnabled" ng-click="guestBill.paymentChosen='cash'">Cash</button>
+                <button type="submit" class="button--payButton cashEnabled" ng-click="guestBill.cashAlert()">Cash</button>
               </div>
 
             </div>
           </li>
         </ul>
 
+        <!-- OPTIONAL FEATURE. when guestBill.paid is true, greyed out venmo/cash buttons. need to add self.paid back to controller and set to true in cashAlert -->
+        <!-- Problem: when hearing another joined/update of bill, won't set guestBill.paid back to false -->
+        <!-- <ul class="collection receipt__item" ng-if="guestBill.data.billData.billSent && !guestBill.isHost && guestBill.paid">
+          <li class="collection-item">
+            <div class="receipt__tiptax">
+              <h5 class="receipt__tiptax">Pay with:</h5>
+              <div class="button__div--payment">
+                <button type="submit" class="button--payButton"><img src="../../assets/venmo_logo_white.png" alt="Venmo" width="55px"></button>
+                <button type="submit" class="button--payButton">Cash</button>
+              </div>
+            </div>
+          </li>
+        </ul> -->
+
         <!-- end payment option -->
 
-        <!-- Payment Choice Confirmation -->
-        <div class="alert__notify" ng-show="guestBill.paymentChosen">
-          We have notified the host that you will be paying with cash.
-        </div>
       </section>
     </div>
 

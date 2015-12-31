@@ -9,6 +9,12 @@
   function NavbarCtrl(appFactory, $window) {
 
     var self = this;
+    self.isVenmo = $window.localStorage.venmoUsername;
+
+    self.logoutVenmo = function () {
+      $window.localStorage.clear();
+      self.isVenmo = false;
+    }
 
     appFactory.copySessData(self); //copy session data to scope
 
@@ -17,7 +23,7 @@
     };
     
     self.logout = appFactory.logout; // remove this line from other controllers
-  }
 
+  }
 
 })();
