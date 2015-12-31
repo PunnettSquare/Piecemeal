@@ -4,17 +4,15 @@
   <div class="col s12">
 
 
-
     <header>
       <h5>Enter</h5>
       <div class="divider"></div>
     </header>
 
-
     <div class="form">
-      <br>
+    <br>
       <h6>Join by entering your name:</h6>
-      <input type="text" placeholder="Name" ng-model="username" name="username" class="enterName" required autofocus id="name" required>
+      <input type="text" placeholder="Name" ng-model="username" name="username" class="enterName" required id="name" required>
       <br>
 
       <button ng-show="!loading.isSent" type="submit" name="username" ng-disabled="userInput.username.$error.required" value="Enter room" class="enterRoom btn" ng-click="loading.setSessionUser(username)">Enter Room</button>

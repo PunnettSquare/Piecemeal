@@ -1,33 +1,171 @@
-.logoSpacing {
-  margin: 6rem 2rem 2rem 2rem;
-  width: 80%;
+* {
+    font-family: Lato, sans-serif;
+    /*border: 1px solid grey;*/
 }
 
-.file-field .file-path-wrapper { /* overrides default materialize for Enter Code field */
-  overflow: hidden;
-  padding-right: 10px; /*right*/
+.header {
+    display: flex;
+    height: 3.7rem;
+    padding: 0.5rem 0.9rem;
+
+    color: #009688;
+    border-radius: 0.3rem;
+    /*    background: rgba(0, 0, 0, 0.60);*/
+    background: rgba(255, 255, 255, 0.40);
+
+    align-items: center;
+    justify-content: space-between;
 }
 
-.file-field .btn, .file-field .btn-large { /* overrides default materialize for joinButton */
-  float: right; /*switch to right; below included for clarity*/
-  height: 3rem;
-  line-height: 3rem;
+a {
+    color: inherit;
 }
 
+.brand-logo {
+    font-size: 2rem;
+    /*font-weight: bold;*/
+}
+
+.teal-color {
+    /*background: rgba(0, 150, 136, 0.3);*/
+}
+
+.create {
+    border-radius: 0.3rem;
+}
+
+.image {
+    height: 45rem;
+    background-repeat: repeat;
+    background-attachment: fixed;
+    background-size: contain;
+
+
+    /*background-image: url("../assets/home2.jpg");*/
+    /*background-position: 0 -6rem;*/
+
+
+    background-image: url("../assets/home4.jpg");
+    background-position: 0 -7rem;
+    /*background-position: -24em -49em;*/
+    /*background-size: cover;*/
+}
+
+div.motto {
+    margin-top: 10rem;
+
+    font-size: 2rem;
+    font-weight: 500;
+
+    text-align: center;
+
+    color: white;
+    background: rgba(0, 150, 136, 0.4);
+    /*background: rgba(0, 150, 136, 0.5);*/
+}
+
+.form {
+    text-align: center;
+}
+
+.input-field {
+    margin: 0 1rem;
+}
+
+::-webkit-input-placeholder {
+    font-size: 1.2rem;
+
+    text-align: center;
+
+    color: grey;
+}
+
+::-moz-placeholder {
+    font-size: 1.2rem;
+    /* Firefox 19+ */
+
+    text-align: center;
+
+    color: grey;
+}
+
+:-ms-input-placeholder {
+    font-size: 1.2rem;
+
+    text-align: center;
+
+    color: grey;
+}
+
+:-moz-placeholder {
+    font-size: 1.2rem;
+    /* Firefox 18- */
+
+    text-align: center;
+
+    color: grey;
+}
+
+#info {
+    height: 12rem;
+    padding: 0.3rem;
+    margin-top: 10rem;
+
+    text-align: center;
+
+    border-radius: 0.3rem;
+    background: rgba(240, 240, 240, 0.90);
+    /*    width: 30rem;
+    margin-right: auto;
+    margin-left: auto;*/
+}
+
+/*.logoSpacing {
+    width: 80%;
+    margin: 6rem 2rem 2rem 2rem;
+}*/
+
+/*.file-field .file-path-wrapper {
+    padding-right: 10px;
+    overflow: hidden;
+}*/
+/*
+.file-field .btn,
+.file-field .btn-large {
+    float: right;
+    height: 3rem;
+
+    line-height: 3rem;
+}
+*/
 .createButton {
-  height: 3rem;
-  line-height: 3rem;
+    height: 2.7rem;
+    padding: 0 1.3rem;
+
+    line-height: 2.8rem;
 }
 
-/*Shrinks text to avoid widowed words on phone*/
 @media (max-width: 600px) {
-  .shrink {
-    font-size: 1.4rem;
-  }
+    #info {
+        height: 12rem;
+        padding: 0.3rem;
+        margin-top: 10rem;
 
-  .logoSpacing {
-    margin: 4rem 1rem 1rem 1rem;
-    max-width: 80%;
-  }
+        text-align: center;
 
+        border-radius: 0.3rem;
+        background: rgba(240, 240, 240, 0.90);
+    }
+}/*Shrinks text to avoid widowed words on phone
+
+/*@media (max-width: 600px) {
+    .shrink {
+        font-size: 1.4rem;
+    }
+
+    .logoSpacing {
+        max-width: 80%;
+        margin: 4rem 1rem 1rem 1rem;
+    }
 }
+*/
