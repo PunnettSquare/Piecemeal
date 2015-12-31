@@ -4,15 +4,13 @@
   angular.module('Piecemeal')
     .controller('LoadingCtrl', LoadingCtrl);
 
-  LoadingCtrl.$inject = ['$location', '$window', 'loadingFactory', 'appFactory', '$timeout'];
+  LoadingCtrl.$inject = ['$location', '$window', 'loadingFactory','$timeout','usersList'];
 
-  function LoadingCtrl($location, $window, loadingFactory, appFactory, $timeout) {
+  function LoadingCtrl($location, $window, loadingFactory, $timeout, usersList) {
     var self = this;
-
-    if (!$window.localStorage.getItem('code')) {
-      var path = $location.path().split('/');
-      $window.localStorage.setItem('code', path[path.length - 2]);
-    }
+    self.currentUsers = _.uniq(_.pluck(usersList.data, 'username'));
+    self.code = $window.location.hash.split("/")[1];
+    window.localStorage.code = $window.location.hash.split("/")[1];
 
     self.setSessionUser = function(username) {
       loadingFactory.sendSessionUser(
@@ -27,9 +25,6 @@
           });
           self.isSent = true;
           $location.path('/' + $window.localStorage.code + '/allDishes');
-          // $timeout(function() {
-          //   window.location.hash = "#/" + code + "/allDishes";
-          // }, 1000);
         })
         .catch(function(err) {
           console.log("Error: Could not send session user info.");

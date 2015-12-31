@@ -1,9 +1,16 @@
+body {
+	box-sizing: border-box;
+}
+
+
+
 /*Gets rid of tiny increment buttons on number inputs*/
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
+
 
 /*Same thing as "light" class*/
 h1, h2, h3, h4, h5, h6 {

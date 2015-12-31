@@ -10,6 +10,20 @@ module.exports = function(app, io) {
     res.redirect('/#/' + req.params.code.toLowerCase() + '/loading');
   });
 
+  app.post('/eventInfo', function(req, res) {
+    var code = req.body.code;
+
+    util.findEvent(db, code)
+      .then(function(event_id) {
+        if (event_id.length !== 0) {
+          return util.gatherState(db, event_id[0].id, code) // real data
+            .then(function(eventInfo) {
+              res.send(eventInfo.users);
+            });
+        }
+      });
+  });
+
   app.post('/createEvent', function(req, res) {
     var username = req.body.username || 'Jerry';
 
@@ -27,12 +41,12 @@ module.exports = function(app, io) {
       });
   });
 
-  app.get('/checkCode/:code', function (req, res) {
+  app.get('/checkCode/:code', function(req, res) {
     util.checkCode(db, req.params.code)
-    .then(function(billExists) {
-      res.send(billExists);
-    })
-  })
+      .then(function(billExists) {
+        res.send(billExists);
+      });
+  });
 
   app.post('/newUser', function(req, res) {
     var username = req.body.username;

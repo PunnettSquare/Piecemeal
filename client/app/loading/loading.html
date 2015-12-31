@@ -1,32 +1,57 @@
-<div class="container-fluid" id="loading" ng-cloak>
+<link rel="stylesheet" href="../../styles/loading.css">
 
-  <div class="row">
-    <div class="col-md-6">
-      <form name="userInput">
-        <!-- <h3>Loading!</h3> -->
-
-        <!-- Enter Your Name -->
-        <div class="form-group">
-          <br>
-          <label for="name">Enter Name</label>
-          <input type="text" placeholder="Enter Your Name" ng-model="username" name="username" class="enterName form-control" required autofocus id="name" required>
-          <br>
-
-          <button ng-show="!loading.isSent" type="submit" name="username" ng-disabled="userInput.username.$error.required" value="Enter room" class="enterRoom btn btn-default" ng-click="loading.setSessionUser(username)">Enter Room</button>
-          <br>
+<div class="row" id="allDishes" ng-cloak>
+  <div class="col s12">
 
 
-          <div class="spinner" style="position:relative; left:2em">
-            <loading ng-if="loading.isSent"></loading>
+
+    <header>
+      <h5>Enter</h5>
+      <div class="divider"></div>
+    </header>
+
+
+    <div class="form">
+      <br>
+      <h6>Join by entering your name:</h6>
+      <input type="text" placeholder="Name" ng-model="username" name="username" class="enterName" required autofocus id="name" required>
+      <br>
+
+      <button ng-show="!loading.isSent" type="submit" name="username" ng-disabled="userInput.username.$error.required" value="Enter room" class="enterRoom btn" ng-click="loading.setSessionUser(username)">Enter Room</button>
+      <br>
+    </div>
+
+    <br>
+    <br>
+
+    <div class="roomInfo">
+      <h6>Room <strong>{{loading.code}}</strong> currently has:</h6>
+      <div class="roomInfo__chips">
+
+
+        <!--         <div class="animated infinite fadeInUp chip--animated">
+          <div class="chip">
+            <div class="chip__icon">
+              <p class="chip__letter">Y</p>
+            </div>
+            You
           </div>
-          <br>
-          <div ng-show="loading.isError">Your entered room does not exist. Please try again.</div>
+        </div> -->
+        <div class="animated infinite fadeInUp chip--animated" ng-repeat="user in loading.currentUsers">
+          <div class="chip">
+            <div class="chip__icon">
+              <p class="chip__letter">{{_.capitalize(user[0])}}</p>
+            </div>
+            {{_.capitalize(user)}}
+          </div>
 
-
-        </form>
+        </div>
       </div>
-    </form>
-    <br><br><br>
+
+    </div>
+
+
+
 
 
   </div>
