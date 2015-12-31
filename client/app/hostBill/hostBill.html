@@ -130,13 +130,11 @@
             <h5 class="dish__title">Add Fee</h5>
             <!-- fee input -->
             <div class="row">
-              <form class="col s12">
-                <div class="input-field">
-                  <i class="material-icons prefix">$</i>
-                  <input name="fee" id="icon_prefix" type="number" class="validate" step="any" ng-model="hostBill.fee" placeholder="0" min="0" aria-label="fee">
-                  <!-- <label for="icon_prefix">Add Fee</label>  -->
-                </div>
-              </form>
+              <div class="input-field">
+                <i class="material-icons prefix">$</i>
+                <input name="fee" id="icon_prefix" type="number" class="validate" step="any" ng-model="hostBill.fee" placeholder="0" min="0" aria-label="fee">
+                <!-- <label for="icon_prefix">Add Fee</label>  -->
+              </div>
             <!-- fee display -->
               <strong>
                 <span ng-show="billForm.fee.$pristine">
@@ -161,13 +159,11 @@
             <h5 class="dish__title">Add Discount</h5>
             <!-- discount input -->
             <div class="row">
-              <form class="col s12">
-                <div class="input-field">
-                  <i class="material-icons prefix">$</i>
-                  <input name="discount" id="icon_prefix" type="number" class="validate" step="any" ng-model="hostBill.discount" placeholder="0" min="0" aria-label="discount">
-                  <!-- <label for="icon_prefix">Add Discount</label>  -->
-                </div>
-              </form>
+              <div class="input-field">
+                <i class="material-icons prefix">$</i>
+                <input name="discount" id="icon_prefix" type="number" class="validate" step="any" ng-model="hostBill.discount" placeholder="0" min="0" aria-label="discount">
+                <!-- <label for="icon_prefix">Add Discount</label>  -->
+              </div>
             <!-- discount display -->
               <strong>
                 <span ng-show="billForm.discount.$pristine">
@@ -214,6 +210,8 @@
           <span ng-show="billForm.tip.$pristine || billForm.tax.$pristine">
             Please enter tax and tip.
           </span>
+        </div>
+        <div class="row center-align">
           <button type="submit" ng-disabled="billForm.tax.$error.required || billForm.tip.$error.required" ng-click="hostBill.sendBillAndAlert()" class="sendBills btn">Send Bills to Guests</button>
         </div>
 
