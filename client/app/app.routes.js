@@ -163,7 +163,15 @@
           }
         },
         resolve: {
-
+          usersList: ['$http', function($http) {
+            return $http({
+              method: 'POST',
+              url: '/eventInfo',
+              data: {
+                code: window.location.hash.split("/")[1]
+              }
+            });
+          }]
         }
       });
   }
