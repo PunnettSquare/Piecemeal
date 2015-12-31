@@ -8,10 +8,10 @@ if (process.env.PORT) {
     id: process.env.VENMO_ID,
     secret: process.env.VENMO_SECRET
   };
-  callbackURL = "https://piecemeal.herokuapp.com/auth/venmo/callback";
+  callbackURL = "http://piecemeal.herokuapp.com/auth/venmo/callback";
 } else {
   var venmoInfo = require('../../venmoApiKeys');
-  callbackURL = 'http://127.0.0.1:8080/auth/venmo/callback';
+  callbackURL = 'http://localhost:8080/auth/venmo/callback';
 }
 var cookieParser = require('cookie-parser');
 var db = require('../../db/db');
