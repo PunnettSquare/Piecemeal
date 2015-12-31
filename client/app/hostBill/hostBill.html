@@ -191,6 +191,8 @@
                 {{ hostBill.getSubTotal(hostBill.data.dishes)
                 + (hostBill.repopulateTip(hostBill.data.billData) * 0.01 * hostBill.getSubTotal(hostBill.data.dishes))
                 + (hostBill.repopulateTax(hostBill.data.billData) * 0.01 * hostBill.getSubTotal(hostBill.data.dishes))
+                + (hostBill.repopulateFee(hostBill.data.billData) * 0.01 * hostBill.getSubTotal(hostBill.data.dishes))
+                - (hostBill.repopulateDiscount(hostBill.data.billData) * 0.01 * hostBill.getSubTotal(hostBill.data.dishes))
                 + hostBill.fee - hostBill.discount | currency}}
               </span>
               <span ng-show="billForm.tip.$dirty && billForm.tax.$pristine">

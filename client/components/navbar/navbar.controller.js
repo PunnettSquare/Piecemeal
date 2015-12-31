@@ -15,7 +15,7 @@
       $window.localStorage.clear();
       self.isVenmo = false;
     }
-    self.test="test";
+
     appFactory.copySessData(self); //copy session data to scope
 
     self.isLoggedIn = function() {
