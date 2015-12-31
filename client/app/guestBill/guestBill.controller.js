@@ -104,7 +104,7 @@
     };
 
     self.cashAlert = function () {
-      Materialize.toast('We have notified the host that you will be paying with cash.', 4000);
+      Materialize.toast('We have notified the host that you will be<br>paying with cash.', 4000);
     };
 
     //remove:

@@ -60,6 +60,89 @@ li.pag__space {
   padding: 0;
 }
 
+
+/*GUEST BILL CSS*/
+
+.dish__item:last-child {
+    margin-bottom: 2rem;
+}
+
+.dish__item--cost {
+    float: right;
+
+    font-size: 1rem;
+
+    font-weight: 500;
+/*    color: teal;*/
+}
+
+.dish__item--total {
+    font-size: 0.9rem;
+}
+
+.receipt__item--number {
+    float: right;
+
+    font-size: 1.3rem;
+}
+
+.receipt__title,
+.dish__title {
+    margin: 0.3rem 0;
+
+    font-size: 1.3rem;
+}
+
+.dish__item {
+    border-radius: 0.7rem;
+}
+
+.button--payButton {
+    width: 8.5rem;
+    padding: 8px 18px;
+
+    font-size: 1.2rem;
+    font-weight: bold;
+
+    color: white;
+    border: 0;
+    border-radius: 3px;
+}
+
+.receipt__item {
+    border-radius: 0.7rem;
+}
+
+.receipt__subtitle,
+.dish__item--shared {
+    font-size: 0.85rem;
+}
+
+.receipt__tiptax {
+    text-align: center;
+}
+
+h5.receipt__tiptax {
+    margin-top: 0;
+}
+
+/*.alert__notify {
+    padding: 1rem;
+    margin: 0 0.3rem;
+
+    color: #3c763d;
+    border-radius: 1rem;
+    background-color: #dff0d8;
+}*/
+
+.button__div--payment {
+    display: flex;
+    margin-top: 0.8rem;
+
+    justify-content: space-around;
+}
+
+
 * {
   /*border: 1px solid grey;*/
 }
