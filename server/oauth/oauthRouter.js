@@ -74,8 +74,7 @@ module.exports = function(app) {
       'access_profile',
       'access_email',
       'access_phone',
-      'access_balance',
-      'access_friends'
+      'access_balance'
     ],
     failureRedirect: '/'
   }));
