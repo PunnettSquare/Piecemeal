@@ -19,3 +19,128 @@ nav .button-collapse {
   font-weight: 300;
   margin-left: 3%;
 }
+
+/*side nav css*/
+/*
+.side-nav .collapsible {
+  border: none;
+  box-shadow: none;
+}
+
+.side-nav .collapsible li {
+  padding: 0;
+}
+
+.side-nav .collapsible-header {
+  background-color: transparent;
+  border: none;
+  line-height: inherit;
+  height: inherit;
+  margin: 0 1rem;
+}
+
+.side-nav .collapsible-header i {
+  line-height: inherit;
+}
+
+.side-nav .collapsible-body {
+  border: 0;
+  background-color: #fff;
+}
+
+.side-nav .collapsible-body li a {
+  margin: 0 1rem 0 2rem;
+}
+
+.side-nav {
+  position: fixed;
+  width: 240px;
+  left: -105%;
+  top: 0;
+  margin: 0;
+  height: 100%;
+  height: calc(100% + 60px);
+  height: -moz-calc(100%);
+  padding-bottom: 60px;
+  background-color: #fff;
+  z-index: 999;
+  overflow-y: auto;
+  will-change: left;
+}
+
+.side-nav.right-aligned {
+  will-change: right;
+  right: -105%;
+  left: auto;
+}
+
+.side-nav .collapsible {
+  margin: 0;
+}
+
+.side-nav li {
+  float: none;
+  padding: 0 15px;
+  line-height: 64px;
+}
+
+.side-nav li:hover, .side-nav li.active {
+  background-color: #ddd;
+}
+
+.side-nav a {
+  color: #444;
+  display: block;
+  font-size: 1rem;
+  height: 64px;
+  line-height: 64px;
+  padding: 0 15px;
+}
+
+.side-nav.fixed a {
+  display: block;
+  padding: 0 15px;
+  color: #444;
+}
+
+.side-nav.fixed {
+  left: 0;
+  position: fixed;
+}
+
+.side-nav.fixed.right-aligned {
+  right: 0;
+  left: auto;
+}
+
+@media only screen and (max-width: 992px) {
+  .side-nav.fixed {
+    left: -105%;
+  }
+  .side-nav.fixed.right-aligned {
+    right: -105%;
+    left: auto;
+  }
+}
+
+.side-nav .collapsible-body li.active,
+.side-nav.fixed .collapsible-body li.active {
+  background-color: #ee6e73;
+}
+
+.side-nav .collapsible-body li.active a,
+.side-nav.fixed .collapsible-body li.active a {
+  color: #fff;
+}
+
+#sidenav-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 120vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 997;
+  will-change: opacity;
+}
+*/
