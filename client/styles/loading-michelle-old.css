@@ -1,0 +1,221 @@
+#allDishes {
+    margin: 0 0.3rem;
+}
+
+/*  Form  */
+.form--addName {
+    margin-top: 0.5rem;
+}
+
+.enterRoom {
+    float: right;
+}
+
+/*  Room Info  */
+.roomInfo {
+    display: block;
+
+    text-align: center;
+}
+
+.roomInfo--error {
+    text-align: center;
+}
+
+.roomInfo__chips {
+    display: flex;
+
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.chip {
+    margin-top: 1rem;
+}
+
+.chip__icon {
+    display: inline-block;
+    width: 34px;
+    height: 34px;
+    margin-left: -1rem;
+
+    border: 1px solid #80cbc4;
+    border-radius: 50%;
+    background-color: #80cbc4;
+}
+
+.chip__letter {
+    margin: 0;
+
+    font-size: 1.3rem;
+    font-weight: bolder;
+
+    text-align: center;
+}
+
+/*  Chip Animation  */
+
+.animated {
+    -webkit-animation-duration: 1.2s;
+            animation-duration: 1.2s;
+    -webkit-animation-iteration-count: 1;
+            animation-iteration-count: 1;
+
+    -webkit-animation-fill-mode: both;
+            animation-fill-mode: both;
+}
+
+@-webkit-keyframes fadeInUp {
+    0% {
+        -webkit-transform: translate3d(0, 50%, 0);
+                transform: translate3d(0, 50%, 0);
+
+        opacity: 0;
+    }
+
+    40% {
+        -webkit-transform: none;
+                transform: none;
+
+        opacity: 1;
+    }
+}
+
+@keyframes fadeInUp {
+    0% {
+        -webkit-transform: translate3d(0, 50%, 0);
+                transform: translate3d(0, 50%, 0);
+
+        opacity: 0;
+    }
+
+    40% {
+        -webkit-transform: none;
+                transform: none;
+
+        opacity: 1;
+    }
+}
+
+.fadeInUp {
+    -webkit-animation-name: fadeInUp;
+            animation-name: fadeInUp;
+    /*animation-timing-function: cubic-bezier(.10, .75, .2, 1.01);*/
+}
+
+.chip--animated {
+    display: inline-block;
+    padding-right: 1rem;
+    padding-bottom: 1rem;
+}
+
+:root {
+    --time: 0.2s;
+}
+
+.chip--animated:nth-of-type(2) {
+    -webkit-animation-delay: 0.2s;
+            animation-delay: 0.2s;
+}
+
+.chip--animated:nth-of-type(3) {
+    -webkit-animation-delay: 0.4s;
+            animation-delay: 0.4s;
+}
+
+.chip--animated:nth-of-type(4) {
+    -webkit-animation-delay: 0.6s;
+            animation-delay: 0.6s;
+}
+
+.chip--animated:nth-of-type(5) {
+    -webkit-animation-delay: 0.8s;
+            animation-delay: 0.8s;
+}
+
+.chip--animated:nth-of-type(6) {
+    -webkit-animation-delay: 1s;
+            animation-delay: 1s;
+}
+
+.chip--animated:nth-of-type(7) {
+    -webkit-animation-delay: 1.2s;
+            animation-delay: 1.2s;
+}
+
+.chip--animated:nth-of-type(8) {
+    -webkit-animation-delay: 1.4s;
+            animation-delay: 1.4s;
+}
+
+.chip--animated:nth-of-type(9) {
+    -webkit-animation-delay: 1.6s;
+            animation-delay: 1.6s;
+}
+
+.chip--animated:nth-of-type(10) {
+    -webkit-animation-delay: 1.8s;
+            animation-delay: 1.8s;
+}
+
+.chip--animated:nth-of-type(11) {
+    -webkit-animation-delay: 2s;
+            animation-delay: 2s;
+}
+
+.chip--animated:nth-of-type(12) {
+    -webkit-animation-delay: 2.2s;
+            animation-delay: 2.2s;
+}
+
+.chip--animated:nth-of-type(13) {
+    -webkit-animation-delay: 2.4s;
+            animation-delay: 2.4s;
+}
+
+.chip--animated:nth-of-type(14) {
+    -webkit-animation-delay: 2.6s;
+            animation-delay: 2.6s;
+}
+
+.chip--animated:nth-of-type(15) {
+    -webkit-animation-delay: 2.8s;
+            animation-delay: 2.8s;
+}
+
+.chip--animated:nth-of-type(16) {
+    -webkit-animation-delay: 3.0s;
+            animation-delay: 3.0s;
+}
+
+.chip--animated:nth-of-type(17) {
+    -webkit-animation-delay: 3.2s;
+            animation-delay: 3.2s;
+}
+.chip--animated:nth-of-type(18) {
+
+    -webkit-animation-delay: 3.4s;
+            animation-delay: 3.4s;
+}
+
+.chip--animated:nth-of-type(19) {
+    -webkit-animation-delay: 3.6s;
+            animation-delay: 3.6s;
+}
+
+.chip--animated:nth-of-type(20) {
+    -webkit-animation-delay: 3.8s;
+            animation-delay: 3.8s;
+}
+.chip--animated:nth-of-type(21) {
+    -webkit-animation-delay: 4.0s;
+            animation-delay: 4.0s;
+}
+.chip--animated:nth-of-type(22) {
+    -webkit-animation-delay: 4.2s;
+            animation-delay: 4.2s;
+}
+.chip--animated:nth-of-type(23) {
+    -webkit-animation-delay: 4.4s;
+            animation-delay: 4.4s;
+}
