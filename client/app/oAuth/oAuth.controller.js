@@ -2,10 +2,9 @@
   'use strict';
 
   angular.module('Piecemeal')
-  .controller('OAuthCtrl', OAuthCtrl);
+    .controller('OAuthCtrl', OAuthCtrl);
 
   OAuthCtrl.$inject = ['oAuthFactory', '$window', '$location'];
-
 
   function OAuthCtrl(oAuthFactory, $window, $location) {
     var self = this;
@@ -29,7 +28,7 @@
           console.log("Error in creating event.");
         });
     };
-    
+
   }
 
 })();

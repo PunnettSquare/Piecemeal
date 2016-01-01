@@ -2,7 +2,7 @@
   'use strict';
 
   angular.module('Piecemeal')
-  .factory('oAuthFactory', oAuthFactory);
+    .factory('oAuthFactory', oAuthFactory);
 
   oAuthFactory.$inject = ['$http'];
 
