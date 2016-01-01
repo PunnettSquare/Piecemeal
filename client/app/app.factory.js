@@ -224,6 +224,7 @@
 
       socketFactory.on('billsSentToGuests', function(data) {
         console.log("Heard 'billsSentToGuests' in appFactory.data:", data);
+        console.log("Also, here is the total appFactory.data: ", appFactory.data); 
         services.data.billData = data;
 
         $rootScope.$broadcast('billsSentToGuests');

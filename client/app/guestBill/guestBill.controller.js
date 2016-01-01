@@ -29,6 +29,7 @@
       self.data = appFactory.data;
       self.getDishIndivCost = appFactory.getDishIndivCost;
       self.venmoUsername = appFactory.data.venmoUsername;
+      console.log(self.data);
     });
 
     // Update scope's data with the most updated data from appFactory.
