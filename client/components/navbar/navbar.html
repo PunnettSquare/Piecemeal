@@ -2,9 +2,16 @@
 
 <script type="text/javascript">
   $( document ).ready(function(){
-    $(".button-collapse").sideNav();
+    $('.button-collapse').sideNav({
+          // menuWidth: 300, // Default is 240
+          edge: 'right', // Choose the horizontal origin
+          closeOnClick: true // Closes side-nav on <a> clicks, useful for Angular/Meteor
+        }
+      );
   });
 </script>
+
+
 
 <nav>
   <div class="nav-wrapper teal lighten-1">
@@ -17,7 +24,7 @@
       <!-- Recreate logout-only navbar for home only -->
     </ul>
     <ul class="side-nav" id="mobile-demo">
-      <li class="active"><a class="allDishes" ui-sref="event.allDishes">All Dishes</a></li>
+      <li><a class="allDishes" ui-sref="event.allDishes">All Dishes</a></li>
       <li><a class="guestBill" ui-sref="event.guestBill">Your Bill</a></li>
       <li><a class="hostBill" ui-sref="event.hostBill" ng-show="navbar.isHost" >Final Bill</a></li>
       <li><a class="leaveBill" ng-if="navbar.isLoggedIn()" ng-click="navbar.logout()">Leave Bill</a></li>
