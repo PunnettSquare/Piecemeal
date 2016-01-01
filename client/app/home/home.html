@@ -13,7 +13,7 @@
     <div class="header__logo">
       <a href="#">Piecemeal.</a>
     </div>
-    <div><button ng-click="home.oAuth()" class="createButton btn waves-effect waves-light teal" type="submit" name="createBill">Create Bill
+    <div><button ng-disabled="home.privateMode" ng-click="home.oAuth()" class="createButton btn waves-effect waves-light teal" type="submit" name="createBill">Create Bill
     </button></div>
   </div class="header">
 
@@ -37,7 +37,7 @@
         <div class="input-field">
           <input name="code" id="roomCode" type="text" class="validate enterCode inlineInput" ng-model="code" placeholder="Enter Room Name" required>
         </div>
-        <button class="btn enterRoom waves-effect waves-light teal validate" ng-disabled="userInput2.code.$error.required" ng-click="home.setSessionUser(code)" type="submit" name="joinBill">
+        <button class="btn enterRoom waves-effect waves-light teal validate" ng-disabled="userInput2.code.$error.required || home.privateMode" ng-click="home.setSessionUser(code)" type="submit" name="joinBill">
         <span>Join Bill</span>
         </button>
       </form>

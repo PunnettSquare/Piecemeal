@@ -19,3 +19,8 @@ nav .button-collapse {
   font-weight: 300;
   margin-left: 3%;
 }
+
+.leaveBill {
+  position: absolute;
+  bottom: 4rem;
+}

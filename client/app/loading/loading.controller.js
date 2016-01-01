@@ -17,8 +17,11 @@
       self.privateMode = true;
       //TODO display warning and disable use of application
     }
+
     if (!self.privateMode) {
       $window.localStorage.checkPrivateMode = undefined;
+    } else {
+      Materialize.toast('Turn off Safari Private mode to continue');
     }
 
     self.setSessionUser = function(username) {

@@ -17,7 +17,7 @@
       <input type="text" placeholder="Name" ng-model="username" name="username" class="enterName" required id="name" required>
       <br>
 
-      <button ng-show="!loading.isSent" type="submit" name="username" ng-disabled="userInput.username.$error.required" value="Enter room" class="enterRoom btn" ng-click="loading.setSessionUser(username)">Enter Room</button>
+      <button ng-show="!loading.isSent" type="submit" name="username" ng-disabled="userInput.username.$error.required || loading.privateMode" value="Enter room" class="enterRoom btn" ng-click="loading.setSessionUser(username)">Enter Room</button>
       <br>
     </div>
 

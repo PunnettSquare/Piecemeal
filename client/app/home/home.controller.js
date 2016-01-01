@@ -17,7 +17,9 @@
       self.privateMode = true;
     }
     if (!self.privateMode) {
-      console.log($window.localStorage.checkPrivateMode);
+      $window.localStorage.checkPrivateMode = undefined;
+    } else {
+      Materialize.toast('Turn off Safari Private mode to continue');
     }
 
     self.setSessionUser = function(code) {
