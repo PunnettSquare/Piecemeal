@@ -17,7 +17,6 @@
       $location.path(url.slice(2) + '/');
     }
 
-
     self.logoutVenmo = function() {
       $window.localStorage.clear();
       self.isVenmo = false;

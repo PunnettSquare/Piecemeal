@@ -82,11 +82,11 @@
       </div>
 
       <!-- Add Dish/Cancel buttons -->
-      <div id="modal-footer" class="modal-footer">
+      <div id="modal-footer" class="modal-footer modal-close">
         <button type="submit" ng-disabled="dishForm.amount.$error.required || dishForm.name.$error.required" ng-click="allDishes.addDish(allDishes.dishName, allDishes.amount)" class="addDish btn btn-default" >
         Add Dish
         </button>
-        <a ui-sref="event.allDishes" class="modal-action modal-close waves-effect waves-green btn-flat ">Cancel</a>
+        <a ui-sref="event.allDishes" class="modal-action modal-close waves-effect waves-green btn-flat">Cancel</a>
       </div>
     </div>
   </div>

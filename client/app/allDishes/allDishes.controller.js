@@ -4,12 +4,17 @@
   angular.module('Piecemeal')
     .controller('AllDishesCtrl', AllDishesCtrl);
 
-  AllDishesCtrl.$inject = ['socketFactory', 'appFactory', '$scope', 'allDishesFactory'];
+  AllDishesCtrl.$inject = ['socketFactory', 'appFactory', '$scope', 'allDishesFactory', '$window', '$location'];
 
-  function AllDishesCtrl(socketFactory, appFactory, $scope, allDishesFactory) {
+  function AllDishesCtrl(socketFactory, appFactory, $scope, allDishesFactory, $window, $location) {
     var self = this;
     appFactory.copySessData(self);
-    appFactory.checkCode()
+    self.checkCode = appFactory.checkCode;
+    var url = $window.location.hash
+    if (url === '' && $window.localStorage.code) {
+      $location.path('/' + $window.localStorage.code + '/allDishes' )
+    }
+
     // load data on page refresh
     $scope.$on('joined', function() {
       self.data = appFactory.data;

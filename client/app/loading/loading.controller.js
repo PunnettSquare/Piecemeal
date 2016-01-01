@@ -10,12 +10,10 @@
     var self = this;
     self.currentUsers = _.uniq(_.pluck(usersList.data, 'username'));
     self.code = $window.location.hash.split("/")[1];
-    // window.localStorage.code = $window.location.hash.split("/")[1];
 
     //check for Safari private mode
     try { $window.localStorage.checkPrivateMode = 'not private'; } catch (e) {
       self.privateMode = true;
-      //TODO display warning and disable use of application
     }
 
     if (!self.privateMode) {
@@ -25,6 +23,7 @@
     }
 
     self.setSessionUser = function(username) {
+      window.localStorage.code = $window.location.hash.split("/")[1];
       loadingFactory.sendSessionUser(
           _.assign($window.localStorage, {
             isHost: false,
