@@ -11,11 +11,7 @@
     $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|chrome-extension|venmo):/);
 
     var getInfoOnRefresh = function ($http, $location) {
-      console.log()
-      if (!window.localStorage.code || window.location.hash.split("/")[1] !== window.location.code) {
-        $locaion.path('/home');
-        return;
-      }
+
       if (!usernameCache[window.localStorage.user_id]) {
         usernameCache[window.localStorage.user_id] = true;
         return $http({
