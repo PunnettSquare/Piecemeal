@@ -12,6 +12,15 @@
     self.code = $window.location.hash.split("/")[1];
     // window.localStorage.code = $window.location.hash.split("/")[1];
 
+    //check for Safari private mode
+    try { $window.localStorage.checkPrivateMode = 'not private'; } catch (e) {
+      self.privateMode = true;
+      //TODO display warning and disable use of application
+    }
+    if (!self.privateMode) {
+      $window.localStorage.checkPrivateMode = undefined;
+    }
+
     self.setSessionUser = function(username) {
       loadingFactory.sendSessionUser(
           _.assign($window.localStorage, {

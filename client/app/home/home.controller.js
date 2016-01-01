@@ -12,6 +12,14 @@
 
     self.incorrectCode = false;
 
+
+    try { $window.localStorage.checkPrivateMode = 'not private'; } catch (e) {
+      self.privateMode = true;
+    }
+    if (!self.privateMode) {
+      console.log($window.localStorage.checkPrivateMode);
+    }
+
     self.setSessionUser = function(code) {
       code = code.toLowerCase();
       homeFactory.checkCode(code.toLowerCase())
