@@ -39,7 +39,7 @@
     $stateProvider
       .state('home', {
         url: '/home',
-        views: { 
+        views: {
           'navbar': {
             templateUrl: 'components/navbar/homeNavbar.html',
             controller: 'NavbarCtrl',
