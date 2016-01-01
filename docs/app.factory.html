@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>App Factory</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+      <ul id="jump_to">
+        <li>
+          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+          <a class="small" href="javascript:void(0);">+</a>
+          <div id="jump_wrapper">
+          <div id="jump_page_wrapper">
+            <div id="jump_page">
+              
+                
+                <a class="source" href="allDishes.controller.html">
+                  allDishes.controller.js
+                </a>
+              
+                
+                <a class="source" href="allDishes.factory.html">
+                  allDishes.factory.js
+                </a>
+              
+                
+                <a class="source" href="app.factory.html">
+                  app.factory.js
+                </a>
+              
+                
+                <a class="source" href="app.module.html">
+                  app.module.js
+                </a>
+              
+                
+                <a class="source" href="app.routes.html">
+                  app.routes.js
+                </a>
+              
+                
+                <a class="source" href="dashboard.controller.html">
+                  dashboard.controller.js
+                </a>
+              
+                
+                <a class="source" href="dashboard.factory.html">
+                  dashboard.factory.js
+                </a>
+              
+                
+                <a class="source" href="guestBill.controller.html">
+                  guestBill.controller.js
+                </a>
+              
+                
+                <a class="source" href="home.controller.html">
+                  home.controller.js
+                </a>
+              
+                
+                <a class="source" href="home.factory.html">
+                  home.factory.js
+                </a>
+              
+                
+                <a class="source" href="hostBill.controller.html">
+                  hostBill.controller.js
+                </a>
+              
+                
+                <a class="source" href="loading.controller.html">
+                  loading.controller.js
+                </a>
+              
+                
+                <a class="source" href="loading.factory.html">
+                  loading.factory.js
+                </a>
+              
+                
+                <a class="source" href="oAuth.controller.html">
+                  oAuth.controller.js
+                </a>
+              
+                
+                <a class="source" href="oAuth.factory.html">
+                  oAuth.factory.js
+                </a>
+              
+                
+                <a class="source" href="socket.module.html">
+                  socket.module.js
+                </a>
+              
+                
+                <a class="source" href="navbar.controller.html">
+                  navbar.controller.js
+                </a>
+              
+            </div>
+          </div>
+        </li>
+      </ul>
+    
+    <ul class="sections">
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              <h1 id="app-factory">App Factory</h1>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <h5 id="-back-to-table-of-contents-tableofcontents-html-"><a href="./tableofcontents.html">Back to Table of Contents</a></h5>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p><strong>Summary</strong>: TODO</p>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p>Sockets: client emits ‘shareDish’ to server, which broadcasts ‘dishShared’ to clients. hear it here and update data on service
+then, if the controllers have direct binding to this data, no further action is needed</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>
+(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+<span class="hljs-meta">  'use strict'</span>;
+
+  angular.module(<span class="hljs-string">'Piecemeal'</span>)
+    .factory(<span class="hljs-string">'appFactory'</span>, appFactory);
+
+  appFactory.$inject = [<span class="hljs-string">'socketFactory'</span>, <span class="hljs-string">'$rootScope'</span>, <span class="hljs-string">'$window'</span>, <span class="hljs-string">'$location'</span>];</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p><strong>Parameters:</strong> TODO</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>
+  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">appFactory</span>(<span class="hljs-params">socketFactory, $rootScope, $window, $location</span>) </span>{
+
+    <span class="hljs-keyword">var</span> services = {
+      initListeners: initListeners,
+      addDish: addDish,
+      shareDish: shareDish,
+      unshareDish: unshareDish,
+      getSessStorage: getSessStorage,
+      arrayToSentence: arrayToSentence,
+      getUsersByDish: getUsersByDish,
+      getDishIndivCost: getDishIndivCost,
+      goToAllDishes: goToAllDishes,
+      goToGuestBill: goToGuestBill,
+      goToAddDish: goToAddDish,
+      goToHostBill: goToHostBill,
+      goToHome: goToHome,
+      copySessData: copySessData,
+      logout: logout,</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <p>getUsers: getUsers
+data: data
+data.billData: billData</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    };
+
+    <span class="hljs-keyword">return</span> services;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-7">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <p>function getUsers() {
+  console.log(“services data: “, services.data);
+  // Work in progress potentially for host Receipt
+};</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>
+    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getSessStorage</span>(<span class="hljs-params">prop</span>) </span>{
+      <span class="hljs-keyword">if</span> (prop === <span class="hljs-string">"code"</span>) {
+        <span class="hljs-keyword">return</span> $<span class="hljs-built_in">window</span>.localStorage.code;
+      }
+      <span class="hljs-keyword">if</span> (prop === <span class="hljs-string">"event_id"</span>) {
+        <span class="hljs-keyword">return</span> <span class="hljs-built_in">parseInt</span>($<span class="hljs-built_in">window</span>.localStorage.event_id);
+      }
+      <span class="hljs-keyword">if</span> (prop === <span class="hljs-string">"isHost"</span>) {
+        <span class="hljs-keyword">return</span> ($<span class="hljs-built_in">window</span>.localStorage.isHost === <span class="hljs-string">"false"</span>) ? <span class="hljs-literal">false</span> : <span class="hljs-literal">true</span>;
+      }
+      <span class="hljs-keyword">if</span> (prop === <span class="hljs-string">"user_id"</span>) {
+        <span class="hljs-keyword">return</span> <span class="hljs-built_in">parseInt</span>($<span class="hljs-built_in">window</span>.localStorage.user_id);
+      }
+      <span class="hljs-keyword">if</span> (prop === <span class="hljs-string">"username"</span>) {
+        <span class="hljs-keyword">return</span> $<span class="hljs-built_in">window</span>.localStorage.username;
+      }
+      <span class="hljs-keyword">if</span> (prop === <span class="hljs-string">"billSent"</span>) {
+        <span class="hljs-keyword">return</span> ($<span class="hljs-built_in">window</span>.localStorage.billSent === <span class="hljs-string">"true"</span>) ? <span class="hljs-literal">true</span> : <span class="hljs-literal">false</span>;
+      }
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">copySessData</span>(<span class="hljs-params">self</span>) </span>{
+      <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> prop <span class="hljs-keyword">in</span> $<span class="hljs-built_in">window</span>.localStorage) {
+        self[prop] = getSessStorage(prop);
+      }
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getDishIndivCost</span>(<span class="hljs-params">dish</span>) </span>{
+      <span class="hljs-keyword">return</span> dish.cost / dish.users.length;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">arrayToSentence</span>(<span class="hljs-params">array</span>) </span>{
+      array = _.map(array, _.capitalize);
+      <span class="hljs-keyword">if</span> (array.length === <span class="hljs-number">1</span>) {
+        <span class="hljs-keyword">return</span> array[<span class="hljs-number">0</span>];
+      }
+      <span class="hljs-keyword">if</span> (array.length === <span class="hljs-number">2</span>) {
+        <span class="hljs-keyword">return</span> array.join(<span class="hljs-string">" and "</span>);
+      } <span class="hljs-keyword">else</span> {
+        <span class="hljs-keyword">var</span> last = array.pop();
+        <span class="hljs-keyword">return</span> array.join(<span class="hljs-string">", "</span>) + <span class="hljs-string">" and "</span> + last;
+      }
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">goToAddDish</span>(<span class="hljs-params"></span>) </span>{
+      $location.path(<span class="hljs-string">'/'</span> + services.getSessStorage(<span class="hljs-string">'code'</span>) + <span class="hljs-string">'/addDish'</span>);
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">goToAllDishes</span>(<span class="hljs-params"></span>) </span>{
+      $location.path(<span class="hljs-string">'/'</span> + services.getSessStorage(<span class="hljs-string">'code'</span>) + <span class="hljs-string">'/allDishes'</span>);
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">goToGuestBill</span>(<span class="hljs-params"></span>) </span>{
+      $location.path(<span class="hljs-string">'/'</span> + services.getSessStorage(<span class="hljs-string">'code'</span>) + <span class="hljs-string">'/guestBill'</span>);
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">goToHostBill</span>(<span class="hljs-params"></span>) </span>{
+      $location.path(<span class="hljs-string">'/'</span> + services.getSessStorage(<span class="hljs-string">'code'</span>) + <span class="hljs-string">'/hostBill'</span>);
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">goToHome</span>(<span class="hljs-params"></span>) </span>{
+      $location.path(<span class="hljs-string">'/home'</span>);
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">addDish</span>(<span class="hljs-params">dish</span>) </span>{
+      <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>; i &lt; services.data.users.length; i++) {
+        <span class="hljs-keyword">if</span> (services.data.users[i].id === dish.user_id) {
+          services.data.users[i].dishes.push(dish);
+        }
+      }
+      services.data.dishes.push(dish);
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">shareDish</span>(<span class="hljs-params">dish_id, user_id</span>) </span>{
+      <span class="hljs-keyword">var</span> dishObj;
+      services.data.dishes.forEach(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">dish</span>) </span>{
+        <span class="hljs-keyword">if</span> (dish.dish_id === dish_id) {
+          dish.users.push(user_id);
+          dishObj = dish;
+        }
+      });
+      services.data.users.forEach(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">user</span>) </span>{
+        <span class="hljs-keyword">if</span> (user.id === user_id) {
+          user.dishes.push(dishObj);
+        }
+      });
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">unshareDish</span>(<span class="hljs-params">dish_id, user_id</span>) </span>{
+      services.data.dishes.forEach(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">dish, dishIndex</span>) </span>{
+        <span class="hljs-keyword">if</span> (dish.dish_id === dish_id) {
+          dish.users.splice(dish.users.indexOf(user_id), <span class="hljs-number">1</span>);
+          <span class="hljs-keyword">if</span> (dish.users.length === <span class="hljs-number">0</span>) {
+            services.data.dishes.splice(dishIndex, <span class="hljs-number">1</span>);
+          }
+        }
+      });
+      services.data.users.forEach(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">user</span>) </span>{
+        <span class="hljs-keyword">if</span> (user.id === user_id) {
+          <span class="hljs-keyword">var</span> dishIndex = user.dishes.reduce(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">dishIndex, dish, index</span>) </span>{
+            <span class="hljs-keyword">if</span> (dishIndex || dishIndex === <span class="hljs-number">0</span>) {
+              <span class="hljs-keyword">return</span> dishIndex;
+            }
+            <span class="hljs-keyword">if</span> (dish.dish_id === dish_id) {
+              <span class="hljs-keyword">return</span> index;
+            }
+          }, <span class="hljs-literal">false</span>);
+          user.dishes.splice(dishIndex, <span class="hljs-number">1</span>);
+        }
+      });
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">logout</span>(<span class="hljs-params"></span>) </span>{
+      <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> prop <span class="hljs-keyword">in</span> $<span class="hljs-built_in">window</span>.localStorage) {
+        <span class="hljs-keyword">if</span> (prop !== <span class="hljs-string">'username'</span> &amp;&amp; prop !== <span class="hljs-string">'venmoUsername'</span> &amp;&amp; prop !== <span class="hljs-string">'user_id'</span>) {
+          <span class="hljs-keyword">delete</span> $<span class="hljs-built_in">window</span>.localStorage[prop];
+        }
+      }
+      goToHome();
+      setTimeout(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+        $<span class="hljs-built_in">window</span>.location.reload();
+      }, <span class="hljs-number">1</span>);
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getUsersByDish</span>(<span class="hljs-params">dish, users</span>) </span>{
+      <span class="hljs-keyword">return</span> arrayToSentence(
+        _(dish.users).map(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">id</span>) </span>{
+          <span class="hljs-keyword">return</span> users[_.findIndex(users, {
+            <span class="hljs-string">'id'</span>: id
+          })].username;
+        }).value());</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-8">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-8">&#182;</a>
+              </div>
+              <p>  return {
+    username: users[index].username,
+    user_id: parseInt(users[index].id),
+    isHost: users[index].host
+  };</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    }
+
+    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">initListeners</span>(<span class="hljs-params"></span>) </span>{</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-9">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-9">&#182;</a>
+              </div>
+              <p>socketFactory.init();</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      socketFactory.on(<span class="hljs-string">'joined'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">data</span>) </span>{
+        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Heard 'joined' in appFactory.data:"</span>, data);
+        services.data = data;
+        $rootScope.$broadcast(<span class="hljs-string">'joined'</span>);
+      });
+
+      socketFactory.on(<span class="hljs-string">'newParticipant'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">userObj</span>) </span>{
+        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Heard 'newParticipant' in appFactory:"</span>, userObj);
+        services.data.users.push(userObj);
+      });
+
+      socketFactory.on(<span class="hljs-string">'dishAdded'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">dish</span>) </span>{
+        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Heard 'dishAdded' in appFactory.data:"</span>, dish);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-10">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-10">&#182;</a>
+              </div>
+              <p>data format: {cost: 3, name: “rice”, user_id: “29319”, event_id: 1, users: [“29319”]}</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        addDish(dish);
+      });
+
+      socketFactory.on(<span class="hljs-string">'dishShared'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">data</span>) </span>{
+        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Heard 'dishShared' in appFactory.data:"</span>, data);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-11">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-11">&#182;</a>
+              </div>
+              <p>data format: {user_id: 24, dish_id: 14}</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        shareDish(data.dish_id, data.user_id);
+      });
+
+      socketFactory.on(<span class="hljs-string">'dishUnshared'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">data</span>) </span>{
+        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Heard 'dishUnshared' in appFactory.data:"</span>, data);
+        unshareDish(data.dish_id, data.user_id);
+      });
+
+      socketFactory.on(<span class="hljs-string">'billsSentToGuests'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">data</span>) </span>{
+        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Heard 'billsSentToGuests' in appFactory.data:"</span>, data);
+        services.data.billData = data;
+
+        $rootScope.$broadcast(<span class="hljs-string">'billsSentToGuests'</span>);
+      });
+
+    }
+  }
+})();</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>

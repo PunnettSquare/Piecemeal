@@ -1,3 +1,9 @@
+// # Navbar Controller
+
+// ##### [Back to Table of Contents](./tableofcontents.html)
+
+// **Summary**: TODO
+
 (function() {
   'use strict';
 
@@ -5,6 +11,8 @@
     .controller('NavbarCtrl', NavbarCtrl);
 
   NavbarCtrl.$inject = ['appFactory', '$window'];
+
+  // **Parameters:** TODO
 
   function NavbarCtrl(appFactory, $window) {
 
@@ -17,13 +25,14 @@
       $window.location.reload();
     };
 
-    appFactory.copySessData(self); //copy session data to scope
+    //copy session data to scope
+    appFactory.copySessData(self); 
 
     self.isLoggedIn = function() {
       return $window.localStorage.getItem('username');
     };
 
-    self.logout = appFactory.logout; // remove this line from other controllers
+    self.logout = appFactory.logout; 
 
   }
 

@@ -1,3 +1,10 @@
+// # Home Controller
+
+// ##### [Back to Table of Contents](./tableofcontents.html)
+
+// **Summary**: TODO
+
+
 (function() {
   'use strict';
 
@@ -5,6 +12,9 @@
     .factory('homeFactory', homeFactory);
 
   homeFactory.$inject = ['$http'];
+
+  // **Parameters:** TODO
+
 
   function homeFactory($http) {
     var services = {
