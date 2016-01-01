@@ -1,3 +1,9 @@
+// # Loading Factory
+
+// ##### [Back to Table of Contents](./tableofcontents.html)
+
+// **Summary**: TODO
+
 (function() {
   'use strict';
 
@@ -5,6 +11,8 @@
     .factory('loadingFactory', loadingFactory);
 
   loadingFactory.$inject = ['$http'];
+
+  // **Parameters:** TODO
 
   function loadingFactory($http) {
     var services = {

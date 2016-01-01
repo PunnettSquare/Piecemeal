@@ -1,9 +1,17 @@
+// # Piecemeal App Routes 
+
+// ##### [Back to Table of Contents](./tableofcontents.html)
+
+// **Summary**: Routes sub and nested views.
+
 (function() {
   'use strict';
   angular.module('Piecemeal')
     .config(config);
 
   config.$inject = ['$stateProvider', '$urlRouterProvider', '$compileProvider'];
+
+  // **Parameters:** TODO
 
   function config($stateProvider, $urlRouterProvider, $compileProvider) {
     var usernameCache = {};

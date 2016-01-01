@@ -1,3 +1,9 @@
+// # OAuth Controller
+
+// ##### [Back to Table of Contents](./tableofcontents.html)
+
+// **Summary**: TODO
+
 (function() {
   'use strict';
 
@@ -5,6 +11,8 @@
     .controller('OAuthCtrl', OAuthCtrl);
 
   OAuthCtrl.$inject = ['oAuthFactory', '$window', '$location'];
+
+  // **Parameters:** TODO
 
   function OAuthCtrl(oAuthFactory, $window, $location) {
     var self = this;

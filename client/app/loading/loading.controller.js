@@ -1,10 +1,18 @@
+// # Loading Controller
+
+// ##### [Back to Table of Contents](./tableofcontents.html)
+
+// **Summary**: TODO
+
 (function() {
   'use strict';
 
   angular.module('Piecemeal')
     .controller('LoadingCtrl', LoadingCtrl);
 
-  LoadingCtrl.$inject = ['$location', '$window', 'loadingFactory','$timeout','usersList', 'appFactory'];
+  LoadingCtrl.$inject = ['$location', '$window', 'loadingFactory', '$timeout', 'usersList', 'appFactory'];
+
+  // **Parameters:** TODO
 
   function LoadingCtrl($location, $window, loadingFactory, $timeout, usersList, appFactory) {
     var self = this;
@@ -27,7 +35,7 @@
       loadingFactory.sendSessionUser(
           _.assign($window.localStorage, {
             isHost: false,
-            username: username
+            username: username,
           }))
         .then(function(userInfo) {
           _.assign($window.localStorage, {
@@ -42,7 +50,7 @@
           console.error(err);
           self.isError = true;
           $timeout(function() {
-            appFactory.logout();
+            // appFactory.logout();
           }, 2000);
         });
     };

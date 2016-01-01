@@ -1,3 +1,10 @@
+// # HostBill Controller
+
+// ##### [Back to Table of Contents](./tableofcontents.html)
+
+// **Summary**: TODO
+
+
 (function() {
   'use strict';
 
@@ -5,6 +12,8 @@
     .controller('HostBillCtrl', HostBillCtrl);
 
   HostBillCtrl.$inject = ['appFactory', 'socketFactory', '$scope'];
+
+  // **Parameters:** TODO
 
   function HostBillCtrl(appFactory, socketFactory, $scope) {
     var self = this;

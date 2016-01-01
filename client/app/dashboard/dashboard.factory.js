@@ -1,3 +1,10 @@
+// # Dashboard Controller
+
+// ##### [Back to Table of Contents](./tableofcontents.html)
+
+// **Summary**: TODO
+
+
 (function() {
   'use strict';
 
@@ -5,6 +12,8 @@
     .factory('dashboardFactory', dashboardFactory);
 
   dashboardFactory.$inject = ['$http'];
+
+  // **Parameters:** TODO
 
   function dashboardFactory($http) {
     var services = {
