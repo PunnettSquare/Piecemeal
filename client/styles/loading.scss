@@ -1,0 +1,152 @@
+#allDishes {
+    margin: 0 0.3rem;
+}
+
+/*  Form  */
+.form--addName {
+    margin-top: 0.5rem;
+}
+
+.enterRoom {
+    float: right;
+}
+
+/*  Room Info  */
+.roomInfo {
+    display: block;
+
+    text-align: center;
+}
+
+.roomInfo--error {
+    text-align: center;
+}
+
+.roomInfo__chips {
+    display: flex;
+
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.chip {
+    margin-top: 1rem;
+}
+
+.chip__icon {
+    display: inline-block;
+    width: 34px;
+    height: 34px;
+    margin-left: -1rem;
+
+    border: 1px solid #80cbc4;
+    border-radius: 50%;
+    background-color: #80cbc4;
+}
+
+.chip__letter {
+    margin: 0;
+
+    font-size: 1.3rem;
+    font-weight: bolder;
+
+    text-align: center;
+}
+
+/*  Chip Animation  */
+
+@mixin transform($transforms) {
+       -moz-transform: $transforms;
+         -o-transform: $transforms;
+        -ms-transform: $transforms;
+    -webkit-transform: $transforms;
+          transform: $transforms;
+}
+
+@mixin animate($name, $dur, $count, $mode) {
+
+             -moz-animation-duration: $dur;
+               -o-animation-duration: $dur;
+              -ms-animation-duration: $dur;
+          -webkit-animation-duration: $dur;
+                animation-duration: $dur;
+
+       -moz-animation-iteration-count: $count;
+         -o-animation-iteration-count: $count;
+        -ms-animation-iteration-count: $count;
+    -webkit-animation-iteration-count: $count;
+          animation-iteration-count: $count;
+
+       -moz-animation-fill-mode: $mode;
+         -o-animation-fill-mode: $mode;
+        -ms-animation-fill-mode: $mode;
+    -webkit-animation-fill-mode: $mode;
+          animation-fill-mode: $mode;
+}
+
+
+@mixin keyframes($animationName) {
+  @-webkit-keyframes #{$animationName} {
+    @content;
+  }
+  @-moz-keyframes #{$animationName} {
+    @content;
+  }
+  @-o-keyframes #{$animationName} {
+    @content;
+  }
+  @keyframes #{$animationName} {
+    @content;
+  }
+}
+
+@include keyframes(fadeInUp) {
+    0% {
+        opacity: 0;
+        @include transform(translate3d(0, 50%, 0));
+    }
+
+    40% {
+        opacity: 1;
+        @include transform(none);
+    }
+
+}
+
+@mixin fadeInUp {
+       -moz-animation-name: fadeInUp;
+         -o-animation-name: fadeInUp;
+        -ms-animation-name: fadeInUp;
+    -webkit-animation-name: fadeInUp;
+          animation-name: fadeInUp;
+
+    @include animate(fadeInUp, 1.2s, 1, both);
+}
+
+.animated {
+@include fadeInUp;
+}
+
+.chip--animated {
+    display: inline-block;
+    padding-right: 1rem;
+    padding-bottom: 1rem;
+}
+
+
+
+
+// Chip Animation - individual
+@mixin animation-delay($n) {
+    -webkit-animation-delay:0.2s * $n;
+    -moz-animation-delay:0.2s * $n;
+    -ms-animation-delay:0.2s * $n;
+    -o-animation-delay:0.2s * $n;
+    animation-delay:0.2s * $n;
+}
+
+@for $s from 1 to 30 {
+    .chip--animated:nth-of-type($s) {
+     @include animation-delay($s);
+    }
+}

@@ -1,34 +1,38 @@
-<div class="container-fluid">
-  <div class="row">
-    <div class="col-md-12" id="oAuth" ng-cloak>
-      <h2>Setup a Bill</h2>
+<link rel="stylesheet" href="../../styles/oAuth.css">
 
-      <div class="row">
-        <div class="col-sm-6">
-          <div class="card card-block">
-            <h3 class="card-title">Login with Venmo</h3>
-            <p class="card-text">Enable others to automatically pay you their share of the bill.</p>
-            <br>
-            <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
-            <a href="/auth/venmo" class="payButton venmoEnabled">Login in with <img src="../../assets/venmo_logo_white.png" alt="Venmo" width="55px"></a>
-          </div>
-          <br>
-        </div>
+<div class="row" id="oAuth" ng-cloak>
+  <div class="col s12">
+
+    <!-- Header -->
+    <header>
+      <h5>Set Up A Bill</h5>
+      <div class="divider"></div>
+    </header>
+
+    <!-- Login with Venmo -->
+    <div class="form">
+      <br>
+      <h5>Login with Venmo</h5>
+      <p>Enable others to pay you their share of the bill.</p>
+      <div class="button--venmoOAuth">
+        <a href="/auth/venmo">Login in with <img src="../../assets/venmo_logo_white.png" alt="Venmo" width="55px" class="venmoEnabled"></a>
       </div>
-      <div class="row">
-        <div class="col-sm-6">
-          <div class="card card-block">
-            <h3 class="card-title">Proceed without logging in</h3>
-            <br>
-            <form name="userInput">
-              <input type="text" placeholder="Enter your name here" required ng-model="username" name="username" class="enterName form-control" id="name">
-              <br>
-              <button type="submit" ng-disabled="userInput.username.$error.required" ng-click="oAuth.setSessionUser(username, true, null)" class="btn btn-primary createBill" ng-disabled="userInput.username.$error.required">Create Bill</button>
-              <br>
-            </form>
-          </div>
-        </div>
-      </div>
+      <br>
+      <br>
     </div>
+
+    <!-- No login form -->
+    <div class="divider"></div>
+    <div class="form">
+      <br>
+      <h5>No login</h5>
+      <input type="text" placeholder="Enter your name here" required ng-model="username" name="username" class="enterName" id="name">
+      <br>
+      <div class="button--createBill">
+        <button type="submit" ng-disabled="userInput.username.$error.required" ng-click="oAuth.setSessionUser(username, true, null)" class="btn createBill" ng-disabled="userInput.username.$error.required">Create Bill</button>
+      </div>
+      <br>
+    </div>
+
   </div>
 </div>
