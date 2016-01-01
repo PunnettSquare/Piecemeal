@@ -23,7 +23,7 @@
           return res.data;
         })
         .catch(function(err) {
-          console.log("Could not send username to server.");
+          throw err;
         });
     }
   }

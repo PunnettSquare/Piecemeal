@@ -1,33 +1,179 @@
-.logoSpacing {
-  margin: 6rem 2rem 2rem 2rem;
-  width: 80%;
+/*   BACKGROUND IMAGE    */
+
+.image {
+    font-family: Lato, sans-serif;
+
+    background-image: url("../assets/home.jpg");
+    background-repeat: repeat;
+    /*background-attachment: fixed;*/
+    /*background-size: contain;*/
 }
 
-.file-field .file-path-wrapper { /* overrides default materialize for Enter Code field */
-  overflow: hidden;
-  padding-right: 10px; /*right*/
+
+
+/*  Header  */
+.header {
+    display: flex;
+    height: 4rem;
+    padding: 0.5rem 0.9rem;
+
+    border-radius: 0.3rem;
+    background: rgba(18,18,18,1);
+    background:    -moz-linear-gradient(top, rgba(18,18,18,1) 0%, rgba(18,18,18,1) 0%, rgba(20,20,20,1) 0%, rgba(15,15,15,1) 0%, rgba(15,15,15,1) 12%, rgba(15,15,15,0.12) 72%, rgba(15,15,15,0) 80%);
+    background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(18,18,18,1)), color-stop(0%, rgba(18,18,18,1)), color-stop(0%, rgba(20,20,20,1)), color-stop(0%, rgba(15,15,15,1)), color-stop(12%, rgba(15,15,15,1)), color-stop(72%, rgba(15,15,15,0.12)), color-stop(80%, rgba(15,15,15,0)));
+    background: -webkit-linear-gradient(top, rgba(18,18,18,1) 0%, rgba(18,18,18,1) 0%, rgba(20,20,20,1) 0%, rgba(15,15,15,1) 0%, rgba(15,15,15,1) 12%, rgba(15,15,15,0.12) 72%, rgba(15,15,15,0) 80%);
+    background:      -o-linear-gradient(top, rgba(18,18,18,1) 0%, rgba(18,18,18,1) 0%, rgba(20,20,20,1) 0%, rgba(15,15,15,1) 0%, rgba(15,15,15,1) 12%, rgba(15,15,15,0.12) 72%, rgba(15,15,15,0) 80%);
+    background:     -ms-linear-gradient(top, rgba(18,18,18,1) 0%, rgba(18,18,18,1) 0%, rgba(20,20,20,1) 0%, rgba(15,15,15,1) 0%, rgba(15,15,15,1) 12%, rgba(15,15,15,0.12) 72%, rgba(15,15,15,0) 80%);
+    background:         linear-gradient(to bottom, rgba(18,18,18,1) 0%, rgba(18,18,18,1) 0%, rgba(20,20,20,1) 0%, rgba(15,15,15,1) 0%, rgba(15,15,15,1) 12%, rgba(15,15,15,0.12) 72%, rgba(15,15,15,0) 80%);
+    /*background: rgba(0, 0, 0, 0.55);*/
+    /*background: rgba(0, 150, 136, 0.3);*/
+    /*background: rgba(255, 255, 255, 0.75);*/
+
+    justify-content: space-between;
 }
 
-.file-field .btn, .file-field .btn-large { /* overrides default materialize for joinButton */
-  float: right; /*switch to right; below included for clarity*/
-  height: 3rem;
-  line-height: 3rem;
+.header__logo {
+    font-size: 2rem;
+}
+
+.header__logo a {
+    color: white;
+    /*color: #009688;*/
 }
 
 .createButton {
-  height: 3rem;
-  line-height: 3rem;
+    height: 2.7rem;
+    padding: 0 1.3rem;
+
+    line-height: 2.8rem;
 }
 
-/*Shrinks text to avoid widowed words on phone*/
-@media (max-width: 600px) {
-  .shrink {
-    font-size: 1.4rem;
-  }
+/*  BOTTOM HALF OF PAGE */
+/*  Motto - "Split a bill, share a meal"  */
 
-  .logoSpacing {
-    margin: 4rem 1rem 1rem 1rem;
-    max-width: 80%;
-  }
+.motto {
+    font-size: 2rem;
 
+    text-align: center;
+
+    color: white;
+    background: rgba(0, 150, 136, 0.6);
 }
+
+/*  Form and instructions  */
+
+h6.instructions {
+    font-size: 1.3rem;
+}
+
+#info {
+    height: 12rem;
+    padding: 0.3rem;
+
+    text-align: center;
+
+    border-radius: 0.3rem;
+    background: rgba(240, 240, 240, 0.85);
+}
+
+/*   Media Queries for Image background and Motto    */
+
+@media only screen
+  and (min-device-width: 285px)
+  and (max-device-width: 736px) {
+    .image {
+        height: 45rem;
+
+        background-position: -16rem 35rem;
+        background-size: cover;
+    }
+
+    .motto {
+        margin-top: 20rem;
+    }
+}
+
+@media screen
+  and (min-device-width: 736px)
+  and (max-device-width: 2000px) {
+    .image {
+        height: 50rem;
+
+        background-position: center;
+        background-size: cover;
+    }
+
+    .motto {
+        width: 50rem;
+        margin-top: 25rem;
+        margin-right: auto;
+        margin-left: auto;
+
+        border-radius: 0;
+        border-top-left-radius: 0.3rem;
+        border-top-right-radius: 0.3rem;
+    }
+
+    .motto span {
+        font-size: 3rem;
+    }
+
+    #info {
+        width: 50rem;
+        margin: 0 auto;
+        margin-bottom: 3rem;
+    }
+
+}/*   Form   */
+
+
+.form {
+    text-align: center;
+}
+
+.input-field {
+    margin: 0 1rem;
+}
+
+::-webkit-input-placeholder {
+    font-size: 1.2rem;
+
+    text-align: center;
+
+    color: grey;
+}
+
+::-moz-placeholder {
+    font-size: 1.2rem;
+
+    text-align: center;
+
+    color: grey;
+}
+
+:-ms-input-placeholder {
+    font-size: 1.2rem;
+
+    text-align: center;
+
+    color: grey;
+}
+
+:-moz-placeholder {
+    font-size: 1.2rem;
+
+    text-align: center;
+
+    color: grey;
+}
+
+/*   Join bill button   */
+.enterRoom span {
+    padding: 0.5rem 2rem;
+}
+
+/*.logoSpacing {
+    width: 80%;
+    margin: 6rem 2rem 2rem 2rem;
+}
+*/

@@ -1,73 +1,55 @@
+<link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
 <link rel="stylesheet" href="../../styles/home.css">
 
-<div class="section no-pad-bot" id="index-banner">
-  <div class="container center-align">
-    <!-- LOGO: height 50 for mobile; LATER: check to see if logoSpacing is pulling from Bootstrap somewhere -->
-    <object class="logoSpacing center-align" type="image/svg+xml" data="../../assets/piecemealLogoLightEcho.svg">Piecemeal</object>
-            <!-- <img src="../../assets/piecemealLogo.svg" height="30"/> -->
-    <!-- <h1 class="header center teal-text text-lighten-1">Piecemeal</h1> -->
-    <div class="row">
-      <h4 class="header col s12 grey-text">The easiest way to split a restaurant bill and pay with Venmo
-        <!-- <img src="../../assets/venmo_logo_blue.svg" alt="Venmo" width="85px"> -->
-      </h4>
+
+<!-- BACKGROUND IMAGE -->
+<div class="image">
+
+
+
+  <!-- HEADER -->
+  <div class="header" id="color">
+    <!-- <object class="logoSpacing center-align" type="image/svg+xml" data="../../assets/piecemealLogoLightEcho.svg">Piecemeal</object> -->
+    <div class="header__logo">
+      <a href="#">Piecemeal.</a>
+    </div>
+    <div><button ng-click="home.oAuth()" class="createButton btn waves-effect waves-light teal" type="submit" name="createBill">Create Bill
+    </button></div>
+  </div class="header">
+
+
+  <!--  Setup a bill Motto -->
+  <div class="motto">
+    <span>Split a bill, share a meal.</span>
+  </div>
+
+
+
+  <!--   User form, information, button  -->
+  <div class="col s12" id="info">
+
+    <h6 class="instructions">
+    The easiest way to split a restaurant bill with your friends.</h6>
+    <!-- <h6 class="join">Enter a room name to join!</h6> -->
+
+    <div class="form">
+      <form name="userInput2">
+        <div class="input-field">
+          <input name="code" id="roomCode" type="text" class="validate enterCode inlineInput" ng-model="code" placeholder="Enter Room Name" required>
+        </div>
+        <button class="btn enterRoom waves-effect waves-light teal validate" ng-disabled="userInput2.code.$error.required" ng-click="home.setSessionUser(code)" type="submit" name="joinBill">
+        <span>Join Bill</span>
+        </button>
+      </form>
+    </div>
+
+
+    <!-- Later: Style into alert -->
+    <div ng-if="home.incorrectCode" class="center">
+      Your entered room does not exist. Please try again.
     </div>
   </div>
 
-  <!-- Action Section -->
-  <div class="container">
-    <div class="section">
-      <div class="row">
-
-        <!--Setup a bill-->
-        <div class="col s12 m6">
-            <form name="userInput">
-              <div>
-                <h5 class="center shrink">
-                  Setup a bill to split with your friends
-                </h5>
-
-                <div class="row center input-field">
-                  <button ng-click="home.oAuth()" class="createButton createRoom btn waves-effect waves-light teal" type="submit" name="createBill">Create Bill
-                    <i class="material-icons right">send</i>
-                  </button>
-                </div>
-
-              </div>
-            </form>
-        </div>
-
-        <!-- Enter a room code (as a guest) -->
-        <div class="col s12 m6">
-          <div class="row">
-
-            <form name="userInput2">
-              <h5 class="center light shrink">
-                Or enter the code to join an existing bill
-              </h5>
-              <div class="file-field input-field homeButton">
-                <button class="btn enterRoom waves-effect waves-light teal validate" ng-disabled="userInput2.code.$error.required" ng-click="home.setSessionUser(code)" type="submit" name="joinBill">
-                  <span>Join Bill</span>
-                  <i class="material-icons right">send</i>
-                </button>
-                <div class="file-path-wrapper">
-                  <input name="code" id="roomCode" type="text" class="validate enterCode inlineInput" ng-model="code" required>
-                  <label for="roomCode">Enter Code</label>
-                </div>
-              </div>
-            </form>
-
-            <!-- Later: Style into alert -->
-            <div ng-if="home.incorrectCode" class="center">
-              Your entered room does not exist. Please try again.
-            </div>
-
-          </div>
-        </div>
-        <!-- End enter room code -->
-
-      </div>
-    </div>
-  </div>
 
   <!--   Info Section   -->
   <div class="page-footer teal" id="howPiecemealWorks">
@@ -105,10 +87,8 @@
               <p class="light">Once the bill is split, automatic payment requests can optionally be sent through Venmo. Plus, if you use Piecemeal frequently, you can stay logged in through Venmo.</p>
             </div>
           </div>
-
         </div>
       </div>
     </div>
   </div>
-
 </div>
