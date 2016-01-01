@@ -1,21 +1,21 @@
-(function() {
-  'use strict';
+// (function() {
+//   'use strict';
 
-  angular.module('Piecemeal')
-    .factory('hostBillFactory', hostBillFactory);
+//   angular.module('Piecemeal')
+//     .factory('hostBillFactory', hostBillFactory);
 
-  hostBillFactory.$inject = [];
+//   hostBillFactory.$inject = [];
 
-  function hostBillFactory() {
-    var services = {
-      showHostBill: showHostBill
-    };
+//   function hostBillFactory() {
+//     var services = {
+//       showHostBill: showHostBill
+//     };
 
-    return services;
+//     return services;
 
-    function showHostBill() {
+//     function showHostBill() {
 
-    }
-  }
+//     }
+//   }
 
-})();
+// })();

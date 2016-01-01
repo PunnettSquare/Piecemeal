@@ -1,3 +1,9 @@
+// # OAuth Controller
+
+// ##### [Back to Table of Contents](./tableofcontents.html)
+
+// **Summary**: TODO
+
 (function() {
   'use strict';
 
@@ -5,6 +11,8 @@
     .factory('oAuthFactory', oAuthFactory);
 
   oAuthFactory.$inject = ['$http'];
+
+  // **Parameters:** TODO
 
   function oAuthFactory($http) {
     var services = {

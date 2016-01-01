@@ -1,3 +1,10 @@
+// # Home Controller
+
+// ##### [Back to Table of Contents](./tableofcontents.html)
+
+// **Summary**: TODO
+
+
 (function() {
   'use strict';
 
@@ -5,6 +12,8 @@
     .controller('HomeCtrl', HomeCtrl);
 
   HomeCtrl.$inject = ['$window', 'homeFactory', '$location'];
+
+  // **Parameters:** TODO
 
   function HomeCtrl($window, homeFactory, $location) {
 
