@@ -20,7 +20,12 @@ module.exports = function(app, io) {
             .then(function(eventInfo) {
               res.send(eventInfo.users);
             });
+        } else {
+          res.send(false);
         }
+      }).catch(function(err) {
+        console.log("Room doesn't exist.");
+        throw err;
       });
   });
 

@@ -1,0 +1,33 @@
+.logoSpacing {
+  margin: 6rem 2rem 2rem 2rem;
+  width: 80%;
+}
+
+.file-field .file-path-wrapper { /* overrides default materialize for Enter Code field */
+  overflow: hidden;
+  padding-right: 10px; /*right*/
+}
+
+.file-field .btn, .file-field .btn-large { /* overrides default materialize for joinButton */
+  float: right; /*switch to right; below included for clarity*/
+  height: 3rem;
+  line-height: 3rem;
+}
+
+.createButton {
+  height: 3rem;
+  line-height: 3rem;
+}
+
+/*Shrinks text to avoid widowed words on phone*/
+@media (max-width: 600px) {
+  .shrink {
+    font-size: 1.4rem;
+  }
+
+  .logoSpacing {
+    margin: 4rem 1rem 1rem 1rem;
+    max-width: 80%;
+  }
+
+}

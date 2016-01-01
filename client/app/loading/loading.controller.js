@@ -4,13 +4,13 @@
   angular.module('Piecemeal')
     .controller('LoadingCtrl', LoadingCtrl);
 
-  LoadingCtrl.$inject = ['$location', '$window', 'loadingFactory','$timeout','usersList'];
+  LoadingCtrl.$inject = ['$location', '$window', 'loadingFactory','$timeout','usersList', 'appFactory'];
 
-  function LoadingCtrl($location, $window, loadingFactory, $timeout, usersList) {
+  function LoadingCtrl($location, $window, loadingFactory, $timeout, usersList, appFactory) {
     var self = this;
     self.currentUsers = _.uniq(_.pluck(usersList.data, 'username'));
     self.code = $window.location.hash.split("/")[1];
-    window.localStorage.code = $window.location.hash.split("/")[1];
+    // window.localStorage.code = $window.location.hash.split("/")[1];
 
     self.setSessionUser = function(username) {
       loadingFactory.sendSessionUser(
