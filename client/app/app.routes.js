@@ -42,7 +42,7 @@
         url: '/home',
         views: {
           'navbar': {
-            templateUrl: 'components/navbar/homeNavbar.html',
+            templateUrl: 'components/navbar/homeNavBar.html',
             controller: 'NavbarCtrl',
             controllerAs: 'homeNavbar'
           },
