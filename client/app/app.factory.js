@@ -36,7 +36,7 @@
     return services;
 
     function checkCode() {
-      if (!$window.localStorage.code || $window.location.hash.split("/")[1] !== $window.location.code) {
+      if (!$window.localStorage.code || $window.location.hash.split("/")[1] !== $window.localStorage.code) {
         $location.path('/home');
       }
     }
