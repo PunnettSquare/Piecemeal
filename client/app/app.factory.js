@@ -1,3 +1,9 @@
+// # App Factory
+
+// ##### [Back to Table of Contents](./tableofcontents.html)
+
+// **Summary**: TODO
+
 // Sockets: client emits 'shareDish' to server, which broadcasts 'dishShared' to clients. hear it here and update data on service
 // then, if the controllers have direct binding to this data, no further action is needed
 
@@ -8,6 +14,8 @@
     .factory('appFactory', appFactory);
 
   appFactory.$inject = ['socketFactory', '$rootScope', '$window', '$location'];
+
+  // **Parameters:** TODO
 
   function appFactory(socketFactory, $rootScope, $window, $location) {
 
@@ -185,6 +193,7 @@
     }
 
     function initListeners() {
+      // socketFactory.init();
       socketFactory.on('joined', function(data) {
         console.log("Heard 'joined' in appFactory.data:", data);
         services.data = data;
@@ -218,8 +227,6 @@
         services.data.billData = data;
 
         $rootScope.$broadcast('billsSentToGuests');
-        // $rootScope.$broadcast('billsSentToGuests', data);
-        // $rootScope.$apply();
       });
 
     }

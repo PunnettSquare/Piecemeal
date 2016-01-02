@@ -1,10 +1,18 @@
+// # Loading Controller
+
+// ##### [Back to Table of Contents](./tableofcontents.html)
+
+// **Summary**: TODO
+
 (function() {
   'use strict';
 
   angular.module('Piecemeal')
     .controller('LoadingCtrl', LoadingCtrl);
 
-  LoadingCtrl.$inject = ['$location', '$window', 'loadingFactory','$timeout','usersList', 'appFactory'];
+  LoadingCtrl.$inject = ['$location', '$window', 'loadingFactory', '$timeout', 'usersList', 'appFactory'];
+
+  // **Parameters:** TODO
 
   function LoadingCtrl($location, $window, loadingFactory, $timeout, usersList, appFactory) {
     var self = this;
@@ -12,7 +20,9 @@
     self.code = $window.location.hash.split("/")[1];
 
     //check for Safari private mode
-    try { $window.localStorage.checkPrivateMode = 'not private'; } catch (e) {
+    try {
+      $window.localStorage.checkPrivateMode = 'not private';
+    } catch (e) {
       self.privateMode = true;
     }
 
@@ -23,14 +33,16 @@
     }
 
     self.setSessionUser = function(username) {
-      window.localStorage.code = $window.location.hash.split("/")[1];
-      loadingFactory.sendSessionUser(
-          _.assign($window.localStorage, {
-            isHost: false,
-            username: username
-          }))
+      loadingFactory.sendSessionUser({
+          isHost: false,
+          username: username,
+          code: $window.location.hash.split("/")[1]
+        })
         .then(function(userInfo) {
           _.assign($window.localStorage, {
+            isHost: false,
+            username: username,
+            code: $window.location.hash.split("/")[1],
             user_id: userInfo.user_id,
             event_id: userInfo.event_id
           });
@@ -38,12 +50,11 @@
           $location.path('/' + $window.localStorage.code + '/allDishes');
         })
         .catch(function(err) {
-          console.log("Error: Could not send session user info.");
-          console.error(err);
-          self.isError = true;
+          Materialize.toast('Your entered room does not exist. <br>Redirecting...', 2500);
+          console.error("Error: Could not send session user info.", err);
           $timeout(function() {
-            appFactory.logout();
-          }, 2000);
+            $location.path('/home');
+          }, 2500);
         });
     };
   }

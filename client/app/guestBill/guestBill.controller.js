@@ -1,3 +1,9 @@
+// # GuestBill Controller
+
+// ##### [Back to Table of Contents](./tableofcontents.html)
+
+// **Summary**: TODO
+
 (function() {
   'use strict';
 
@@ -6,23 +12,34 @@
 
   GuestBillCtrl.$inject = ['$scope', 'appFactory', 'allDishesFactory', 'socketFactory', '$timeout'];
 
+  // **Parameters:** TODO
+
   function GuestBillCtrl($scope, appFactory, allDishesFactory, socketFactory, $timeout) {
     var self = this;
+
+    // Copy data from ```window.localStorage``` onto the $scope.
     appFactory.copySessData(self);
 
     appFactory.checkCode();
-    // load data on page refresh
+
+    // **Assign appFactory data to scope, upon hearing 'joined' emitted by $rootScope.**
+
+    // Copy the data emitted by appFactory through ```$rootScope```, upon hearing a 'joined' event, thus ensuring the latest data is on the scope.
     $scope.$on('joined', function() {
       self.data = appFactory.data;
-      self.data.billData = appFactory.data.billData; // check later
       self.getDishIndivCost = appFactory.getDishIndivCost;
       self.venmoUsername = appFactory.data.venmoUsername;
     });
 
-    // load data when *not* on page refresh
+    // Update scope's data with the most updated data from appFactory.
+    // *(This is for when a page has NOT refreshed.)
     self.data = appFactory.data;
 
+    // **Initialize [appFactory](../docs/app.factory.js) and [socketFactory](../docs/socket.module.html) socket listeners.**
+
+    // ```appFactory.data``` will be undefined on a refresh and on the initial join, because AllDishesCtrl will have loaded before the socket connection is made with the server.
     if (!appFactory.data) {
+      // This initializes the socket listeners on appFactory and sets up Angular's event system listeners.
       socketFactory.init();
       appFactory.initListeners();
     } else {
@@ -30,6 +47,7 @@
       self.venmoUsername = appFactory.data.venmoUsername;
     }
 
+    // **TODO the rest**
     $scope.$on('billsSentToGuests', function() {
       self.data.billData = appFactory.data.billData;
     });
@@ -111,7 +129,7 @@
     self.venmoAlert = function () {
       $timeout(function(){
         Materialize.toast('Venmo app required.', 4000);
-      }, 1000)
+      }, 1000);
     };
 
     //remove:
@@ -119,6 +137,6 @@
     //   return (!self.data) ?  0 : _.sum(_.pluck(dishes, 'cost')) + self.getGuestTip() + self.getGuestTax();
     //   }
     // };
-  };
+  }
 
 })();

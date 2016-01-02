@@ -1,3 +1,9 @@
+// # AllDishes Factory
+
+// ##### [Back to Table of Contents](./tableofcontents.html)
+
+// **Summary**: TODO
+
 (function() {
   'use strict';
 
@@ -5,6 +11,8 @@
     .factory('allDishesFactory', allDishesFactory);
 
   allDishesFactory.$inject = ['appFactory'];
+
+  // **Parameters:** TODO
 
   function allDishesFactory(appFactory) {
 

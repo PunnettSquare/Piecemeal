@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>AllDishes Controller</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+      <ul id="jump_to">
+        <li>
+          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+          <a class="small" href="javascript:void(0);">+</a>
+          <div id="jump_wrapper">
+          <div id="jump_page_wrapper">
+            <div id="jump_page">
+              
+                
+                <a class="source" href="allDishes.controller.html">
+                  allDishes.controller.js
+                </a>
+              
+                
+                <a class="source" href="allDishes.factory.html">
+                  allDishes.factory.js
+                </a>
+              
+                
+                <a class="source" href="app.factory.html">
+                  app.factory.js
+                </a>
+              
+                
+                <a class="source" href="app.module.html">
+                  app.module.js
+                </a>
+              
+                
+                <a class="source" href="app.routes.html">
+                  app.routes.js
+                </a>
+              
+                
+                <a class="source" href="dashboard.controller.html">
+                  dashboard.controller.js
+                </a>
+              
+                
+                <a class="source" href="dashboard.factory.html">
+                  dashboard.factory.js
+                </a>
+              
+                
+                <a class="source" href="guestBill.controller.html">
+                  guestBill.controller.js
+                </a>
+              
+                
+                <a class="source" href="home.controller.html">
+                  home.controller.js
+                </a>
+              
+                
+                <a class="source" href="home.factory.html">
+                  home.factory.js
+                </a>
+              
+                
+                <a class="source" href="hostBill.controller.html">
+                  hostBill.controller.js
+                </a>
+              
+                
+                <a class="source" href="loading.controller.html">
+                  loading.controller.js
+                </a>
+              
+                
+                <a class="source" href="loading.factory.html">
+                  loading.factory.js
+                </a>
+              
+                
+                <a class="source" href="oAuth.controller.html">
+                  oAuth.controller.js
+                </a>
+              
+                
+                <a class="source" href="oAuth.factory.html">
+                  oAuth.factory.js
+                </a>
+              
+                
+                <a class="source" href="socket.module.html">
+                  socket.module.js
+                </a>
+              
+                
+                <a class="source" href="navbar.controller.html">
+                  navbar.controller.js
+                </a>
+              
+            </div>
+          </div>
+        </li>
+      </ul>
+    
+    <ul class="sections">
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              <h1 id="alldishes-controller">AllDishes Controller</h1>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <h5 id="-back-to-table-of-contents-tableofcontents-html-"><a href="./tableofcontents.html">Back to Table of Contents</a></h5>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p><strong>Summary</strong>: Controller that adds, shares, and removes dishes.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>
+(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+<span class="hljs-meta">  'use strict'</span>;
+
+  angular.module(<span class="hljs-string">'Piecemeal'</span>)
+    .controller(<span class="hljs-string">'AllDishesCtrl'</span>, AllDishesCtrl);
+
+  AllDishesCtrl.$inject = [<span class="hljs-string">'socketFactory'</span>, <span class="hljs-string">'appFactory'</span>, <span class="hljs-string">'$scope'</span>, <span class="hljs-string">'allDishesFactory'</span>, <span class="hljs-string">'$window'</span>, <span class="hljs-string">'$location'</span>];</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p><strong>Parameters:</strong>
+<code>socketFactory</code>: <a href="../docs/socket.module.html">Wrapper</a> for SocketIO integrated with Angular’s digest cycle
+<code>appFactory</code>: <a href="../docs/app.factory.html">App-level methods</a>
+<code>$scope</code>: The controller’s local scope
+<code>allDishesFactory</code>: <a href="../docs/allDishes.factory.html">Factory methods</a></p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>
+  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">AllDishesCtrl</span>(<span class="hljs-params">socketFactory, appFactory, $scope, allDishesFactory, $window, $location</span>) </span>{
+    <span class="hljs-keyword">var</span> self = <span class="hljs-keyword">this</span>;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p>Copy data from <code>window.localStorage</code> onto the $scope.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    appFactory.copySessData(self);
+    self.checkCode = appFactory.checkCode;
+    <span class="hljs-keyword">var</span> url = $<span class="hljs-built_in">window</span>.location.hash;
+    <span class="hljs-keyword">if</span> (url === <span class="hljs-string">''</span> &amp;&amp; $<span class="hljs-built_in">window</span>.localStorage.code) {
+      $location.path(<span class="hljs-string">'/'</span> + $<span class="hljs-built_in">window</span>.localStorage.code + <span class="hljs-string">'/allDishes'</span>);
+    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <p><strong>Assign appFactory data to scope, upon hearing ‘joined’ emitted by $rootScope.</strong></p>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-7">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <p>Copy the data emitted by appFactory through <code>$rootScope</code>, upon hearing a ‘joined’ event, thus ensuring the latest data is on the scope.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    $scope.$on(<span class="hljs-string">'joined'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+      self.data = appFactory.data;
+      <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Joined the All Dishes room."</span>);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-8">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-8">&#182;</a>
+              </div>
+              <p>Calculate user’s running total.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      self.calcUserCurrentTotal(self.data);
+    });</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-9">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-9">&#182;</a>
+              </div>
+              <p>Update scope’s data with the most updated data from appFactory.
+*(This is for when a page has NOT refreshed.)</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    self.data = appFactory.data;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-10">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-10">&#182;</a>
+              </div>
+              <p><strong>Initialize <a href="../docs/app.factory.js">appFactory</a> and <a href="../docs/socket.module.html">socketFactory</a> socket listeners.</strong></p>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-11">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-11">&#182;</a>
+              </div>
+              <p><code>appFactory.data</code> will be undefined on a refresh and on the initial join, because AllDishesCtrl will have loaded before the socket connection is made with the server.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>
+    <span class="hljs-keyword">if</span> (!appFactory.data) {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-12">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-12">&#182;</a>
+              </div>
+              <p>This initializes the socket listeners on appFactory and sets up Angular’s event system listeners.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      socketFactory.init();
+      appFactory.initListeners();
+    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-13">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-13">&#182;</a>
+              </div>
+              <p><strong>Adding, Removing, Sharing Dishes</strong></p>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-14">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-14">&#182;</a>
+              </div>
+              <p>Get list of user ID’s through dish item.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    self.getUsersByDish = appFactory.getUsersByDish;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-15">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-15">&#182;</a>
+              </div>
+              <p>Check if the user has eaten the dish.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    self.isOnDish = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">dishUsers, user_id</span>) </span>{
+      <span class="hljs-keyword">return</span> dishUsers.reduce(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">isOnDish, id</span>) </span>{
+        <span class="hljs-keyword">if</span> (id.toString() === user_id.toString()) {
+          <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+        }
+        <span class="hljs-keyword">return</span> isOnDish;
+      }, <span class="hljs-literal">false</span>);
+    };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-16">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-16">&#182;</a>
+              </div>
+              <p>Add user’s ID to dish item in appFactory, and send to the <a href="../docs/sockets.js">server</a> through a socket event to update the database</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    self.shareDish = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">dish_id, user_id, users</span>) </span>{
+      <span class="hljs-keyword">if</span> (!self.isOnDish(users, user_id)) {
+        socketFactory.emit(<span class="hljs-string">'shareDish'</span>, {
+          dish_id: dish_id,
+          user_id: user_id
+        });
+        appFactory.shareDish(dish_id, user_id);
+      }
+    };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-17">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-17">&#182;</a>
+              </div>
+              <p>Remove user’s ID to dish item in appFactory, and send to the <a href="../docs/sockets.js">server</a> through a socket event to update the database.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    self.unshareDish = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">dish_id, user_id, users</span>) </span>{
+      <span class="hljs-keyword">if</span> (self.isOnDish(users, user_id)) {
+        socketFactory.emit(<span class="hljs-string">'unshareDish'</span>, {
+          dish_id: dish_id,
+          user_id: user_id
+        });
+        appFactory.unshareDish(dish_id, user_id);
+      }
+    };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-18">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-18">&#182;</a>
+              </div>
+              <h2 id="add-dish-modal">Add Dish Modal</h2>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-19">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-19">&#182;</a>
+              </div>
+              <p>Initialize modal’s properties and functionality.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    $(<span class="hljs-string">'.modal-trigger'</span>).leanModal({
+      opacity: <span class="hljs-number">0.7</span>,
+      in_duration: <span class="hljs-number">230</span>,
+      out_duration: <span class="hljs-number">230</span>,
+      calcUserCurrentTotal: self.calcUserCurrentTotal
+    });</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-20">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-20">&#182;</a>
+              </div>
+              <p>Calculate the user’s running total bill.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    self.calcUserCurrentTotal = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">data</span>) </span>{
+      <span class="hljs-keyword">return</span> (!data) ? <span class="hljs-number">0</span> : allDishesFactory.calculateRunningTotal(data);
+    };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-21">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-21">&#182;</a>
+              </div>
+              <p>Add dish item in appFactory, and send dish item data to the <a href="../docs/sockets.js">server</a> through a socket event to update the database.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    self.addDish = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">name, cost</span>) </span>{
+      <span class="hljs-keyword">var</span> dish = {
+        cost: <span class="hljs-built_in">Number</span>(cost),
+        name: name,
+        user_id: self.user_id,
+        event_id: self.event_id,
+        users: [self.user_id]
+      };
+      socketFactory.emit(<span class="hljs-string">'addDish'</span>, dish);
+      self.amount = <span class="hljs-string">''</span>;
+      self.dishName = <span class="hljs-string">''</span>;
+      self.addedDish = <span class="hljs-literal">true</span>;
+      self.previousDish = name;
+    };
+
+  }
+})();</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>

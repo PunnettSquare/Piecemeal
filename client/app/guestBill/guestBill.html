@@ -1,8 +1,6 @@
-<link rel="stylesheet" href="../../styles/guestBill.css">
-
 <!-- PAGINATION -->
 <ul class="pagination">
-  <li class="waves-effect pag__button--prev"><i class="material-icons">chevron_left</i><a class="pag__button--text" ui-sref="event.allDishes">All Dishes</a></li>
+  <li class="waves-effect pag__button--prev"><a class="pag__button--text" ui-sref="event.allDishes"><i class="material-icons">chevron_left</i>All Dishes</a></li>
   <li id="pag__title--current"><h5>Your Bill</h5></li>
   <li class="waves-effect pag__button--next" ng-if="guestBill.isHost"><a class="pag__button--text" ui-sref="event.hostBill">Finalize Bill<i class="material-icons">chevron_right</i></a></li>
   <li class="pag__space" ng-if="!guestBill.isHost"></li>
@@ -13,11 +11,10 @@
 <div class="divider"></div>
 <!-- End Pagination -->
 
-<div class="row" id="allDishes" ng-cloak>
+<div class="row" ng-cloak>
   <div class="col s12">
 
     <section>
-      <br>
       <!-- Dish items -->
       <ul class="dish__item collection" ng-repeat="dish in guestBill.getGuestDishes(guestBill.user_id, guestBill.data.dishes)">
         <li class="collection-item" ng-if="dish.users.length !== 0">
@@ -60,8 +57,8 @@
           <div class="receipt__tiptax">
             The host hasn't entered tax and tip yet. Please wait for your bill to be finalized before proceeding with payment.
             <div class="button__div--payment">
-              <button type="submit" class="button--payButton"><img src="../../assets/venmo_logo_white.png" alt="Venmo" width="55px"></button>
-              <button type="submit" class="button--payButton">Cash</button>
+              <button type="submit" class="button--payButton" disabled><img src="../../assets/venmo_logo_white.png" alt="Venmo" width="55px" ></button>
+              <button type="submit" class="button--payButton" disabled>Cash</button>
             </div>
           </div>
         </li>
@@ -113,6 +110,7 @@
             +{{guestBill.getGuestFee() | currency}}
           </span>
           </h6>
+
           <span class="receipt__subtitle" ng-if="guestBill.data.billData.feePercent">(+{{ guestBill.data.billData.feePercent | number:0 }}% of subtotal)</span>
 
           <h6 ng-if="guestBill.data.billData.discountPercent">
@@ -121,6 +119,7 @@
             -{{guestBill.getGuestDiscount() | currency}}
           </span>
           </h6>
+
           <span class="receipt__subtitle" ng-if="guestBill.data.billData.discountPercent">(-{{ guestBill.data.billData.discountPercent | number:0 }}% of subtotal)</span>
 
 
@@ -181,8 +180,6 @@
         </ul> -->
 
         <!-- end payment option -->
-
       </section>
     </div>
-
   </div>
