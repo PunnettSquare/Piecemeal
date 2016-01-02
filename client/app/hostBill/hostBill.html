@@ -1,8 +1,6 @@
-<link rel="stylesheet" href="../../styles/hostBill.css">
-
 <!-- PAGINATION -->
 <ul class="pagination">
-  <li class="waves-effect pag__button--prev"><i class="material-icons">chevron_left</i><a class="pag__button--text" ui-sref="event.guestBill">Your Bill</a></li>
+  <li class="waves-effect pag__button--prev"><a class="pag__button--text" ui-sref="event.guestBill"><i class="material-icons">chevron_left</i>Your Bill</a></li>
   <li id="pag__title--current"><h5>Final Bill</h5></li>
   <!-- <li class="waves-effect pag__button--next"><a class="pag__button--text" ui-sref="event.hostBill">Receipt<i class="material-icons">chevron_right</i></a></li> -->
   <!-- Enable above and disable below when hostReceipt is ready -->
@@ -13,7 +11,7 @@
 
 <div class="row" id="hostBill" ng-cloak>
   <div class="col s12">
-
+    
     <section>
       <!-- Dish items -->
       <ul class="dish__item collection" ng-repeat="dish in hostBill.data.dishes">
@@ -24,12 +22,12 @@
           <span class="dish__item--shared">
             Each individual paid: {{ hostBill.getDishIndivCost(dish) | currency }}
             <br>
-            {{ hostBill.getUsersByDish(dish, hostBill.data.users) }} got this.</span>
+          {{ hostBill.getUsersByDish(dish, hostBill.data.users) }} got this.</span>
         </li>
       </ul>
     </section>
     <!-- end list of dishes -->
-
+    
     <!-- SUBTOTAL -->
     <ul class="collection receipt__item">
       <li class="collection-item">
@@ -40,10 +38,9 @@
         </h5>
       </li>
     </ul>
-
+    
     <!-- TIP TAX FEE DISCOUNT FORM -->
     <form role="form" name="billForm">
-        
       <!-- TIP-->
       <ul class="collection receipt__item"> <!-- border -->
         <li class="collection-item"> <!-- spacing -->

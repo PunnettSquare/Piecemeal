@@ -150,7 +150,6 @@
             </div>
             
             <div class="content"><div class='highlight'><pre>
-
 (<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
 <span class="hljs-meta">  'use strict'</span>;
 
@@ -176,18 +175,19 @@
   <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">HomeCtrl</span>(<span class="hljs-params">$window, homeFactory, $location</span>) </span>{
 
     <span class="hljs-keyword">var</span> self = <span class="hljs-keyword">this</span>;
+    self.isVenmo = $<span class="hljs-built_in">window</span>.localStorage.venmoUsername;
 
     self.incorrectCode = <span class="hljs-literal">false</span>;
 
     self.setSessionUser = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">code</span>) </span>{
       code = code.toLowerCase();
       homeFactory.checkCode(code.toLowerCase())
-      .then(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">validCode</span>) </span>{
-        <span class="hljs-keyword">if</span> (validCode.data.isValid) {
-          _.assign($<span class="hljs-built_in">window</span>.localStorage, {
-            code: code,
-            isHost: <span class="hljs-literal">false</span>
-          });</pre></div></div>
+        .then(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">validCode</span>) </span>{
+          <span class="hljs-keyword">if</span> (validCode.data.isValid) {
+            _.assign($<span class="hljs-built_in">window</span>.localStorage, {
+              code: code,
+              isHost: <span class="hljs-literal">false</span>
+            });</pre></div></div>
             
         </li>
         
@@ -202,7 +202,7 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>          <span class="hljs-keyword">if</span> ($<span class="hljs-built_in">window</span>.localStorage.venmoUsername) {</pre></div></div>
+            <div class="content"><div class='highlight'><pre>            <span class="hljs-keyword">if</span> ($<span class="hljs-built_in">window</span>.localStorage.venmoUsername) {</pre></div></div>
             
         </li>
         
@@ -217,18 +217,18 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>            $<span class="hljs-built_in">window</span>.localStorage.event_id = validCode.data.id;
-            $location.path(<span class="hljs-string">'/'</span> + code + <span class="hljs-string">'/allDishes'</span>);
+            <div class="content"><div class='highlight'><pre>              $<span class="hljs-built_in">window</span>.localStorage.event_id = validCode.data.id;
+              $location.path(<span class="hljs-string">'/'</span> + code + <span class="hljs-string">'/allDishes'</span>);
+            } <span class="hljs-keyword">else</span> {
+              $location.path(<span class="hljs-string">'/'</span> + $<span class="hljs-built_in">window</span>.localStorage.code + <span class="hljs-string">'/loading'</span>);
+            }
           } <span class="hljs-keyword">else</span> {
-            $location.path(<span class="hljs-string">'/'</span> + $<span class="hljs-built_in">window</span>.localStorage.code + <span class="hljs-string">'/loading'</span>);
+            Materialize.toast(<span class="hljs-string">'Your entered room does not exist. Please try again.'</span>, <span class="hljs-number">4000</span>);
           }
-        } <span class="hljs-keyword">else</span> {
-          self.incorrectCode = <span class="hljs-literal">true</span>;
-        }
-      });
+        });
     };
 
-    self.oAuth = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{</pre></div></div>
+    self.oAuth = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{</pre></div></div>
             
         </li>
         
@@ -261,7 +261,7 @@
             <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">var</span> userInfo = {
           id: $<span class="hljs-built_in">window</span>.localStorage.user_id,
           username: $<span class="hljs-built_in">window</span>.localStorage.username
-        }
+        };
         homeFactory.createEvent(userInfo)
           .then(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">data</span>) </span>{
             data = data.data;
@@ -292,7 +292,13 @@
             
             <div class="content"><div class='highlight'><pre>        $location.path(<span class="hljs-string">'/oAuth'</span>);
       }
-    }
+    };
+
+    self.logoutVenmo = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+      $<span class="hljs-built_in">window</span>.localStorage.clear();
+      self.isVenmo = <span class="hljs-literal">false</span>;
+      $<span class="hljs-built_in">window</span>.location.reload();
+    };
 
   }
 })();</pre></div></div>

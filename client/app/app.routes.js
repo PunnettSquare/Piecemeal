@@ -48,11 +48,11 @@
       .state('home', {
         url: '/home',
         views: {
-          'navbar': {
-            templateUrl: 'components/navbar/homeNavbar.html',
-            controller: 'NavbarCtrl',
-            controllerAs: 'homeNavbar'
-          },
+          // 'navbar': {
+          //   templateUrl: 'components/navbar/homeNavbar.html',
+          //   controller: 'NavbarCtrl',
+          //   controllerAs: 'homeNavbar'
+          // },
           '@': {
             templateUrl: 'app/home/home.html',
             controller: 'HomeCtrl',
@@ -73,11 +73,6 @@
       .state('dashboard', {
         url: '/dashboard',
         views: {
-          'navbar': {
-            templateUrl: 'components/navbar/navbar.html',
-            controller: 'NavbarCtrl',
-            controllerAs: 'navbar'
-          },
           '@': {
             templateUrl: 'app/dashboard/dashboard.html',
             controller: 'DashboardCtrl',

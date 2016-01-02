@@ -14,9 +14,9 @@ module.exports = function(app, express, io) {
 
   var eventRouter = express.Router();
 
+  app.use(morgan('dev'));
   app.use('/', express.static(path.join(__dirname, '../../client/')));
 
-  app.use(morgan('dev'));
 
   // app.use('/', express.static(path.join(__dirname, '../../dist/client')));
 

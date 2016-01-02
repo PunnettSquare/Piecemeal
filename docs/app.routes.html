@@ -231,13 +231,26 @@ TODO test edge cases</p>
     $stateProvider
       .state(<span class="hljs-string">'home'</span>, {
         url: <span class="hljs-string">'/home'</span>,
-        views: {
-          <span class="hljs-string">'navbar'</span>: {
-            templateUrl: <span class="hljs-string">'components/navbar/homeNavbar.html'</span>,
-            controller: <span class="hljs-string">'NavbarCtrl'</span>,
-            controllerAs: <span class="hljs-string">'homeNavbar'</span>
-          },
-          <span class="hljs-string">'@'</span>: {
+        views: {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-7">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <p>‘navbar’: {
+  templateUrl: ‘components/navbar/homeNavbar.html’,
+  controller: ‘NavbarCtrl’,
+  controllerAs: ‘homeNavbar’
+},</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>          <span class="hljs-string">'@'</span>: {
             templateUrl: <span class="hljs-string">'app/home/home.html'</span>,
             controller: <span class="hljs-string">'HomeCtrl'</span>,
             controllerAs: <span class="hljs-string">'home'</span>
@@ -257,11 +270,6 @@ TODO test edge cases</p>
       .state(<span class="hljs-string">'dashboard'</span>, {
         url: <span class="hljs-string">'/dashboard'</span>,
         views: {
-          <span class="hljs-string">'navbar'</span>: {
-            templateUrl: <span class="hljs-string">'components/navbar/navbar.html'</span>,
-            controller: <span class="hljs-string">'NavbarCtrl'</span>,
-            controllerAs: <span class="hljs-string">'navbar'</span>
-          },
           <span class="hljs-string">'@'</span>: {
             templateUrl: <span class="hljs-string">'app/dashboard/dashboard.html'</span>,
             controller: <span class="hljs-string">'DashboardCtrl'</span>,
@@ -284,11 +292,11 @@ TODO test edge cases</p>
         </li>
         
         
-        <li id="section-7">
+        <li id="section-8">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-7">&#182;</a>
+                <a class="pilcrow" href="#section-8">&#182;</a>
               </div>
               <p>.state(‘event.addDish’, {
   url: ‘/addDish’,

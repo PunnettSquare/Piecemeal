@@ -17,13 +17,13 @@
   function NavbarCtrl(appFactory, $window) {
 
     var self = this;
-    self.isVenmo = $window.localStorage.venmoUsername;
+    // self.isVenmo = $window.localStorage.venmoUsername;
 
-    self.logoutVenmo = function() {
-      $window.localStorage.clear();
-      self.isVenmo = false;
-      $window.location.reload();
-    };
+    // self.logoutVenmo = function() {
+    //   $window.localStorage.clear();
+    //   self.isVenmo = false;
+    //   $window.location.reload();
+    // };
 
     //copy session data to scope
     appFactory.copySessData(self); 

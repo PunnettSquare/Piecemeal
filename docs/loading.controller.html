@@ -193,25 +193,11 @@
           $location.path(<span class="hljs-string">'/'</span> + $<span class="hljs-built_in">window</span>.localStorage.code + <span class="hljs-string">'/allDishes'</span>);
         })
         .catch(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">err</span>) </span>{
-          <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Error: Could not send session user info."</span>);
-          <span class="hljs-built_in">console</span>.error(err);
-          self.isError = <span class="hljs-literal">true</span>;
-          $timeout(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-5">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-5">&#182;</a>
-              </div>
-              <p>appFactory.logout();</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>          }, <span class="hljs-number">2000</span>);
+          Materialize.toast(<span class="hljs-string">'Your entered room does not exist. &lt;br&gt;Redirecting...'</span>, <span class="hljs-number">2500</span>);
+          <span class="hljs-built_in">console</span>.error(<span class="hljs-string">"Error: Could not send session user info."</span>, err);
+          $timeout(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+            $location.path(<span class="hljs-string">'/home'</span>);
+          }, <span class="hljs-number">2500</span>);
         });
     };
   }
