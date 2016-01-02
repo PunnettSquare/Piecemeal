@@ -588,7 +588,8 @@ h5.receipt__tiptax {
 /*  Form  */
 
 .loading__button--enterRoom {
-
+    display: flex;
+    justify-content: center;
 }
 
 /*  Room Info  */
