@@ -46,11 +46,6 @@
       .state('home', {
         url: '/home',
         views: {
-          // 'navbar': {
-          //   templateUrl: 'components/navbar/homeNavbar.html',
-          //   controller: 'NavbarCtrl',
-          //   controllerAs: 'homeNavbar'
-          // },
           '@': {
             templateUrl: 'app/home/home.html',
             controller: 'HomeCtrl',
@@ -61,6 +56,9 @@
       .state('oAuth', {
         url: '/oAuth',
         views: {
+          'navbar': {
+            templateUrl: 'components/navbar/homeNavBar.html',
+          },
           '@': {
             templateUrl: 'app/oAuth/oAuth.html',
             controller: 'OAuthCtrl',

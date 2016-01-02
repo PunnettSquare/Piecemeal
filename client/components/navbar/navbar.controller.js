@@ -30,7 +30,7 @@
     }
 
     self.isLoggedIn = function() {
-      return $window.localStorage.getItem('username');
+      return $window.localStorage.getItem('code');
     };
 
     self.logout = appFactory.logout;

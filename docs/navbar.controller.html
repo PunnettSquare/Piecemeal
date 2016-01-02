@@ -174,17 +174,7 @@
             </div>
             
             <div class="content"><div class='highlight'><pre>
-    <span class="hljs-keyword">var</span> self = <span class="hljs-keyword">this</span>;
-<span class="xml"><span class="hljs-tag">&lt;&lt;&lt;&lt;&lt;&lt;&lt; <span class="hljs-attr">HEAD</span>
-    <span class="hljs-attr">self.isVenmo</span> = $<span class="hljs-attr">window.localStorage.venmoUsername</span>;
-    <span class="hljs-attr">var</span> <span class="hljs-attr">url</span> = $<span class="hljs-attr">window.location.hash</span>;
-    <span class="hljs-attr">var</span> <span class="hljs-attr">pieces</span> = <span class="hljs-attr">url.split</span>('/');
-
-    <span class="hljs-attr">if</span> (<span class="hljs-attr">pieces.length</span> =<span class="hljs-string">==</span> <span class="hljs-attr">2</span> &amp;&amp; <span class="hljs-attr">pieces</span>[<span class="hljs-attr">1</span>] !=<span class="hljs-string">=</span> '<span class="hljs-attr">home</span>') {
-      $<span class="hljs-attr">location.path</span>(<span class="hljs-attr">url.slice</span>(<span class="hljs-attr">2</span>) + '/');
-    }
-=<span class="hljs-string">======</span>
-</span></span></pre></div></div>
+    <span class="hljs-keyword">var</span> self = <span class="hljs-keyword">this</span>;</pre></div></div>
             
         </li>
         
@@ -195,46 +185,23 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-5">&#182;</a>
               </div>
-              <p>self.isVenmo = $window.localStorage.venmoUsername;</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>&gt;&gt;&gt;&gt;&gt;&gt;&gt; (feat) CSS Migration, loading bugfixes, refactoring, Materialize toasts added</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-6">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-6">&#182;</a>
-              </div>
-              <p>self.logoutVenmo = function() {
-  $window.localStorage.clear();
-  self.isVenmo = false;
-  $window.location.reload();
-};</p>
-
-            </div>
-            
-        </li>
-        
-        
-        <li id="section-7">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-7">&#182;</a>
-              </div>
               <p>copy session data to scope</p>
 
             </div>
             
             <div class="content"><div class='highlight'><pre>    appFactory.copySessData(self);
 
+
+    self.isVenmo = $<span class="hljs-built_in">window</span>.localStorage.venmoUsername;
+    <span class="hljs-keyword">var</span> url = $<span class="hljs-built_in">window</span>.location.hash;
+    <span class="hljs-keyword">var</span> pieces = url.split(<span class="hljs-string">'/'</span>);
+
+    <span class="hljs-keyword">if</span> (pieces.length === <span class="hljs-number">2</span> &amp;&amp; pieces[<span class="hljs-number">1</span>] !== <span class="hljs-string">'home'</span>) {
+      $location.path(url.slice(<span class="hljs-number">2</span>) + <span class="hljs-string">'/'</span>);
+    }
+
     self.isLoggedIn = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
-      <span class="hljs-keyword">return</span> $<span class="hljs-built_in">window</span>.localStorage.getItem(<span class="hljs-string">'username'</span>);
+      <span class="hljs-keyword">return</span> $<span class="hljs-built_in">window</span>.localStorage.getItem(<span class="hljs-string">'code'</span>);
     };
 
     self.logout = appFactory.logout;

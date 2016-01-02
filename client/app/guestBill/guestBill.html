@@ -57,8 +57,8 @@
           <div class="receipt__tiptax">
             The host hasn't entered tax and tip yet. Please wait for your bill to be finalized before proceeding with payment.
             <div class="button__div--payment">
-              <button type="submit" class="button--payButton"><img src="../../assets/venmo_logo_white.png" alt="Venmo" width="55px"></button>
-              <button type="submit" class="button--payButton">Cash</button>
+              <button type="submit" class="button--payButton" disabled><img src="../../assets/venmo_logo_white.png" alt="Venmo" width="55px" ></button>
+              <button type="submit" class="button--payButton" disabled>Cash</button>
             </div>
           </div>
         </li>
@@ -111,7 +111,7 @@
           </span>
           </h6>
 
-          <span class="receipt__subtitle" ng-show="guestBill.data.billData.feePercent">(+{{ guestBill.data.billData.feePercent | number:0 }}% of subtotal)</span>
+          <span class="receipt__subtitle" ng-if="guestBill.data.billData.feePercent">(+{{ guestBill.data.billData.feePercent | number:0 }}% of subtotal)</span>
 
           <h6 ng-if="guestBill.data.billData.discountPercent">
           Discount:

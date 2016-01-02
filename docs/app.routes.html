@@ -204,33 +204,6 @@
       .state(<span class="hljs-string">'home'</span>, {
         url: <span class="hljs-string">'/home'</span>,
         views: {
-<span class="xml"><span class="hljs-tag">&lt;&lt;&lt;&lt;&lt;&lt;&lt; <span class="hljs-attr">HEAD</span>
-          '<span class="hljs-attr">navbar</span>'<span class="hljs-attr">:</span> {
-            <span class="hljs-attr">templateUrl:</span> '<span class="hljs-attr">components</span>/<span class="hljs-attr">navbar</span>/<span class="hljs-attr">homeNavBar.html</span>',
-            <span class="hljs-attr">controller:</span> '<span class="hljs-attr">NavbarCtrl</span>',
-            <span class="hljs-attr">controllerAs:</span> '<span class="hljs-attr">homeNavbar</span>'
-          },
-=<span class="hljs-string">======</span>
-</span></span></pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-5">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-5">&#182;</a>
-              </div>
-              <p>‘navbar’: {
-  templateUrl: ‘components/navbar/homeNavbar.html’,
-  controller: ‘NavbarCtrl’,
-  controllerAs: ‘homeNavbar’
-},</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>&gt;&gt;&gt;&gt;&gt;&gt;&gt; (feat) CSS Migration, loading bugfixes, refactoring, Materialize toasts added
           <span class="hljs-string">'@'</span>: {
             templateUrl: <span class="hljs-string">'app/home/home.html'</span>,
             controller: <span class="hljs-string">'HomeCtrl'</span>,
@@ -241,6 +214,9 @@
       .state(<span class="hljs-string">'oAuth'</span>, {
         url: <span class="hljs-string">'/oAuth'</span>,
         views: {
+          <span class="hljs-string">'navbar'</span>: {
+            templateUrl: <span class="hljs-string">'components/navbar/homeNavBar.html'</span>,
+          },
           <span class="hljs-string">'@'</span>: {
             templateUrl: <span class="hljs-string">'app/oAuth/oAuth.html'</span>,
             controller: <span class="hljs-string">'OAuthCtrl'</span>,
@@ -273,11 +249,11 @@
         </li>
         
         
-        <li id="section-6">
+        <li id="section-5">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-6">&#182;</a>
+                <a class="pilcrow" href="#section-5">&#182;</a>
               </div>
               <p>.state(‘event.addDish’, {
   url: ‘/addDish’,
@@ -325,11 +301,11 @@
         </li>
         
         
-        <li id="section-7">
+        <li id="section-6">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-7">&#182;</a>
+                <a class="pilcrow" href="#section-6">&#182;</a>
               </div>
               <p>.state(‘event.hostReceipt’, {
   url: ‘/hostReceipt’,
@@ -347,11 +323,11 @@
         </li>
         
         
-        <li id="section-8">
+        <li id="section-7">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-8">&#182;</a>
+                <a class="pilcrow" href="#section-7">&#182;</a>
               </div>
               <p>})</p>
 

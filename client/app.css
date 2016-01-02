@@ -78,6 +78,12 @@ li.navbar__icon--user {
     positon: absolute;
 }
 
+.leaveBill {
+  position: absolute;
+  bottom: 4rem;
+}
+
+
 /* --------- PAGINATION --------- */
 
 .pag__button--text {
@@ -553,7 +559,7 @@ h5.receipt__tiptax {
 
 
 
-/* ----------------------------------- O AUTH --------------------------------------- */
+/* ----------------------------------- OAUTH --------------------------------------- */
 .button--venmoOAuth {
     width: 14rem;
     padding: 0.5rem 0.9rem;
@@ -575,12 +581,14 @@ h5.receipt__tiptax {
     color: inherit;
 }
 
+
+
 /* ----------------------------------- LOADING --------------------------------------- */
 
 /*  Form  */
 
 .loading__button--enterRoom {
-    float: right;
+
 }
 
 /*  Room Info  */
