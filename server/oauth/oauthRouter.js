@@ -91,18 +91,20 @@ module.exports = function(app) {
     var user_id = req.user[0].id;
     var username = req.user[0].username;
     if (req.isAuthenticated()) {
-      var code = util.generateCode();
-      util.createEventVenmo(db, code, user_id)
-        .then(function(event_id) {
-          var responseObject = {
-            event_id: event_id[0],
-            code: code,
-            user_id: user_id,
-            username: username,
-            venmoUsername: req.user[0].venmoUsername
-          };
-          res.send(responseObject);
-        });
+      util.generateCode(db)
+      .then(function(code) {
+        util.createEventVenmo(db, code, user_id)
+          .then(function(event_id) {
+            var responseObject = {
+              event_id: event_id[0],
+              code: code,
+              user_id: user_id,
+              username: username,
+              venmoUsername: req.user[0].venmoUsername
+            };
+            res.send(responseObject);
+          });
+      })
     } else {
       res.end();
     }
@@ -111,15 +113,17 @@ module.exports = function(app) {
   app.post('/createEvent', function(req, res) {
     var user_id = req.body.id;
     var username = req.body.username; 
-    var code = util.generateCode();
-    util.createEventVenmo(db, code, user_id)
-    .then(function(event_id) {
-      var responseObject = {
-        event_id: event_id[0],
-        code: code
-      };
-      res.send(responseObject);
-    });
+    util.generateCode(db)
+    .then(function(code) {
+      util.createEventVenmo(db, code, user_id)
+      .then(function(event_id) {
+        var responseObject = {
+          event_id: event_id[0],
+          code: code
+        };
+        res.send(responseObject);
+      });
+    })
   });
 
   app.get('/getBills', function(req, res) {

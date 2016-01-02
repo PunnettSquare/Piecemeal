@@ -34,7 +34,6 @@
     self.getUsersByDish = appFactory.getUsersByDish;
 
     self.isOnDish = function(dishUsers, user_id) {
-      var result = false;
       return dishUsers.reduce(function(isOnDish, id) {
         if (id.toString() === user_id.toString()) {
           return true;
