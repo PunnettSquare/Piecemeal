@@ -73,15 +73,19 @@
 
       if (self.tipType.value === 'dollar') {
         if (dollarOrPercent === 'dollar') {
+          console.log("type dollar, request dollar"); 
           return self.tip;
         } else if (dollarOrPercent === 'percent') {
+          console.log("type dollar, request percent"); 
           var num = self.tip / self.getSubTotal(self.data.dishes) * 100;
           return Math.round(num * 100) / 100; // round to 2 decimal places
         }
       } else if (self.tipType.value === 'percent') {
         if (dollarOrPercent === 'dollar') {
+          console.log("type percent, request dollar"); 
           return self.tip * 0.01 * self.getSubTotal(self.data.dishes);
         } else if (dollarOrPercent === 'percent') {
+          console.log("type percent, request percent"); 
           return self.tip;
         }
       }

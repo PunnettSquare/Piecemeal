@@ -1,4 +1,4 @@
-// JASMINE TESTS
+// # JASMINE TESTS
 // Notes: May need to comment out calculateRunningTotal in addDish.factory to get this to work
 // run with karma start karma.conf.js
 
@@ -6,12 +6,16 @@ beforeEach(module('Piecemeal'));
 
 describe('Piecemeal', function() {
 
+// Note: If wanted to test allDishes, would have to comment out jQuery leanModal method, or else get the spy below to function
   // spyOn($.fn, 'leanModal').and.returnValue("something");
   // spyOn($.fn, 'leanModal').and.callFake(function() {
   //   return 1001;
   // });
 
+  // ## Mocks
+
   var $controller;
+
   var allDishesFactoryMock = {
     calculateRunningTotal: function(data) {
       return _.filter(data.dishes, function(obj, key) {
@@ -22,6 +26,7 @@ describe('Piecemeal', function() {
         }, 0);
     }
   };
+
   var appFactoryMock = {
     initListeners: function() {},
     getSessStorage: function(prop) {
@@ -152,11 +157,15 @@ describe('Piecemeal', function() {
     $on: function() {}
   };
 
+  // ## Unit Tests
+
   beforeEach(inject(function(_$controller_, $rootScope) {
     // Angular mock injector unwraps the underscores (_) from around the parameter names when matching
     $controller = _$controller_;
     socketMock = new sockMock($rootScope);
   }));
+
+  // Guest Bill Unit Tests
 
   describe('GuestBillCtrl', function() {
     var controller;
@@ -173,9 +182,7 @@ describe('Piecemeal', function() {
     });
 
     it("should get Guest's dishes", function() {
-      console.log("controller.user_id: ", controller.user_id);
       guestsDishes = controller.getGuestDishes(controller.user_id, controller.data.dishes);
-      console.log('guestsDishes: --->', guestsDishes);
       expect(guestsDishes.length).toEqual(2);
     });
 
@@ -183,14 +190,26 @@ describe('Piecemeal', function() {
       expect(controller.getOtherUsersByUsername(guestsDishes[0], controller.data.users, controller.user_id)).toEqual('Fawn');
     });
 
-    it("should calculate user's current total", function() { // actually in allDishesFactory
-      expect(controller.getGuestTotal(controller.data)).toEqual(14);
+    it("should calculate user's current total", function() {
+      expect(controller.getGuestTotal(controller.data)).toEqual(7.5);
     });
 
   });
 
+  // Host Bill Unit Tests
+
   describe('HostBillCtrl', function() {
-    var controller, dishMock;
+    var controller;
+    // Can use dishMock instead of appFactoryMock.data.dishes[0] for simplicity
+    // var dishMock = {
+    //     cost: "5.00",
+    //     dish_id: 26,
+    //     email: null,
+    //     event_id: 36,
+    //     name: "hiahi",
+    //     phone: null,
+    //     users: [45, 46]
+    // };
 
     beforeEach(function() {
       controller = $controller('HostBillCtrl', {
@@ -198,39 +217,55 @@ describe('Piecemeal', function() {
         socketFactory: socketMock,
         appFactory: appFactoryMock
       });
-
-      // can optionally use dishMock instead of appFactoryMock.data.dishes[0] below for simplicity
-      var dishMock = {
-          cost: "5.00",
-          dish_id: 26,
-          email: null,
-          event_id: 36,
-          name: "hiahi",
-          phone: null,
-          users: [45, 46]
-      };
+      controller.tip = 1.5;
+      controller.tipType.value = 'dollar';
+      controller.tax = 1.5;
+      controller.taxType.value = 'dollar';
+      controller.fee = 1;
+      controller.discount = 0.5;
     });
 
-    // move to appFactory spec
-    // it('should return the individual\'s cost for a dish', function() { 
-    //   expect(controller.getDishIndivCost(appFactoryMock.data.dishes[0])).toEqual(4);
-    // });
-
-    it('should get dishes for all users', function () {
-
+    it('should return the individual\'s portion of cost for a dish', function() { 
+      expect(controller.getDishIndivCost(appFactoryMock.data.dishes[0])).toEqual(5);
     });
 
     it('should return subtotal for all dishes (not counting tax/tip)', function() {
-      expect(controller.getSubTotal(controller.data.dishes)).toEqual(18);
+      expect(controller.getSubTotal(controller.data.dishes)).toEqual(15);
     });
 
-    it('should calculate fee or discount as a percent', function () {
-      
+    it('should get tip as dollar amount', function () {
+      expect(controller.getTip('dollar')).toEqual(1.5);
     });
 
-    it('should calculate grand total', function () {
-      
+    it('should calculate tip as a percent', function () {
+      expect(controller.getTip('percent')).toEqual(10);
     });
+
+    it('should get tax as dollar amount', function () {
+      expect(controller.getTax('dollar')).toEqual(1.5);
+    });
+
+    it('should calculate tax as a percent', function () {
+      expect(controller.getTax('percent')).toEqual(10);
+    });
+
+    it('should get fee', function () {
+      expect(controller.fee).toEqual(1);
+    });
+
+    it('should get discount', function () {
+      expect(controller.discount).toEqual(.5);
+    });
+
+    // it('should calculate grand total', function () {
+    //   console.log('controller.getSubTotal(controller.data.dishes): ', controller.getSubTotal(controller.data.dishes)); 
+    //   console.log("controller.getTip('dollar'): ", controller.getTip('dollar')); 
+    //   console.log("controller.getTax('dollar'): ", controller.getTax('dollar')); 
+    //   console.log('controller.fee: ', controller.fee); 
+    //   console.log('controller.discount: ', controller.discount); 
+    //   expect(controller.getGrandTotal()).toEqual(18.5);
+      
+    // });
 
   });
 
