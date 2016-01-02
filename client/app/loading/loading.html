@@ -1,58 +1,55 @@
-<link rel="stylesheet" href="../../styles/loading.css">
-
-<div class="row" id="allDishes" ng-cloak>
-  <div class="col s12">
-
-
-    <!-- Header -->
-    <header>
-      <h5>Enter</h5>
-      <div class="divider"></div>
-    </header>
-
-    <!-- Add Name form -->
-    <div class="form--addName">
-      <br>
-      <h6>Join by entering your name:</h6>
-      <input type="text" placeholder="Name" ng-model="username" name="username" class="enterName" required id="name" required>
-      <br>
-
-      <button ng-show="!loading.isSent" type="submit" name="username" ng-disabled="userInput.username.$error.required" value="Enter room" class="enterRoom btn" ng-click="loading.setSessionUser(username)">Enter Room</button>
-      <br>
-    </div>
-
-    <br>
-    <br>
-
-
-    <!-- Error message (Room doesn't exist) -->
-    <div class="roomInfo--error" ng-show="loading.isError">
-      <h5>The room '{{loading.code}}' does not exist. Redirecting...</h5>
-    </div>
-
-
-    <!-- Who is currently in the room -->
-    <div class="roomInfo" ng-hide="loading.isError">
-      <h6>Room <strong>{{loading.code}}</strong> currently has:</h6>
-      <div class="roomInfo__chips">
-
-
-        <div class="animated fadeInUp chip--animated">
-          <div class="chip">
-            <div class="chip__icon">
-              <p class="chip__letter">Y</p>
-            </div>
-            You
-          </div>
+<div class="content--centered">
+  
+  <div class="row" ng-cloak>
+    <div class="col s12">
+      
+      
+      <!-- Header -->
+      <header>
+        <h5>Enter</h5>
+        <div class="divider"></div>
+      </header>
+      
+      <!-- Add Name form -->
+      <form name="userInput">
+        <div>
+          <br>
+          <h6>Join by entering your name:</h6>
+          <input type="text" placeholder="Name" ng-model="username" name="username" class="enterName" required id="name" required>
+          <br>
+          
+          <button ng-show="!loading.isSent" type="submit" name="username" ng-disabled="userInput.username.$error.required" value="Enter room" class="enterRoom btn loading__button--enterRoom" ng-click="loading.setSessionUser(username)">Enter Room</button>
+          <br>
         </div>
-        <div class="animated fadeInUp chip--animated" ng-repeat="user in loading.currentUsers">
-          <div class="chip">
-            <div class="chip__icon">
-              <p class="chip__letter">{{_.capitalize(user[0])}}</p>
+      </form>
+      
+      <br>
+      <br>
+      
+      
+      <!-- Who is currently in the room -->
+      <div class="roomInfo" ng-hide="loading.isError">
+        <h6>Room <strong>{{loading.code}}</strong> currently has:</h6>
+        <div class="roomInfo__chips">
+          
+          
+          <div class="animated fadeInUp chip--animated">
+            <div class="chip">
+              <div class="chip__icon">
+                <p class="chip__letter">Y</p>
+              </div>
+              You
             </div>
-            {{_.capitalize(user)}}
           </div>
-
+          <div class="animated fadeInUp chip--animated" ng-repeat="user in loading.currentUsers">
+            <div class="chip">
+              <div class="chip__icon">
+                <p class="chip__letter">{{_.capitalize(user[0])}}</p>
+              </div>
+              {{_.capitalize(user)}}
+            </div>
+            
+          </div>
         </div>
       </div>
     </div>

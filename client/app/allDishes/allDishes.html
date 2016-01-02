@@ -1,5 +1,3 @@
-<link rel="stylesheet" href="../../styles/allDishes.css">
-
 <!-- PAGINATION -->
 <ul class="pagination">
   <li class="pag__space"></li>
@@ -12,27 +10,27 @@
 
 <div class="row" id="allDishes" ng-cloak>
   <div class="col s12">
-
+    
     <!-- Header -->
-    <header>
+    <header class="content--centered">
       <p>Hi, {{_.capitalize(allDishes.username)}}.
         <strong class="code">Bill Code: {{ allDishes.code }}</strong>
       </p>
       <p>Share your billcode or direct link (<strong>piecemeal.us/{{ allDishes.code }}</strong>) with other participants.</p>
     </header>
-
+    
     <!-- Dish items -->
     <ul class="collection" ng-repeat="dish in allDishes.data.dishes">
-      <li id="dish__item" class="collection-item" ng-if="dish.users.length !== 0">
+      <li id="dish__item--padding" class="collection-item" ng-if="dish.users.length !== 0">
         {{ _.map(dish.name.split(" "), _.capitalize).join(" ") }}
         <span class="dish__item--cost">
           {{dish.cost | currency }}
         </span>
         <br>
-        <div class="sharedBy">{{ allDishes.getUsersByDish(dish, allDishes.data.users) }} got this.</div>
-
+        <div class="dish__item--shared">{{ allDishes.getUsersByDish(dish, allDishes.data.users) }} got this.</div>
+        
         <!-- Share/unshare buttons -->
-        <div class="button">
+        <div class="button--share">
           <div class="button__background waves-effect waves-light btn">
             <i class="material-icons button--edit share" ng-hide="allDishes.isOnDish(dish.users, allDishes.user_id)" ng-click="allDishes.shareDish(dish.dish_id, allDishes.user_id, dish.users)">add_circle_outline</i>
             <i class="material-icons button--edit unshare" ng-show="allDishes.isOnDish(dish.users, allDishes.user_id)" ng-click="allDishes.unshareDish(dish.dish_id, allDishes.user_id, dish.users)">clear</i>
@@ -40,18 +38,18 @@
         </div>
       </li>
     </ul>
-
+    
     <!-- Add Dish button -->
     <a class="button--addDish btn-floating btn-large waves-effect waves-light btn red modal-trigger" data-target="addDish"><i class="material-icons">add</i></a>
-
-
-
+    
+    
+    
     <!-- ADD DISH MODAL -->
     <div id="addDish" class="modal">
       <div class="modal__box">
-
+        
         <h5 class="modal__title">Add A Dish</h5>
-
+        
         <!-- Form -->
         <form role="form" name="dishForm">
           <div class="modal__input--dish input-field col s8">
@@ -61,7 +59,7 @@
             <input name="amount" type="number" step="0.01" placeholder="$ 0.00" ng-model="allDishes.amount" class="dishCost" id="addDish" aria-label="amount" required>
           </div>
         </form>
-
+        
         <!-- Dish cost display -->
         <div class="modal--costInfo">
           This dish costs
@@ -80,7 +78,7 @@
           <br ng-hide="allDishes.addedDish"> -->
         </div>
       </div>
-
+      
       <!-- Add Dish/Cancel buttons -->
       <div id="modal-footer" class="modal-footer">
         <button type="submit" ng-disabled="dishForm.amount.$error.required || dishForm.name.$error.required" ng-click="allDishes.addDish(allDishes.dishName, allDishes.amount)" class="addDish btn btn-default" >

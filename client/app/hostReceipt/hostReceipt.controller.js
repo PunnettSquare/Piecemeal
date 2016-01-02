@@ -1,40 +1,42 @@
-(function() {
-  'use strict';
+// // Delete? We're not even using this yet.
 
-  angular.module('Piecemeal')
-    .controller('HostReceiptCtrl', HostReceiptCtrl);
+// (function() {
+//   'use strict';
 
-  HostReceiptCtrl.$inject = ['appFactory', 'socketFactory', '$scope'];
+//   angular.module('Piecemeal')
+//     .controller('HostReceiptCtrl', HostReceiptCtrl);
 
-  function HostReceiptCtrl(appFactory, socketFactory, $scope) {
-    var self = this;
+//   HostReceiptCtrl.$inject = ['appFactory', 'socketFactory', '$scope'];
 
-    appFactory.copySessData(self);
+//   function HostReceiptCtrl(appFactory, socketFactory, $scope) {
+//     var self = this;
 
-    // load data on page refresh
-    $scope.$on('joined', function() {
-      self.data = appFactory.data;
-      self.getDishIndivCost = appFactory.getDishIndivCost;
-    });
+//     appFactory.copySessData(self);
 
-    // load data when *not* on page refresh
-    self.data = appFactory.data;
+//     // load data on page refresh
+//     $scope.$on('joined', function() {
+//       self.data = appFactory.data;
+//       self.getDishIndivCost = appFactory.getDishIndivCost;
+//     });
 
-    if (!appFactory.data) {
-      socketFactory.init();
-      appFactory.initListeners();
-    } else {
-      self.billsSent = true;
-    }
+//     // load data when *not* on page refresh
+//     self.data = appFactory.data;
 
-    self.getDishIndivCost = appFactory.getDishIndivCost;
-    self.getUsersByDish = appFactory.getUsersByDish;
+//     if (!appFactory.data) {
+//       socketFactory.init();
+//       appFactory.initListeners();
+//     } else {
+//       self.billsSent = true;
+//     }
 
-    // console.log("data: ", self.data); 
-    // console.log("data.users: ", self.data.users); 
-    appFactory.getUsers();
+//     self.getDishIndivCost = appFactory.getDishIndivCost;
+//     self.getUsersByDish = appFactory.getUsersByDish;
 
-    self.logout = appFactory.logout;
-  }
+//     // console.log("data: ", self.data); 
+//     // console.log("data.users: ", self.data.users); 
+//     appFactory.getUsers();
 
-})();
+//     self.logout = appFactory.logout;
+//   }
+
+// })();

@@ -1,3 +1,9 @@
+// # Dashboard Controller
+
+// ##### [Back to Table of Contents](./tableofcontents.html)
+
+// **Summary**: TODO
+
 (function() {
   'use strict';
 
@@ -5,6 +11,8 @@
     .controller('DashboardCtrl', DashboardCtrl);
 
   DashboardCtrl.$inject = ['dashboardFactory', '$window', '$location', 'appFactory'];
+
+  // **Parameters:** TODO
 
   function DashboardCtrl(dashboardFactory, $window, $location, appFactory) {
     var self = this;

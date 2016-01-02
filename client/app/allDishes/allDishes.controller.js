@@ -1,3 +1,9 @@
+// # AllDishes Controller
+
+// ##### [Back to Table of Contents](./tableofcontents.html)
+
+// **Summary**: Controller that adds, shares, and removes dishes.
+
 (function() {
   'use strict';
 
@@ -6,28 +12,49 @@
 
   AllDishesCtrl.$inject = ['socketFactory', 'appFactory', '$scope', 'allDishesFactory'];
 
+  // **Parameters:**  
+  // ```socketFactory```: [Wrapper](../docs/socket.module.html) for SocketIO integrated with Angular's digest cycle  
+  // ```appFactory```: [App-level methods](../docs/app.factory.html)  
+  // ```$scope```: The controller's local scope  
+  // ```allDishesFactory```: [Factory methods](../docs/allDishes.factory.html)  
+
   function AllDishesCtrl(socketFactory, appFactory, $scope, allDishesFactory) {
     var self = this;
+
+    // Copy data from ```window.localStorage``` onto the $scope.
     appFactory.copySessData(self);
 
-    // load data on page refresh
+    // **Assign appFactory data to scope, upon hearing 'joined' emitted by $rootScope.** 
+
+    // Copy the data emitted by appFactory through ```$rootScope```, upon hearing a 'joined' event, thus ensuring the latest data is on the scope.
     $scope.$on('joined', function() {
       self.data = appFactory.data;
       console.log("Joined the All Dishes room.");
-      self.calcUserCurrentTotal(self.data);
 
+      // Calculate user's running total.
+      self.calcUserCurrentTotal(self.data);
     });
 
-    // load data when *not* on page refresh
+    // Update scope's data with the most updated data from appFactory.  
+    // *(This is for when a page has NOT refreshed.)
     self.data = appFactory.data;
 
+    // **Initialize [appFactory](../docs/app.factory.js) and [socketFactory](../docs/socket.module.html) socket listeners.** 
+
+    // ```appFactory.data``` will be undefined on a refresh and on the initial join, because AllDishesCtrl will have loaded before the socket connection is made with the server. 
+
     if (!appFactory.data) {
+      // This initializes the socket listeners on appFactory and sets up Angular's event system listeners.  
       socketFactory.init();
       appFactory.initListeners();
     }
 
+    // **Adding, Removing, Sharing Dishes**
+
+    // Get list of user ID's through dish item.
     self.getUsersByDish = appFactory.getUsersByDish;
 
+    // Check if the user has shared the dish.
     self.isOnDish = function(dishUsers, user_id) {
       var result = false;
       return dishUsers.reduce(function(isOnDish, id) {
@@ -38,6 +65,7 @@
       }, false);
     };
 
+    // Add user's ID to dish item in appFactory, and send to the [server](../docs/sockets.js) through a socket event to update the database.
     self.shareDish = function(dish_id, user_id, users) {
       if (!self.isOnDish(users, user_id)) {
         socketFactory.emit('shareDish', {
@@ -48,6 +76,7 @@
       }
     };
 
+    // Remove user's ID to dish item in appFactory, and send to the [server](../docs/sockets.js) through a socket event to update the database.
     self.unshareDish = function(dish_id, user_id, users) {
       if (self.isOnDish(users, user_id)) {
         socketFactory.emit('unshareDish', {
@@ -58,7 +87,9 @@
       }
     };
 
-    ////// AddDish functionality
+    // ## Add Dish Modal
+
+    // Initialize modal's properties and functionality.
     $('.modal-trigger').leanModal({
       opacity: 0.7,
       in_duration: 230,
@@ -66,10 +97,12 @@
       calcUserCurrentTotal: self.calcUserCurrentTotal
     });
 
+    // Calculate the user's running total bill.
     self.calcUserCurrentTotal = function(data) {
       return (!data) ? 0 : allDishesFactory.calculateRunningTotal(data);
     };
 
+    // Add dish item in appFactory, and send dish item data to the [server](../docs/sockets.js) through a socket event to update the database.
     self.addDish = function(name, cost) {
       var dish = {
         cost: Number(cost),

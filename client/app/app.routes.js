@@ -1,9 +1,17 @@
+// # Piecemeal App Routes 
+
+// ##### [Back to Table of Contents](./tableofcontents.html)
+
+// **Summary**: Routes sub and nested views.
+
 (function() {
   'use strict';
   angular.module('Piecemeal')
     .config(config);
 
   config.$inject = ['$stateProvider', '$urlRouterProvider', '$compileProvider'];
+
+  // **Parameters:** TODO
 
   function config($stateProvider, $urlRouterProvider, $compileProvider) {
     var usernameCache = {};
@@ -40,11 +48,11 @@
       .state('home', {
         url: '/home',
         views: {
-          'navbar': {
-            templateUrl: 'components/navbar/homeNavbar.html',
-            controller: 'NavbarCtrl',
-            controllerAs: 'homeNavbar'
-          },
+          // 'navbar': {
+          //   templateUrl: 'components/navbar/homeNavbar.html',
+          //   controller: 'NavbarCtrl',
+          //   controllerAs: 'homeNavbar'
+          // },
           '@': {
             templateUrl: 'app/home/home.html',
             controller: 'HomeCtrl',
@@ -65,11 +73,6 @@
       .state('dashboard', {
         url: '/dashboard',
         views: {
-          'navbar': {
-            templateUrl: 'components/navbar/navbar.html',
-            controller: 'NavbarCtrl',
-            controllerAs: 'navbar'
-          },
           '@': {
             templateUrl: 'app/dashboard/dashboard.html',
             controller: 'DashboardCtrl',

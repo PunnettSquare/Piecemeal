@@ -1,23 +1,20 @@
-<link rel="stylesheet" href="../../styles/guestBill.css">
-
 <!-- PAGINATION -->
 <ul class="pagination">
-  <li class="waves-effect pag__button--prev"><i class="material-icons">chevron_left</i><a class="pag__button--text" ui-sref="event.allDishes">All Dishes</a></li>
+  <li class="waves-effect pag__button--prev"><a class="pag__button--text" ui-sref="event.allDishes"><i class="material-icons">chevron_left</i>All Dishes</a></li>
   <li id="pag__title--current"><h5>Your Bill</h5></li>
   <li class="waves-effect pag__button--next" ng-show="guestBill.isHost"><a class="pag__button--text" ui-sref="event.hostBill">Finalize Bill<i class="material-icons">chevron_right</i></a></li>
   <li class="pag__space" ng-if="!guestBill.isHost"></li>
   <!-- Can conditionally show space above or leave bill flow below after bill is sent and payment is selected. If not, remove later
   <li class="waves-effect pag__button" ng-if="!guestBill.isHost" ng-click="guestBill.logout()"><a class="pag__button--text">Leave Bill <i class="material-icons">chevron_right</i></a></li> -->
-
+  
 </ul>
 <div class="divider"></div>
 <!-- End Pagination -->
 
-<div class="row" id="allDishes" ng-cloak>
+<div class="row" ng-cloak>
   <div class="col s12">
-
+    
     <section>
-      <br>
       <!-- Dish items -->
       <ul class="dish__item collection" ng-repeat="dish in guestBill.getGuestDishes(guestBill.user_id, guestBill.data.dishes)">
         <li class="collection-item" ng-if="dish.users.length !== 0">
@@ -37,12 +34,12 @@
       </ul>
     </section>
     <!-- end list of dishes they ate -->
-
-
-
+    
+    
+    
     <!-- START RECEIPT -->
     <section>
-
+      
       <!-- Your Subtotal -->
       <ul class="collection receipt__item">
         <li class="collection-item">
@@ -53,7 +50,7 @@
           </h5>
         </li>
       </ul>
-
+      
       <!-- Before host has sent tip/tax -->
       <ul class="collection receipt__item" ng-if="!guestBill.data.billData.billSent && !guestBill.isHost">
         <li class="collection-item">
@@ -66,8 +63,8 @@
           </div>
         </li>
       </ul>
-
-
+      
+      
       <!-- Start tip -->
       <ul class="collection receipt__item" ng-if="guestBill.data.billData.billSent && !guestBill.isHost">
         <li class="collection-item">
@@ -76,16 +73,16 @@
             {{guestBill.getGuestTip() | currency}}
           </span>
           </h5>
-
+          
           <div class="receipt__subtitle tipPercent">
             Your host chose {{ guestBill.data.billData.tipPercent }}% for tip.
           </div>
         </li>
       </ul>
       <!-- end tip -->
-
-
-
+      
+      
+      
       <!-- start tax -->
       <ul class="collection receipt__item" ng-if="guestBill.data.billData.billSent && !guestBill.isHost">
         <li class="collection-item">
@@ -94,15 +91,15 @@
             {{guestBill.getGuestTax() | currency}}
           </span>
           </h5>
-
+          
           <div class="receipt__subtitle taxPercent">
             You were charged {{ guestBill.data.billData.taxPercent }}% for tax.
           </div>
           <!-- end tax -->
         </li>
       </ul>
-
-
+      
+      
       <!-- FEE OR DISCOUNT -->
       <ul class="collection receipt__item" ng-if="!_.isEmpty(guestBill.data.billData) && guestBill.data.billData.billSent && !guestBill.isHost && (guestBill.data.billData.feePercent || guestBill.data.billData.discountPercent)">
         <li class="collection-item">
@@ -114,7 +111,7 @@
           </span>
           </h6>
           <span class="receipt__subtitle" ng-show="guestBill.data.billData.feePercent">(+{{ guestBill.data.billData.feePercent | number:0 }}% of subtotal)</span>
-
+          
           <h6 ng-show="guestBill.data.billData.discountPercent">
           Discount:
           <span class="receipt__item--number">
@@ -122,8 +119,8 @@
           </span>
           </h6>
           <span class="receipt__subtitle" ng-show="guestBill.data.billData.discountPercent">(-{{ guestBill.data.billData.discountPercent | number:0 }}% of subtotal)</span>
-
-
+          
+          
           <!-- Percent of subtotal:
           <span ng-show="guestBill.data.billData.feePercent">{{ guestBill.data.billData.feePercent }}% Fee</span>
           <span ng-show="guestBill.data.billData.discountPercent && guestBill.data.billData.feePercent">
@@ -132,17 +129,17 @@
           <span ng-show="guestBill.data.billData.discountPercent">{{ guestBill.data.billData.discountPercent }}% Discount </span> -->
         </li>
       </ul>
-
+      
       <!-- Start TOTALS -->
       <ul class="collection receipt__item" ng-if="guestBill.data.billData.billSent && !guestBill.isHost">
         <li class="collection-item">
-
+          
           <h5 class="receipt__title"><strong>Your Total</strong>
           <span class="receipt__item--number">
             {{guestBill.getGuestGrandTotal() | currency}}
           </span>
           </h5>
-
+          
           <!--   <div class="tipPercent">
             All Subtotal: {{guestBill.getAllSubtotal(guestBill.data.dishes);}}
             <small>Dinner Grand Total: {{  guestBill.getGrandTotal(guestBill.data.dishes, guestBill.data.billData) | currency}}
@@ -151,7 +148,7 @@
             <!-- end totals -->
           </li>
         </ul>
-
+        
         <!-- OPTIONAL feature: can add class:  `&& !guestBill.paid`. when guestBill.paid is false, this will show-->
         <ul class="collection receipt__item" ng-if="guestBill.data.billData.billSent && !guestBill.isHost">
           <li class="collection-item">
@@ -161,11 +158,11 @@
                 <a type="submit" class="button--payButton venmoEnabled" ng-href="venmo://paycharge?txn=pay&amount={{guestBill.getGuestGrandTotal()}}&audience=private&note=Bill%20split%20with%20Piecemeal.%20piecemeal.herokuapp.com&recipients={{guestBill.venmoUsername}}" ng-click="guestBill.venmoAlert()"><img src="../../assets/venmo_logo_white.png" alt="Venmo" width="55px"></a>
                 <button type="submit" class="button--payButton cashEnabled" ng-click="guestBill.cashAlert()">Cash</button>
               </div>
-
+              
             </div>
           </li>
         </ul>
-
+        
         <!-- OPTIONAL FEATURE. when guestBill.paid is true, greyed out venmo/cash buttons. need to add self.paid back to controller and set to true in cashAlert -->
         <!-- Problem: when hearing another joined/update of bill, won't set guestBill.paid back to false -->
         <!-- <ul class="collection receipt__item" ng-if="guestBill.data.billData.billSent && !guestBill.isHost && guestBill.paid">
@@ -179,10 +176,10 @@
             </div>
           </li>
         </ul> -->
-
+        
         <!-- end payment option -->
-
+        
       </section>
     </div>
-
+    
   </div>

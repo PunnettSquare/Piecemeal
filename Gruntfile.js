@@ -305,6 +305,19 @@ module.exports = function(grunt) {
       }
     },
 
+    docco: {
+      src: ['<%= project.js %>',
+        '!<%= project.client %>/app/addDish/*.js',
+        '!<%= project.client %>/app/guestBill/guestBill.factory.js',
+        '!<%= project.client %>/app/hostBill/hostBill.factory.js',
+        '!<%= project.client %>/app/hostReceipt/*.js',
+        '!<%= project.client %>/app/loading/loading.directive.js'
+      ],
+      options: {
+        output: 'docs/'
+      }
+    },
+
     watch: {
       // all: {
       //   files: ['<%= project.client %>{,*/}**/*.*',
@@ -315,6 +328,10 @@ module.exports = function(grunt) {
       bower: {
         files: ['bower.json'],
         tasks: ['wiredep']
+      },
+      docco: {
+        files: ['<%= project.client %>/**/*.js'],
+        tasks: ['docco']
       },
       livereload: {
         options: {
