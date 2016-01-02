@@ -49,11 +49,6 @@
       }
     }
 
-    // function getUsers() {
-    //   console.log("services data: ", services.data);
-    //   // Work in progress potentially for host Receipt
-    // };
-
     function getSessStorage(prop) {
       if (prop === "code") {
         return $window.localStorage.code;
@@ -224,7 +219,6 @@
 
       socketFactory.on('billsSentToGuests', function(data) {
         console.log("Heard 'billsSentToGuests' in appFactory.data:", data);
-        console.log("Also, here is the total appFactory.data: ", appFactory.data); 
         services.data.billData = data;
 
         $rootScope.$broadcast('billsSentToGuests');

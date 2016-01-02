@@ -255,19 +255,15 @@
 
       <span class="hljs-keyword">if</span> (self.tipType.value === <span class="hljs-string">'dollar'</span>) {
         <span class="hljs-keyword">if</span> (dollarOrPercent === <span class="hljs-string">'dollar'</span>) {
-          <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"type dollar, request dollar"</span>); 
           <span class="hljs-keyword">return</span> self.tip;
         } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (dollarOrPercent === <span class="hljs-string">'percent'</span>) {
-          <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"type dollar, request percent"</span>); 
           <span class="hljs-keyword">var</span> num = self.tip / self.getSubTotal(self.data.dishes) * <span class="hljs-number">100</span>;
           <span class="hljs-keyword">return</span> <span class="hljs-built_in">Math</span>.round(num * <span class="hljs-number">100</span>) / <span class="hljs-number">100</span>; <span class="hljs-comment">// round to 2 decimal places</span>
         }
       } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (self.tipType.value === <span class="hljs-string">'percent'</span>) {
         <span class="hljs-keyword">if</span> (dollarOrPercent === <span class="hljs-string">'dollar'</span>) {
-          <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"type percent, request dollar"</span>); 
           <span class="hljs-keyword">return</span> self.tip * <span class="hljs-number">0.01</span> * self.getSubTotal(self.data.dishes);
         } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (dollarOrPercent === <span class="hljs-string">'percent'</span>) {
-          <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"type percent, request percent"</span>); 
           <span class="hljs-keyword">return</span> self.tip;
         }
       }
