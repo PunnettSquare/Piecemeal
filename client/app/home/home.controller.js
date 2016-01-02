@@ -49,7 +49,7 @@
               $location.path('/' + $window.localStorage.code + '/loading');
             }
           } else {
-            Materialize.toast('Your entered room does not exist. Please try again.', 4000);
+            Materialize.toast('Your entered room does not exist. <br>Please try again.', 4000);
           }
         });
     };

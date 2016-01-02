@@ -190,7 +190,9 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">try</span> { $<span class="hljs-built_in">window</span>.localStorage.checkPrivateMode = <span class="hljs-string">'not private'</span>; } <span class="hljs-keyword">catch</span> (e) {
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">try</span> {
+      $<span class="hljs-built_in">window</span>.localStorage.checkPrivateMode = <span class="hljs-string">'not private'</span>;
+    } <span class="hljs-keyword">catch</span> (e) {
       self.privateMode = <span class="hljs-literal">true</span>;
     }
 
@@ -201,14 +203,16 @@
     }
 
     self.setSessionUser = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">username</span>) </span>{
-      <span class="hljs-built_in">window</span>.localStorage.code = $<span class="hljs-built_in">window</span>.location.hash.split(<span class="hljs-string">"/"</span>)[<span class="hljs-number">1</span>];
-      loadingFactory.sendSessionUser(
+      loadingFactory.sendSessionUser({
+          isHost: <span class="hljs-literal">false</span>,
+          username: username,
+          code: $<span class="hljs-built_in">window</span>.location.hash.split(<span class="hljs-string">"/"</span>)[<span class="hljs-number">1</span>]
+        })
+        .then(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">userInfo</span>) </span>{
           _.assign($<span class="hljs-built_in">window</span>.localStorage, {
             isHost: <span class="hljs-literal">false</span>,
             username: username,
-          }))
-        .then(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">userInfo</span>) </span>{
-          _.assign($<span class="hljs-built_in">window</span>.localStorage, {
+            code: $<span class="hljs-built_in">window</span>.location.hash.split(<span class="hljs-string">"/"</span>)[<span class="hljs-number">1</span>],
             user_id: userInfo.user_id,
             event_id: userInfo.event_id
           });
