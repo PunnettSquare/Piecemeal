@@ -34,6 +34,9 @@ Starting PostGreSQL
 Practice Run:
 `ngrok http 8080`
 
+Tests:
+-Unit tests: karma start karma.conf.js
+
 ## Requirements
 
 - Node 0.10.x

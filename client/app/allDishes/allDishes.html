@@ -62,7 +62,7 @@
         </form>
 
         <!-- Dish cost display -->
-        <div class="modal--costInfo">
+<!--         <div class="modal--costInfo">
           This dish costs
           <strong><span ng-if="dishForm.amount.$pristine">
             {{ 0 + allDishes.amount | currency}}
@@ -71,13 +71,7 @@
             {{ 0 + allDishes.amount | currency}}
           </span></strong>
           and your total so far is <strong><span id="currency-default">{{allDishes.calcUserCurrentTotal(allDishes.data) | currency}}</span></strong>.
-          <!-- <div ng-if="allDishes.addedDish" class="modal__div--success">
-            <p class="modal__text--success">
-              {{ _.map(allDishes.previousDish.split(" "), _.capitalize).join(" ") }} added!
-            </p>
-          </div>
-          <br ng-hide="allDishes.addedDish"> -->
-        </div>
+        </div> -->
       </div>
 
       <!-- Add Dish/Cancel buttons -->

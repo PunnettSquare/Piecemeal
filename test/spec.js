@@ -29,6 +29,7 @@ describe('Piecemeal', function() {
         return 46; // not host
       }
     },
+    checkCode: function () {},
     copySessData: function() {
       return appFactoryMock.data;
     },
@@ -157,32 +158,6 @@ describe('Piecemeal', function() {
     socketMock = new sockMock($rootScope);
   }));
 
-  describe('HostBillCtrl', function() {
-    var controller, dishMock;
-
-    beforeEach(function() {
-      controller = $controller('HostBillCtrl', {
-        $scope: scopeMock,
-        socketFactory: socketMock,
-        appFactory: appFactoryMock
-      });
-
-      // can optionally use dishMock instead of appFactoryMock.data.dishes[0] below for simplicity
-      // dishMock = {
-      //   cost: 8,
-      //   users: [7, 8]
-      // };
-    });
-
-    it('should return the individual\'s cost for a dish', function() { // move to appFactory spec
-      expect(controller.getDishIndivCost(appFactoryMock.data.dishes[0])).toEqual(4);
-    });
-
-    it('should return subtotal for all dishes (not counting tax/tip)', function() {
-      expect(controller.getSubTotal(controller.data.dishes)).toEqual(18);
-    });
-  });
-
   describe('GuestBillCtrl', function() {
     var controller;
     var guestsDishes;
@@ -194,10 +169,13 @@ describe('Piecemeal', function() {
         appFactory: appFactoryMock,
         allDishesFactory: allDishesFactoryMock
       });
+      controller.user_id = 46;
     });
 
     it("should get Guest's dishes", function() {
+      console.log("controller.user_id: ", controller.user_id);
       guestsDishes = controller.getGuestDishes(controller.user_id, controller.data.dishes);
+      console.log('guestsDishes: --->', guestsDishes);
       expect(guestsDishes.length).toEqual(2);
     });
 
@@ -207,6 +185,51 @@ describe('Piecemeal', function() {
 
     it("should calculate user's current total", function() { // actually in allDishesFactory
       expect(controller.getGuestTotal(controller.data)).toEqual(14);
+    });
+
+  });
+
+  describe('HostBillCtrl', function() {
+    var controller, dishMock;
+
+    beforeEach(function() {
+      controller = $controller('HostBillCtrl', {
+        $scope: scopeMock,
+        socketFactory: socketMock,
+        appFactory: appFactoryMock
+      });
+
+      // can optionally use dishMock instead of appFactoryMock.data.dishes[0] below for simplicity
+      var dishMock = {
+          cost: "5.00",
+          dish_id: 26,
+          email: null,
+          event_id: 36,
+          name: "hiahi",
+          phone: null,
+          users: [45, 46]
+      };
+    });
+
+    // move to appFactory spec
+    // it('should return the individual\'s cost for a dish', function() { 
+    //   expect(controller.getDishIndivCost(appFactoryMock.data.dishes[0])).toEqual(4);
+    // });
+
+    it('should get dishes for all users', function () {
+
+    });
+
+    it('should return subtotal for all dishes (not counting tax/tip)', function() {
+      expect(controller.getSubTotal(controller.data.dishes)).toEqual(18);
+    });
+
+    it('should calculate fee or discount as a percent', function () {
+      
+    });
+
+    it('should calculate grand total', function () {
+      
     });
 
   });
