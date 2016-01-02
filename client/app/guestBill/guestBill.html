@@ -4,7 +4,7 @@
 <ul class="pagination">
   <li class="waves-effect pag__button--prev"><i class="material-icons">chevron_left</i><a class="pag__button--text" ui-sref="event.allDishes">All Dishes</a></li>
   <li id="pag__title--current"><h5>Your Bill</h5></li>
-  <li class="waves-effect pag__button--next" ng-show="guestBill.isHost"><a class="pag__button--text" ui-sref="event.hostBill">Finalize Bill<i class="material-icons">chevron_right</i></a></li>
+  <li class="waves-effect pag__button--next" ng-if="guestBill.isHost"><a class="pag__button--text" ui-sref="event.hostBill">Finalize Bill<i class="material-icons">chevron_right</i></a></li>
   <li class="pag__space" ng-if="!guestBill.isHost"></li>
   <!-- Can conditionally show space above or leave bill flow below after bill is sent and payment is selected. If not, remove later
   <li class="waves-effect pag__button" ng-if="!guestBill.isHost" ng-click="guestBill.logout()"><a class="pag__button--text">Leave Bill <i class="material-icons">chevron_right</i></a></li> -->
@@ -21,14 +21,14 @@
       <!-- Dish items -->
       <ul class="dish__item collection" ng-repeat="dish in guestBill.getGuestDishes(guestBill.user_id, guestBill.data.dishes)">
         <li class="collection-item" ng-if="dish.users.length !== 0">
-          <h5 class="dish__title">{{_.map(dish.name.split(" "), _.capitalize).join(" ")}}
+          <h5 class="dish__title">{{::_.map(dish.name.split(" "), _.capitalize).join(" ")}}
           <span class="dish__item--cost">
             {{ guestBill.getDishIndivCost(dish) | currency }}
           </span>
           </h5>
           <!-- Your portion: <strong>{{ guestBill.getDishIndivCost(dish) | currency }}</strong> -->
           <span class="dish__item--total">
-            Total cost: {{ dish.cost | currency }}
+            Total cost: {{ ::dish.cost | currency }}
           </span>
           <br>
           <span ng-if="dish.users.length !== 1" class="dish__item--shared">You shared this with {{ guestBill.getOtherUsersByUsername(dish, guestBill.data.users, guestBill.user_id) }}.</span>
@@ -107,29 +107,29 @@
       <ul class="collection receipt__item" ng-if="!_.isEmpty(guestBill.data.billData) && guestBill.data.billData.billSent && !guestBill.isHost && (guestBill.data.billData.feePercent || guestBill.data.billData.discountPercent)">
         <li class="collection-item">
           <h5 class="receipt__title">Fee or Discount</h5>
-          <h6 ng-show="guestBill.data.billData.feePercent">
+          <h6 ng-if="guestBill.data.billData.feePercent">
           Fee:
           <span class="receipt__item--number">
             +{{guestBill.getGuestFee() | currency}}
           </span>
           </h6>
-          <span class="receipt__subtitle" ng-show="guestBill.data.billData.feePercent">(+{{ guestBill.data.billData.feePercent | number:0 }}% of subtotal)</span>
+          <span class="receipt__subtitle" ng-if="guestBill.data.billData.feePercent">(+{{ guestBill.data.billData.feePercent | number:0 }}% of subtotal)</span>
 
-          <h6 ng-show="guestBill.data.billData.discountPercent">
+          <h6 ng-if="guestBill.data.billData.discountPercent">
           Discount:
           <span class="receipt__item--number">
             -{{guestBill.getGuestDiscount() | currency}}
           </span>
           </h6>
-          <span class="receipt__subtitle" ng-show="guestBill.data.billData.discountPercent">(-{{ guestBill.data.billData.discountPercent | number:0 }}% of subtotal)</span>
+          <span class="receipt__subtitle" ng-if="guestBill.data.billData.discountPercent">(-{{ guestBill.data.billData.discountPercent | number:0 }}% of subtotal)</span>
 
 
           <!-- Percent of subtotal:
-          <span ng-show="guestBill.data.billData.feePercent">{{ guestBill.data.billData.feePercent }}% Fee</span>
-          <span ng-show="guestBill.data.billData.discountPercent && guestBill.data.billData.feePercent">
+          <span ng-if="guestBill.data.billData.feePercent">{{ guestBill.data.billData.feePercent }}% Fee</span>
+          <span ng-if="guestBill.data.billData.discountPercent && guestBill.data.billData.feePercent">
             and
           </span>
-          <span ng-show="guestBill.data.billData.discountPercent">{{ guestBill.data.billData.discountPercent }}% Discount </span> -->
+          <span ng-if="guestBill.data.billData.discountPercent">{{ guestBill.data.billData.discountPercent }}% Discount </span> -->
         </li>
       </ul>
 

@@ -6,7 +6,7 @@
       <ul class="nav nav-tabs">
         <li><a class="allDishes" ui-sref="event.allDishes">All Dishes</a></li>
         <li><a ui-sref="event.addDish">Add Dish</a></li>
-        <li><a class="hostBill" ng-show="guestBill.isHost" ui-sref="event.hostBill">Final Bill</a></li>
+        <li><a class="hostBill" ng-if="guestBill.isHost" ui-sref="event.hostBill">Final Bill</a></li>
         <!-- <li><a class="logout" ng-click="guestBill.logout()">Logout</a></li> -->
       </ul>
       <!-- /Navbar refactor -->
@@ -82,17 +82,17 @@
       <div class="panel panel-default" ng-if="!_.isEmpty(guestBill.data.billData) && !guestBill.isHost && (guestBill.data.billData.feePercent || guestBill.data.billData.discountPercent)">
         <div class="panel-body">
           <h4 class="h4">Fee or Discount</h4 class="h4">
-          <p class="text-right h5" ng-show="guestBill.data.billData.feePercent">Fee: {{guestBill.getGuestFee() | currency}}</p>
-          <p class="text-right h5" ng-show="guestBill.data.billData.discountPercent">Discount: {{guestBill.getGuestDiscount() | currency}}</p>
+          <p class="text-right h5" ng-if="guestBill.data.billData.feePercent">Fee: {{guestBill.getGuestFee() | currency}}</p>
+          <p class="text-right h5" ng-if="guestBill.data.billData.discountPercent">Discount: {{guestBill.getGuestDiscount() | currency}}</p>
         </div>
         <div class="panel-footer">
           <small>
           Percent of subtotal:
-          <span ng-show="guestBill.data.billData.feePercent">{{ guestBill.data.billData.feePercent }}% Fee</span>
-          <span ng-show="guestBill.data.billData.discountPercent && guestBill.data.billData.feePercent">
+          <span ng-if="guestBill.data.billData.feePercent">{{ guestBill.data.billData.feePercent }}% Fee</span>
+          <span ng-if="guestBill.data.billData.discountPercent && guestBill.data.billData.feePercent">
             and
           </span>
-          <span ng-show="guestBill.data.billData.discountPercent">{{ guestBill.data.billData.discountPercent }}% Discount </span></small>
+          <span ng-if="guestBill.data.billData.discountPercent">{{ guestBill.data.billData.discountPercent }}% Discount </span></small>
         </div>
       </div>
 
@@ -122,7 +122,7 @@
       <!-- end payment option -->
 
       <!-- Payment Choice Confirmation -->
-      <div class="alert alert-success alert-dismissible" role="alert" ng-show="guestBill.paymentChosen">
+      <div class="alert alert-success alert-dismissible" role="alert" ng-if="guestBill.paymentChosen">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         We have notified the host that you will be paying with cash.
       </div>

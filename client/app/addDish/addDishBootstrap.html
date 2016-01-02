@@ -8,7 +8,7 @@
         <li><a class="allDishes" ui-sref="event.allDishes">All Dishes</a></li>
         <li class="active"><a ui-sref="event.addDish">Add Dish</a></li>
         <li><a class="guestBill" ui-sref="event.guestBill">Your Bill</a></li>
-        <li><a class="hostBill" ng-show="addDish.isHost" ui-sref="event.hostBill">Final Bill</a></li>
+        <li><a class="hostBill" ng-if="addDish.isHost" ui-sref="event.hostBill">Final Bill</a></li>
         <!-- <li><a class="logout" ng-click="addDish.logout()">Logout</a></li> -->
       </ul>
       <!-- /Navbar refactor -->
@@ -41,10 +41,10 @@
             <div class="form-group">
               <p class="help-block">
                 This dish costs
-                <strong><span ng-show="dishForm.amount.$pristine">
+                <strong><span ng-if="dishForm.amount.$pristine">
                   {{ 0 + addDish.amount | currency}}
                 </span>
-                <span ng-show="dishForm.amount.$dirty" id="currency-default">
+                <span ng-if="dishForm.amount.$dirty" id="currency-default">
                   {{ 0 + addDish.amount | currency}}
                 </span></strong>
                 <!--                 and your total so far is <strong><span id="currency-default">{{addDish.userTotal | currency}}</span></strong>. -->
@@ -61,7 +61,7 @@
 
           <br>
           <!-- alert for successful adds -->
-          <div class="alert alert-success alert-dismissible" role="alert" ng-show="addDish.addedDish">
+          <div class="alert alert-success alert-dismissible" role="alert" ng-if="addDish.addedDish">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             {{ _.map(addDish.previousDish.split(" "), _.capitalize).join(" ") }} added!
           </div>

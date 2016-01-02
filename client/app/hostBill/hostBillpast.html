@@ -61,10 +61,10 @@
               <p class="help-block text-right">
                 Your added tip:
                 <strong>
-                <span ng-show="billForm.tip.$pristine">
+                <span ng-if="billForm.tip.$pristine">
                   {{ 0 + hostBill.repopulateTip(hostBill.data.billData) * 0.01 * hostBill.getSubTotal(hostBill.data.dishes) | currency }}
                 </span>
-                <span ng-show="billForm.tip.$dirty" id="currency-default">
+                <span ng-if="billForm.tip.$dirty" id="currency-default">
                   {{ hostBill.getTip('dollar') | currency}}
                 </span>
                 </strong>
@@ -94,10 +94,10 @@
               <p class="help-block text-right">
                 Your added tax:
                 <strong>
-                <span ng-show="billForm.tax.$pristine">
+                <span ng-if="billForm.tax.$pristine">
                   {{ 0 + hostBill.repopulateTax(hostBill.data.billData) * 0.01 * hostBill.getSubTotal(hostBill.data.dishes) | currency }}
                 </span>
-                <span ng-show="billForm.tax.$dirty" id="currency-default">
+                <span ng-if="billForm.tax.$dirty" id="currency-default">
                   {{ hostBill.getTax('dollar') | currency}}
                 </span>
                 </strong>
@@ -114,7 +114,7 @@
         <!-- End FEE/DISCOUNT option -->
 
         <!-- FEES -->
-        <div class="panel panel-default" ng-show="hostBill.feeOption || hostBill.data.billData.feePercent">
+        <div class="panel panel-default" ng-if="hostBill.feeOption || hostBill.data.billData.feePercent">
           <div class="panel-heading">
             <h1 class="panel-title">Add Fee</h1>
             <br>
@@ -126,14 +126,14 @@
             <!-- DISPLAY FEE -->
             <div class="fee">
               <p class="help-block text-right">
-                <span ng-show="billForm.fee.$pristine">
+                <span ng-if="billForm.fee.$pristine">
                   <!-- {{ 0 + hostBill.repopulateFee(hostBill.data.billData) }}% -->
                   Your added fee:
                   <strong>
                   {{ 0 + hostBill.repopulateFee(hostBill.data.billData) * 0.01 * hostBill.getSubTotal(hostBill.data.dishes) | currency }}
                   </strong>
                 </span>
-                <span ng-show="billForm.fee.$dirty" id="currency-default">
+                <span ng-if="billForm.fee.$dirty" id="currency-default">
                   Fee as percent of subtotal:
                   <strong>
                   {{ hostBill.getFeeOrDiscountPercent('fee')}}%
@@ -145,7 +145,7 @@
         </div>
 
         <!-- DISCOUNT -->
-        <div class="panel panel-default" ng-show="hostBill.discountOption || hostBill.data.billData.discountPercent">
+        <div class="panel panel-default" ng-if="hostBill.discountOption || hostBill.data.billData.discountPercent">
           <div class="panel-heading">
             <h1 class="panel-title">Add Discount</h1>
             <br>
@@ -158,13 +158,13 @@
             <div class="discount">
               <p class="help-block text-right">
 
-                <span ng-show="billForm.discount.$pristine">
+                <span ng-if="billForm.discount.$pristine">
                   Your added discount:
                   <strong>
                   {{ 0 + hostBill.repopulateDiscount(hostBill.data.billData) * 0.01 * hostBill.getSubTotal(hostBill.data.dishes) | currency }}
                   </strong>
                 </span>
-                <span ng-show="billForm.discount.$dirty" id="currency-default">
+                <span ng-if="billForm.discount.$dirty" id="currency-default">
                   Discount as percent of subtotal:
                   <strong>
                   {{ hostBill.getFeeOrDiscountPercent('discount')}}%
@@ -180,18 +180,18 @@
           <div class="panel-heading">
             <h1 class="h1 panel-title">Grand Total</h1>
             <p class="text-right h4">
-              <span ng-show="billForm.tip.$pristine && billForm.tip.$pristine">
+              <span ng-if="billForm.tip.$pristine && billForm.tip.$pristine">
                 {{ hostBill.getSubTotal(hostBill.data.dishes)
                 + (hostBill.repopulateTip(hostBill.data.billData) * 0.01 * hostBill.getSubTotal(hostBill.data.dishes))
                 + (hostBill.repopulateTax(hostBill.data.billData) * 0.01 * hostBill.getSubTotal(hostBill.data.dishes))
                 + hostBill.fee - hostBill.discount | currency}}
                 <!-- CHECK FEE AND DISCOUNT FOR PERSISTANCE -->
               </span>
-              <span ng-show="billForm.tip.$dirty && billForm.tax.$pristine">
+              <span ng-if="billForm.tip.$dirty && billForm.tax.$pristine">
                 {{ hostBill.getSubTotal(hostBill.data.dishes) +
                 hostBill.getTip('dollar') + hostBill.fee - hostBill.discount | currency }}
               </span>
-              <span ng-show="billForm.tip.$dirty && billForm.tax.$dirty">
+              <span ng-if="billForm.tip.$dirty && billForm.tax.$dirty">
                 {{ hostBill.getSubTotal(hostBill.data.dishes) +
                 hostBill.getTip('dollar') + hostBill.getTax('dollar') + hostBill.fee - hostBill.discount | currency }}
               </span>
@@ -204,7 +204,7 @@
         </div>
 
         <br>
-        <div class="alert alert-success alert-dismissible" role="alert" ng-show="!hostBill.billsSent">
+        <div class="alert alert-success alert-dismissible" role="alert" ng-if="!hostBill.billsSent">
           <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
           Bills sent successfully!
         </div>

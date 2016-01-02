@@ -18,8 +18,8 @@
       <!-- Dish items -->
       <ul class="dish__item collection" ng-repeat="dish in hostBill.data.dishes">
         <li class="collection-item" ng-if="dish.users.length !== 0">
-          <h5 class="dish__title">{{_.map(dish.name.split(" "), _.capitalize).join(" ")}}</h5>
-          Total Cost: <strong>{{ dish.cost | currency }}</strong>
+          <h5 class="dish__title">{{::_.map(dish.name.split(" "), _.capitalize).join(" ")}}</h5>
+          Total Cost: <strong>{{ ::dish.cost | currency }}</strong>
           <br>
           <span class="dish__item--shared">
             Each individual paid: {{ hostBill.getDishIndivCost(dish) | currency }}
@@ -66,10 +66,10 @@
             <p>
               Your added tip:
               <strong>
-              <span ng-show="billForm.tip.$pristine">
+              <span ng-if="billForm.tip.$pristine">
                 {{ 0 + hostBill.repopulateTip(hostBill.data.billData) * 0.01 * hostBill.getSubTotal(hostBill.data.dishes) | currency }}
               </span>
-              <span ng-show="billForm.tip.$dirty" id="currency-default">
+              <span ng-if="billForm.tip.$dirty" id="currency-default">
                 {{ hostBill.getTip('dollar') | currency}}
               </span>
               </strong>
@@ -104,10 +104,10 @@
             <p>
               Your added tax:
               <strong>
-              <span ng-show="billForm.tax.$pristine">
+              <span ng-if="billForm.tax.$pristine">
                 {{ 0 + hostBill.repopulateTax(hostBill.data.billData) * 0.01 * hostBill.getSubTotal(hostBill.data.dishes) | currency }}
               </span>
-              <span ng-show="billForm.tax.$dirty" id="currency-default">
+              <span ng-if="billForm.tax.$dirty" id="currency-default">
                 {{ hostBill.getTax('dollar') | currency}}
               </span>
               </strong>
@@ -125,7 +125,7 @@
         <!-- End FEE/DISCOUNT option -->
 
         <!-- FEES-->
-        <ul class="collection receipt__item" ng-show="hostBill.feeOption || hostBill.data.billData.feePercent"> <!-- border -->
+        <ul class="collection receipt__item" ng-if="hostBill.feeOption || hostBill.data.billData.feePercent"> <!-- border -->
           <li class="collection-item"> <!-- spacing -->
             <h5 class="dish__title">Add Fee</h5>
             <!-- fee input -->
@@ -137,11 +137,11 @@
               </div>
             <!-- fee display -->
               <strong>
-                <span ng-show="billForm.fee.$pristine">
+                <span ng-if="billForm.fee.$pristine">
                 Your added fee:
                   {{ 0 + hostBill.repopulateFee(hostBill.data.billData) * 0.01 * hostBill.getSubTotal(hostBill.data.dishes) | currency }}
                 </span>
-                <span ng-show="billForm.fee.$dirty" id="currency-default">
+                <span ng-if="billForm.fee.$dirty" id="currency-default">
                   Fee as percent of subtotal:
                   <strong>
                   {{ hostBill.getFeeOrDiscountPercent('fee')}}%
@@ -154,7 +154,7 @@
         </ul>
 
         <!-- DISCOUNT-->
-        <ul class="collection receipt__item" ng-show="hostBill.discountOption || hostBill.data.billData.discountPercent"> <!-- border -->
+        <ul class="collection receipt__item" ng-if="hostBill.discountOption || hostBill.data.billData.discountPercent"> <!-- border -->
           <li class="collection-item"> <!-- spacing -->
             <h5 class="dish__title">Add Discount</h5>
             <!-- discount input -->
@@ -166,11 +166,11 @@
               </div>
             <!-- discount display -->
               <strong>
-                <span ng-show="billForm.discount.$pristine">
+                <span ng-if="billForm.discount.$pristine">
                 Your added discount:
                   {{ 0 + hostBill.repopulateDiscount(hostBill.data.billData) * 0.01 * hostBill.getSubTotal(hostBill.data.dishes) | currency }}
                 </span>
-                <span ng-show="billForm.discount.$dirty" id="currency-default">
+                <span ng-if="billForm.discount.$dirty" id="currency-default">
                   Discount as percent of subtotal:
                   <strong>
                   {{ hostBill.getFeeOrDiscountPercent('discount')}}%
@@ -187,7 +187,7 @@
           <li class="collection-item">
             <h5 class="receipt__title"><strong>Grand Total</strong>
             <span class="receipt__item--number right">
-              <span ng-show="billForm.tip.$pristine && billForm.tax.$pristine">
+              <span ng-if="billForm.tip.$pristine && billForm.tax.$pristine">
                 {{ hostBill.getSubTotal(hostBill.data.dishes)
                 + (hostBill.repopulateTip(hostBill.data.billData) * 0.01 * hostBill.getSubTotal(hostBill.data.dishes))
                 + (hostBill.repopulateTax(hostBill.data.billData) * 0.01 * hostBill.getSubTotal(hostBill.data.dishes))
@@ -195,11 +195,11 @@
                 - (hostBill.repopulateDiscount(hostBill.data.billData) * 0.01 * hostBill.getSubTotal(hostBill.data.dishes))
                 + hostBill.fee - hostBill.discount | currency}}
               </span>
-              <span ng-show="billForm.tip.$dirty && billForm.tax.$pristine">
+              <span ng-if="billForm.tip.$dirty && billForm.tax.$pristine">
                 {{ hostBill.getSubTotal(hostBill.data.dishes) +
                 hostBill.getTip('dollar') + hostBill.fee - hostBill.discount | currency }}
               </span>
-              <span ng-show="billForm.tip.$dirty && billForm.tax.$dirty">
+              <span ng-if="billForm.tip.$dirty && billForm.tax.$dirty">
                 {{ hostBill.getSubTotal(hostBill.data.dishes) +
                 hostBill.getTip('dollar') + hostBill.getTax('dollar') + hostBill.fee - hostBill.discount | currency }}
               </span>
@@ -209,7 +209,7 @@
         </ul>
       
         <div class="row center-align">
-          <span ng-show="billForm.tip.$pristine || billForm.tax.$pristine">
+          <span ng-if="billForm.tip.$pristine || billForm.tax.$pristine">
             Please enter tax and tip.
           </span>
         </div>

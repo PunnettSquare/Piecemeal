@@ -12,10 +12,10 @@
     <br><br>
 
     This dish costs
-    <strong><span ng-show="dishForm.amount.$pristine">
+    <strong><span ng-if="dishForm.amount.$pristine">
       {{ 0 + addDish.amount | currency}}
     </span>
-    <span ng-show="dishForm.amount.$dirty" id="currency-default">
+    <span ng-if="dishForm.amount.$dirty" id="currency-default">
       {{ 0 + addDish.amount | currency}}
     </span></strong>
     and your total so far is
