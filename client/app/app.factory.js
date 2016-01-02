@@ -49,11 +49,6 @@
       }
     }
 
-    // function getUsers() {
-    //   console.log("services data: ", services.data);
-    //   // Work in progress potentially for host Receipt
-    // };
-
     function getSessStorage(prop) {
       if (prop === "code") {
         return $window.localStorage.code;

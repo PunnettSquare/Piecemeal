@@ -34,6 +34,18 @@ Starting PostGreSQL
 Practice Run:
 `ngrok http 8080`
 
+Tests:
+-Unit tests: karma start karma.conf.js
+
+Starting from a clear state during development:
+Stop server, drop the database as shown above
+Restart: grunt init, grunt start
+If cannot create a bill, clear local storage in console as well
+
+Update documentation:
+grunt docco
+grunt watch
+
 ## Requirements
 
 - Node 0.10.x
