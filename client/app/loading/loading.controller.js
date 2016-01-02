@@ -46,12 +46,11 @@
           $location.path('/' + $window.localStorage.code + '/allDishes');
         })
         .catch(function(err) {
-          console.log("Error: Could not send session user info.");
-          console.error(err);
-          self.isError = true;
+          Materialize.toast('Your entered room does not exist. <br>Redirecting...', 2500);
+          console.error("Error: Could not send session user info.", err);
           $timeout(function() {
-            // appFactory.logout();
-          }, 2000);
+            $location.path('/home');
+          }, 2500);
         });
     };
   }
