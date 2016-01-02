@@ -12,6 +12,16 @@
 
     self.incorrectCode = false;
 
+
+    try { $window.localStorage.checkPrivateMode = 'not private'; } catch (e) {
+      self.privateMode = true;
+    }
+    if (!self.privateMode) {
+      $window.localStorage.checkPrivateMode = undefined;
+    } else {
+      Materialize.toast('Turn off Safari Private mode to continue');
+    }
+
     self.setSessionUser = function(code) {
       code = code.toLowerCase();
       homeFactory.checkCode(code.toLowerCase())

@@ -52,7 +52,13 @@ exports.up = function(knex, Promise) {
         .references('id')
         .inTable('users');
       // table.dateTime('postDate');
-    })
+    }),
+
+    knex.schema.createTable('appSettings', function(table) {
+      table.increments('id').primary();
+      table.integer('wordIndex');
+      table.integer('counter');
+    }),
   ]);
 };
 

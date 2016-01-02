@@ -27,12 +27,19 @@
       goToHome: goToHome,
       copySessData: copySessData,
       logout: logout,
+      checkCode: checkCode
       // getUsers: getUsers
       // data: data
       // data.billData: billData
     };
 
     return services;
+
+    function checkCode() {
+      if (!$window.localStorage.code || $window.location.hash.split("/")[1] !== $window.localStorage.code) {
+        $location.path('/home');
+      }
+    }
 
     // function getUsers() {
     //   console.log("services data: ", services.data);

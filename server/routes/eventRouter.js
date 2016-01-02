@@ -3,8 +3,10 @@ var db = require('../../db/db');
 var handleSocket = require('../sockets');
 var util = require('../utility.js');
 var _ = require('underscore');
-
 module.exports = function(app, io) {
+  setTimeout(function() {
+    util.setFirstWord(db)
+  }, 5000)
 
   app.get('/:code', function(req, res) {
     res.redirect('/#/' + req.params.code.toLowerCase() + '/loading');
@@ -31,19 +33,20 @@ module.exports = function(app, io) {
 
   app.post('/createEvent', function(req, res) {
     var username = req.body.username || 'Jerry';
-
-    var code = util.generateCode();
-    util.createEvent(db, code, username)
-      .then(function(dataObj) {
-        res.status(200).send({
-          code: code,
-          user_id: dataObj.user_id[0],
-          event_id: dataObj.event_id[0]
+    util.generateCode(db)
+    .then(function(code) {
+      util.createEvent(db, code, username)
+        .then(function(dataObj) {
+          res.status(200).send({
+            code: code,
+            user_id: dataObj.user_id[0],
+            event_id: dataObj.event_id[0]
+          });
+        })
+        .catch(function(err) {
+          throw err;
         });
-      })
-      .catch(function(err) {
-        throw err;
-      });
+    })
   });
 
   app.get('/checkCode/:code', function(req, res) {
@@ -121,8 +124,5 @@ module.exports = function(app, io) {
         });
     }
   });
-
-  // uncomment this to populate an empty database with dummy data from ./generateData.js
-  // comment it out again after one run of this file
-  // setTimeout(generateData, 1500);
+  
 };

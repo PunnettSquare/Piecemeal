@@ -11,6 +11,8 @@
     
     appFactory.copySessData(self);
 
+    appFactory.checkCode();
+    
     // load data on page refresh
     $scope.$on('joined', function() {
       self.data = appFactory.data;

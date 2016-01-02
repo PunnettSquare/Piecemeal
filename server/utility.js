@@ -283,16 +283,42 @@ module.exports = {
   // }
 
   // food related words
-  generateCode: function() {
-    if (counter === roomNames.length) {
-      incrementer++;
-      counter = 0;
-    }
-    if (incrementer > 0) {
-      return roomNames[counter++] + incrementer;
-    } else {
-      return roomNames[counter++];
-    }
+  generateCode: function(db) {
+    return db('appSettings').select('*').where('id', 1)
+    .then(function(setting) {
+        return setting[0]
+    })
+    .then(function(settings) {
+      var code = roomNames[settings.wordIndex]
+      if (settings.wordIndex === roomNames.length-1) {
+        settings.wordIndex = 0;
+        settings.counter++
+      } else {
+        settings.wordIndex++
+      }
+      code = settings.counter > 0 ? code + settings.counter : code;
+      return db('appSettings').update({
+        wordIndex: settings.wordIndex,
+        counter: settings.counter
+      })
+      .then(function(word) {
+        return code
+      })
+    })
+  },
+
+  setFirstWord: function (db) {
+    return db('appSettings').select('*').where('id', 1)
+    .then(function(setting) {
+      if (setting.length === 0) {
+        return db('appSettings').insert({
+          wordIndex: 0,
+          counter: 0
+        })
+      } else {
+        return setting[0]
+      }
+    })
   },
 
   findDishArray: function(usersDishesArray) {

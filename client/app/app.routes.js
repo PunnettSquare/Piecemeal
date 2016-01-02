@@ -10,7 +10,8 @@
 
     $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|chrome-extension|venmo):/);
 
-    var getInfoOnRefresh = function($http) {
+    var getInfoOnRefresh = function ($http, $location) {
+
       if (!usernameCache[window.localStorage.user_id]) {
         usernameCache[window.localStorage.user_id] = true;
         return $http({
@@ -24,13 +25,10 @@
     };
 
     console.log('window.localStorage =', window.localStorage);
-    $urlRouterProvider.otherwise(function($injector) {
+    $urlRouterProvider.otherwise(function ($injector) {
       var state = $injector.get('$state');
-      //changed to code from username for persistent venmo sessions
-      // TODO test edge cases
       if (!window.localStorage.getItem('code') || window.localStorage.getItem('code') === "undefined") {
         state.go('home');
-        // state.go('404');
       } else {
         state.go('event.allDishes');
       }
@@ -41,7 +39,7 @@
         url: '/home',
         views: {
           'navbar': {
-            templateUrl: 'components/navbar/homeNavbar.html',
+            templateUrl: 'components/navbar/homeNavBar.html',
             controller: 'NavbarCtrl',
             controllerAs: 'homeNavbar'
           },
@@ -127,18 +125,18 @@
           getEventInfo: ['$http', getInfoOnRefresh]
         }
       })
-      .state('event.hostReceipt', {
-        url: '/hostReceipt',
-        views: {
-          '@': {
-            templateUrl: 'app/hostReceipt/hostReceipt.html',
-            controller: 'HostReceiptCtrl',
-            controllerAs: 'hostReceipt'
-          }
-        },
-        resolve: {}
+      // .state('event.hostReceipt', {
+      //   url: '/hostReceipt',
+      //   views: {
+      //     '@': {
+      //       templateUrl: 'app/hostReceipt/hostReceipt.html',
+      //       controller: 'HostReceiptCtrl',
+      //       controllerAs: 'hostReceipt'
+      //     }
+      //   },
+      //   resolve: {}
 
-      })
+      // })
       .state('event.hostBill', {
         url: '/hostBill',
         views: {

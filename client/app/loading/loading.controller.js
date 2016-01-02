@@ -10,9 +10,20 @@
     var self = this;
     self.currentUsers = _.uniq(_.pluck(usersList.data, 'username'));
     self.code = $window.location.hash.split("/")[1];
-    // window.localStorage.code = $window.location.hash.split("/")[1];
+
+    //check for Safari private mode
+    try { $window.localStorage.checkPrivateMode = 'not private'; } catch (e) {
+      self.privateMode = true;
+    }
+
+    if (!self.privateMode) {
+      $window.localStorage.checkPrivateMode = undefined;
+    } else {
+      Materialize.toast('Turn off Safari Private mode to continue');
+    }
 
     self.setSessionUser = function(username) {
+      window.localStorage.code = $window.location.hash.split("/")[1];
       loadingFactory.sendSessionUser(
           _.assign($window.localStorage, {
             isHost: false,
