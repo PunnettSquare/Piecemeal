@@ -1,5 +1,5 @@
 // # JASMINE TESTS
-// Run with karma start karma.conf.js
+// Run with `karma start karma.conf.js`
 
 beforeEach(module('Piecemeal'));
 
