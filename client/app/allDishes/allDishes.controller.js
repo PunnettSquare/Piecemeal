@@ -59,7 +59,7 @@
     // Get list of user ID's through dish item.
     self.getUsersByDish = appFactory.getUsersByDish;
 
-    // Check if the user has shared the dish.
+    // Check if the user has eaten the dish.
     self.isOnDish = function(dishUsers, user_id) {
       return dishUsers.reduce(function(isOnDish, id) {
         if (id.toString() === user_id.toString()) {
@@ -69,7 +69,7 @@
       }, false);
     };
 
-    // Add user's ID to dish item in appFactory, and send to the [server](../docs/sockets.js) through a socket event to update the database.
+    // Add user's ID to dish item in appFactory, and send to the [server](../docs/sockets.js) through a socket event to update the database 
     self.shareDish = function(dish_id, user_id, users) {
       if (!self.isOnDish(users, user_id)) {
         socketFactory.emit('shareDish', {
