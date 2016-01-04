@@ -2,7 +2,7 @@
 
 // ##### [Back to Table of Contents](./tableofcontents.html)
 
-// **Summary**: TODO
+// **Summary**: Allow host to see all dishes, enter tip and tax, and send final bill.
 
 
 (function() {
@@ -22,13 +22,13 @@
 
     appFactory.checkCode();
     
-    // load data on page refresh
+    // Load data on page refresh
     $scope.$on('joined', function() {
       self.data = appFactory.data;
       self.getDishIndivCost = appFactory.getDishIndivCost;
     });
 
-    // load data when *not* on page refresh
+    // Load data when *not* on page refresh
     self.data = appFactory.data;
 
     if (!appFactory.data) {

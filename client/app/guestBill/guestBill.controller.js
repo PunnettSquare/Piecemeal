@@ -2,7 +2,7 @@
 
 // ##### [Back to Table of Contents](./tableofcontents.html)
 
-// **Summary**: TODO
+// **Summary**: Reflect the dishes a user has added or shared and the subtotal. When host sends final bill with tip and tax, the user can choose to pay with Venmo or Cash.
 
 (function() {
   'use strict';

@@ -104,6 +104,11 @@
                   navbar.controller.js
                 </a>
               
+                
+                <a class="source" href="tableofcontents.html">
+                  tableofcontents.js
+                </a>
+              
             </div>
           </div>
         </li>
@@ -145,7 +150,7 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-3">&#182;</a>
               </div>
-              <p><strong>Summary</strong>: TODO</p>
+              <p><strong>Summary</strong>: Store data and shared functionality (updating sessions, dishes, logging out, etc.) for quick access by controllers and initialize socket event listeners.</p>
 
             </div>
             
@@ -158,12 +163,12 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-4">&#182;</a>
               </div>
-              <p>Sockets: client emits ‘shareDish’ to server, which broadcasts ‘dishShared’ to clients. hear it here and update data on service
-then, if the controllers have direct binding to this data, no further action is needed</p>
+              <p>Sockets: Client emits ‘shareDish’ (and other events) to server, which broadcasts ‘dishShared’ to clients. Socket event listeners in appFactory update the data in the factory. Then, if the controllers have direct binding to this data, no further action is needed</p>
 
             </div>
             
             <div class="content"><div class='highlight'><pre>
+
 (<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
 <span class="hljs-meta">  'use strict'</span>;
 
@@ -188,7 +193,7 @@ then, if the controllers have direct binding to this data, no further action is 
             <div class="content"><div class='highlight'><pre>
   <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">appFactory</span>(<span class="hljs-params">socketFactory, $rootScope, $window, $location</span>) </span>{
 
-    <span class="hljs-keyword">var</span> services = {
+    <span class="hljs-keyword">var</span> services = { <span class="hljs-comment">// Added separately: .data, .data.billData</span>
       initListeners: initListeners,
       addDish: addDish,
       shareDish: shareDish,
@@ -204,24 +209,8 @@ then, if the controllers have direct binding to this data, no further action is 
       goToHome: goToHome,
       copySessData: copySessData,
       logout: logout,
-      checkCode: checkCode</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-6">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-6">&#182;</a>
-              </div>
-              <p>getUsers: getUsers
-data: data
-data.billData: billData</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>    };
+      checkCode: checkCode
+    };
 
     <span class="hljs-keyword">return</span> services;
 
@@ -361,39 +350,21 @@ data.billData: billData</p>
           <span class="hljs-keyword">return</span> users[_.findIndex(users, {
             <span class="hljs-string">'id'</span>: id
           })].username;
-        }).value());</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-7">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-7">&#182;</a>
-              </div>
-              <p>  return {
-    username: users[index].username,
-    user_id: parseInt(users[index].id),
-    isHost: users[index].host
-  };</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>    }
+        }).value());
+    }
 
     <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">initListeners</span>(<span class="hljs-params"></span>) </span>{</pre></div></div>
             
         </li>
         
         
-        <li id="section-8">
+        <li id="section-6">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-8">&#182;</a>
+                <a class="pilcrow" href="#section-6">&#182;</a>
               </div>
-              <p>socketFactory.init();</p>
+              <p>RootScope Broadcast: Upon refresh, controllers attempt to reference appFactory.data faster than the asynchronous get request to retrieve data, resulting in a reference to null. Therefore, to persist data on refresh, when the ‘joined’ event is emitted, a broadcast is sent out via the $rootScope message bus in order to let controllers know it is OK to retrieve a reference to appFactory.data.</p>
 
             </div>
             
@@ -414,11 +385,11 @@ data.billData: billData</p>
         </li>
         
         
-        <li id="section-9">
+        <li id="section-7">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-9">&#182;</a>
+                <a class="pilcrow" href="#section-7">&#182;</a>
               </div>
               <p>data format: {cost: 3, name: “rice”, user_id: “29319”, event_id: 1, users: [“29319”]}</p>
 
@@ -433,11 +404,11 @@ data.billData: billData</p>
         </li>
         
         
-        <li id="section-10">
+        <li id="section-8">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-10">&#182;</a>
+                <a class="pilcrow" href="#section-8">&#182;</a>
               </div>
               <p>data format: {user_id: 24, dish_id: 14}</p>
 

@@ -2,7 +2,7 @@
 
 // ##### [Back to Table of Contents](./tableofcontents.html)
 
-// **Summary**: Routes sub and nested views.
+// **Summary**: Route sub and nested views.
 
 (function() {
   'use strict';
