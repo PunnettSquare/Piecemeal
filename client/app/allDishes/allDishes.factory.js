@@ -2,7 +2,7 @@
 
 // ##### [Back to Table of Contents](./tableofcontents.html)
 
-// **Summary**: TODO
+// **Summary**: Calculate the running total in the add Dish modal.
 
 (function() {
   'use strict';

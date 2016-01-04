@@ -2,7 +2,7 @@
 
 <html>
 <head>
-  <title>GuestBill Controller</title>
+  <title>Socket Module</title>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
   <link rel="stylesheet" media="all" href="docco.css" />
@@ -104,6 +104,11 @@
                   navbar.controller.js
                 </a>
               
+                
+                <a class="source" href="tableofcontents.html">
+                  tableofcontents.js
+                </a>
+              
             </div>
           </div>
         </li>
@@ -119,7 +124,7 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-1">&#182;</a>
               </div>
-              <h1 id="guestbill-controller">GuestBill Controller</h1>
+              <h1 id="socket-module">Socket Module</h1>
 
             </div>
             
@@ -145,7 +150,7 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-3">&#182;</a>
               </div>
-              <p><strong>Summary</strong>: Customized API over SocketIO to be integrated with Angular’s digest cycle.</p>
+              <p><strong>Summary</strong>: Custom SocketIO API integrated with Angular’s digest cycle in a factory.</p>
 
             </div>
             
@@ -158,7 +163,7 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-4">&#182;</a>
               </div>
-              <p>To use sockets on client, inject ‘socket’ (and add to params) in all controllers that will use sockets (all except home)</p>
+              <p>To use sockets on client, inject ‘socketFactory’ (and add to params) in all controllers that will use sockets (all except home).</p>
 
             </div>
             
@@ -194,7 +199,9 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-6">&#182;</a>
               </div>
-              <p><strong>Parameters:</strong> TODO</p>
+              <p><strong>Parameters:</strong>
+<code>$rootScope</code>: Used to integrate into digest cycle
+<code>$window</code>: The socket is stored as a global variable on the window object</p>
 
             </div>
             

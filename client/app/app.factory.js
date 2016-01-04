@@ -2,10 +2,10 @@
 
 // ##### [Back to Table of Contents](./tableofcontents.html)
 
-// **Summary**: TODO
+// **Summary**: Store data and shared functionality (updating sessions, dishes, logging out, etc.) for quick access by controllers and initialize socket event listeners.
 
-// Sockets: client emits 'shareDish' to server, which broadcasts 'dishShared' to clients. hear it here and update data on service
-// then, if the controllers have direct binding to this data, no further action is needed
+// Sockets: Client emits 'shareDish' (and other events) to server, which broadcasts 'dishShared' to clients. Socket event listeners in appFactory update the data in the factory. Then, if the controllers have direct binding to this data, no further action is needed
+
 
 (function() {
   'use strict';
@@ -19,7 +19,7 @@
 
   function appFactory(socketFactory, $rootScope, $window, $location) {
 
-    var services = {
+    var services = { // Added separately: .data, .data.billData
       initListeners: initListeners,
       addDish: addDish,
       shareDish: shareDish,
@@ -36,9 +36,6 @@
       copySessData: copySessData,
       logout: logout,
       checkCode: checkCode
-      // getUsers: getUsers
-      // data: data
-      // data.billData: billData
     };
 
     return services;
@@ -180,15 +177,10 @@
             'id': id
           })].username;
         }).value());
-      //   return {
-      //     username: users[index].username,
-      //     user_id: parseInt(users[index].id),
-      //     isHost: users[index].host
-      //   };
     }
 
     function initListeners() {
-      // socketFactory.init();
+      // RootScope Broadcast: Upon refresh, controllers attempt to reference appFactory.data faster than the asynchronous get request to retrieve data, resulting in a reference to null. Therefore, to persist data on refresh, when the 'joined' event is emitted, a broadcast is sent out via the $rootScope message bus in order to let controllers know it is OK to retrieve a reference to appFactory.data.
       socketFactory.on('joined', function(data) {
         console.log("Heard 'joined' in appFactory.data:", data);
         services.data = data;

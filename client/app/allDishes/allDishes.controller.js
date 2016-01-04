@@ -2,7 +2,7 @@
 
 // ##### [Back to Table of Contents](./tableofcontents.html)
 
-// **Summary**: Controller that adds, shares, and removes dishes.
+// **Summary**: Add, share, and remove dishes.
 
 (function() {
   'use strict';

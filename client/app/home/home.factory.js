@@ -2,7 +2,7 @@
 
 // ##### [Back to Table of Contents](./tableofcontents.html)
 
-// **Summary**: TODO
+// **Summary**: Check if bill already exists or not and creates new bill.
 
 
 (function() {

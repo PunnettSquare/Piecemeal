@@ -15,14 +15,14 @@ input::-webkit-inner-spin-button {
 }
 
 /*Same thing as "light" class*/
-h1,
+/*h1,
 h2,
 h3,
 h4,
 h5,
 h6 {
     font-weight: 300;
-}
+}*/
 
 /* --------- NAVBAR --------- */
 @media only screen and (min-width: 993px) {
@@ -172,7 +172,6 @@ li.pag__space {
     color: white;
     background: rgba(0, 150, 136, 0.6);
 }
-
 
 /*   Media Queries for Image background and Motto    */
 

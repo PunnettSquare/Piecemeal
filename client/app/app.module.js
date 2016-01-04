@@ -2,7 +2,7 @@
 
 // ##### [Back to Table of Contents](./tableofcontents.html)
 
-// **Summary**: Initializes Piecemeal application.
+// **Summary**: Initialize Piecemeal application.
 
 angular.module('Piecemeal', ['ui.router', 'ngMessages'])
 

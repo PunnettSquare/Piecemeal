@@ -1,10 +1,10 @@
-// # GuestBill Controller
+// # Socket Module
 
 // ##### [Back to Table of Contents](./tableofcontents.html)
 
-// **Summary**: Customized API over SocketIO to be integrated with Angular's digest cycle.
+// **Summary**: Custom SocketIO API integrated with Angular's digest cycle in a factory.
 
-// To use sockets on client, inject 'socket' (and add to params) in all controllers that will use sockets (all except home)
+// To use sockets on client, inject 'socketFactory' (and add to params) in all controllers that will use sockets (all except home).
 
 // Adds sockets to the digest cycle the angular way:
 
@@ -17,7 +17,9 @@
 
   socketFactory.$inject = ['$rootScope', '$window'];
 
-  // **Parameters:** TODO
+  // **Parameters:**
+  // ```$rootScope```: Used to integrate into digest cycle
+  // ```$window```: The socket is stored as a global variable on the window object
 
   function socketFactory($rootScope, $window) {
 

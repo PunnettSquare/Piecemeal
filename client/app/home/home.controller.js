@@ -2,7 +2,7 @@
 
 // ##### [Back to Table of Contents](./tableofcontents.html)
 
-// **Summary**: TODO
+// **Summary**: Check if user is logged into Venmo, and if so, show logged out button.
 
 (function() {
   'use strict';
@@ -12,7 +12,7 @@
 
   HomeCtrl.$inject = ['$window', 'homeFactory', '$location'];
 
-  // **Parameters:** TODO
+  // **Parameters:** TO DO
 
   function HomeCtrl($window, homeFactory, $location) {
 

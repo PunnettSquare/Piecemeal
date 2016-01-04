@@ -2,7 +2,7 @@
 
 // ##### [Back to Table of Contents](./tableofcontents.html)
 
-// **Summary**: TODO
+// **Summary**: After Venmo oAuth, the page creates the room. Later, it will be built into an actual dashboard.
 
 (function() {
   'use strict';

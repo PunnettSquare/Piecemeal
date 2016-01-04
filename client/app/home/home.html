@@ -7,7 +7,7 @@
   <div class="home__header" id="color">
     <!-- <object class="logoSpacing center-align" type="image/svg+xml" data="../../assets/piecemealLogoLightEcho.svg">Piecemeal</object> -->
     <div class="home__header__logo">
-      <a href="#">Piecemeal.</a>
+      <a href="#">Piecemeal</a>
     </div>
     <div><button ng-disabled="home.privateMode" ng-click="home.oAuth()" class="createButton btn waves-effect waves-light teal" type="submit" name="createBill">Create Bill
     </button></div>
@@ -16,7 +16,7 @@
 
   <!--  Setup a bill Motto -->
   <div class="home__motto">
-    <span>Split a bill, share a meal.</span>
+    <span>Split a bill. Share a meal.</span>
   </div>
 
 
@@ -26,12 +26,11 @@
 
     <h6 class="instructions">
     The easiest way to split a restaurant bill with your friends.</h6>
-    <!-- <h6 class="join">Enter a room name to join!</h6> -->
 
     <div>
       <form name="userInput2">
         <div class="input-field home__input">
-          <input name="code" id="roomCode" type="text" class="validate enterCode inlineInput" ng-model="code" placeholder="Enter Room Name" required>
+          <input name="code" id="roomCode" type="text" class="validate enterCode inlineInput" ng-model="code" placeholder="Enter Bill Code Here" required>
         </div>
         <button class="btn enterRoom home--enterRoom waves-effect waves-light teal validate" ng-disabled="userInput2.code.$error.required || home.privateMode" ng-click="home.setSessionUser(code)" type="submit" name="joinBill">
         <span>Join Bill</span>
