@@ -306,14 +306,19 @@ module.exports = function(grunt) {
     },
 
     docco: {
-      src: ['<%= project.js %>',
-      'tableofcontents.js',
-        '!<%= project.client %>/app/addDish/*.js',
-        '!<%= project.client %>/app/guestBill/guestBill.factory.js',
-        '!<%= project.client %>/app/hostBill/hostBill.factory.js',
-        '!<%= project.client %>/app/hostReceipt/*.js',
-        '!<%= project.client %>/app/loading/loading.directive.js'
-      ],
+      client: {
+        src: ['<%= project.js %>',
+        'tableofcontents.js',
+          '!<%= project.client %>/app/addDish/*.js',
+          '!<%= project.client %>/app/guestBill/guestBill.factory.js',
+          '!<%= project.client %>/app/hostBill/hostBill.factory.js',
+          '!<%= project.client %>/app/hostReceipt/*.js',
+          '!<%= project.client %>/app/loading/loading.directive.js'
+        ]
+      },
+      server: {
+        src: ['server/**/*.js']
+      },
       options: {
         output: 'docs/'
       }

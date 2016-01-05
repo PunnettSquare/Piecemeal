@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>Utility and Helper Functions</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+      <ul id="jump_to">
+        <li>
+          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+          <a class="small" href="javascript:void(0);">+</a>
+          <div id="jump_wrapper">
+          <div id="jump_page_wrapper">
+            <div id="jump_page">
+              
+                
+                <a class="source" href="middleware.html">
+                  middleware.js
+                </a>
+              
+                
+                <a class="source" href="oauthRouter.html">
+                  oauthRouter.js
+                </a>
+              
+                
+                <a class="source" href="roomNames.html">
+                  roomNames.js
+                </a>
+              
+                
+                <a class="source" href="eventRouter.html">
+                  eventRouter.js
+                </a>
+              
+                
+                <a class="source" href="server.html">
+                  server.js
+                </a>
+              
+                
+                <a class="source" href="sockets.html">
+                  sockets.js
+                </a>
+              
+                
+                <a class="source" href="utility.html">
+                  utility.js
+                </a>
+              
+            </div>
+          </div>
+        </li>
+      </ul>
+    
+    <ul class="sections">
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              <h1 id="utility-and-helper-functions">Utility and Helper Functions</h1>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <h5 id="-back-to-table-of-contents-tableofcontents-html-"><a href="./tableofcontents.html">Back to Table of Contents</a></h5>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p><strong>Summary</strong>: Various helper functions which interact with the database</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>
+<span class="hljs-keyword">var</span> _ = <span class="hljs-built_in">require</span>(<span class="hljs-string">'underscore'</span>);
+<span class="hljs-keyword">var</span> roomNames = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./roomNames.js'</span>);
+
+<span class="hljs-built_in">module</span>.exports = {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p>Create event in database and populate users and events junction table</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  createEvent: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">db, code, username</span>) </span>{
+    <span class="hljs-keyword">return</span> db(<span class="hljs-string">'users'</span>).insert({
+        username: username
+      })
+      .returning(<span class="hljs-string">'id'</span>)
+      .then(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">user_id</span>) </span>{
+        <span class="hljs-keyword">return</span> db(<span class="hljs-string">'events'</span>).insert({
+            code: code
+          })
+          .returning(<span class="hljs-string">'id'</span>)
+          .then(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">event_id</span>) </span>{
+            <span class="hljs-keyword">return</span> db(<span class="hljs-string">'usersJoinEvents'</span>).insert({
+                user_id: user_id[<span class="hljs-number">0</span>],
+                event_id: event_id[<span class="hljs-number">0</span>],
+                host: <span class="hljs-literal">true</span>,
+                status: <span class="hljs-literal">true</span>
+              }).returning(<span class="hljs-string">'id'</span>)
+              .then(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+                <span class="hljs-keyword">return</span> {
+                  event_id: event_id,
+                  user_id: user_id
+                };
+              });
+          });
+      });
+  },</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p>Check if a event code exists in the database</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  checkCode: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">db, code</span>) </span>{
+    <span class="hljs-keyword">return</span> db(<span class="hljs-string">'events'</span>).where({
+        code: code
+      })
+      .then(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">data</span>) </span>{
+        <span class="hljs-keyword">if</span> (data.length === <span class="hljs-number">0</span>) {
+          <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+        } <span class="hljs-keyword">else</span> {
+          data[<span class="hljs-number">0</span>].isValid = <span class="hljs-literal">true</span>;
+          <span class="hljs-keyword">return</span> data[<span class="hljs-number">0</span>];
+        }
+      })
+  },
+  
+  createEventVenmo: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">db, code, user_id</span>) </span>{
+    <span class="hljs-keyword">return</span> db(<span class="hljs-string">'events'</span>).insert({
+        code: code
+      })
+      .returning(<span class="hljs-string">'id'</span>)
+      .then(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">event_id</span>) </span>{
+        <span class="hljs-keyword">return</span> db(<span class="hljs-string">'usersJoinEvents'</span>).insert({
+            user_id: user_id,
+            event_id: event_id[<span class="hljs-number">0</span>],
+            host: <span class="hljs-literal">true</span>,
+            status: <span class="hljs-literal">true</span>
+          })
+          .returning(<span class="hljs-string">'event_id'</span>);
+      });
+  },
+
+  findUser: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">db, venmoUsername</span>) </span>{
+    <span class="hljs-keyword">return</span> db(<span class="hljs-string">'users'</span>).where({
+      venmoUsername: venmoUsername
+    });
+  },
+
+  addTipAndTax: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">db, event_id, taxPercent, tipPercent, feePercent, discountPercent, billSent</span>) </span>{
+    <span class="hljs-keyword">return</span> db(<span class="hljs-string">'events'</span>).where({
+      <span class="hljs-string">'id'</span>: event_id
+    }).update({
+      taxPercent: taxPercent,
+      tipPercent: tipPercent,
+      feePercent: feePercent,
+      discountPercent: discountPercent,
+      billSent: billSent
+    });
+  },
+
+  createUser: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">db, username, event_id, host</span>) </span>{
+    <span class="hljs-keyword">return</span> db(<span class="hljs-string">'users'</span>).insert({
+        username: username
+      })
+      .returning(<span class="hljs-string">'id'</span>)
+      .then(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">user_id</span>) </span>{
+        <span class="hljs-keyword">return</span> db(<span class="hljs-string">'usersJoinEvents'</span>).insert({
+          user_id: user_id[<span class="hljs-number">0</span>],
+          event_id: event_id,
+          status: <span class="hljs-literal">false</span>,
+          host: host
+        }).returning(<span class="hljs-string">'user_id'</span>);
+      });
+  },
+
+  createDish: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">db, dishName, cost, user_id, event_id</span>) </span>{
+    <span class="hljs-keyword">var</span> dishId;
+    <span class="hljs-keyword">return</span> db(<span class="hljs-string">'dishes'</span>).insert({
+        name: dishName,
+        cost: cost,
+        event_id: event_id
+      })
+      .returning(<span class="hljs-string">'id'</span>)
+      .then(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">dish_id</span>) </span>{
+        dishId = dish_id;
+        <span class="hljs-keyword">return</span> db(<span class="hljs-string">'usersJoinDishes'</span>).insert({
+          user_id: user_id,
+          dish_id: dish_id[<span class="hljs-number">0</span>]
+        }).returning(<span class="hljs-string">'id'</span>);
+      })
+      .then(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+        <span class="hljs-keyword">return</span> {
+          dish_id: dishId
+        };
+      });
+  },
+
+  shareDish: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">db, user_id, dish_id</span>) </span>{
+    <span class="hljs-keyword">return</span> db(<span class="hljs-string">'usersJoinDishes'</span>).insert({
+      user_id: user_id,
+      dish_id: dish_id
+    });
+  },
+
+  unshareDish: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">db, user_id, dish_id</span>) </span>{
+    <span class="hljs-keyword">return</span> db(<span class="hljs-string">'usersJoinDishes'</span>).where({
+        user_id: user_id,
+        dish_id: dish_id
+      }).del()
+      .then(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+        <span class="hljs-keyword">return</span> db(<span class="hljs-string">'usersJoinDishes'</span>).where({
+            dish_id: dish_id
+          })
+          .returning(<span class="hljs-string">'id'</span>);
+      })
+      .then(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">ids</span>) </span>{
+        <span class="hljs-keyword">if</span> (ids.length === <span class="hljs-number">0</span>) {
+          <span class="hljs-keyword">return</span> db(<span class="hljs-string">'dishes'</span>).where({
+            id: dish_id
+          }).del();
+        } <span class="hljs-keyword">else</span> {
+          <span class="hljs-keyword">return</span>;
+        }
+      });
+  },
+
+  removeDish: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">db, dish_id</span>) </span>{
+    <span class="hljs-keyword">return</span> db(<span class="hljs-string">'usersJoinDishes'</span>).where({
+        dish_id: dish_id
+      }).del()
+      .then(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+        <span class="hljs-keyword">return</span> db(<span class="hljs-string">'dishes'</span>).where({
+          dish_id: dish_id
+        }).del();
+      });
+  },
+
+  gatherEvents: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">db, user_id</span>) </span>{
+    <span class="hljs-keyword">return</span> <span class="hljs-built_in">module</span>.exports.getUsersEvents(db, user_id)
+      .then(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">ids</span>) </span>{
+        <span class="hljs-keyword">return</span> <span class="hljs-built_in">module</span>.exports.getCodes(db, ids);
+      })
+      .then(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">arrays</span>) </span>{
+        <span class="hljs-keyword">return</span> <span class="hljs-built_in">Promise</span>.all(_.map(arrays, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">idCodeArray</span>) </span>{
+          <span class="hljs-keyword">return</span> <span class="hljs-built_in">module</span>.exports.gatherState(db, idCodeArray[<span class="hljs-number">0</span>], idCodeArray[<span class="hljs-number">1</span>]);
+        }));
+      });
+  },
+
+  gatherBillInfo: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">db, event_id</span>) </span>{</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <p>return    db.select().from(‘events’).innerJoin(‘usersJoinEvents’, ‘events.event_id’, ‘usersJoinEvents.event_id’)</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  },
+
+  getCodes: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">db, ids</span>) </span>{
+    <span class="hljs-keyword">return</span> <span class="hljs-built_in">Promise</span>.all(_.map(ids, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">id</span>) </span>{
+      <span class="hljs-keyword">return</span> db(<span class="hljs-string">'events'</span>).where({
+          id: id.event_id
+        }).returning(<span class="hljs-string">'code'</span>)
+        .then(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">data</span>) </span>{
+          <span class="hljs-keyword">return</span> [id.event_id, data[<span class="hljs-number">0</span>].code];
+        });
+    }));
+  },
+
+  getUsersEvents: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">db, user_id</span>) </span>{
+    <span class="hljs-keyword">return</span> db.select(<span class="hljs-string">'event_id'</span>).from(<span class="hljs-string">'usersJoinEvents'</span>).where(<span class="hljs-string">'usersJoinEvents.user_id'</span>, user_id);
+  },
+
+  gatherState: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">db, event_id, code</span>) </span>{
+    <span class="hljs-keyword">var</span> state = {
+      event_id: event_id,
+      code: code,
+      billData: {}
+    };
+    <span class="hljs-keyword">return</span> <span class="hljs-built_in">module</span>.exports.findBillAmendments(db, event_id)
+      .then(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">amendmentsObj</span>) </span>{
+        state.billData.tipPercent = <span class="hljs-built_in">Number</span>(amendmentsObj[<span class="hljs-number">0</span>].tipPercent);
+        state.billData.taxPercent = <span class="hljs-built_in">Number</span>(amendmentsObj[<span class="hljs-number">0</span>].taxPercent);
+        state.billData.feePercent = <span class="hljs-built_in">Number</span>(amendmentsObj[<span class="hljs-number">0</span>].feePercent);
+        state.billData.discountPercent = <span class="hljs-built_in">Number</span>(amendmentsObj[<span class="hljs-number">0</span>].discountPercent);
+        state.billData.billSent = amendmentsObj[<span class="hljs-number">0</span>].billSent;
+      }).then(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+        <span class="hljs-keyword">return</span> <span class="hljs-built_in">module</span>.exports.findEventUsers(db, event_id)
+          .then(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">users</span>) </span>{
+            state.users = users;
+            users.forEach(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">user</span>) </span>{
+              <span class="hljs-keyword">if</span> (!!user.venmoUsername &amp;&amp; user.host) {
+                state.venmoUsername = user.venmoUsername;
+              }
+            });
+            <span class="hljs-keyword">return</span> <span class="hljs-built_in">Promise</span>.all(_.map(users, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">user</span>) </span>{
+                <span class="hljs-keyword">return</span> <span class="hljs-built_in">module</span>.exports.findUserDishes(db, user.id, event_id);
+              }))
+              .then(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">usersDishesArrays</span>) </span>{
+                usersDishesArrays.forEach(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">userDishesArray</span>) </span>{
+                  _.each(state.users, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">userObj, index, list</span>) </span>{
+                    <span class="hljs-keyword">var</span> username = userObj.username;
+                    <span class="hljs-keyword">if</span> (list[index].dishes === <span class="hljs-literal">undefined</span>) {
+                      list[index].dishes = [];
+                    }
+                    userDishesArray.forEach(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">dishObj</span>) </span>{
+                      <span class="hljs-keyword">if</span> (username === dishObj.username) {
+                        list[index].dishes.push(dishObj);
+                      }
+                    });
+                  });
+                });
+                state.dishes = <span class="hljs-built_in">module</span>.exports.findDishArray(usersDishesArrays);
+
+                <span class="hljs-keyword">return</span> state;
+              });
+          });
+      })
+      .catch(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">err</span>) </span>{
+        <span class="hljs-keyword">throw</span> err;
+      });
+  },
+
+  findEvent: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">db, code</span>) </span>{
+    <span class="hljs-keyword">return</span> db(<span class="hljs-string">'events'</span>).where({
+      code: code
+    }).select(<span class="hljs-string">'id'</span>);
+  },
+
+  findEventUsers: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">db, event_id</span>) </span>{
+    <span class="hljs-keyword">return</span> db.select(<span class="hljs-string">'users.username'</span>, <span class="hljs-string">'usersJoinEvents.status'</span>, <span class="hljs-string">'usersJoinEvents.host'</span>, <span class="hljs-string">'users.id'</span>, <span class="hljs-string">'users.venmoUsername'</span>).from(<span class="hljs-string">'events'</span>).leftJoin(<span class="hljs-string">'usersJoinEvents'</span>, <span class="hljs-string">'events.id'</span>, <span class="hljs-string">'usersJoinEvents.event_id'</span>).leftJoin(<span class="hljs-string">'users'</span>, <span class="hljs-string">'users.id'</span>, <span class="hljs-string">'usersJoinEvents.user_id'</span>).where(<span class="hljs-string">'events.id'</span>, event_id);
+  },
+
+  findUserDishes: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">db, user_id, event_id</span>) </span>{
+    <span class="hljs-keyword">return</span> db.select().from(<span class="hljs-string">'users'</span>).innerJoin(<span class="hljs-string">'usersJoinDishes'</span>, <span class="hljs-string">'users.id'</span>, <span class="hljs-string">'usersJoinDishes.user_id'</span>).innerJoin(<span class="hljs-string">'dishes'</span>, <span class="hljs-string">'dishes.id'</span>, <span class="hljs-string">'usersJoinDishes.dish_id'</span>).where(<span class="hljs-string">'users.id'</span>, user_id)
+      .then(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">dishes</span>) </span>{
+        <span class="hljs-keyword">return</span> dishes.filter(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">dish</span>) </span>{
+          <span class="hljs-keyword">return</span> dish.event_id === event_id;
+        });
+      });
+  },
+
+  findBillAmendments: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">db, event_id</span>) </span>{
+    <span class="hljs-keyword">return</span> db(<span class="hljs-string">'events'</span>).select(<span class="hljs-string">'tipPercent'</span>, <span class="hljs-string">'taxPercent'</span>, <span class="hljs-string">'feePercent'</span>, <span class="hljs-string">'discountPercent'</span>, <span class="hljs-string">'billSent'</span>)
+      .where(<span class="hljs-string">'id'</span>, event_id);
+  },
+
+  generateCode: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">db</span>) </span>{
+    <span class="hljs-keyword">return</span> db(<span class="hljs-string">'appSettings'</span>).select(<span class="hljs-string">'*'</span>).where(<span class="hljs-string">'id'</span>, <span class="hljs-number">1</span>)
+    .then(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">setting</span>) </span>{
+        <span class="hljs-keyword">return</span> setting[<span class="hljs-number">0</span>]
+    })
+    .then(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">settings</span>) </span>{
+      <span class="hljs-keyword">var</span> code = roomNames[settings.wordIndex]
+      <span class="hljs-keyword">if</span> (settings.wordIndex === roomNames.length<span class="hljs-number">-1</span>) {
+        settings.wordIndex = <span class="hljs-number">0</span>;
+        settings.counter++
+      } <span class="hljs-keyword">else</span> {
+        settings.wordIndex++
+      }
+      code = settings.counter &gt; <span class="hljs-number">0</span> ? code + settings.counter : code;
+      <span class="hljs-keyword">return</span> db(<span class="hljs-string">'appSettings'</span>).update({
+        wordIndex: settings.wordIndex,
+        counter: settings.counter
+      })
+      .then(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">word</span>) </span>{
+        <span class="hljs-keyword">return</span> code
+      })
+    })
+  },
+
+  setFirstWord: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">db</span>) </span>{
+    <span class="hljs-keyword">return</span> db(<span class="hljs-string">'appSettings'</span>).select(<span class="hljs-string">'*'</span>).where(<span class="hljs-string">'id'</span>, <span class="hljs-number">1</span>)
+    .then(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">setting</span>) </span>{
+      <span class="hljs-keyword">if</span> (setting.length === <span class="hljs-number">0</span>) {
+        <span class="hljs-keyword">return</span> db(<span class="hljs-string">'appSettings'</span>).insert({
+          wordIndex: <span class="hljs-number">0</span>,
+          counter: <span class="hljs-number">0</span>
+        })
+      } <span class="hljs-keyword">else</span> {
+        <span class="hljs-keyword">return</span> setting[<span class="hljs-number">0</span>]
+      }
+    })
+  },
+
+  findDishArray: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">usersDishesArray</span>) </span>{
+    <span class="hljs-keyword">var</span> result = [];
+    usersDishesArray.forEach(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">dishArray</span>) </span>{
+      dishArray.forEach(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">dishObj</span>) </span>{</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-7">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <p>check if dish is shared</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">var</span> isSharedDish = result.reduce(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">isInside, dish, index</span>) </span>{
+          <span class="hljs-keyword">if</span> (isInside) {
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+          }
+          <span class="hljs-keyword">if</span> (dish.dish_id === dishObj.dish_id) {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-8">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-8">&#182;</a>
+              </div>
+              <p>if so, add user to users prop</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            result[index].users.push(dishObj.user_id);
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+          }
+        }, <span class="hljs-literal">false</span>);
+
+        <span class="hljs-keyword">if</span> (!isSharedDish) {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-9">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-9">&#182;</a>
+              </div>
+              <p>otherwise add user prop and push into array</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>          dishObj.users = [dishObj.user_id];
+          <span class="hljs-keyword">delete</span> dishObj.user_id;
+          <span class="hljs-keyword">delete</span> dishObj.username;
+          <span class="hljs-keyword">delete</span> dishObj.id;
+          result.push(dishObj);
+        }
+      });
+    });
+    <span class="hljs-keyword">return</span> result;
+  }
+};</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>
