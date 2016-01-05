@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>Event Router</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+      <ul id="jump_to">
+        <li>
+          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+          <a class="small" href="javascript:void(0);">+</a>
+          <div id="jump_wrapper">
+          <div id="jump_page_wrapper">
+            <div id="jump_page">
+              
+                
+                <a class="source" href="allDishes.controller.html">
+                  allDishes.controller.js
+                </a>
+              
+                
+                <a class="source" href="allDishes.factory.html">
+                  allDishes.factory.js
+                </a>
+              
+                
+                <a class="source" href="app.factory.html">
+                  app.factory.js
+                </a>
+              
+                
+                <a class="source" href="app.module.html">
+                  app.module.js
+                </a>
+              
+                
+                <a class="source" href="app.routes.html">
+                  app.routes.js
+                </a>
+              
+                
+                <a class="source" href="dashboard.controller.html">
+                  dashboard.controller.js
+                </a>
+              
+                
+                <a class="source" href="dashboard.factory.html">
+                  dashboard.factory.js
+                </a>
+              
+                
+                <a class="source" href="guestBill.controller.html">
+                  guestBill.controller.js
+                </a>
+              
+                
+                <a class="source" href="home.controller.html">
+                  home.controller.js
+                </a>
+              
+                
+                <a class="source" href="home.factory.html">
+                  home.factory.js
+                </a>
+              
+                
+                <a class="source" href="hostBill.controller.html">
+                  hostBill.controller.js
+                </a>
+              
+                
+                <a class="source" href="loading.controller.html">
+                  loading.controller.js
+                </a>
+              
+                
+                <a class="source" href="loading.factory.html">
+                  loading.factory.js
+                </a>
+              
+                
+                <a class="source" href="oAuth.controller.html">
+                  oAuth.controller.js
+                </a>
+              
+                
+                <a class="source" href="oAuth.factory.html">
+                  oAuth.factory.js
+                </a>
+              
+                
+                <a class="source" href="socket.module.html">
+                  socket.module.js
+                </a>
+              
+                
+                <a class="source" href="navbar.controller.html">
+                  navbar.controller.js
+                </a>
+              
+                
+                <a class="source" href="middleware.html">
+                  middleware.js
+                </a>
+              
+                
+                <a class="source" href="oauthRouter.html">
+                  oauthRouter.js
+                </a>
+              
+                
+                <a class="source" href="roomNames.html">
+                  roomNames.js
+                </a>
+              
+                
+                <a class="source" href="eventRouter.html">
+                  eventRouter.js
+                </a>
+              
+                
+                <a class="source" href="server.html">
+                  server.js
+                </a>
+              
+                
+                <a class="source" href="sockets.html">
+                  sockets.js
+                </a>
+              
+                
+                <a class="source" href="utility.html">
+                  utility.js
+                </a>
+              
+            </div>
+          </div>
+        </li>
+      </ul>
+    
+    <ul class="sections">
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              <h1 id="event-router">Event Router</h1>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <h5 id="-back-to-table-of-contents-tableofcontents-html-"><a href="./tableofcontents.html">Back to Table of Contents</a></h5>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p><strong>Summary</strong>: Express router which handles requests generally related to events/bills.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>
+<span class="hljs-keyword">var</span> generateData = <span class="hljs-built_in">require</span>(<span class="hljs-string">'../../generateData'</span>);
+<span class="hljs-keyword">var</span> db = <span class="hljs-built_in">require</span>(<span class="hljs-string">'../../db/db'</span>);
+<span class="hljs-keyword">var</span> handleSocket = <span class="hljs-built_in">require</span>(<span class="hljs-string">'../sockets'</span>);
+<span class="hljs-keyword">var</span> util = <span class="hljs-built_in">require</span>(<span class="hljs-string">'../utility.js'</span>);
+<span class="hljs-keyword">var</span> _ = <span class="hljs-built_in">require</span>(<span class="hljs-string">'underscore'</span>);
+<span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">app, io</span>) </span>{</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p>On server start, wait for database to be set up then check if application settings are stored in database.  If no settings found, set the defaults.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  setTimeout(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+    util.setFirstWord(db)
+  }, <span class="hljs-number">5000</span>)</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p><strong>Direct route to join a specific room</strong>  </p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  app.get(<span class="hljs-string">'/:code'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">req, res</span>) </span>{</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <p>Redirect client to name entry screen</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    res.redirect(<span class="hljs-string">'/#/'</span> + req.params.code.toLowerCase() + <span class="hljs-string">'/loading'</span>);
+  });</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-7">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <p><strong>Get users associated with a specific event code</strong></p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  app.post(<span class="hljs-string">'/eventInfo'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">req, res</span>) </span>{
+    <span class="hljs-keyword">var</span> code = req.body.code;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-8">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-8">&#182;</a>
+              </div>
+              <p>Find event associated with event code</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    util.findEvent(db, code)
+      .then(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">event_id</span>) </span>{
+        <span class="hljs-keyword">if</span> (event_id.length !== <span class="hljs-number">0</span>) {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-9">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-9">&#182;</a>
+              </div>
+              <p>Query for users associated with that event’s <code>event_id</code></p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>          <span class="hljs-keyword">return</span> util.gatherState(db, event_id[<span class="hljs-number">0</span>].id, code) <span class="hljs-comment">// real data</span>
+            .then(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">eventInfo</span>) </span>{</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-10">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-10">&#182;</a>
+              </div>
+              <p>Send list of users to client, used currently for room attendence on loading page</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>              res.send(eventInfo.users);
+            });
+        } <span class="hljs-keyword">else</span> {
+          res.send(<span class="hljs-literal">false</span>);
+        }
+      }).catch(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">err</span>) </span>{
+        res.send(<span class="hljs-number">500</span>);
+        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Room doesn't exist."</span>);
+        <span class="hljs-keyword">throw</span> err;
+      });
+  });</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-11">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-11">&#182;</a>
+              </div>
+              <p><strong>Create an event</strong></p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  app.post(<span class="hljs-string">'/createEvent'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">req, res</span>) </span>{
+    <span class="hljs-keyword">var</span> username = req.body.username;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-12">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-12">&#182;</a>
+              </div>
+              <p>Create a unique event code</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    util.generateCode(db)
+    .then(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">code</span>) </span>{</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-13">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-13">&#182;</a>
+              </div>
+              <p>Create the event</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      util.createEvent(db, code, username)
+        .then(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">dataObj</span>) </span>{</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-14">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-14">&#182;</a>
+              </div>
+              <p>Send relevant information to client to be stored in window.localStorage</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>          res.status(<span class="hljs-number">200</span>).send({
+            code: code,
+            user_id: dataObj.user_id[<span class="hljs-number">0</span>],
+            event_id: dataObj.event_id[<span class="hljs-number">0</span>]
+          });
+        })
+        .catch(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">err</span>) </span>{
+          <span class="hljs-keyword">throw</span> err;
+        });
+    })
+  });</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-15">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-15">&#182;</a>
+              </div>
+              <p><strong>Check if a event code exists in the database</strong></p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  app.get(<span class="hljs-string">'/checkCode/:code'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">req, res</span>) </span>{
+    util.checkCode(db, req.params.code)
+      .then(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">billExists</span>) </span>{
+        res.send(billExists);
+      });
+  });</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-16">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-16">&#182;</a>
+              </div>
+              <p><strong>Make a new user</strong></p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  app.post(<span class="hljs-string">'/newUser'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">req, res</span>) </span>{
+    <span class="hljs-keyword">var</span> username = req.body.username;
+    <span class="hljs-keyword">var</span> code = req.body.code;
+    <span class="hljs-keyword">var</span> host = req.body.host || <span class="hljs-literal">false</span>;
+    <span class="hljs-keyword">var</span> event_id;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-17">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-17">&#182;</a>
+              </div>
+              <p>Find event ID associated with event code</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    util.findEvent(db, code)
+      .then(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">eventIdArray</span>) </span>{
+        event_id = eventIdArray[<span class="hljs-number">0</span>].id;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-18">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-18">&#182;</a>
+              </div>
+              <p>Write new user to database</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">return</span> util.createUser(db, username, event_id, <span class="hljs-literal">false</span>);
+      })
+      .then(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">user_id</span>) </span>{</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-19">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-19">&#182;</a>
+              </div>
+              <p>Send relevant information to client to be stored in window.localStorage</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        res.status(<span class="hljs-number">200</span>).send({
+          user_id: user_id[<span class="hljs-number">0</span>],
+          event_id: event_id
+        });
+      })
+      .catch(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">err</span>) </span>{
+        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Error!"</span>, err);
+        res.status(<span class="hljs-number">500</span>).send(err);
+      });
+  });
+
+  <span class="hljs-keyword">var</span> connections = {};</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-20">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-20">&#182;</a>
+              </div>
+              <p><strong>Wildcard route for connecting users to their respective socket.io namespace</strong></p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  app.post(<span class="hljs-string">'/*'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">req, res</span>) </span>{
+    <span class="hljs-keyword">var</span> code = req.url.slice(<span class="hljs-number">1</span>);
+    <span class="hljs-keyword">var</span> user_id = req.body.user_id;
+
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"NEW POST /* REQUEST: with ID"</span>, user_id, <span class="hljs-string">"and code"</span>, code);
+    res.sendStatus(<span class="hljs-number">200</span>);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-21">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-21">&#182;</a>
+              </div>
+              <p>Check for duplicate requests to avoid duplicate sets of socket event listeners for a given user</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">if</span> (!connections[user_id]) {
+      connections[user_id] = <span class="hljs-literal">true</span>;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-22">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-22">&#182;</a>
+              </div>
+              <p>Remove check after a short period to allow refreshing of page</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      setTimeout(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+        connections[user_id] = <span class="hljs-literal">false</span>;
+      }, <span class="hljs-number">2000</span>);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-23">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-23">&#182;</a>
+              </div>
+              <p>Query database for event id based on code</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      util.findEvent(db, code)
+        .then(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">event_id</span>) </span>{</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-24">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-24">&#182;</a>
+              </div>
+              <p>check for an event</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>          <span class="hljs-keyword">if</span> (event_id.length !== <span class="hljs-number">0</span>) {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-25">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-25">&#182;</a>
+              </div>
+              <p>Retrieve the state of the event to send to socket</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            <span class="hljs-keyword">return</span> util.gatherState(db, event_id[<span class="hljs-number">0</span>].id, code)
+              .then(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">eventInfo</span>) </span>{</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-26">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-26">&#182;</a>
+              </div>
+              <p>Extract new user data object to send to other existing clients</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                <span class="hljs-keyword">var</span> newUserObj = _.reduce(eventInfo.users, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">user, curr</span>) </span>{
+                  <span class="hljs-keyword">if</span> (!!user) {
+                    <span class="hljs-keyword">return</span> user;
+                  }
+                  <span class="hljs-keyword">if</span> (curr.id.toString() === req.body.user_id.toString()) {
+                    <span class="hljs-keyword">return</span> curr;
+                  }
+                  <span class="hljs-keyword">return</span> user;
+                }, <span class="hljs-literal">false</span>);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-27">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-27">&#182;</a>
+              </div>
+              <p>Handle the socket connection</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                handleSocket(req.url, eventInfo, io, newUserObj);
+              });
+          }
+        })
+        .catch(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">err</span>) </span>{
+          <span class="hljs-keyword">throw</span> err;
+        });
+    }
+  });
+  
+};</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>

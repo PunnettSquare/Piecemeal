@@ -2,7 +2,7 @@
 
 <html>
 <head>
-  <title>Piecemeal App Module</title>
+  <title>Middleware</title>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
   <link rel="stylesheet" media="all" href="docco.css" />
@@ -154,7 +154,7 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-1">&#182;</a>
               </div>
-              <h1 id="piecemeal-app-module">Piecemeal App Module</h1>
+              <h1 id="middleware">Middleware</h1>
 
             </div>
             
@@ -171,6 +171,25 @@
 
             </div>
             
+            <div class="content"><div class='highlight'><pre>
+<span class="hljs-keyword">var</span> path = <span class="hljs-built_in">require</span>(<span class="hljs-string">'path'</span>);
+<span class="hljs-keyword">var</span> bodyParser = <span class="hljs-built_in">require</span>(<span class="hljs-string">'body-parser'</span>);
+<span class="hljs-keyword">var</span> morgan = <span class="hljs-built_in">require</span>(<span class="hljs-string">'morgan'</span>);
+
+<span class="hljs-built_in">module</span>.exports = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">app, express, io</span>) </span>{
+
+  app.use(bodyParser.urlencoded({
+    extended: <span class="hljs-literal">true</span>
+  }));
+
+  app.use(bodyParser.json());
+
+  <span class="hljs-keyword">var</span> oauthRouter = express.Router();
+
+  <span class="hljs-keyword">var</span> eventRouter = express.Router();
+
+  app.use(morgan(<span class="hljs-string">'dev'</span>));</pre></div></div>
+            
         </li>
         
         
@@ -180,12 +199,11 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-3">&#182;</a>
               </div>
-              <p><strong>Summary</strong>: Initializes Piecemeal application.</p>
+              <p><strong>Static folder for serving application assets</strong></p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>
-angular.module(<span class="hljs-string">'Piecemeal'</span>, [<span class="hljs-string">'ui.router'</span>, <span class="hljs-string">'ngMessages'</span>])</pre></div></div>
+            <div class="content"><div class='highlight'><pre>  app.use(<span class="hljs-string">'/'</span>, express.static(path.join(__dirname, <span class="hljs-string">'../../client/'</span>)));</pre></div></div>
             
         </li>
         
@@ -196,14 +214,47 @@ angular.module(<span class="hljs-string">'Piecemeal'</span>, [<span class="hljs-
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-4">&#182;</a>
               </div>
-              <p>Set lodash <code>_</code> as a property of window</p>
+              <p><strong>Static folder for serving documentation files</strong></p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  .constant(<span class="hljs-string">'_'</span>, <span class="hljs-built_in">window</span>._)
-  .run(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">$rootScope</span>) </span>{
-    $rootScope._ = <span class="hljs-built_in">window</span>._;
-  });</pre></div></div>
+            <div class="content"><div class='highlight'><pre>  app.use(<span class="hljs-string">'/docs'</span>, express.static(__dirname + <span class="hljs-string">'../../docs'</span>));</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p> <strong>Router to handle oAuth requests</strong></p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  app.use(<span class="hljs-string">'/auth'</span>, oauthRouter);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <p><strong>Router to handle general application requests</strong></p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  app.use(<span class="hljs-string">'/'</span>, eventRouter);
+
+  <span class="hljs-built_in">require</span>(<span class="hljs-string">'../oauth/oauthRouter'</span>)(oauthRouter);
+
+  <span class="hljs-built_in">require</span>(<span class="hljs-string">'../routes/eventRouter'</span>)(eventRouter, io);
+
+};</pre></div></div>
             
         </li>
         

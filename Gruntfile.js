@@ -311,7 +311,8 @@ module.exports = function(grunt) {
         '!<%= project.client %>/app/guestBill/guestBill.factory.js',
         '!<%= project.client %>/app/hostBill/hostBill.factory.js',
         '!<%= project.client %>/app/hostReceipt/*.js',
-        '!<%= project.client %>/app/loading/loading.directive.js'
+        '!<%= project.client %>/app/loading/loading.directive.js',
+        'server/**/*.js'
       ],
       options: {
         output: 'docs/'

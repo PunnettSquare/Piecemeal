@@ -1,9 +1,14 @@
+// # Utility and Helper Functions
+
+// ##### [Back to Table of Contents](./tableofcontents.html)
+
+// **Summary**: Various helper functions which interact with the database
+
 var _ = require('underscore');
 var roomNames = require('./roomNames.js');
-var counter = 0; // for room names
-var incrementer = 0;
 
 module.exports = {
+  // Create event in database and populate users and events junction table
   createEvent: function(db, code, username) {
     return db('users').insert({
         username: username
@@ -30,7 +35,7 @@ module.exports = {
           });
       });
   },
-
+  // Check if a event code exists in the database
   checkCode: function(db, code) {
     return db('events').where({
         code: code
@@ -44,7 +49,7 @@ module.exports = {
         }
       })
   },
-
+  
   createEventVenmo: function(db, code, user_id) {
     return db('events').insert({
         code: code
@@ -237,17 +242,6 @@ module.exports = {
       });
   },
 
-  // example output from findUserDishes
-  // [ { id: 3,
-  //     username: 'Fawn',
-  //     dish_id: 3,
-  //     user_id: 7,
-  //     name: 'chicken',
-  //     cost: 10,
-  //     event_id: 7 },
-  // ]
-  // example output from findEventUsers
-  //[{username: 'Fawn', status: true, host: true, id: 7 }]
   findEvent: function(db, code) {
     return db('events').where({
       code: code
@@ -264,7 +258,7 @@ module.exports = {
         return dishes.filter(function(dish) {
           return dish.event_id === event_id;
         });
-      }); // TODO only get dishes associated with the event
+      });
   },
 
   findBillAmendments: function(db, event_id) {
@@ -272,17 +266,6 @@ module.exports = {
       .where('id', event_id);
   },
 
-  // randomly generated string
-  // generateCode: function() {
-  //   function randomString(length, chars) {
-  //     var result = '';
-  //     for (var i = length; i > 0; --i) result += chars[Math.floor(Math.random() * chars.length)];
-  //     return result;
-  //   }
-  //   return randomString(8, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
-  // }
-
-  // food related words
   generateCode: function(db) {
     return db('appSettings').select('*').where('id', 1)
     .then(function(setting) {
