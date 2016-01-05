@@ -1,7 +1,13 @@
+// # Venmo oAuth Router
+
+// ##### [Back to Table of Contents](./tableofcontents.html)
+
+// **Summary**: Express router which handles requests related to authenticating with Venmo
+
+
 var passport = require('passport');
 var VenmoStrategy = require('passport-venmo').Strategy;
 var session = require('express-session');
-
 var callbackURL;
 if (process.env.PORT) {
   var venmoInfo = {
@@ -17,6 +23,8 @@ var cookieParser = require('cookie-parser');
 var db = require('../../db/db');
 var util = require('../utility');
 module.exports = function(app) {
+
+  // **Passport Section**
 
   app.use(cookieParser());
   app.use(session({
@@ -37,16 +45,19 @@ module.exports = function(app) {
         done(null, user);
       });
   });
-
+  // **Passport Venmo Strategy**
   passport.use(new VenmoStrategy({
       clientID: venmoInfo.id,
       clientSecret: venmoInfo.secret,
       callbackURL: callbackURL
     },
+    // **Callback invoked after each authentication**
     function(accessToken, refreshToken, profile, done) {
       var venmoUsername = profile.username;
+      // Check database to see if user already exists
       util.findUser(db, venmoUsername)
         .then(function(result) {
+          // If user is not found, create one
           if (result.length === 0) {
             db('users').insert({
                 venmoUsername: venmoUsername,
@@ -66,7 +77,7 @@ module.exports = function(app) {
         });
     }
   ));
-
+  // **Initiate Venmo oAuth**
   app.get('/venmo', passport.authenticate('venmo', {
     scope: [
       'make_payments',
@@ -78,7 +89,7 @@ module.exports = function(app) {
     ],
     failureRedirect: '/'
   }));
-
+  // **Venmo oAuth callback route**
   app.get('/venmo/callback',
     passport.authenticate('venmo', {
       failureRedirect: '/'
@@ -87,6 +98,8 @@ module.exports = function(app) {
       res.redirect('/#/dashboard');
     });
 
+
+  //**Create event route for Venmo authenticated hosts returning from oAuth**
   app.get('/createEvent', function(req, res) {
     var user_id = req.user[0].id;
     var username = req.user[0].username;
@@ -110,6 +123,7 @@ module.exports = function(app) {
     }
   });
 
+  // **Route to allow Venmo authenticated hosts to create events without reauthenticating**
   app.post('/createEvent', function(req, res) {
     var user_id = req.body.id;
     var username = req.body.username; 
@@ -126,6 +140,8 @@ module.exports = function(app) {
     })
   });
 
+  // **Get a list of bills associated with a certain user**  
+  // Built out in preparation for the unfinished dashboard
   app.get('/getBills', function(req, res) {
     var user_id = req.user[0].id;
     var username = req.user[0].username;
