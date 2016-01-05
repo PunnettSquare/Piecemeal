@@ -186,14 +186,33 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-5">&#182;</a>
               </div>
-              <p><strong>Parameters:</strong> TODO</p>
+              <p><strong>Parameters:</strong>
+<code>socketFactory</code>: <a href="../docs/socket.module.html">Wrapper</a> for SocketIO integrated with Angular’s digest cycle
+<code>$rootScope</code>: Used to integrate into digest cycle
+<code>$window</code>: The socket is stored as a global variable on the window object
+<code>$location</code>: Makes the URL in the browser address bar (based on the window.location) editable</p>
 
             </div>
             
             <div class="content"><div class='highlight'><pre>
-  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">appFactory</span>(<span class="hljs-params">socketFactory, $rootScope, $window, $location</span>) </span>{
+  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">appFactory</span>(<span class="hljs-params">socketFactory, $rootScope, $window, $location</span>) </span>{</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <p><strong>appFactory methods:</strong>
+.data and .data.billData are added subsequently</p>
 
-    <span class="hljs-keyword">var</span> services = { <span class="hljs-comment">// Added separately: .data, .data.billData</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>
+    <span class="hljs-keyword">var</span> services = {
       initListeners: initListeners,
       addDish: addDish,
       shareDish: shareDish,
@@ -251,19 +270,6 @@
       <span class="hljs-keyword">return</span> dish.cost / dish.users.length;
     }
 
-    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">arrayToSentence</span>(<span class="hljs-params">array</span>) </span>{
-      array = _.map(array, _.capitalize);
-      <span class="hljs-keyword">if</span> (array.length === <span class="hljs-number">1</span>) {
-        <span class="hljs-keyword">return</span> array[<span class="hljs-number">0</span>];
-      }
-      <span class="hljs-keyword">if</span> (array.length === <span class="hljs-number">2</span>) {
-        <span class="hljs-keyword">return</span> array.join(<span class="hljs-string">" and "</span>);
-      } <span class="hljs-keyword">else</span> {
-        <span class="hljs-keyword">var</span> last = array.pop();
-        <span class="hljs-keyword">return</span> array.join(<span class="hljs-string">", "</span>) + <span class="hljs-string">" and "</span> + last;
-      }
-    }
-
     <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">goToAddDish</span>(<span class="hljs-params"></span>) </span>{
       $location.path(<span class="hljs-string">'/'</span> + services.getSessStorage(<span class="hljs-string">'code'</span>) + <span class="hljs-string">'/addDish'</span>);
     }
@@ -291,9 +297,22 @@
         }
       }
       services.data.dishes.push(dish);
-    }
+    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-7">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <p>Add user id to dish and dish to user</p>
 
-    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">shareDish</span>(<span class="hljs-params">dish_id, user_id</span>) </span>{
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">shareDish</span>(<span class="hljs-params">dish_id, user_id</span>) </span>{
       <span class="hljs-keyword">var</span> dishObj;
       services.data.dishes.forEach(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">dish</span>) </span>{
         <span class="hljs-keyword">if</span> (dish.dish_id === dish_id) {
@@ -306,9 +325,22 @@
           user.dishes.push(dishObj);
         }
       });
-    }
+    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-8">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-8">&#182;</a>
+              </div>
+              <p>Remove user id from dish and dish from user</p>
 
-    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">unshareDish</span>(<span class="hljs-params">dish_id, user_id</span>) </span>{
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">unshareDish</span>(<span class="hljs-params">dish_id, user_id</span>) </span>{
       services.data.dishes.forEach(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">dish, dishIndex</span>) </span>{
         <span class="hljs-keyword">if</span> (dish.dish_id === dish_id) {
           dish.users.splice(dish.users.indexOf(user_id), <span class="hljs-number">1</span>);
@@ -330,9 +362,22 @@
           user.dishes.splice(dishIndex, <span class="hljs-number">1</span>);
         }
       });
-    }
+    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-9">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-9">&#182;</a>
+              </div>
+              <p>Delete everything stored in localStorage except for login info in order to leave the bill. Redirect to homepage. (Why 1 second wait?) (Rename as leaveBill?)</p>
 
-    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">logout</span>(<span class="hljs-params"></span>) </span>{
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">logout</span>(<span class="hljs-params"></span>) </span>{
       <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> prop <span class="hljs-keyword">in</span> $<span class="hljs-built_in">window</span>.localStorage) {
         <span class="hljs-keyword">if</span> (prop !== <span class="hljs-string">'username'</span> &amp;&amp; prop !== <span class="hljs-string">'venmoUsername'</span> &amp;&amp; prop !== <span class="hljs-string">'user_id'</span>) {
           <span class="hljs-keyword">delete</span> $<span class="hljs-built_in">window</span>.localStorage[prop];
@@ -342,9 +387,48 @@
       setTimeout(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
         $<span class="hljs-built_in">window</span>.location.reload();
       }, <span class="hljs-number">1</span>);
-    }
+    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-10">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-10">&#182;</a>
+              </div>
+              <p>Turn an array into sentence format with commas and “and”</p>
 
-    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getUsersByDish</span>(<span class="hljs-params">dish, users</span>) </span>{
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">arrayToSentence</span>(<span class="hljs-params">array</span>) </span>{
+      array = _.map(array, _.capitalize);
+      <span class="hljs-keyword">if</span> (array.length === <span class="hljs-number">1</span>) {
+        <span class="hljs-keyword">return</span> array[<span class="hljs-number">0</span>];
+      }
+      <span class="hljs-keyword">if</span> (array.length === <span class="hljs-number">2</span>) {
+        <span class="hljs-keyword">return</span> array.join(<span class="hljs-string">" and "</span>);
+      } <span class="hljs-keyword">else</span> {
+        <span class="hljs-keyword">var</span> last = array.pop();
+        <span class="hljs-keyword">return</span> array.join(<span class="hljs-string">", "</span>) + <span class="hljs-string">" and "</span> + last;
+      }
+    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-11">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-11">&#182;</a>
+              </div>
+              <p>Return list of users on a dish in sentence format</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getUsersByDish</span>(<span class="hljs-params">dish, users</span>) </span>{
       <span class="hljs-keyword">return</span> arrayToSentence(
         _(dish.users).map(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">id</span>) </span>{
           <span class="hljs-keyword">return</span> users[_.findIndex(users, {
@@ -358,11 +442,11 @@
         </li>
         
         
-        <li id="section-6">
+        <li id="section-12">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-6">&#182;</a>
+                <a class="pilcrow" href="#section-12">&#182;</a>
               </div>
               <p>RootScope Broadcast: Upon refresh, controllers attempt to reference appFactory.data faster than the asynchronous get request to retrieve data, resulting in a reference to null. Therefore, to persist data on refresh, when the ‘joined’ event is emitted, a broadcast is sent out via the $rootScope message bus in order to let controllers know it is OK to retrieve a reference to appFactory.data.</p>
 
@@ -385,11 +469,11 @@
         </li>
         
         
-        <li id="section-7">
+        <li id="section-13">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-7">&#182;</a>
+                <a class="pilcrow" href="#section-13">&#182;</a>
               </div>
               <p>data format: {cost: 3, name: “rice”, user_id: “29319”, event_id: 1, users: [“29319”]}</p>
 
@@ -404,11 +488,11 @@
         </li>
         
         
-        <li id="section-8">
+        <li id="section-14">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-8">&#182;</a>
+                <a class="pilcrow" href="#section-14">&#182;</a>
               </div>
               <p>data format: {user_id: 24, dish_id: 14}</p>
 
