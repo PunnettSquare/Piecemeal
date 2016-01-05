@@ -6,7 +6,7 @@
     "lint": "jscs ./",
     "start": "node server/server.js",
     "postinstall": "./node_modules/bower/bin/bower cache clean && ./node_modules/bower/bin/bower install",
-    "test": "node test/selenium/duplicationTests.js"
+    "test": "karma start karma.conf.js && node test/selenium/duplicationTests.js"
   },
   "pre-commit": "lint",
   "repository": {
