@@ -15,11 +15,18 @@
 
   appFactory.$inject = ['socketFactory', '$rootScope', '$window', '$location'];
 
-  // **Parameters:** TODO
+  // **Parameters:**
+  // ```socketFactory```: [Wrapper](../docs/socket.module.html) for SocketIO integrated with Angular's digest cycle
+  // ```$rootScope```: Used to integrate into digest cycle
+  // ```$window```: The socket is stored as a global variable on the window object
+  // ```$location```: Makes the URL in the browser address bar (based on the window.location) editable
 
   function appFactory(socketFactory, $rootScope, $window, $location) {
 
-    var services = { // Added separately: .data, .data.billData
+    // **appFactory methods:**
+    // .data and .data.billData are added subsequently
+
+    var services = {
       initListeners: initListeners,
       addDish: addDish,
       shareDish: shareDish,
@@ -77,19 +84,6 @@
       return dish.cost / dish.users.length;
     }
 
-    function arrayToSentence(array) {
-      array = _.map(array, _.capitalize);
-      if (array.length === 1) {
-        return array[0];
-      }
-      if (array.length === 2) {
-        return array.join(" and ");
-      } else {
-        var last = array.pop();
-        return array.join(", ") + " and " + last;
-      }
-    }
-
     function goToAddDish() {
       $location.path('/' + services.getSessStorage('code') + '/addDish');
     }
@@ -119,6 +113,7 @@
       services.data.dishes.push(dish);
     }
 
+    // Add user id to dish and dish to user
     function shareDish(dish_id, user_id) {
       var dishObj;
       services.data.dishes.forEach(function(dish) {
@@ -134,6 +129,7 @@
       });
     }
 
+    // Remove user id from dish and dish from user
     function unshareDish(dish_id, user_id) {
       services.data.dishes.forEach(function(dish, dishIndex) {
         if (dish.dish_id === dish_id) {
@@ -158,6 +154,7 @@
       });
     }
 
+    // Delete everything stored in localStorage except for login info in order to leave the bill. Redirect to homepage. (Why 1 second wait?) (Rename as leaveBill?)
     function logout() {
       for (var prop in $window.localStorage) {
         if (prop !== 'username' && prop !== 'venmoUsername' && prop !== 'user_id') {
@@ -170,6 +167,21 @@
       }, 1);
     }
 
+    // Turn an array into sentence format with commas and "and"
+    function arrayToSentence(array) {
+      array = _.map(array, _.capitalize);
+      if (array.length === 1) {
+        return array[0];
+      }
+      if (array.length === 2) {
+        return array.join(" and ");
+      } else {
+        var last = array.pop();
+        return array.join(", ") + " and " + last;
+      }
+    }
+
+    // Return list of users on a dish in sentence format
     function getUsersByDish(dish, users) {
       return arrayToSentence(
         _(dish.users).map(function(id) {
