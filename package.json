@@ -6,7 +6,7 @@
     "lint": "jscs ./",
     "start": "node server/server.js",
     "postinstall": "./node_modules/bower/bin/bower cache clean && ./node_modules/bower/bin/bower install",
-    "test": "karma start karma.conf.js && node test/selenium/duplicationTests.js"
+    "test": "karma start karma.conf.js"
   },
   "pre-commit": "lint",
   "repository": {
@@ -62,9 +62,11 @@
     "grunt-wiredep": "^2.0.0",
     "jasmine-core": "^2.4.1",
     "karma": "^0.13.15",
+    "karma-chrome-launcher": "^0.2.2",
     "karma-jasmine": "^0.3.6",
-    "karma-phantomjs-launcher": "^0.2.1",
+    "karma-phantomjs-launcher": "^0.2.3",
     "load-grunt-tasks": "^3.3.0",
+    "phantomjs": "^1.9.19",
     "time-grunt": "^1.2.2"
   }
 }
