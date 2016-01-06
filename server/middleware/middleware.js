@@ -16,7 +16,7 @@ module.exports = function(app, express, io) {
 
   app.use(morgan('dev'));
   app.use('/', express.static(path.join(__dirname, '../../client/')));
-
+  app.use('/', express.static(path.join(__dirname, '../../docs/')));
 
   // app.use('/', express.static(path.join(__dirname, '../../dist/client')));
 

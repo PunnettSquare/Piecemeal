@@ -1,8 +1,10 @@
-var _ = require('underscore');
+var _ = require('lodash');
+var helpers = require('./helpers');
+var webdriver = require('selenium-webdriver');
+var Promise = require('bluebird');
 var count = 0;
 var run = function() {
-  var helpers = require('./helpers');
-  var webdriver = require('selenium-webdriver');
+
   var hostBrowser = new webdriver.Builder().usingServer().withCapabilities({
     'browserName': 'chrome'
   }).build();
@@ -17,8 +19,7 @@ var run = function() {
   }).build();
   // var url = 'http://piecemeal.herokuapp.com';
   var url = 'localhost:8080/';
-  var Promise = require('bluebird');
-  var _ = require('lodash');
+
   var tipInput = '20';
   var taxInput = '8';
   return require('./botPiecemeal')(helpers, webdriver, hostBrowser, guestOne, guestTwo, guestThree, url, 30000)

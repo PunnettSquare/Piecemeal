@@ -307,7 +307,7 @@ module.exports = function(grunt) {
 
     docco: {
       src: ['<%= project.js %>',
-      'tableofcontents.js',
+        'tableofcontents.js',
         '!<%= project.client %>/app/addDish/*.js',
         '!<%= project.client %>/app/guestBill/guestBill.factory.js',
         '!<%= project.client %>/app/hostBill/hostBill.factory.js',
@@ -326,10 +326,10 @@ module.exports = function(grunt) {
       //   ],
       //   tasks: ['newer:injector:scripts']
       // }
-      bower: {
-        files: ['bower.json'],
-        tasks: ['wiredep']
-      },
+      // bower: {
+      //   files: ['bower.json'],
+      //   tasks: ['wiredep']
+      // },
       docco: {
         files: ['<%= project.client %>/**/*.js'],
         tasks: ['docco']

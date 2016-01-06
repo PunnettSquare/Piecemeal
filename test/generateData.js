@@ -1,5 +1,5 @@
-var util = require('./server/utility');
-var db = require('./db/db');
+var util = require('../server/utility');
+var db = require('../db/db');
 module.exports = function() {
   var roomName = 'testRoom';
   var hostUserName = 'Jackson';

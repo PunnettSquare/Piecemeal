@@ -37,13 +37,3 @@
 
 
 // ## Back-End
-
-// #### [app.js](./app.html)
-// * Global App Object. Defines initialization with
-// canvas properties, Socket.io listeners, utility functions and WebRTC video components.
-
-// #### [initialize.js](./initialize.html)
-// * Initialize App and register canvas mouse event listeners.
-
-// #### [whiteboard.js](./whiteboard.html)
-// * Angular services and Controllers for the whiteboard.
