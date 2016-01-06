@@ -1,4 +1,3 @@
-var _ = require('underscore');
 var count = 0;
 var run = function() {
   var helpers = require('./helpers');
