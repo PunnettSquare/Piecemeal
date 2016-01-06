@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>roomNames.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+      <ul id="jump_to">
+        <li>
+          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+          <a class="small" href="javascript:void(0);">+</a>
+          <div id="jump_wrapper">
+          <div id="jump_page_wrapper">
+            <div id="jump_page">
+              
+                
+                <a class="source" href="middleware.html">
+                  middleware.js
+                </a>
+              
+                
+                <a class="source" href="oauthRouter.html">
+                  oauthRouter.js
+                </a>
+              
+                
+                <a class="source" href="roomNames.html">
+                  roomNames.js
+                </a>
+              
+                
+                <a class="source" href="eventRouter.html">
+                  eventRouter.js
+                </a>
+              
+                
+                <a class="source" href="server.html">
+                  server.js
+                </a>
+              
+                
+                <a class="source" href="sockets.html">
+                  sockets.js
+                </a>
+              
+                
+                <a class="source" href="utility.html">
+                  utility.js
+                </a>
+              
+            </div>
+          </div>
+        </li>
+      </ul>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>roomNames.js</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              <p>module.exports</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> _ = <span class="hljs-built_in">require</span>(<span class="hljs-string">'lodash'</span>);
+
+<span class="hljs-keyword">var</span> words = [<span class="hljs-string">'bacon'</span>, <span class="hljs-string">'bagel'</span>, <span class="hljs-string">'basil'</span>, <span class="hljs-string">'beans'</span>, <span class="hljs-string">'beet'</span>, <span class="hljs-string">'berry'</span>, <span class="hljs-string">'bran'</span>, <span class="hljs-string">'bread'</span>, <span class="hljs-string">'cake'</span>, <span class="hljs-string">'candy'</span>, <span class="hljs-string">'chili'</span>, <span class="hljs-string">'chips'</span>, <span class="hljs-string">'corn'</span>, <span class="hljs-string">'crab'</span>, <span class="hljs-string">'cream'</span>, <span class="hljs-string">'crepe'</span>, <span class="hljs-string">'crust'</span>, <span class="hljs-string">'curry'</span>, <span class="hljs-string">'cloves'</span>, <span class="hljs-string">'dairy'</span>, <span class="hljs-string">'dill'</span>, <span class="hljs-string">'dough'</span>, <span class="hljs-string">'fig'</span>, <span class="hljs-string">'fish'</span>, <span class="hljs-string">'garlic'</span>, <span class="hljs-string">'chia'</span>, <span class="hljs-string">'fennel'</span>, <span class="hljs-string">'parsley'</span>, <span class="hljs-string">'flax'</span>, <span class="hljs-string">'flour'</span>, <span class="hljs-string">'fruit'</span>, <span class="hljs-string">'fry'</span>, <span class="hljs-string">'grain'</span>, <span class="hljs-string">'grape'</span>, <span class="hljs-string">'gravy'</span>, <span class="hljs-string">'guava'</span>, <span class="hljs-string">'herbs'</span>, <span class="hljs-string">'ham'</span>, <span class="hljs-string">'honey'</span>, <span class="hljs-string">'ice'</span>, <span class="hljs-string">'icing'</span>, <span class="hljs-string">'jam'</span>, <span class="hljs-string">'jelly'</span>, <span class="hljs-string">'jug'</span>, <span class="hljs-string">'juice'</span>, <span class="hljs-string">'kale'</span>, <span class="hljs-string">'kiwi'</span>, <span class="hljs-string">'lemon'</span>, <span class="hljs-string">'lime'</span>, <span class="hljs-string">'loaf'</span>, <span class="hljs-string">'lox'</span>, <span class="hljs-string">'maize'</span>, <span class="hljs-string">'mango'</span>, <span class="hljs-string">'meat'</span>, <span class="hljs-string">'melon'</span>, <span class="hljs-string">'menu'</span>, <span class="hljs-string">'milk'</span>, <span class="hljs-string">'mint'</span>, <span class="hljs-string">'mints'</span>, <span class="hljs-string">'mochi'</span>, <span class="hljs-string">'mug'</span>, <span class="hljs-string">'munch'</span>, <span class="hljs-string">'nosh'</span>, <span class="hljs-string">'nut'</span>, <span class="hljs-string">'oats'</span>, <span class="hljs-string">'okra'</span>, <span class="hljs-string">'olive'</span>, <span class="hljs-string">'pasta'</span>, <span class="hljs-string">'peach'</span>, <span class="hljs-string">'pea'</span>, <span class="hljs-string">'pear'</span>, <span class="hljs-string">'pecan'</span>, <span class="hljs-string">'pie'</span>, <span class="hljs-string">'pilaf'</span>, <span class="hljs-string">'pizza'</span>, <span class="hljs-string">'plate'</span>, <span class="hljs-string">'plum'</span>, <span class="hljs-string">'pop'</span>, <span class="hljs-string">'pork'</span>, <span class="hljs-string">'rice'</span>, <span class="hljs-string">'rye'</span>, <span class="hljs-string">'sage'</span>, <span class="hljs-string">'salad'</span>, <span class="hljs-string">'salsa'</span>, <span class="hljs-string">'salt'</span>, <span class="hljs-string">'sauce'</span>, <span class="hljs-string">'seeds'</span>, <span class="hljs-string">'soda'</span>, <span class="hljs-string">'soup'</span>, <span class="hljs-string">'sour'</span>, <span class="hljs-string">'sweet'</span>, <span class="hljs-string">'soy'</span>, <span class="hljs-string">'spicy'</span>, <span class="hljs-string">'spoon'</span>, <span class="hljs-string">'spork'</span>, <span class="hljs-string">'spuds'</span>, <span class="hljs-string">'squid'</span>, <span class="hljs-string">'steak'</span>, <span class="hljs-string">'straw'</span>, <span class="hljs-string">'sugar'</span>, <span class="hljs-string">'sushi'</span>, <span class="hljs-string">'syrup'</span>, <span class="hljs-string">'anise'</span>, <span class="hljs-string">'cumin'</span>, <span class="hljs-string">'spice'</span>, <span class="hljs-string">'thyme'</span>, <span class="hljs-string">'apple'</span>, <span class="hljs-string">'apricot'</span>, <span class="hljs-string">'avocado'</span>, <span class="hljs-string">'banana'</span>, <span class="hljs-string">'currant'</span>, <span class="hljs-string">'cherry'</span>, <span class="hljs-string">'coconut'</span>, <span class="hljs-string">'date'</span>, <span class="hljs-string">'durian'</span>, <span class="hljs-string">'jujube'</span>, <span class="hljs-string">'juniper'</span>, <span class="hljs-string">'kumquat'</span>, <span class="hljs-string">'lychee'</span>, <span class="hljs-string">'orange'</span>, <span class="hljs-string">'papaya'</span>, <span class="hljs-string">'pumpkin'</span>, <span class="hljs-string">'squash'</span>, <span class="hljs-string">'tomato'</span>, <span class="hljs-string">'gateau'</span>, <span class="hljs-string">'latte'</span>, <span class="hljs-string">'mocha'</span>, <span class="hljs-string">'cafe'</span>, <span class="hljs-string">'eggnog'</span>, <span class="hljs-string">'butter'</span>, <span class="hljs-string">'carrot'</span>, <span class="hljs-string">'coffee'</span>, <span class="hljs-string">'cupcake'</span>, <span class="hljs-string">'pavlova'</span>, <span class="hljs-string">'redbean'</span>, <span class="hljs-string">'torte'</span>, <span class="hljs-string">'almond'</span>, <span class="hljs-string">'custard'</span>, <span class="hljs-string">'eggtart'</span>, <span class="hljs-string">'chai'</span>, <span class="hljs-string">'caramel'</span>, <span class="hljs-string">'pudding'</span>, <span class="hljs-string">'fondant'</span>, <span class="hljs-string">'jello'</span>, <span class="hljs-string">'yogurt'</span>, <span class="hljs-string">'trifle'</span>, <span class="hljs-string">'treacle'</span>, <span class="hljs-string">'sundae'</span>, <span class="hljs-string">'sorbet'</span>, <span class="hljs-string">'gelato'</span>, <span class="hljs-string">'parfait'</span>, <span class="hljs-string">'mousse'</span>, <span class="hljs-string">'fudge'</span>, <span class="hljs-string">'cashew'</span>, <span class="hljs-string">'peanut'</span>, <span class="hljs-string">'walnut'</span>, <span class="hljs-string">'waffle'</span>, <span class="hljs-string">'burrito'</span>, <span class="hljs-string">'cobbler'</span>, <span class="hljs-string">'kebab'</span>, <span class="hljs-string">'ketchup'</span>, <span class="hljs-string">'lasagna'</span>, <span class="hljs-string">'mayo'</span>, <span class="hljs-string">'taco'</span>, <span class="hljs-string">'grits'</span>, <span class="hljs-string">'omlet'</span>, <span class="hljs-string">'cheese'</span>, <span class="hljs-string">'cookie'</span>, <span class="hljs-string">'hotdog'</span>, <span class="hljs-string">'muffin'</span>, <span class="hljs-string">'potato'</span>, <span class="hljs-string">'radish'</span>, <span class="hljs-string">'shrimp'</span>, <span class="hljs-string">'turkey'</span>, <span class="hljs-string">'alamode'</span>, <span class="hljs-string">'alfalfa'</span>, <span class="hljs-string">'alfredo'</span>, <span class="hljs-string">'anchovy'</span>, <span class="hljs-string">'baloney'</span>, <span class="hljs-string">'bananas'</span>, <span class="hljs-string">'berries'</span>, <span class="hljs-string">'biscuit'</span>, <span class="hljs-string">'brownie'</span>, <span class="hljs-string">'burgers'</span>, <span class="hljs-string">'catfish'</span>, <span class="hljs-string">'chicken'</span>, <span class="hljs-string">'cookies'</span>, <span class="hljs-string">'cracker'</span>, <span class="hljs-string">'dessert'</span>, <span class="hljs-string">'glucose'</span>, <span class="hljs-string">'granola'</span>, <span class="hljs-string">'halibut'</span>, <span class="hljs-string">'hotdogs'</span>, <span class="hljs-string">'hotcake'</span>, <span class="hljs-string">'muffins'</span>, <span class="hljs-string">'pancake'</span>, <span class="hljs-string">'peanuts'</span>, <span class="hljs-string">'popcorn'</span>, <span class="hljs-string">'poptart'</span>, <span class="hljs-string">'raisins'</span>, <span class="hljs-string">'ravioli'</span>, <span class="hljs-string">'stirfry'</span>, <span class="hljs-string">'tequila'</span>, <span class="hljs-string">'walnuts'</span>, <span class="hljs-string">'waffles'</span>];
+
+<span class="hljs-built_in">module</span>.exports = words;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p><em>(words)
+.sample(words.length)
+.map(function(word) {
+  return word.toLowerCase();
+})
+.tap(function(array) {
+    </em>.times((300), function(n) {
+      array.push(<em>.camelCase([</em>.sample(words, 2)]));
+    });
+  })
+.filter(function(word, index, self) {
+  return word.length &lt; 8;
+})
+.uniq()
+.value();</p>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>module.exports = words;</p>
+
+            </div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>
