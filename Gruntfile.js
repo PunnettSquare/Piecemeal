@@ -326,10 +326,10 @@ module.exports = function(grunt) {
       //   ],
       //   tasks: ['newer:injector:scripts']
       // }
-      bower: {
-        files: ['bower.json'],
-        tasks: ['wiredep']
-      },
+      // bower: {
+      //   files: ['bower.json'],
+      //   tasks: ['wiredep']
+      // },
       docco: {
         files: ['<%= project.client %>/**/*.js'],
         tasks: ['docco']
