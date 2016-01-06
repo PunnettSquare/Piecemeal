@@ -1,4 +1,4 @@
-var generateData = require('../../generateData');
+var generateData = require('../../test/generateData.js');
 var db = require('../../db/db');
 var handleSocket = require('../sockets');
 var util = require('../utility.js');
@@ -124,5 +124,5 @@ module.exports = function(app, io) {
         });
     }
   });
-  
+
 };
