@@ -112,10 +112,11 @@ Currently in progress!
 
 We used Jasmine and Karma to test our Angular components, and used [mgMock](https://docs.angularjs.org/api/ngMock) and [angular.mock.inject](https://docs.angularjs.org/api/ngMock/function/angular.mock.inject).
 
-To run the tests, just run
+To run the tests, just run:
 
 ```
 karma start karma.conf.js
+
 ```
 
 
