@@ -296,11 +296,6 @@ li.pag__space {
     background:         linear-gradient(to bottom, rgba(0,150,136,1) 0%, rgba(0,0,0,1) 100%);
 }
 
-#home__footer .container .row {
-    display: flex;
-    justify-content: space-between;
-}
-
 
 /* -------------------------------- ALL DISHES AND GUEST BILL ------------------------------------*/
 

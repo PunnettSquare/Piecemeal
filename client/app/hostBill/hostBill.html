@@ -11,7 +11,7 @@
 
 <div class="row" id="hostBill" ng-cloak>
   <div class="col s12">
-    
+
     <section>
       <!-- Dish items -->
       <ul class="dish__item collection" ng-repeat="dish in hostBill.data.dishes">
@@ -27,7 +27,7 @@
       </ul>
     </section>
     <!-- end list of dishes -->
-    
+
     <!-- SUBTOTAL -->
     <ul class="collection receipt__item">
       <li class="collection-item">
@@ -38,7 +38,7 @@
         </h5>
       </li>
     </ul>
-    
+
     <!-- TIP TAX FEE DISCOUNT FORM -->
     <form role="form" name="billForm">
       <!-- TIP-->
@@ -47,7 +47,7 @@
           <h5 class="dish__title">Tip</h5>
           <!-- tip input -->
           <div class="input">
-            <input class="tipPercent" name="tip" type="number" step="any" ng-model="hostBill.tip" placeholder="0" min="0" aria-label="tip" required>
+            <input class="tipPercent" name="tip" type="number" step="any" ng-model="hostBill.tip" placeholder="0" min="0" required>
           </div>
           <!-- Tip switch -->
           <div class="switch">
@@ -74,7 +74,7 @@
           </div>
           <!-- end display tip -->
           <!-- start sandbox -->
-                    
+
           <!-- end sandbox -->
         </li>
       </ul>
@@ -85,7 +85,7 @@
           <h5 class="dish__title">Tax</h5>
           <!-- tax input -->
           <div>
-            <input class="taxPercent" name="tax" type="number" step="any" ng-model="hostBill.tax" placeholder="0" min="0" aria-label="tax" required>
+            <input class="taxPercent" name="tax" type="number" step="any" ng-model="hostBill.tax" placeholder="0" min="0" required>
           </div>
           <!-- Tax switch -->
           <div class="switch">
@@ -129,7 +129,7 @@
             <div class="row">
               <div class="input-field">
                 <i class="material-icons prefix">$</i>
-                <input name="fee" id="icon_prefix" type="number" class="validate" step="any" ng-model="hostBill.fee" placeholder="0" min="0" aria-label="fee">
+                <input name="fee" id="icon_prefix" type="number" class="validate" step="any" ng-model="hostBill.fee" placeholder="0" min="0">
                 <!-- <label for="icon_prefix">Add Fee</label>  -->
               </div>
             <!-- fee display -->
@@ -158,7 +158,7 @@
             <div class="row">
               <div class="input-field">
                 <i class="material-icons prefix">$</i>
-                <input name="discount" id="icon_prefix" type="number" class="validate" step="any" ng-model="hostBill.discount" placeholder="0" min="0" aria-label="discount">
+                <input name="discount" id="icon_prefix" type="number" class="validate" step="any" ng-model="hostBill.discount" placeholder="0" min="0">
                 <!-- <label for="icon_prefix">Add Discount</label>  -->
               </div>
             <!-- discount display -->
@@ -204,7 +204,7 @@
             </h5>
           </li>
         </ul>
-      
+
         <div class="row center-align">
           <span ng-if="billForm.tip.$pristine || billForm.tax.$pristine">
             Please enter tax and tip.
