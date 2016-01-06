@@ -4,7 +4,7 @@
 
 // **Summary**: Express router which handles requests generally related to events/bills.
 
-var generateData = require('../../generateData');
+var generateData = require('../../test/generateData.js');
 var db = require('../../db/db');
 var handleSocket = require('../sockets');
 var util = require('../utility.js');
@@ -13,10 +13,9 @@ module.exports = function(app, io) {
 
   // On server start, wait for database to be set up then check if application settings are stored in database.  If no settings found, set the defaults.
   setTimeout(function() {
-    util.setFirstWord(db)
-  }, 5000)
-
-  // **Direct route to join a specific room**  
+    util.setFirstWord(db);
+  }, 5000);
+  // **Direct route to join a specific room**
   app.get('/:code', function(req, res) {
     // Redirect client to name entry screen
     res.redirect('/#/' + req.params.code.toLowerCase() + '/loading');
@@ -50,21 +49,21 @@ module.exports = function(app, io) {
     var username = req.body.username;
     // Create a unique event code
     util.generateCode(db)
-    .then(function(code) {
-      // Create the event
-      util.createEvent(db, code, username)
-        .then(function(dataObj) {
-          // Send relevant information to client to be stored in window.localStorage
-          res.status(200).send({
-            code: code,
-            user_id: dataObj.user_id[0],
-            event_id: dataObj.event_id[0]
+      .then(function(code) {
+        // Create the event
+        util.createEvent(db, code, username)
+          .then(function(dataObj) {
+            // Send relevant information to client to be stored in window.localStorage
+            res.status(200).send({
+              code: code,
+              user_id: dataObj.user_id[0],
+              event_id: dataObj.event_id[0]
+            });
+          })
+          .catch(function(err) {
+            throw err;
           });
-        })
-        .catch(function(err) {
-          throw err;
-        });
-    })
+      });
   });
 
   // **Check if a event code exists in the database**
@@ -147,5 +146,5 @@ module.exports = function(app, io) {
         });
     }
   });
-  
+
 };

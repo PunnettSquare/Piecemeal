@@ -23,8 +23,10 @@ module.exports = function(app, express, io) {
   app.use('/', express.static(path.join(__dirname, '../../client/')));
   // **Static folder for serving documentation files**
   app.use('/docs', express.static(__dirname + '../../docs'));
+
   //  **Router to handle oAuth requests**
   app.use('/auth', oauthRouter);
+
   // **Router to handle general application requests**
   app.use('/', eventRouter);
 

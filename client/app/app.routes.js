@@ -57,7 +57,9 @@
         url: '/oAuth',
         views: {
           'navbar': {
-            templateUrl: 'components/navbar/homeNavBar.html',
+            // Left out controller to avoid checkCode
+            // Otherwise use homeNavBar.html
+            templateUrl: 'components/navbar/navbar.html',
           },
           '@': {
             templateUrl: 'app/oAuth/oAuth.html',
