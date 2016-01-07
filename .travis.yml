@@ -1,6 +1,6 @@
 language: node_js
 node_js:
-  - "0.12.5"
+  - "4.2.1"
 # before_script:
   # if we are using grunt for tests
   # - "npm install -g grunt-cli" 
