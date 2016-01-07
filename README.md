@@ -6,9 +6,9 @@ The easiest way to split a bill. Try it out at [piecemeal.us](http://www.pieceme
 
 ## Team
 
-  - __Product Owner__: Fawn Bertram [LinkedIn](#) - [Github](https://github.com/Faline10) - [Portfolio](#)
-  - __Scrum Master__: Jackson Sharf [LinkedIn](#) - [Github](https://github.com/5harf)
-  - __Development Team Members__: Michelle Lee [LinkedIn](#) - [Github](https://github.com/mi-lee)
+  - __Product Owner__: Fawn Bertram [LinkedIn](https://www.linkedin.com/in/fawnbertram) -  [Github](https://github.com/Faline10)
+  - __Scrum Master__: Jackson Sharf [LinkedIn](https://www.linkedin.com/in/jacksonsharf) - [Github](https://github.com/5harf)
+  - __Development Team Members__: Michelle Lee [LinkedIn](https://www.linkedin.com/in/michellemhlee) - [Github](https://github.com/mi-lee)
 
 ## Table of Contents
 
@@ -25,7 +25,7 @@ The easiest way to split a bill. Try it out at [piecemeal.us](http://www.pieceme
 
 #### Using the appplication
 
-Piecemeal is live! You can try it out at at [piecemeal.us](http://www.piecemeal.us/).
+Piecemeal is live! You can try it out at at **[piecemeal.us](http://www.piecemeal.us/)**.
 
 
 
@@ -33,8 +33,8 @@ Piecemeal is live! You can try it out at at [piecemeal.us](http://www.piecemeal.
 
 #### Requirements
 
-- Node 0.10.x
-- Postgresql 9.1.x
+- Node 4.2.x
+- PostgreSQL 9.1.x
 
 ##### 1. Install the dependencies:
 
