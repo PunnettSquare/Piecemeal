@@ -1,7 +1,3 @@
 language: node_js
 node_js:
   - "0.12.5"
-# before_script:
-  # if we are using grunt for tests
-  # - "npm install -g grunt-cli" 
-  # can include web server to run an app and phantomJS here if needed
