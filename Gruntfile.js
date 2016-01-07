@@ -15,7 +15,6 @@ module.exports = function(grunt) {
   };
 
   grunt.initConfig({
-
     pkg: grunt.file.readJSON('package.json'),
 
     project: {
@@ -77,20 +76,7 @@ module.exports = function(grunt) {
       client: {
         src: '<%= project.client %>/index.html',
         ignorePath: '<%= project.client %>/',
-      },
-      // karma: { // for unit tests and travis
-      //   unit: {
-      //      configFile: 'config/karma.conf.js',
-      //      background: true
-      //   },
-        // Add a new travis ci karma configuration
-        // configs here override those in our existing karma.conf.js
-        // travis: {
-        //     configFile: 'config/karma.conf.js',
-        //     singleRun: true,
-        //     browsers: ['PhantomJS']
-        // }
-      // }
+      }
       // ,
       // test: {
       //   devDependencies: true,
@@ -367,12 +353,7 @@ module.exports = function(grunt) {
         options: {
           livereload: '<%= connect.options.livereload %>'
         }
-      }
-      // ,
-      // karma: { // for unit tests and travis
-      //   files: ['src/**/*.js', 'test/unit/**/*.js'],
-      //   tasks: ['karma:unit:run']
-      // }
+      },
       // injectJS: {
       //   files: ['<%= project.client %>/app/app.module.js',
       //     '<%= project.client %>/app/app.routes.js',
@@ -454,9 +435,4 @@ module.exports = function(grunt) {
   grunt.registerTask('build', ['jshint', 'wiredep', 'injector:scripts', 'injector:sass', 'injector:css']);
   grunt.registerTask('dist', ['clean', 'concat', 'uglify', 'sass', 'cssmin', 'copy', 'htmlmin']); // cdnify
   // grunt.registerTask('test', ['wiredep', 'karma', 'mochaTest']);
-  // Tasks for karma and travis:
-  // grunt.loadNpmTasks('grunt-contrib-watch');
-  // grunt.loadNpmTasks('grunt-karma');
-  // grunt.registerTask('devmode', ['karma:unit', 'watch']);
-  // grunt.registerTask('test', ['karma:travis']);
 };
