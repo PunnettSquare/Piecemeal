@@ -1,4 +1,9 @@
 // # Socket Connection Handler
+
+// ##### [Back to Table of Contents](./tableofcontents.html)
+
+// **Summary**: Initialize Socket listeners and emitters on server-side. This entire socket connect handler is used only on POST requests for wildcard /* (i.e., room names).
+
 var util = require('./utility');
 var db = require('../db/db');
 
@@ -65,17 +70,8 @@ var connect = function(eventUrl, eventInfo, io, userObj) {
           throw err;
         });
     });
-    // socket.on('finished', function(data) { // how to
-    //   util.userFinished(db, data.userId, data.eventId);
-    // })
   });
 };
 
-// Required by [server.js]
+// Required by [server.js](./server.html)
 module.exports = connect;
-
-// won't need this unless using handshake sessions for user auth:
-// io.use(sharedsession(session));
-// socket.on("login", function(data){
-//       console.log("client["+socket.handshake.session.myCustomData.userID+"] sent data: " + data);
-//   })

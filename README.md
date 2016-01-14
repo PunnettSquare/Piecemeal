@@ -2,13 +2,21 @@
 
 The easiest way to split a bill. Try it out at [piecemeal.us](http://www.piecemeal.us/).
 
-![front-page](fullpage.png)
+![front-page](readme/fullpage.png)
 
 ## Team
 
-  - __Product Owner__: Fawn Bertram [LinkedIn](https://www.linkedin.com/in/fawnbertram) -  [Github](https://github.com/Faline10)
-  - __Scrum Master__: Jackson Sharf [LinkedIn](https://www.linkedin.com/in/jacksonsharf) - [Github](https://github.com/5harf)
-  - __Development Team Members__: Michelle Lee [LinkedIn](https://www.linkedin.com/in/michellemhlee) - [Github](https://github.com/mi-lee)
+![jackson](readme/jackson.jpg)
+
+  - __Scrum Master__: Jackson Sharf   |  [LinkedIn](https://www.linkedin.com/in/jacksonsharf)  |  [Github](https://github.com/5harf)
+
+![fawn](readme/fawn.jpg)
+
+  - __Product Owner__: Fawn Bertram  |  [LinkedIn](https://www.linkedin.com/in/fawnbertram)  |  [Github](https://github.com/Faline10)
+
+![michelle](readme/michelle.jpg)
+
+  - __Front-End Engineer__: Michelle Lee  |  [LinkedIn](https://www.linkedin.com/in/michellemhlee)  |  [Github](https://github.com/mi-lee)
 
 ## Table of Contents
 
@@ -99,24 +107,23 @@ Currently in progress!
 
 #### Database Schema
 
-![dbschema](dbschema.png)
+![dbschema](readme/dbschema.png)
 
 
 #### Data flow
 
 #### Architecture of Piecemeal
-![architecture-diagram](architecture-diagram.png)
+![architecture-diagram](readme/architecture-diagram.png)
 
 
 #### Testing
 
-We used Jasmine and Karma to test our Angular components, and used [mgMock](https://docs.angularjs.org/api/ngMock) and [angular.mock.inject](https://docs.angularjs.org/api/ngMock/function/angular.mock.inject).
+We used Jasmine and Karma to test our Angular components, and used [ngMock](https://docs.angularjs.org/api/ngMock) and [angular.mock.inject](https://docs.angularjs.org/api/ngMock/function/angular.mock.inject).
 
 To run the tests, just run:
 
 ```
 karma start karma.conf.js
-
 ```
 
 

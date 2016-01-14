@@ -47,9 +47,9 @@ module.exports = {
           data[0].isValid = true;
           return data[0];
         }
-      })
+      });
   },
-  
+
   createEventVenmo: function(db, code, user_id) {
     return db('events').insert({
         code: code

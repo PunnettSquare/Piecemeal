@@ -20,6 +20,91 @@
             <div id="jump_page">
               
                 
+                <a class="source" href="allDishes.controller.html">
+                  allDishes.controller.js
+                </a>
+              
+                
+                <a class="source" href="allDishes.factory.html">
+                  allDishes.factory.js
+                </a>
+              
+                
+                <a class="source" href="app.factory.html">
+                  app.factory.js
+                </a>
+              
+                
+                <a class="source" href="app.module.html">
+                  app.module.js
+                </a>
+              
+                
+                <a class="source" href="app.routes.html">
+                  app.routes.js
+                </a>
+              
+                
+                <a class="source" href="dashboard.controller.html">
+                  dashboard.controller.js
+                </a>
+              
+                
+                <a class="source" href="dashboard.factory.html">
+                  dashboard.factory.js
+                </a>
+              
+                
+                <a class="source" href="guestBill.controller.html">
+                  guestBill.controller.js
+                </a>
+              
+                
+                <a class="source" href="home.controller.html">
+                  home.controller.js
+                </a>
+              
+                
+                <a class="source" href="home.factory.html">
+                  home.factory.js
+                </a>
+              
+                
+                <a class="source" href="hostBill.controller.html">
+                  hostBill.controller.js
+                </a>
+              
+                
+                <a class="source" href="loading.controller.html">
+                  loading.controller.js
+                </a>
+              
+                
+                <a class="source" href="loading.factory.html">
+                  loading.factory.js
+                </a>
+              
+                
+                <a class="source" href="oAuth.controller.html">
+                  oAuth.controller.js
+                </a>
+              
+                
+                <a class="source" href="oAuth.factory.html">
+                  oAuth.factory.js
+                </a>
+              
+                
+                <a class="source" href="socket.module.html">
+                  socket.module.js
+                </a>
+              
+                
+                <a class="source" href="navbar.controller.html">
+                  navbar.controller.js
+                </a>
+              
+                
                 <a class="source" href="middleware.html">
                   middleware.js
                 </a>
@@ -52,6 +137,11 @@
                 
                 <a class="source" href="utility.html">
                   utility.js
+                </a>
+              
+                
+                <a class="source" href="tableofcontents.html">
+                  tableofcontents.js
                 </a>
               
             </div>
@@ -100,7 +190,7 @@
             </div>
             
             <div class="content"><div class='highlight'><pre>
-<span class="hljs-keyword">var</span> generateData = <span class="hljs-built_in">require</span>(<span class="hljs-string">'../../generateData'</span>);
+<span class="hljs-keyword">var</span> generateData = <span class="hljs-built_in">require</span>(<span class="hljs-string">'../../test/generateData.js'</span>);
 <span class="hljs-keyword">var</span> db = <span class="hljs-built_in">require</span>(<span class="hljs-string">'../../db/db'</span>);
 <span class="hljs-keyword">var</span> handleSocket = <span class="hljs-built_in">require</span>(<span class="hljs-string">'../sockets'</span>);
 <span class="hljs-keyword">var</span> util = <span class="hljs-built_in">require</span>(<span class="hljs-string">'../utility.js'</span>);
@@ -121,8 +211,8 @@
             </div>
             
             <div class="content"><div class='highlight'><pre>  setTimeout(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
-    util.setFirstWord(db)
-  }, <span class="hljs-number">5000</span>)</pre></div></div>
+    util.setFirstWord(db);
+  }, <span class="hljs-number">5000</span>);</pre></div></div>
             
         </li>
         
@@ -133,7 +223,7 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-5">&#182;</a>
               </div>
-              <p><strong>Direct route to join a specific room</strong>  </p>
+              <p><strong>Direct route to join a specific room</strong></p>
 
             </div>
             
@@ -259,7 +349,7 @@
             </div>
             
             <div class="content"><div class='highlight'><pre>    util.generateCode(db)
-    .then(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">code</span>) </span>{</pre></div></div>
+      .then(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">code</span>) </span>{</pre></div></div>
             
         </li>
         
@@ -274,8 +364,8 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>      util.createEvent(db, code, username)
-        .then(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">dataObj</span>) </span>{</pre></div></div>
+            <div class="content"><div class='highlight'><pre>        util.createEvent(db, code, username)
+          .then(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">dataObj</span>) </span>{</pre></div></div>
             
         </li>
         
@@ -290,16 +380,16 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>          res.status(<span class="hljs-number">200</span>).send({
-            code: code,
-            user_id: dataObj.user_id[<span class="hljs-number">0</span>],
-            event_id: dataObj.event_id[<span class="hljs-number">0</span>]
+            <div class="content"><div class='highlight'><pre>            res.status(<span class="hljs-number">200</span>).send({
+              code: code,
+              user_id: dataObj.user_id[<span class="hljs-number">0</span>],
+              event_id: dataObj.event_id[<span class="hljs-number">0</span>]
+            });
+          })
+          .catch(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">err</span>) </span>{
+            <span class="hljs-keyword">throw</span> err;
           });
-        })
-        .catch(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">err</span>) </span>{
-          <span class="hljs-keyword">throw</span> err;
-        });
-    })
+      });
   });</pre></div></div>
             
         </li>
@@ -319,6 +409,9 @@
     util.checkCode(db, req.params.code)
       .then(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">billExists</span>) </span>{
         res.send(billExists);
+      })
+      .catch(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">err</span>) </span>{
+        <span class="hljs-keyword">throw</span> err;
       });
   });</pre></div></div>
             
@@ -546,7 +639,7 @@
         });
     }
   });
-  
+
 };</pre></div></div>
             
         </li>

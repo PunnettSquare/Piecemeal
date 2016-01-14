@@ -2,6 +2,8 @@
 
 // ##### [Back to Table of Contents](./tableofcontents.html)
 
+// **Summary**: List of Middleware for the application.
+
 var path = require('path');
 var bodyParser = require('body-parser');
 var morgan = require('morgan');
@@ -19,10 +21,12 @@ module.exports = function(app, express, io) {
   var eventRouter = express.Router();
 
   app.use(morgan('dev'));
+
   // **Static folder for serving application assets**
   app.use('/', express.static(path.join(__dirname, '../../client/')));
+
   // **Static folder for serving documentation files**
-  app.use('/docs', express.static(__dirname + '../../docs'));
+  app.use('/docs', express.static(path.join(__dirname, '../../docs')));
 
   //  **Router to handle oAuth requests**
   app.use('/auth', oauthRouter);

@@ -105,6 +105,41 @@
                 </a>
               
                 
+                <a class="source" href="middleware.html">
+                  middleware.js
+                </a>
+              
+                
+                <a class="source" href="oauthRouter.html">
+                  oauthRouter.js
+                </a>
+              
+                
+                <a class="source" href="roomNames.html">
+                  roomNames.js
+                </a>
+              
+                
+                <a class="source" href="eventRouter.html">
+                  eventRouter.js
+                </a>
+              
+                
+                <a class="source" href="server.html">
+                  server.js
+                </a>
+              
+                
+                <a class="source" href="sockets.html">
+                  sockets.js
+                </a>
+              
+                
+                <a class="source" href="utility.html">
+                  utility.js
+                </a>
+              
+                
                 <a class="source" href="tableofcontents.html">
                   tableofcontents.js
                 </a>
@@ -192,7 +227,10 @@
         })
         .then(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">res</span>) </span>{
           <span class="hljs-keyword">return</span> res.data;
-        });
+        })
+        .catch(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">err</span>) </span>{
+          <span class="hljs-built_in">console</span>.error(err);
+        })
     }
   }
 

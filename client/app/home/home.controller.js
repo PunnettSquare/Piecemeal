@@ -52,6 +52,9 @@
           } else {
             Materialize.toast('Your entered room does not exist. <br>Please try again.', 4000);
           }
+        })
+        .catch(function(err) {
+          console.error(err);
         });
     };
 

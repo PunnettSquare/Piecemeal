@@ -20,6 +20,91 @@
             <div id="jump_page">
               
                 
+                <a class="source" href="allDishes.controller.html">
+                  allDishes.controller.js
+                </a>
+              
+                
+                <a class="source" href="allDishes.factory.html">
+                  allDishes.factory.js
+                </a>
+              
+                
+                <a class="source" href="app.factory.html">
+                  app.factory.js
+                </a>
+              
+                
+                <a class="source" href="app.module.html">
+                  app.module.js
+                </a>
+              
+                
+                <a class="source" href="app.routes.html">
+                  app.routes.js
+                </a>
+              
+                
+                <a class="source" href="dashboard.controller.html">
+                  dashboard.controller.js
+                </a>
+              
+                
+                <a class="source" href="dashboard.factory.html">
+                  dashboard.factory.js
+                </a>
+              
+                
+                <a class="source" href="guestBill.controller.html">
+                  guestBill.controller.js
+                </a>
+              
+                
+                <a class="source" href="home.controller.html">
+                  home.controller.js
+                </a>
+              
+                
+                <a class="source" href="home.factory.html">
+                  home.factory.js
+                </a>
+              
+                
+                <a class="source" href="hostBill.controller.html">
+                  hostBill.controller.js
+                </a>
+              
+                
+                <a class="source" href="loading.controller.html">
+                  loading.controller.js
+                </a>
+              
+                
+                <a class="source" href="loading.factory.html">
+                  loading.factory.js
+                </a>
+              
+                
+                <a class="source" href="oAuth.controller.html">
+                  oAuth.controller.js
+                </a>
+              
+                
+                <a class="source" href="oAuth.factory.html">
+                  oAuth.factory.js
+                </a>
+              
+                
+                <a class="source" href="socket.module.html">
+                  socket.module.js
+                </a>
+              
+                
+                <a class="source" href="navbar.controller.html">
+                  navbar.controller.js
+                </a>
+              
+                
                 <a class="source" href="middleware.html">
                   middleware.js
                 </a>
@@ -54,6 +139,11 @@
                   utility.js
                 </a>
               
+                
+                <a class="source" href="tableofcontents.html">
+                  tableofcontents.js
+                </a>
+              
             </div>
           </div>
         </li>
@@ -73,11 +163,6 @@
 
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">var</span> util = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./utility'</span>);
-<span class="hljs-keyword">var</span> db = <span class="hljs-built_in">require</span>(<span class="hljs-string">'../db/db'</span>);
-
-<span class="hljs-keyword">var</span> connect = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">eventUrl, eventInfo, io, userObj</span>) </span>{</pre></div></div>
-            
         </li>
         
         
@@ -86,6 +171,38 @@
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <h5 id="-back-to-table-of-contents-tableofcontents-html-"><a href="./tableofcontents.html">Back to Table of Contents</a></h5>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p><strong>Summary</strong>: Initialize Socket listeners and emitters on server-side. This entire socket connect handler is used only on POST requests for wildcard /* (i.e., room names).</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>
+<span class="hljs-keyword">var</span> util = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./utility'</span>);
+<span class="hljs-keyword">var</span> db = <span class="hljs-built_in">require</span>(<span class="hljs-string">'../db/db'</span>);
+
+<span class="hljs-keyword">var</span> connect = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">eventUrl, eventInfo, io, userObj</span>) </span>{</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
               </div>
               <p>Set the Socket.io namespace to the eventUrl.</p>
 
@@ -151,40 +268,9 @@
         .catch(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">err</span>) </span>{
           <span class="hljs-keyword">throw</span> err;
         });
-    });</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-3">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-3">&#182;</a>
-              </div>
-              <p>socket.on(‘finished’, function(data) { // how to
-  util.userFinished(db, data.userId, data.eventId);
-})</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>  });
+    });
+  });
 };</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-4">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-4">&#182;</a>
-              </div>
-              <p>Required by [server.js]</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre><span class="hljs-built_in">module</span>.exports = connect;</pre></div></div>
             
         </li>
         
@@ -195,13 +281,11 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-5">&#182;</a>
               </div>
-              <p>won’t need this unless using handshake sessions for user auth:
-io.use(sharedsession(session));
-socket.on(“login”, function(data){
-      console.log(“client[“+socket.handshake.session.myCustomData.userID+”] sent data: “ + data);
-  })</p>
+              <p>Required by <a href="./server.html">server.js</a></p>
 
             </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-built_in">module</span>.exports = connect;</pre></div></div>
             
         </li>
         

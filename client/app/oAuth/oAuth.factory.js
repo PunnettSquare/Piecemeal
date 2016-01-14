@@ -29,7 +29,10 @@
         })
         .then(function(res) {
           return res.data;
-        });
+        })
+        .catch(function(err) {
+          console.error(err);
+        })
     }
   }
 

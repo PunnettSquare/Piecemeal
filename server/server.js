@@ -2,6 +2,8 @@
 
 // ##### [Back to Table of Contents](./tableofcontents.html)
 
+// **Summary**: High level overview of server setup.
+
 var express = require('express');
 
 var app = express();
