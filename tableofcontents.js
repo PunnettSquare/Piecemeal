@@ -34,3 +34,27 @@
 
 // #### [socket.module.js](./socket.module.html)
 // * Custom SocketIO API integrated with Angular's digest cycle in a factory
+
+
+// ## Back-End
+
+// #### [server.js](./server.html)
+// * Main server file.
+
+// #### [sockets.js](./sockets.html)
+// *
+
+// #### [utility.js](./utility.html)
+// *
+
+// #### [roomNames.js](./roomNames.html)
+// *
+
+// #### [eventRouter.js](./eventRouter.html)
+// *
+
+// #### [oauthRouter.js](./oauthRouter.html)
+// *
+
+// #### [middleware.js](./middleware.html)
+// *

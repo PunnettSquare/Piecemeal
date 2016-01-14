@@ -184,8 +184,9 @@
 
     self.incorrectCode = <span class="hljs-literal">false</span>;
 
-
-    <span class="hljs-keyword">try</span> { $<span class="hljs-built_in">window</span>.localStorage.checkPrivateMode = <span class="hljs-string">'not private'</span>; } <span class="hljs-keyword">catch</span> (e) {
+    <span class="hljs-keyword">try</span> {
+      $<span class="hljs-built_in">window</span>.localStorage.checkPrivateMode = <span class="hljs-string">'not private'</span>;
+    } <span class="hljs-keyword">catch</span> (e) {
       self.privateMode = <span class="hljs-literal">true</span>;
     }
     <span class="hljs-keyword">if</span> (!self.privateMode) {
@@ -240,6 +241,9 @@
           } <span class="hljs-keyword">else</span> {
             Materialize.toast(<span class="hljs-string">'Your entered room does not exist. &lt;br&gt;Please try again.'</span>, <span class="hljs-number">4000</span>);
           }
+        })
+        .catch(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">err</span>) </span>{
+          <span class="hljs-built_in">console</span>.error(err);
         });
     };
 

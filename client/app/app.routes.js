@@ -89,19 +89,6 @@
 
         }
       })
-      // .state('event.addDish', {
-      //   url: '/addDish',
-      //   views: {
-      //     '@': {
-      //       templateUrl: 'app/addDish/addDish.html',
-      //       controller: 'AddDishCtrl',
-      //       controllerAs: 'addDish'
-      //     }
-      //   },
-      //   resolve: {
-      //     getEventInfo: ['$http', getInfoOnRefresh]
-      //   }
-      // })
       .state('event.allDishes', {
         url: '/allDishes',
         views: {
@@ -128,18 +115,6 @@
           getEventInfo: ['$http', getInfoOnRefresh]
         }
       })
-      // .state('event.hostReceipt', {
-      //   url: '/hostReceipt',
-      //   views: {
-      //     '@': {
-      //       templateUrl: 'app/hostReceipt/hostReceipt.html',
-      //       controller: 'HostReceiptCtrl',
-      //       controllerAs: 'hostReceipt'
-      //     }
-      //   },
-      //   resolve: {}
-
-      // })
       .state('event.hostBill', {
         url: '/hostBill',
         views: {

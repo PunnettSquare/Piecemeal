@@ -26,7 +26,7 @@
       return $http({
         method: 'GET',
         url: '/checkCode/' + code
-      })
+      });
     }
 
     function createEvent(data) {

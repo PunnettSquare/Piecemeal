@@ -22,7 +22,7 @@ module.exports = function(app, express, io) {
   // **Static folder for serving application assets**
   app.use('/', express.static(path.join(__dirname, '../../client/')));
   // **Static folder for serving documentation files**
-  app.use('/docs', express.static(__dirname + '../../docs'));
+  app.use('/docs', express.static(path.join(__dirname, '../../docs')));
 
   //  **Router to handle oAuth requests**
   app.use('/auth', oauthRouter);

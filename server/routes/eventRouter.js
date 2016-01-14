@@ -71,6 +71,9 @@ module.exports = function(app, io) {
     util.checkCode(db, req.params.code)
       .then(function(billExists) {
         res.send(billExists);
+      })
+      .catch(function(err) {
+        throw err;
       });
   });
 
