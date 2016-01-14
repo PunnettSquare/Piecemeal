@@ -83,13 +83,13 @@ module.exports = function(grunt) {
       //      configFile: 'config/karma.conf.js',
       //      background: true
       //   },
-        // Add a new travis ci karma configuration
-        // configs here override those in our existing karma.conf.js
-        // travis: {
-        //     configFile: 'config/karma.conf.js',
-        //     singleRun: true,
-        //     browsers: ['PhantomJS']
-        // }
+      // Add a new travis ci karma configuration
+      // configs here override those in our existing karma.conf.js
+      // travis: {
+      //     configFile: 'config/karma.conf.js',
+      //     singleRun: true,
+      //     browsers: ['PhantomJS']
+      // }
       // }
       // ,
       // test: {
@@ -320,19 +320,15 @@ module.exports = function(grunt) {
     },
 
     docco: {
-      client: {
-        src: ['<%= project.js %>',
+      src: ['<%= project.js %>',
         'tableofcontents.js',
-          '!<%= project.client %>/app/addDish/*.js',
-          '!<%= project.client %>/app/guestBill/guestBill.factory.js',
-          '!<%= project.client %>/app/hostBill/hostBill.factory.js',
-          '!<%= project.client %>/app/hostReceipt/*.js',
-          '!<%= project.client %>/app/loading/loading.directive.js'
-        ]
-      },
-      server: {
-        src: ['server/**/*.js']
-      },
+        '!<%= project.client %>/app/addDish/*.js',
+        '!<%= project.client %>/app/guestBill/guestBill.factory.js',
+        '!<%= project.client %>/app/hostBill/hostBill.factory.js',
+        '!<%= project.client %>/app/hostReceipt/*.js',
+        '!<%= project.client %>/app/loading/loading.directive.js',
+        'server/**/*.js'
+      ],
       options: {
         output: 'docs/'
       }
@@ -350,7 +346,7 @@ module.exports = function(grunt) {
       //   tasks: ['wiredep']
       // },
       docco: {
-        files: ['<%= project.client %>/**/*.js'],
+        files: ['**/*.js'],
         tasks: ['docco']
       },
       livereload: {
