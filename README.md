@@ -1,6 +1,6 @@
 # Piecemeal.us
 
-The easiest way to split a bill. Try it out at [piecemeal.us](http://www.piecemeal.us/).
+Split a bill, share a meal. Try it out at **[piecemeal.us](http://www.piecemeal.us/)**.
 
 ![front-page](readme/fullpage.png)
 
