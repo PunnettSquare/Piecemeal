@@ -45,7 +45,13 @@
             if ($window.localStorage.venmoUsername) {
               //if so send them directly into room, using their stored username
               $window.localStorage.event_id = validCode.data.id;
-              $location.path('/' + code + '/allDishes');
+              homeFactory.addVenmoUser({
+                user_id: $window.localStorage.user_id,
+                event_id: $window.localStorage.event_id
+              })
+              .then(function () {
+                $location.path('/' + code + '/allDishes');
+              })
             } else {
               $location.path('/' + $window.localStorage.code + '/loading');
             }

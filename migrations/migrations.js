@@ -7,7 +7,6 @@ exports.up = function(knex, Promise) {
       table.string('venmoUsername');
       table.string('phone');
       table.string('email');
-      // table.timestamps();
     }),
 
     knex.schema.createTable('events', function(table) {
@@ -27,7 +26,6 @@ exports.up = function(knex, Promise) {
       table.integer('event_id')
         .references('id')
         .inTable('events');
-      // table.dateTime('postDate');
     }),
 
     knex.schema.createTable('usersJoinEvents', function(table) {
@@ -40,7 +38,6 @@ exports.up = function(knex, Promise) {
       table.integer('user_id')
         .references('id')
         .inTable('users');
-      // table.dateTime('postDate');
     }),
 
     knex.schema.createTable('usersJoinDishes', function(table) {
@@ -51,7 +48,7 @@ exports.up = function(knex, Promise) {
       table.integer('user_id')
         .references('id')
         .inTable('users');
-      // table.dateTime('postDate');
+      table.integer('portions');
     }),
 
     knex.schema.createTable('appSettings', function(table) {

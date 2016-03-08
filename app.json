@@ -1,0 +1,8 @@
+{
+  "name": "Piecemeal",
+  "description": "Bill Splitting Application",
+  "image": "heroku/nodejs",
+  "addons": [
+    "heroku-postgresql"
+  ]
+}

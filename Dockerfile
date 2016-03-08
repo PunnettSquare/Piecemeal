@@ -1,10 +1,11 @@
 FROM node
 RUN mkdir app
 
-WORKDIR app
+ADD package.json /tmp/package.json
+RUN cd /tmp && npm install
+RUN mkdir -p /app && cp -a /tmp/node_modules /app/
 
-ADD package.json /app/
-RUN npm install
+WORKDIR app
 
 ADD . /app/
 
