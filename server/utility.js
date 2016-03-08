@@ -100,6 +100,26 @@ module.exports = {
       });
   },
 
+  addVenmoUser: function (db, event_id, user_id) {
+    return db('usersJoinEvents').where({
+        event_id: event_id,
+        user_id: user_id
+      })
+      .then(function(data) {
+        if (data.length === 0) {
+          return  db('usersJoinEvents').insert({
+            user_id: user_id,
+            event_id: event_id,
+            status: false,
+            host: false
+          })
+        } else {
+          return
+        } 
+      });
+   
+  },
+
   createDish: function(db, dishName, cost, user_id, event_id) {
     var dishId;
     return db('dishes').insert({
