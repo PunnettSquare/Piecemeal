@@ -124,7 +124,7 @@
     }
 
     // Add user id to dish and dish to user
-    function shareDish(dish_id, user_id) {
+    function shareDish(dish_id, user_id, firstShare) {
       var dishObj;
       services.data.dishes.forEach(function(dish) {
         if (dish.dish_id === dish_id) {
@@ -132,11 +132,13 @@
           dishObj = dish;
         }
       });
-      services.data.users.forEach(function(user) {
-        if (user.id === user_id) {
-          user.dishes.push(dishObj);
-        }
-      });
+      if (firstShare) {
+        services.data.users.forEach(function(user) {
+          if (user.id === user_id) {
+            user.dishes.push(dishObj);
+          }
+        });
+      }
     }
 
     // Remove user id from dish and dish from user
@@ -194,6 +196,7 @@
     // Return list of users on a dish in sentence format
     function getUsersByDish(dish, users) {
       return arrayToSentence(
+        // make this part scan array and put 'Jackson x 2' in place of Jackson if multiple shares are present
         _(dish.users).map(function(id) {
           return users[_.findIndex(users, {
             'id': id
@@ -223,7 +226,7 @@
       socketFactory.on('dishShared', function(data) {
         console.log("Heard 'dishShared' in appFactory.data:", data);
         // data format: {user_id: 24, dish_id: 14}
-        shareDish(data.dish_id, data.user_id);
+        shareDish(data.dish_id, data.user_id, data.firstShare);
       });
 
       socketFactory.on('dishUnshared', function(data) {

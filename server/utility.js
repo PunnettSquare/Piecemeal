@@ -132,7 +132,8 @@ module.exports = {
         dishId = dish_id;
         return db('usersJoinDishes').insert({
           user_id: user_id,
-          dish_id: dish_id[0]
+          dish_id: dish_id[0],
+          portions: 1
         }).returning('id');
       })
       .then(function() {
@@ -143,10 +144,29 @@ module.exports = {
   },
 
   shareDish: function(db, user_id, dish_id) {
-    return db('usersJoinDishes').insert({
-      user_id: user_id,
-      dish_id: dish_id
-    });
+    return db('usersJoinDishes')
+    .where({
+        dish_id: dish_id,
+        user_id: user_id
+      })
+      .then(function(data) {
+        console.log('data in shareDish:', data)
+        if (data.length === 0) {
+          return db('usersJoinDishes').insert({
+            user_id: user_id,
+            dish_id: dish_id,
+            portions: 1
+          });
+        } else {
+         return db('usersJoinDishes').where({
+            user_id: user_id,
+            dish_id: dish_id
+          }).update({
+            portions: 1 + data[0].portions
+          });
+        }
+      });
+
   },
 
   unshareDish: function(db, user_id, dish_id) {
@@ -241,6 +261,7 @@ module.exports = {
                 return module.exports.findUserDishes(db, user.id, event_id);
               }))
               .then(function(usersDishesArrays) {
+                // Add dish models to each user in the state
                 usersDishesArrays.forEach(function(userDishesArray) {
                   _.each(state.users, function(userObj, index, list) {
                     var username = userObj.username;
@@ -254,6 +275,7 @@ module.exports = {
                     });
                   });
                 });
+                // Add dish models section to state object
                 state.dishes = module.exports.findDishArray(usersDishesArrays);
 
                 return state;
@@ -286,7 +308,18 @@ module.exports = {
     .innerJoin('dishes', 'dishes.id', 'usersJoinDishes.dish_id')
     .where('users.id', user_id)
       .then(function(dishes) {
-        console.log(dishes);
+        // Dishes
+        // [ { id: 9,
+        //     username: 'asdfas',
+        //     venmoUsername: null,
+        //     phone: null,
+        //     email: null,
+        //     dish_id: 9,
+        //     user_id: 11,
+        //     portions: 1,
+        //     name: 'asdfas',
+        //     cost: '12.00',
+        //     event_id: 8 } ]
         return dishes.filter(function(dish) {
           return dish.event_id === event_id;
         });
@@ -340,6 +373,18 @@ module.exports = {
   findDishArray: function(usersDishesArray) {
     var result = [];
     usersDishesArray.forEach(function(dishArray) {
+      // Dishe Array
+      // [ { id: 9,
+      //     username: 'asdfas',
+      //     venmoUsername: null,
+      //     phone: null,
+      //     email: null,
+      //     dish_id: 9,
+      //     user_id: 11,
+      //     portions: 1,
+      //     name: 'asdfas',
+      //     cost: '12.00',
+      //     event_id: 8 } ]
       dishArray.forEach(function(dishObj) {
         //check if dish is shared
         var isSharedDish = result.reduce(function(isInside, dish, index) {
@@ -347,15 +392,22 @@ module.exports = {
             return true;
           }
           if (dish.dish_id === dishObj.dish_id) {
-            //if so, add user to users prop
-            result[index].users.push(dishObj.user_id);
+            //if so, add user to users prop, as many times as the portions that user has
+            while (dish.portions) {
+              result[index].users.push(dishObj.user_id);
+              dish.portions--;
+            }
             return true;
           }
         }, false);
 
         if (!isSharedDish) {
           //otherwise add user prop and push into array
-          dishObj.users = [dishObj.user_id];
+          dishObj.users = [];
+          while (dishObj.portions) {
+            dishObj.users.push(dishObj.user_id);
+            dishObj.portions--;
+          }            
           delete dishObj.user_id;
           delete dishObj.username;
           delete dishObj.id;

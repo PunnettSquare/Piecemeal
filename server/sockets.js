@@ -41,12 +41,14 @@ var connect = function(eventUrl, eventInfo, io, userObj) {
       console.log("Server heard: ShareDish with dish ID", data.dish_id, "user ID", data.user_id);
       socket.broadcast.emit('dishShared', {
         user_id: data.user_id,
-        dish_id: data.dish_id
+        dish_id: data.dish_id,
+        firstShare: data.firstShare
       });
       util.shareDish(db, data.user_id, data.dish_id)
         .catch(function(err) {
           throw err;
         });
+      //TODO: handle second share differently
     });
 
     socket.on('unshareDish', function(data) {

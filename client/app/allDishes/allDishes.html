@@ -33,7 +33,7 @@
         <!-- Share/unshare buttons -->
         <div class="button--share">
           <div class="button__background waves-effect waves-light btn">
-            <i class="material-icons button--edit share" ng-hide="allDishes.isOnDish(dish.users, allDishes.user_id)" ng-click="allDishes.shareDish(dish.dish_id, allDishes.user_id, dish.users)">add_circle_outline</i>
+            <i class="material-icons button--edit share" ng-click="allDishes.shareDish(dish.dish_id, allDishes.user_id, dish.users)">add_circle_outline</i>
             <i class="material-icons button--edit unshare" ng-if="allDishes.isOnDish(dish.users, allDishes.user_id)" ng-click="allDishes.unshareDish(dish.dish_id, allDishes.user_id, dish.users)">clear</i>
           </div>
         </div>
