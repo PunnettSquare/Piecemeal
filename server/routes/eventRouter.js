@@ -104,6 +104,20 @@ module.exports = function(app, io) {
       });
   });
 
+  app.put('/addVenmoUser', function(req, res) {
+    var event_id = req.body.event_id;
+    var user_id = req.body.user_id;
+
+    util.addVenmoUser(db, event_id, user_id)
+    .then(function() {
+      res.send(200);
+    })
+    .catch(function (err) {
+      console.log("Error!", err);
+      res.status(500).send(err);
+    })
+  })
+
   var connections = {};
 
   // **Wildcard route for connecting users to their respective socket.io namespace**

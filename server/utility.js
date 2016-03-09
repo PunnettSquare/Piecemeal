@@ -45,6 +45,7 @@ module.exports = {
           return false;
         } else {
           data[0].isValid = true;
+          console.log('code in util', data[0])
           return data[0];
         }
       });
@@ -97,6 +98,26 @@ module.exports = {
           host: host
         }).returning('user_id');
       });
+  },
+
+  addVenmoUser: function (db, event_id, user_id) {
+    return db('usersJoinEvents').where({
+        event_id: event_id,
+        user_id: user_id
+      })
+      .then(function(data) {
+        if (data.length === 0) {
+          return  db('usersJoinEvents').insert({
+            user_id: user_id,
+            event_id: event_id,
+            status: false,
+            host: false
+          })
+        } else {
+          return
+        } 
+      });
+   
   },
 
   createDish: function(db, dishName, cost, user_id, event_id) {
@@ -189,7 +210,9 @@ module.exports = {
   },
 
   getUsersEvents: function(db, user_id) {
-    return db.select('event_id').from('usersJoinEvents').where('usersJoinEvents.user_id', user_id);
+    return db.select('event_id')
+    .from('usersJoinEvents')
+    .where('usersJoinEvents.user_id', user_id);
   },
 
   gatherState: function(db, event_id, code) {
@@ -249,12 +272,21 @@ module.exports = {
   },
 
   findEventUsers: function(db, event_id) {
-    return db.select('users.username', 'usersJoinEvents.status', 'usersJoinEvents.host', 'users.id', 'users.venmoUsername').from('events').leftJoin('usersJoinEvents', 'events.id', 'usersJoinEvents.event_id').leftJoin('users', 'users.id', 'usersJoinEvents.user_id').where('events.id', event_id);
+    return db.select('users.username', 'usersJoinEvents.status', 'usersJoinEvents.host', 'users.id', 'users.venmoUsername')
+    .from('events')
+    .leftJoin('usersJoinEvents', 'events.id', 'usersJoinEvents.event_id')
+    .leftJoin('users', 'users.id', 'usersJoinEvents.user_id')
+    .where('events.id', event_id);
   },
 
   findUserDishes: function(db, user_id, event_id) {
-    return db.select().from('users').innerJoin('usersJoinDishes', 'users.id', 'usersJoinDishes.user_id').innerJoin('dishes', 'dishes.id', 'usersJoinDishes.dish_id').where('users.id', user_id)
+    return db.select()
+    .from('users')
+    .innerJoin('usersJoinDishes', 'users.id', 'usersJoinDishes.user_id')
+    .innerJoin('dishes', 'dishes.id', 'usersJoinDishes.dish_id')
+    .where('users.id', user_id)
       .then(function(dishes) {
+        console.log(dishes);
         return dishes.filter(function(dish) {
           return dish.event_id === event_id;
         });
@@ -262,8 +294,9 @@ module.exports = {
   },
 
   findBillAmendments: function(db, event_id) {
-    return db('events').select('tipPercent', 'taxPercent', 'feePercent', 'discountPercent', 'billSent')
-      .where('id', event_id);
+    return db('events')
+    .select('tipPercent', 'taxPercent', 'feePercent', 'discountPercent', 'billSent')
+    .where('id', event_id);
   },
 
   generateCode: function(db) {

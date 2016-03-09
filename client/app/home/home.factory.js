@@ -19,7 +19,8 @@
   function homeFactory($http) {
     var services = {
       checkCode: checkCode,
-      createEvent: createEvent
+      createEvent: createEvent,
+      addVenmoUser: addVenmoUser
     };
 
     function checkCode(code) {
@@ -27,7 +28,7 @@
         method: 'GET',
         url: '/checkCode/' + code
       });
-    }
+    };
 
     function createEvent(data) {
       return $http({
@@ -35,7 +36,16 @@
         url: '/auth/createEvent',
         data: data
       });
-    }
+    };
+
+
+    function addVenmoUser(data) {
+      return $http({
+        method: 'PUT',
+        url: '/addVenmoUser',
+        data: data
+      })
+    };
 
     return services;
   }

@@ -2,10 +2,16 @@ app:
   build: .
   ports:
    - 8080:8080
+  environment:
+    DATABASE_URL: postgres://admin:admin@db:5432/piecemeal
   links:
-   - postgres
+   - db
 
-postgres:
-  ports: 
-  - 5432:5432
+db:
   image: postgres
+  ports:
+    - 5432:5432
+  environment:
+    POSTGRES_PASSWORD: admin
+    POSTGRES_USER: admin
+    POSTGRES_DB: piecemeal
