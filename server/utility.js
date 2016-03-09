@@ -326,18 +326,6 @@ module.exports = {
     .innerJoin('dishes', 'dishes.id', 'usersJoinDishes.dish_id')
     .where('users.id', user_id)
       .then(function(dishes) {
-        // Dishes
-        // [ { id: 9,
-        //     username: 'asdfas',
-        //     venmoUsername: null,
-        //     phone: null,
-        //     email: null,
-        //     dish_id: 9,
-        //     user_id: 11,
-        //     portions: 1,
-        //     name: 'asdfas',
-        //     cost: '12.00',
-        //     event_id: 8 } ]
         return dishes.filter(function(dish) {
           return dish.event_id === event_id;
         });
@@ -391,26 +379,14 @@ module.exports = {
   findDishArray: function(usersDishesArray) {
     var result = [];
     usersDishesArray.forEach(function(dishArray) {
-      // Dish Array
-      // [ { id: 9,
-      //     username: 'asdfas',
-      //     venmoUsername: null,
-      //     phone: null,
-      //     email: null,
-      //     dish_id: 9,
-      //     user_id: 11,
-      //     portions: 1,
-      //     name: 'asdfas',
-      //     cost: '12.00',
-      //     event_id: 8 } ]
       dishArray.forEach(function(dishObj) {
-        //check if dish is shared
+        // Check if dish is shared
         var isSharedDish = result.reduce(function(isInside, dish, index) {
           if (isInside) {
             return true;
           }
           if (dish.dish_id === dishObj.dish_id) {
-            //if so, add user to users prop, as many times as the portions that user has
+            // If so, add user to users prop, as many times as the portions that user has
             while (dishObj.portions) {
               result[index].users.push(dishObj.user_id);
               dishObj.portions--;
@@ -420,7 +396,7 @@ module.exports = {
         }, false);
 
         if (!isSharedDish) {
-          //otherwise add user prop and push into array for as many portions as user has
+          // Otherwise add user prop and push into array for as many portions as user has
           dishObj.users = [];
           while (dishObj.portions) {
             dishObj.users.push(dishObj.user_id);

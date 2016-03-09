@@ -97,7 +97,7 @@
         if (portions > 1) {
           return users[findIndex(users, {
             'id': user_id
-          })].username + ' x ' + portions;
+          })].username + ' (x' + portions + ')';
         } else {
           return users[findIndex(users, {
             'id': user_id

@@ -81,7 +81,6 @@
       }
     }
 
-    // TODO: Refactor this and following function
     function getDishIndivCost(dish) {
       var user_id = getSessStorage('user_id');
       // Calculate portions
@@ -170,7 +169,6 @@
 
           // Check if user is on multiple times
           dish.users.forEach(function (userId, index) {
-            // TODO: unshareDish is removing wrong index for some reason.  It thinks userId is always 13??
             if (userId === user_id) {
               count++;
               lastIndex = index;
@@ -238,7 +236,7 @@
 
     // Return list of users on a dish in sentence format
     function getUsersByDish(dish, users) {
-      
+
       var tracker = {};
 
       _.each(dish.users, function (user_id) {
@@ -265,7 +263,7 @@
         if (portions > 1) {
           return users[findIndex(users, {
             'id': user_id
-          })].username + ' x ' + portions;
+          })].username + ' (x' + portions + ')';
         } else {
           return users[findIndex(users, {
             'id': user_id
