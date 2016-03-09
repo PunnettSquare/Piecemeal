@@ -93,18 +93,12 @@
     };
 
     self.getGuestSubtotal = function(data) {
-      return appFactory.calculateRunningTotal(data);
+      return allDishesFactory.calculateRunningTotal(data);
     };
 
     self.getGuestGrandTotal = function() {
-      // return (!self.data) ? 0 : Math.round(
-      //   (self.getGuestTotal(self.data)
-      //     + (self.data.billData.taxPercent * self.getGuestTotal(self.data) * 0.01)
-      //     + (self.data.billData.tipPercent * self.getGuestTotal(self.data) * 0.01)
-      //   )*100)/100;
-
       return (!self.data) ? 0 : Math.round((
-        self.getGuestTotal(self.data) + self.getGuestTax() + self.getGuestTip() + self.getGuestFee() - self.getGuestDiscount()
+        self.getGuestSubtotal(self.data) + self.getGuestTax() + self.getGuestTip() + self.getGuestFee() - self.getGuestDiscount()
       ) * 100) / 100;
     };
 

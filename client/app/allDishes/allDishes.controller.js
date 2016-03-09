@@ -103,7 +103,7 @@
 
     // Calculate the user's running total bill.
     self.calcUserCurrentTotal = function(data) {
-      return (!data) ? 0 : allDishesFactory.calculateRunningTotal(data);
+      return (!data) ? 0 : appFactory.calculateRunningTotal(data);
     };
 
     // Add dish item in appFactory, and send dish item data to the [server](../docs/sockets.js) through a socket event to update the database.
