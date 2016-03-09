@@ -20,7 +20,7 @@
           Total Cost: <strong>{{ ::dish.cost | currency }}</strong>
           <br>
           <span class="dish__item--shared">
-            Each portion cost: {{ hostBill.getDishIndivCost(dish) | currency }}
+            Your portion cost: {{ hostBill.getDishIndivCost(dish) | currency }}
             <br>
           {{ hostBill.getUsersByDish(dish, hostBill.data.users) }} got this.</span>
         </li>
