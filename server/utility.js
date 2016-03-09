@@ -373,7 +373,7 @@ module.exports = {
   findDishArray: function(usersDishesArray) {
     var result = [];
     usersDishesArray.forEach(function(dishArray) {
-      // Dishe Array
+      // Dish Array
       // [ { id: 9,
       //     username: 'asdfas',
       //     venmoUsername: null,
@@ -393,16 +393,16 @@ module.exports = {
           }
           if (dish.dish_id === dishObj.dish_id) {
             //if so, add user to users prop, as many times as the portions that user has
-            while (dish.portions) {
+            while (dishObj.portions) {
               result[index].users.push(dishObj.user_id);
-              dish.portions--;
+              dishObj.portions--;
             }
             return true;
           }
         }, false);
 
         if (!isSharedDish) {
-          //otherwise add user prop and push into array
+          //otherwise add user prop and push into array for as many portions as user has
           dishObj.users = [];
           while (dishObj.portions) {
             dishObj.users.push(dishObj.user_id);
