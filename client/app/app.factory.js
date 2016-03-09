@@ -42,7 +42,8 @@
       goToHome: goToHome,
       copySessData: copySessData,
       logout: logout,
-      checkCode: checkCode
+      checkCode: checkCode,
+      calculateRunningTotal: calculateRunningTotal
     };
 
     return services;
@@ -82,6 +83,15 @@
 
     function getDishIndivCost(dish) {
       return dish.cost / dish.users.length;
+    }
+
+    function calculateRunningTotal(data) {
+      return (!data) ? 0 : _.filter(data.dishes, function(obj, key) {
+          return _.contains(obj.users, appFactory.getSessStorage('user_id'));
+        })
+        .reduce(function(acc, current) {
+          return acc + (Number(current.cost) / current.users.length);
+        }, 0);
     }
 
     function goToAddDish() {

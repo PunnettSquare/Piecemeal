@@ -10,11 +10,11 @@
   angular.module('Piecemeal')
     .controller('GuestBillCtrl', GuestBillCtrl);
 
-  GuestBillCtrl.$inject = ['$scope', 'appFactory', 'allDishesFactory', 'socketFactory', '$timeout'];
+  GuestBillCtrl.$inject = ['$scope', 'appFactory', 'appFactory', 'socketFactory', '$timeout'];
 
   // **Parameters:** TODO
 
-  function GuestBillCtrl($scope, appFactory, allDishesFactory, socketFactory, $timeout) {
+  function GuestBillCtrl($scope, appFactory, appFactory, socketFactory, $timeout) {
     var self = this;
 
     // Copy data from ```window.localStorage``` onto the $scope.
@@ -63,16 +63,6 @@
       });
     };
 
-    //remove?
-    self.getGuestTotal = function(data) {
-      return allDishesFactory.calculateRunningTotal(data);
-    };
-
-    //remove
-    self.getGrandTotal = function(dishes, billData) {
-      return (!self.data) ? 0 : _.sum(_.pluck(dishes, 'cost')) + self.getGuestTip() + self.getGuestTax();
-    };
-
     self.getOtherUsersByUsername = function(dish, users, user_id) {
       return appFactory.arrayToSentence(
         _(dish.users).filter(function(id) {
@@ -103,7 +93,7 @@
     };
 
     self.getGuestSubtotal = function(data) {
-      return allDishesFactory.calculateRunningTotal(data);
+      return appFactory.calculateRunningTotal(data);
     };
 
     self.getGuestGrandTotal = function() {
