@@ -81,16 +81,34 @@
       }
     }
 
+    // TODO: Refactor this and following function
     function getDishIndivCost(dish) {
-      return dish.cost / dish.users.length;
+      var user_id = getSessStorage('user_id');
+      // Calculate portions
+      var count = 0;
+      dish.users.forEach(function (userId) {
+        if (userId == user_id) {
+          count++
+        }
+      })
+      return (dish.cost / dish.users.length) * count;
     }
 
     function calculateRunningTotal(data) {
+      var user_id = getSessStorage('user_id');
       return (!data) ? 0 : _.filter(data.dishes, function(obj, key) {
-          return _.contains(obj.users, getSessStorage('user_id'));
+          return _.contains(obj.users, user_id);
         })
-        .reduce(function(acc, current) {
-          return acc + (Number(current.cost) / current.users.length);
+        .reduce(function(totalSoFar, dish) {
+          // Calculate portions per dish
+          var count = 0;
+          dish.users.forEach(function (userId) {
+            if (userId == user_id) {
+              count++
+            }
+          })
+          // Then add together
+          return totalSoFar + (Number(dish.cost) / dish.users.length) * count;
         }, 0);
     }
 
@@ -141,29 +159,54 @@
       }
     }
 
-    // Remove user id from dish and dish from user
+    // Remove portion from dish and dish from user if last portion
     function unshareDish(dish_id, user_id) {
+      // Flag as to if user has any portions left
+      var last = true;
       services.data.dishes.forEach(function(dish, dishIndex) {
         if (dish.dish_id === dish_id) {
-          dish.users.splice(dish.users.indexOf(user_id), 1);
+          var count;
+          var lastIndex;
+
+          // Check if user is on multiple times
+          dish.users.forEach(function (userId, index) {
+            // TODO: unshareDish is removing wrong index for some reason.  It thinks userId is always 13??
+            if (userId === user_id) {
+              count++;
+              lastIndex = index;
+            }
+          })
+
+          if (count > 1) {
+            last = false;
+          }
+
+          // Remove one of them
+          dish.users.splice(lastIndex, 1);
+
+          // Remove dish entirely if this is last user on dish
           if (dish.users.length === 0) {
             services.data.dishes.splice(dishIndex, 1);
           }
         }
       });
-      services.data.users.forEach(function(user) {
-        if (user.id === user_id) {
-          var dishIndex = user.dishes.reduce(function(dishIndex, dish, index) {
-            if (dishIndex || dishIndex === 0) {
-              return dishIndex;
-            }
-            if (dish.dish_id === dish_id) {
-              return index;
-            }
-          }, false);
-          user.dishes.splice(dishIndex, 1);
-        }
-      });
+
+      // If user has no portions left on dish, remove from user model
+      if (last) {
+        services.data.users.forEach(function(user) {
+          if (user.id === user_id) {
+            var dishIndex = user.dishes.reduce(function(dishIndex, dish, index) {
+              if (dishIndex || dishIndex === 0) {
+                return dishIndex;
+              }
+              if (dish.dish_id === dish_id) {
+                return index;
+              }
+            }, false);
+            user.dishes.splice(dishIndex, 1);
+          }
+        });
+      }
     }
 
     // Delete everything stored in localStorage except for login info in order to leave the bill. Redirect to homepage. (Why 1 second wait?) (Rename as leaveBill?)
@@ -195,13 +238,43 @@
 
     // Return list of users on a dish in sentence format
     function getUsersByDish(dish, users) {
-      return arrayToSentence(
-        // make this part scan array and put 'Jackson x 2' in place of Jackson if multiple shares are present
-        _(dish.users).map(function(id) {
-          return users[_.findIndex(users, {
-            'id': id
+      
+      var tracker = {};
+
+      _.each(dish.users, function (user_id) {
+        if (tracker[user_id]) {
+          tracker[user_id]++;
+        } else {
+          tracker[user_id] = 1;
+        }
+      });
+
+      function findIndex(objArray, keyObj) {
+        var result;
+        objArray.forEach(function(obj, index) {
+          for (var key in keyObj) {
+            if (obj[key] == keyObj[key]) {
+              result = index
+            }
+          }
+        })
+        return result;
+      }
+
+      var shares = _.map(tracker, function (portions, user_id) {
+        if (portions > 1) {
+          return users[findIndex(users, {
+            'id': user_id
+          })].username + ' x ' + portions;
+        } else {
+          return users[findIndex(users, {
+            'id': user_id
           })].username;
-        }).value());
+        }
+      })
+
+      return arrayToSentence(shares)
+
     }
 
     function initListeners() {

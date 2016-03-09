@@ -144,13 +144,14 @@ module.exports = {
   },
 
   shareDish: function(db, user_id, dish_id) {
+    // Query DB to see if user is already on dish
     return db('usersJoinDishes')
-    .where({
+      .where({
         dish_id: dish_id,
         user_id: user_id
       })
       .then(function(data) {
-        console.log('data in shareDish:', data)
+        // If they are not, make new entry in table
         if (data.length === 0) {
           return db('usersJoinDishes').insert({
             user_id: user_id,
@@ -158,6 +159,7 @@ module.exports = {
             portions: 1
           });
         } else {
+        // If they already have a portion, increment the portion
          return db('usersJoinDishes').where({
             user_id: user_id,
             dish_id: dish_id
@@ -170,25 +172,41 @@ module.exports = {
   },
 
   unshareDish: function(db, user_id, dish_id) {
-    return db('usersJoinDishes').where({
-        user_id: user_id,
-        dish_id: dish_id
-      }).del()
-      .then(function() {
-        return db('usersJoinDishes').where({
-            dish_id: dish_id
-          })
-          .returning('id');
+    return db('usersJoinDishes')
+      .where({
+        dish_id: dish_id,
+        user_id: user_id
       })
-      .then(function(ids) {
-        if (ids.length === 0) {
-          return db('dishes').where({
-            id: dish_id
-          }).del();
+      .then(function(data) {
+        if (data[0].portions > 1) {
+          return db('usersJoinDishes').where({
+             user_id: user_id,
+             dish_id: dish_id
+           }).update({
+             portions: data[0].portions - 1
+           });
         } else {
-          return;
+          return db('usersJoinDishes').where({
+              user_id: user_id,
+              dish_id: dish_id
+            }).del()
+            .then(function() {
+              return db('usersJoinDishes').where({
+                  dish_id: dish_id
+                })
+                .returning('id');
+            })
+            .then(function(ids) {
+              if (ids.length === 0) {
+                return db('dishes').where({
+                  id: dish_id
+                }).del();
+              } else {
+                return;
+              }
+            });
         }
-      });
+      })
   },
 
   removeDish: function(db, dish_id) {

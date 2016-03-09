@@ -64,16 +64,49 @@
     };
 
     self.getOtherUsersByUsername = function(dish, users, user_id) {
-      return appFactory.arrayToSentence(
-        _(dish.users).filter(function(id) {
-          return id !== user_id;
+
+      var tracker = {};
+
+      var dishUsers = dish.users.slice();
+
+      dishUsers = _.filter(dish.users, function (id) {
+        return id !== user_id;
+      });
+
+      _.each(dishUsers, function (user_id) {
+        if (tracker[user_id]) {
+          tracker[user_id]++;
+        } else {
+          tracker[user_id] = 1;
+        }
+      });
+
+      function findIndex(objArray, keyObj) {
+        var result;
+        objArray.forEach(function(obj, index) {
+          for (var key in keyObj) {
+            if (obj[key] == keyObj[key]) {
+              result = index
+            }
+          }
         })
-        .map(function(id) {
-          return users[_.findIndex(users, {
-            'id': id
+        return result;
+      }
+
+      var shares = _.map(tracker, function (portions, user_id) {
+        if (portions > 1) {
+          return users[findIndex(users, {
+            'id': user_id
+          })].username + ' x ' + portions;
+        } else {
+          return users[findIndex(users, {
+            'id': user_id
           })].username;
-        }).value()
-      );
+        }
+      })
+
+      return appFactory.arrayToSentence(shares)
+
     };
 
     self.getGuestTax = function() {
