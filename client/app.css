@@ -312,8 +312,7 @@ li.pag__space {
 }
 
 .dish__item--cost {
-    float: right;
-
+    /*float: right;*/
     font-size: 1rem;
     font-weight: 500;
 }
@@ -332,7 +331,8 @@ ul.collection {
 }
 
 #dish__item--padding {
-    padding-right: 3em;
+    padding-right: 5.5rem;
+    line-height: 1.5
 }
 
 
