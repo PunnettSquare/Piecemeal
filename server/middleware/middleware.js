@@ -23,7 +23,8 @@ module.exports = function(app, express, io) {
   app.use(morgan('dev'));
 
   // **Static folder for serving application assets**
-  app.use('/', express.static(path.join(__dirname, '../../client/')));
+  app.use('/', express.static(path.join(__dirname, '../../dist/client/')));
+  // app.use('/', express.static(path.join(__dirname, '../../client/')));
 
   // **Static folder for serving documentation files**
   app.use('/docs', express.static(path.join(__dirname, '../../docs')));

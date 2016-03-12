@@ -1,0 +1,26 @@
+@media only screen and (min-width: 993px) {
+  nav a.button-collapse {
+    display: inline-block; /*always display*/
+  }
+}
+
+nav .button-collapse {
+  float: right; /*right*/
+  position: relative;
+  z-index: 1;
+  height: 56px;
+}
+
+.wordmark {
+  color: #fff;
+  display: inline-block;
+  font-size: 2rem;
+  white-space: nowrap;
+  font-weight: 300;
+  margin-left: 3%;
+}
+
+.leaveBill {
+  position: absolute;
+  bottom: 4rem;
+}

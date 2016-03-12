@@ -196,6 +196,14 @@ module.exports = function(grunt) {
       }
     },
 
+    // Prepares angular code for uglify
+    ngmin: {
+      controllers: {
+        src: ['<%= project.dist %>/client/scripts.min.js'],
+        dest: '<%= project.dist %>/client/scripts.min.js'
+      }
+    },
+
     uglify: {
       options: {
         banner: '<%= tag.banner %>'
@@ -205,6 +213,34 @@ module.exports = function(grunt) {
           '<%= project.dist %>/client/scripts.min.js': '<%= project.dist %>/client/scripts.min.js'
         }
       }
+    },
+
+    'string-replace': {
+        inline: {
+            files: {
+                '<%= project.dist %>/client/index.html': '<%= project.dist %>/client/index.html'
+            },
+            options: {
+                replacements: [
+                    {
+                        pattern: '<!--start PROD imports',
+                        replacement: '<!--start PROD imports-->'
+                    },
+                    {
+                        pattern: 'end PROD imports-->',
+                        replacement: '<!--end PROD imports-->'
+                    },
+                    {
+                        pattern: '<!--start DEV imports - injector:js-->',
+                        replacement: '<!--start DEV imports - injector:js'
+                    },
+                    {
+                        pattern: '<!--end DEV imports - injector-->',
+                        replacement: 'end DEV imports - injector-->'
+                    }
+                ]
+            }
+        }
     },
 
     // Compiles Sass to CSS
@@ -258,7 +294,7 @@ module.exports = function(grunt) {
     copy: {
       files: {
         cwd: '<%= project.client %>',
-        src: ['**/*.html', '!**/*Old.html'],
+        src: ['**/*.html', '!**/*Old.html', '**/*.css', '**/*.scss', 'assets/*'],
         dest: '<%= project.dist %>/client/',
         expand: true
       }
@@ -448,7 +484,7 @@ module.exports = function(grunt) {
   grunt.registerTask('testIndiv', ['shell:testIndiv']);
   grunt.registerTask('testDup', ['shell:dupTest']);
   grunt.registerTask('build', ['jshint', 'wiredep', 'injector:scripts', 'injector:sass', 'injector:css']);
-  grunt.registerTask('dist', ['clean', 'concat', 'uglify', 'sass', 'cssmin', 'copy', 'htmlmin']); // cdnify
+  grunt.registerTask('dist', ['clean', 'concat', 'ngmin', 'uglify', 'copy', 'htmlmin', 'string-replace']); // cdnify
   // grunt.registerTask('test', ['wiredep', 'karma', 'mochaTest']);
   // Tasks for karma and travis:
   // grunt.loadNpmTasks('grunt-contrib-watch');
