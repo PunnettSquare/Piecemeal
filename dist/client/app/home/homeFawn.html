@@ -1,1 +1,114 @@
-<link rel="stylesheet" href="../../styles/home.css"><div class="section no-pad-bot" id="index-banner"><div class="container center-align"><object class="logoSpacing center-align" type="image/svg+xml" data="../../assets/piecemealLogoLightEcho.svg">Piecemeal</object><div class="row"></div></div><div class="container"><div class="section"><div class="row"><div class="col s12 m6"><form name="userInput"><div><h5 class="center shrink">Setup a bill to split with your friends</h5><div class="row center input-field"><button ng-click="home.oAuth()" class="createButton createRoom btn waves-effect waves-light teal" type="submit" name="createBill">Create Bill <i class="material-icons right">send</i></button></div></div></form></div><div class="col s12 m6"><div class="row"><form name="userInput2"><h5 class="center light shrink">Or enter the code to join an existing bill</h5><div class="file-field input-field homeButton"><button class="btn enterRoom waves-effect waves-light teal validate" ng-disabled="userInput2.code.$error.required" ng-click="home.setSessionUser(code)" type="submit" name="joinBill"><span>Join Bill</span> <i class="material-icons right">send</i></button><div class="file-path-wrapper"><input name="code" id="roomCode" type="text" class="validate enterCode inlineInput" ng-model="code" required><label for="roomCode">Enter Code</label></div></div></form><div ng-if="home.incorrectCode" class="center">Your entered room does not exist. Please try again.</div><div class="page-footer teal"><div class="container"><div class="section"><div class="row center white-text"><div class="col l12 s12"><h4>How Piecemeal works</h4></div><div class="col s12 m4"><div class="icon-block"><h3 class="center grey-text text-lighten-2"><i class="material-icons">flash_on</i></h3><h5 class="center">Quick & Easy to Join a Bill</h5><p class="light">Everyone can join the same bill from their own phones by going to piecemeal.com and entering the unique code for this bill. No login or downloading required.</p></div></div><div class="col s12 m4"><div class="icon-block"><h3 class="center grey-text text-lighten-2"><i class="material-icons">group</i></h3><h5 class="center">Add or Share Dishes</h5><p class="light">Add the dishes you ordered and share dishes with others. Tax and tip are divided proportionally. Everyone gets an itemized total.</p></div></div><div class="col s12 m4"><div class="icon-block"><h3 class="center grey-text text-lighten-2"><i class="material-icons">settings</i></h3><h5 class="center">Easy Bill Split & Payment</h5><p class="light">Once the bill is split, automatic payment requests can optionally be sent through Venmo. Plus, if you use Piecemeal frequently, you can download the app to stay logged in through Venmo.</p></div></div></div></div></div></div></div>
+<link rel="stylesheet" href="../../styles/home.css">
+
+<div class="section no-pad-bot" id="index-banner">
+  <div class="container center-align">
+    <!-- LOGO: height 50 for mobile; LATER: check to see if logoSpacing is pulling from Bootstrap somewhere -->
+    <object class="logoSpacing center-align" type="image/svg+xml" data="../../assets/piecemealLogoLightEcho.svg">Piecemeal</object>
+            <!-- <img src="../../assets/piecemealLogo.svg" height="30"/> -->
+    <!-- <h1 class="header center teal-text text-lighten-1">Piecemeal</h1> -->
+    <div class="row">
+      <h4 class="header col s12 grey-text">The easiest way to split a restaurant bill and pay with Venmo
+        <!-- <img src="../../assets/venmo_logo_blue.svg" alt="Venmo" width="85px"> -->
+      </h4>
+    </div>
+  </div>
+
+  <!-- Action Section -->
+  <div class="container">
+    <div class="section">
+      <div class="row">
+
+        <!--Setup a bill-->
+        <div class="col s12 m6">
+            <form name="userInput">
+              <div>
+                <h5 class="center shrink">
+                  Setup a bill to split with your friends
+                </h5>
+
+                <div class="row center input-field">
+                  <button ng-click="home.oAuth()" class="createButton createRoom btn waves-effect waves-light teal" type="submit" name="createBill">Create Bill
+                    <i class="material-icons right">send</i>
+                  </button>
+                </div>
+
+              </div>
+            </form>
+        </div>
+
+        <!-- Enter a room code (as a guest) -->
+        <div class="col s12 m6">
+          <div class="row">
+
+            <form name="userInput2">
+              <h5 class="center light shrink">
+                Or enter the code to join an existing bill
+              </h5>
+              <div class="file-field input-field homeButton">
+                <button class="btn enterRoom waves-effect waves-light teal validate" ng-disabled="userInput2.code.$error.required" ng-click="home.setSessionUser(code)" type="submit" name="joinBill">
+                  <span>Join Bill</span>
+                  <i class="material-icons right">send</i>
+                </button>
+                <div class="file-path-wrapper">
+                  <input name="code" id="roomCode" type="text" class="validate enterCode inlineInput" ng-model="code" required>
+                  <label for="roomCode">Enter Code</label>
+                </div>
+              </div>
+            </form>
+
+            <!-- Later: Style into alert -->
+            <div ng-if="home.incorrectCode" class="center">
+              Your entered room does not exist. Please try again.
+            </div>
+
+          </div>
+        </div>
+        <!-- End enter room code -->
+
+      </div>
+    </div>
+  </div>
+
+  <!--   Info Section   -->
+  <div class="page-footer teal">
+    <div class="container">
+      <div class="section">
+        <div class="row center white-text">
+
+          <div class="col l12 s12">
+            <h4>How Piecemeal works</h4>
+          </div>
+
+          <div class="col s12 m4">
+            <div class="icon-block">
+              <h3 class="center grey-text text-lighten-2"><i class="material-icons">flash_on</i></h3>
+              <h5 class="center">Quick & Easy to Join a Bill</h5>
+
+              <p class="light">Everyone can join the same bill from their own phones by going to piecemeal.com and entering the unique code for this bill. No login or downloading required.</p>
+            </div>
+          </div>
+
+          <div class="col s12 m4">
+            <div class="icon-block">
+              <h3 class="center grey-text text-lighten-2"><i class="material-icons">group</i></h3>
+              <h5 class="center">Add or Share Dishes</h5>
+
+              <p class="light">Add the dishes you ordered and share dishes with others. Tax and tip are divided proportionally. Everyone gets an itemized total.</p>
+            </div>
+          </div>
+
+          <div class="col s12 m4">
+            <div class="icon-block">
+              <h3 class="center grey-text text-lighten-2"><i class="material-icons">settings</i></h3>
+              <h5 class="center">Easy Bill Split & Payment</h5>
+
+              <p class="light">Once the bill is split, automatic payment requests can optionally be sent through Venmo. Plus, if you use Piecemeal frequently, you can download the app to stay logged in through Venmo.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

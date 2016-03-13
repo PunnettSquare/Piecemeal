@@ -1,1 +1,39 @@
-<div class="container-fluid" id="hostReceipt" ng-cloak><div class="row"><div class="col-md-12"><ul class="nav nav-tabs"><li><a class="allDishes" ui-sref="event.allDishes">All Dishes</a></li><li><a class="guestBill" ui-sref="event.guestBill">Your Bill</a></li><li class="active"><a class="hostBill" ui-sref="event.hostBill">Final Bill</a></li></ul><h3>Track Payments</h3><table id="mytable" class="table table-bordred table-striped"><thead><th>Name</th><th>Will Pay</th><th>Payment Method</th></thead></table></div></div></div>
+<div class="container-fluid" id="hostReceipt" ng-cloak>
+  <div class="row">
+    <div class="col-md-12">
+
+      <!-- REFACTOR TO NAVBAR LATER (need to do addClass('active') onClick) -->
+      <ul class="nav nav-tabs">
+        <li><a class="allDishes" ui-sref="event.allDishes">All Dishes</a></li>
+        <li><a class="guestBill" ui-sref="event.guestBill">Your Bill</a></li>
+        <li class="active"><a class="hostBill" ui-sref="event.hostBill">Final Bill</a></li>
+        <!-- <li><a class="logout" ng-click="hostReceipt.logout()">Logout</a></li> -->
+      </ul>
+      <!-- /Navbar refactor -->
+
+      <h3>Track Payments</h3>
+
+      <table id="mytable" class="table table-bordred table-striped">
+
+        <thead>
+          <th>Name</th>
+          <th>Will Pay</th>
+          <th>Payment Method</th>
+        </thead>
+        <tbody>
+
+          <!--   <tr ng-Repeat="user in hostReceipt.data.users">
+            <td>{{user.name}}}</td>
+            <td>{{user.}}</td>
+            <td>{{user.paymentMethod}}</td>
+          </tr> -->
+        </tbody>
+
+      </table>
+
+
+
+
+    </div>
+  </div>
+</div>

@@ -484,7 +484,7 @@ module.exports = function(grunt) {
   grunt.registerTask('testIndiv', ['shell:testIndiv']);
   grunt.registerTask('testDup', ['shell:dupTest']);
   grunt.registerTask('build', ['jshint', 'wiredep', 'injector:scripts', 'injector:sass', 'injector:css']);
-  grunt.registerTask('dist', ['clean', 'concat', 'ngmin', 'uglify', 'copy', 'htmlmin', 'string-replace']); // cdnify
+  grunt.registerTask('dist', ['clean', 'concat', 'ngmin', 'uglify', 'copy', 'string-replace']); // cdnify
   // grunt.registerTask('test', ['wiredep', 'karma', 'mochaTest']);
   // Tasks for karma and travis:
   // grunt.loadNpmTasks('grunt-contrib-watch');
