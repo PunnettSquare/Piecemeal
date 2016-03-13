@@ -61,9 +61,7 @@ module.exports = function(app) {
           if (result.length === 0) {
             db('users').insert({
                 venmoUsername: venmoUsername,
-                username: profile.displayName,
-                phone: profile.phone,
-                email: profile.email
+                username: profile.displayName
               })
               .then(function() {
                 return util.findUser(db, venmoUsername);

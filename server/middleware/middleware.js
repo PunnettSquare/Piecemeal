@@ -22,13 +22,20 @@ module.exports = function(app, express, io) {
 
   app.use(morgan('dev'));
 
-  // **Static folder for serving application assets**
+  // **Static folders for serving application assets**
   
-  // Development static files
-  app.use('/', express.static(path.join(__dirname, '../../client/')));
+  app.use('/assets', express.static(path.join(__dirname, '../../client/assets'), {
+    maxage: 1000*60*60*24*360
+  }));
 
-  // Production static files
-  // app.use('/', express.static(path.join(__dirname, '../../dist/client/')));
+  if (process.env.PORT) {
+    // Production static files
+    app.use('/', express.static(path.join(__dirname, '../../dist/client/')));
+  }  else {
+    // Development static files
+    app.use('/', express.static(path.join(__dirname, '../../client/')));
+  }
+
 
   // **Static folder for serving documentation files**
   app.use('/docs', express.static(path.join(__dirname, '../../docs')));
