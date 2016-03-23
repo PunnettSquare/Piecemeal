@@ -289,7 +289,7 @@ module.exports = function(grunt) {
     copy: {
       files: {
         cwd: '<%= project.client %>',
-        src: ['**/*.html', '!**/*Old.html', '**/*.css', '**/*.scss', '!styles/**.*'],
+        src: ['**/*.html', '!**/*Old.html', '**/*.css', '**/*.scss', '**/manifest.json', '!styles/**.*'],
         dest: '<%= project.dist %>/client/',
         expand: true
       }

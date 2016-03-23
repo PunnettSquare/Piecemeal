@@ -1,0 +1,13 @@
+{
+  "name": "Piecemeal",
+  "short_name": "Piecemeal",
+  "start_url": "/",
+  "icons": [{
+    "src": "assets/Drawing.png",
+      "sizes": "203x203",
+      "type": "image/png"
+    }],
+  "display": "standalone",
+  "background_color": "#009788",
+  "theme_color": "#009788"
+}
