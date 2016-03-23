@@ -1,1 +1,63 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,minimum-scale=1,maximum-scale=1,user-scalable=no"><link rel="icon" href="data:;base64,iVBORw0KGgo="><title>Piecemeal</title><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css"><link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"><link rel="stylesheet" href="app.css"></head><body ng-app="Piecemeal" ng-cloak><script defer="defer" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.7/socket.io.min.js"></script><script defer="defer" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script><script defer="defer" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.7/angular.min.js"></script><script defer="defer" src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.15/angular-ui-router.min.js"></script><script defer="defer" src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.1/lodash.min.js"></script><script defer="defer" src="app/app.module.js"></script><script defer="defer" src="app/app.routes.js"></script><script defer="defer" src="app/socket.module.js"></script><script defer="defer" src="app/app.factory.js"></script><script defer="defer" src="app/allDishes/allDishes.controller.js"></script><script defer="defer" src="app/allDishes/allDishes.factory.js"></script><script defer="defer" src="app/dashboard/dashboard.controller.js"></script><script defer="defer" src="app/dashboard/dashboard.factory.js"></script><script defer="defer" src="app/guestBill/guestBill.controller.js"></script><script defer="defer" src="app/home/home.controller.js"></script><script defer="defer" src="app/home/home.factory.js"></script><script defer="defer" src="app/hostBill/hostBill.controller.js"></script><script defer="defer" src="app/loading/loading.controller.js"></script><script defer="defer" src="app/loading/loading.factory.js"></script><script defer="defer" src="app/oAuth/oAuth.controller.js"></script><script defer="defer" src="app/oAuth/oAuth.factory.js"></script><script defer="defer" src="components/navbar/navbar.controller.js"></script><script defer="defer" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script></body></html>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="manifest" href="/manifest.json">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+    <title>Piecemeal</title>
+
+    <!-- external files - will be incorporated later -->
+    <!-- <script async src="//localhost:35729/livereload.js"></script> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" >
+    <!-- end external files -->
+
+    <!-- injector:css -->
+    <link rel="stylesheet" href="app.css">
+    <!-- endinjector -->
+
+  </head>
+
+  <body ng-app="Piecemeal" ng-cloak>
+    <div ui-view="navbar"></div>
+    <div ui-view></div>
+
+    <!-- bower:js -->
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.7/socket.io.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.7/angular.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.15/angular-ui-router.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.1/lodash.min.js"></script>
+    <!-- endbower -->
+
+    <!--start PROD imports-->
+    <script defer src="scripts.min.js"></script>
+    <!--end PROD imports-->
+
+    <!--start DEV imports - injector:js
+    <script defer src="app/app.module.js"></script>
+    <script defer src="app/app.routes.js"></script>
+    <script defer src="app/socket.module.js"></script>
+    <script defer src="app/app.factory.js"></script>
+    <script defer src="app/allDishes/allDishes.controller.js"></script>
+    <script defer src="app/allDishes/allDishes.factory.js"></script>
+    <script defer src="app/dashboard/dashboard.controller.js"></script>
+    <script defer src="app/dashboard/dashboard.factory.js"></script>
+    <script defer src="app/guestBill/guestBill.controller.js"></script>
+    <script defer src="app/home/home.controller.js"></script>
+    <script defer src="app/home/home.factory.js"></script>
+    <script defer src="app/hostBill/hostBill.controller.js"></script>
+    <script defer src="app/loading/loading.controller.js"></script>
+    <script defer src="app/loading/loading.factory.js"></script>
+    <script defer src="app/oAuth/oAuth.controller.js"></script>
+    <script defer src="app/oAuth/oAuth.factory.js"></script>
+    <script defer src="components/navbar/navbar.controller.js"></script>
+    end DEV imports - injector-->
+
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
+
+  </body>
+</html>
