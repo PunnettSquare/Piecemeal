@@ -217,11 +217,12 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-4">&#182;</a>
               </div>
-              <p><strong>Static folder for serving application assets</strong></p>
+              <p><strong>Static folder for serving application assets</strong>
+app.use(‘/‘, express.static(path.join(__dirname, ‘../../client/‘)));</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  app.use(<span class="hljs-string">'/'</span>, express.static(path.join(__dirname, <span class="hljs-string">'../../client/'</span>)));</pre></div></div>
+            <div class="content"><div class='highlight'><pre>    app.use(<span class="hljs-string">'/'</span>, express.static(path.join(__dirname, <span class="hljs-string">'../../dist/client'</span>)));</pre></div></div>
             
         </li>
         

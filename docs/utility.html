@@ -257,6 +257,7 @@
           <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
         } <span class="hljs-keyword">else</span> {
           data[<span class="hljs-number">0</span>].isValid = <span class="hljs-literal">true</span>;
+          <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'code in util'</span>, data[<span class="hljs-number">0</span>])
           <span class="hljs-keyword">return</span> data[<span class="hljs-number">0</span>];
         }
       });
@@ -309,6 +310,26 @@
           host: host
         }).returning(<span class="hljs-string">'user_id'</span>);
       });
+  },
+
+  addVenmoUser: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">db, event_id, user_id</span>) </span>{
+    <span class="hljs-keyword">return</span> db(<span class="hljs-string">'usersJoinEvents'</span>).where({
+        event_id: event_id,
+        user_id: user_id
+      })
+      .then(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">data</span>) </span>{
+        <span class="hljs-keyword">if</span> (data.length === <span class="hljs-number">0</span>) {
+          <span class="hljs-keyword">return</span>  db(<span class="hljs-string">'usersJoinEvents'</span>).insert({
+            user_id: user_id,
+            event_id: event_id,
+            status: <span class="hljs-literal">false</span>,
+            host: <span class="hljs-literal">false</span>
+          })
+        } <span class="hljs-keyword">else</span> {
+          <span class="hljs-keyword">return</span>
+        } 
+      });
+   
   },
 
   createDish: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">db, dishName, cost, user_id, event_id</span>) </span>{
@@ -414,7 +435,9 @@
   },
 
   getUsersEvents: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">db, user_id</span>) </span>{
-    <span class="hljs-keyword">return</span> db.select(<span class="hljs-string">'event_id'</span>).from(<span class="hljs-string">'usersJoinEvents'</span>).where(<span class="hljs-string">'usersJoinEvents.user_id'</span>, user_id);
+    <span class="hljs-keyword">return</span> db.select(<span class="hljs-string">'event_id'</span>)
+    .from(<span class="hljs-string">'usersJoinEvents'</span>)
+    .where(<span class="hljs-string">'usersJoinEvents.user_id'</span>, user_id);
   },
 
   gatherState: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">db, event_id, code</span>) </span>{
@@ -474,12 +497,21 @@
   },
 
   findEventUsers: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">db, event_id</span>) </span>{
-    <span class="hljs-keyword">return</span> db.select(<span class="hljs-string">'users.username'</span>, <span class="hljs-string">'usersJoinEvents.status'</span>, <span class="hljs-string">'usersJoinEvents.host'</span>, <span class="hljs-string">'users.id'</span>, <span class="hljs-string">'users.venmoUsername'</span>).from(<span class="hljs-string">'events'</span>).leftJoin(<span class="hljs-string">'usersJoinEvents'</span>, <span class="hljs-string">'events.id'</span>, <span class="hljs-string">'usersJoinEvents.event_id'</span>).leftJoin(<span class="hljs-string">'users'</span>, <span class="hljs-string">'users.id'</span>, <span class="hljs-string">'usersJoinEvents.user_id'</span>).where(<span class="hljs-string">'events.id'</span>, event_id);
+    <span class="hljs-keyword">return</span> db.select(<span class="hljs-string">'users.username'</span>, <span class="hljs-string">'usersJoinEvents.status'</span>, <span class="hljs-string">'usersJoinEvents.host'</span>, <span class="hljs-string">'users.id'</span>, <span class="hljs-string">'users.venmoUsername'</span>)
+    .from(<span class="hljs-string">'events'</span>)
+    .leftJoin(<span class="hljs-string">'usersJoinEvents'</span>, <span class="hljs-string">'events.id'</span>, <span class="hljs-string">'usersJoinEvents.event_id'</span>)
+    .leftJoin(<span class="hljs-string">'users'</span>, <span class="hljs-string">'users.id'</span>, <span class="hljs-string">'usersJoinEvents.user_id'</span>)
+    .where(<span class="hljs-string">'events.id'</span>, event_id);
   },
 
   findUserDishes: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">db, user_id, event_id</span>) </span>{
-    <span class="hljs-keyword">return</span> db.select().from(<span class="hljs-string">'users'</span>).innerJoin(<span class="hljs-string">'usersJoinDishes'</span>, <span class="hljs-string">'users.id'</span>, <span class="hljs-string">'usersJoinDishes.user_id'</span>).innerJoin(<span class="hljs-string">'dishes'</span>, <span class="hljs-string">'dishes.id'</span>, <span class="hljs-string">'usersJoinDishes.dish_id'</span>).where(<span class="hljs-string">'users.id'</span>, user_id)
+    <span class="hljs-keyword">return</span> db.select()
+    .from(<span class="hljs-string">'users'</span>)
+    .innerJoin(<span class="hljs-string">'usersJoinDishes'</span>, <span class="hljs-string">'users.id'</span>, <span class="hljs-string">'usersJoinDishes.user_id'</span>)
+    .innerJoin(<span class="hljs-string">'dishes'</span>, <span class="hljs-string">'dishes.id'</span>, <span class="hljs-string">'usersJoinDishes.dish_id'</span>)
+    .where(<span class="hljs-string">'users.id'</span>, user_id)
       .then(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">dishes</span>) </span>{
+        <span class="hljs-built_in">console</span>.log(dishes);
         <span class="hljs-keyword">return</span> dishes.filter(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">dish</span>) </span>{
           <span class="hljs-keyword">return</span> dish.event_id === event_id;
         });
@@ -487,8 +519,9 @@
   },
 
   findBillAmendments: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">db, event_id</span>) </span>{
-    <span class="hljs-keyword">return</span> db(<span class="hljs-string">'events'</span>).select(<span class="hljs-string">'tipPercent'</span>, <span class="hljs-string">'taxPercent'</span>, <span class="hljs-string">'feePercent'</span>, <span class="hljs-string">'discountPercent'</span>, <span class="hljs-string">'billSent'</span>)
-      .where(<span class="hljs-string">'id'</span>, event_id);
+    <span class="hljs-keyword">return</span> db(<span class="hljs-string">'events'</span>)
+    .select(<span class="hljs-string">'tipPercent'</span>, <span class="hljs-string">'taxPercent'</span>, <span class="hljs-string">'feePercent'</span>, <span class="hljs-string">'discountPercent'</span>, <span class="hljs-string">'billSent'</span>)
+    .where(<span class="hljs-string">'id'</span>, event_id);
   },
 
   generateCode: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">db</span>) </span>{

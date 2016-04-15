@@ -492,6 +492,20 @@
       });
   });
 
+  app.put(<span class="hljs-string">'/addVenmoUser'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">req, res</span>) </span>{
+    <span class="hljs-keyword">var</span> event_id = req.body.event_id;
+    <span class="hljs-keyword">var</span> user_id = req.body.user_id;
+
+    util.addVenmoUser(db, event_id, user_id)
+    .then(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+      res.send(<span class="hljs-number">200</span>);
+    })
+    .catch(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">err</span>) </span>{
+      <span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Error!"</span>, err);
+      res.status(<span class="hljs-number">500</span>).send(err);
+    })
+  })
+
   <span class="hljs-keyword">var</span> connections = {};</pre></div></div>
             
         </li>
