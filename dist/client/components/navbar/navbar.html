@@ -1,1 +1,7 @@
-<div class="container-fluid"><div class="row"><div class="col-md-12"><nav class="navbar navbar-default" role="navigation"><div class="navbar-header"><button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"><span class="sr-only">Toggle navigation</span></button> <a class="navbar-brand" href="#">Piecemeal</a></div><div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1"><ul class="nav navbar-nav navbar-right"><li><a class="logout" ng-click="navbar.logout()">Logout</a></li></ul></div></nav></div></div></div>
+<script type="text/javascript">$(document).ready(function() {
+$('.button-collapse').sideNav({
+menuWidth: 210, // Default is 240
+edge: 'right', // Choose the horizontal origin
+closeOnClick: true // Closes side-nav on <a> clicks, useful for Angular/Meteor
+  });
+  });</script><nav><div class="nav-wrapper teal lighten-1"><a href="#" class="wordmark">Piecemeal</a> <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons" ng-if="navbar.isLoggedIn()">menu</i></a><ul class="right hide-on-med-and-down"><li><a class="leaveBill" ng-if="navbar.isLoggedIn()" ng-click="navbar.logout()">Leave Bill</a></li></ul><ul class="side-nav" id="mobile-demo"><li><a class="allDishes" ui-sref="event.allDishes">All Dishes</a></li><li><a class="guestBill" ui-sref="event.guestBill">Your Bill</a></li><li><a class="hostBill" ui-sref="event.hostBill" ng-show="navbar.isHost">Final Bill</a></li><li><a class="leaveBill" ng-if="navbar.isLoggedIn()" ng-click="navbar.logout()">Leave Bill</a></li></ul></div></nav>

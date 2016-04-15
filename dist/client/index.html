@@ -7,11 +7,11 @@
     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
     <title>Piecemeal</title>
 
-
     <!-- external files - will be incorporated later -->
-     <!-- // <script src="//localhost:35729/livereload.js"></script> -->
+    <script src="//localhost:35729/livereload.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!-- end external files -->
 
     <!-- injector:css -->
@@ -20,58 +20,23 @@
 
   </head>
 
-
   <body ng-app="Piecemeal" ng-cloak>
     <div ui-view="navbar"></div>
     <div ui-view></div>
 
-
     <!-- bower:js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.7/socket.io.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-    <!-- // <script src="bower_components/jquery/dist/jquery.js"></script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.7/angular.min.js"></script>
-    <!-- // <script src="bower_components/angular/angular.js"></script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.15/angular-ui-router.min.js"></script>
-    <!-- // <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.1/lodash.min.js"></script>
-    <!-- // <script src="bower_components/lodash/lodash.js"></script> -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.7/angular-animate.min.js"></script>
-    <!-- // <script src="bower_components/angular-animate/angular-animate.js"></script> -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.7/angular-messages.min.js"></script>
-    <!-- // <script src="bower_components/angular-messages/angular-messages.js"></script> -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.8/angular-aria.min.js"></script>
-    <!-- // <script src="bower_components/angular-aria/angular-aria.js"></script> -->
-    <!-- // <script src="bower_components/angular-socket.io-mock/angular-socket.io-mock.js"></script> -->
     <!-- endbower -->
 
     <!-- injector:js -->
-    <script src="app/app.module.js"></script>
-    <script src="app/app.routes.js"></script>
-    <script src="app/socket.module.js"></script>
-    <script src="app/app.factory.js"></script>
-    <script src="app/allDishes/allDishes.controller.js"></script>
-    <script src="app/allDishes/allDishes.factory.js"></script>
-    <script src="app/dashboard/dashboard.controller.js"></script>
-    <script src="app/dashboard/dashboard.factory.js"></script>
-    <script src="app/guestBill/guestBill.controller.js"></script>
-    <script src="app/guestBill/guestBill.factory.js"></script>
-    <script src="app/home/home.controller.js"></script>
-    <script src="app/home/home.factory.js"></script>
-    <script src="app/hostBill/hostBill.controller.js"></script>
-    <script src="app/hostBill/hostBill.factory.js"></script>
-    <script src="app/hostReceipt/hostReceipt.controller.js"></script>
-    <script src="app/hostReceipt/hostReceipt.factory.js"></script>
-    <script src="app/loading/loading.controller.js"></script>
-    <script src="app/loading/loading.directive.js"></script>
-    <script src="app/loading/loading.factory.js"></script>
-    <script src="app/oAuth/oAuth.controller.js"></script>
-    <script src="app/oAuth/oAuth.factory.js"></script>
-    <script src="components/navbar/navbar.controller.js"></script>
+    <script src="scripts.min.js"></script>
     <!-- endinjector -->
 
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-    <script src="http://fgnass.github.io/spin.js/spin.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
 
   </body>
 </html>

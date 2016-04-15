@@ -133,7 +133,8 @@ module.exports = function(grunt) {
               '<%= project.client %>/app/app.factory.js',
               '{.tmp,<%= project.client %>}/{app,components}/**/!(*.spec|*.mock).js'
             ]
-          ]
+          ],
+          '<%= project.dist %>/client/index.html': 'dist/client/scripts.min.js'
         }
       },
 
@@ -235,7 +236,7 @@ module.exports = function(grunt) {
           banner: '<%= tag.banner %>'
         },
         files: {
-          '<%= project.dist %>/client/style.css': '<%= project.dist %>/client/style.css'
+          '<%= project.dist %>/client/app.css': '<%= project.dist %>/client/app.css'
         }
       }
     },
@@ -248,7 +249,7 @@ module.exports = function(grunt) {
         minifyCss: true
       },
       files: {
-        cwd: '<%= project.client %>',
+        cwd: '<%= project.dist %>/client',
         src: ['**/*.html', '!index.html', '!**/*Old.html'],
         dest: '<%= project.dist %>/client',
         expand: true
@@ -258,7 +259,7 @@ module.exports = function(grunt) {
     copy: {
       files: {
         cwd: '<%= project.client %>',
-        src: ['**/*.html', '!**/*Old.html'],
+        src: ['**/*.html', '**/*.css', '!**/*Old.html', '!styles/*.*'],
         dest: '<%= project.dist %>/client/',
         expand: true
       }
@@ -447,8 +448,8 @@ module.exports = function(grunt) {
   grunt.registerTask('start', ['open', 'watch']);
   grunt.registerTask('testIndiv', ['shell:testIndiv']);
   grunt.registerTask('testDup', ['shell:dupTest']);
-  grunt.registerTask('build', ['jshint', 'wiredep', 'injector:scripts', 'injector:sass', 'injector:css']);
-  grunt.registerTask('dist', ['clean', 'concat', 'uglify', 'sass', 'cssmin', 'copy', 'htmlmin']); // cdnify
+  grunt.registerTask('build', ['jshint', 'injector:scripts', 'injector:sass', 'injector:css']);
+  grunt.registerTask('dist', ['clean', 'concat', 'uglify', 'copy', 'cssmin', 'htmlmin']); // cdnify
   // grunt.registerTask('test', ['wiredep', 'karma', 'mochaTest']);
   // Tasks for karma and travis:
   // grunt.loadNpmTasks('grunt-contrib-watch');

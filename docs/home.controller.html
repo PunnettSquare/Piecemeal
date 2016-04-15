@@ -269,7 +269,13 @@
             </div>
             
             <div class="content"><div class='highlight'><pre>              $<span class="hljs-built_in">window</span>.localStorage.event_id = validCode.data.id;
-              $location.path(<span class="hljs-string">'/'</span> + code + <span class="hljs-string">'/allDishes'</span>);
+              homeFactory.addVenmoUser({
+                user_id: $<span class="hljs-built_in">window</span>.localStorage.user_id,
+                event_id: $<span class="hljs-built_in">window</span>.localStorage.event_id
+              })
+              .then(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+                $location.path(<span class="hljs-string">'/'</span> + code + <span class="hljs-string">'/allDishes'</span>);
+              })
             } <span class="hljs-keyword">else</span> {
               $location.path(<span class="hljs-string">'/'</span> + $<span class="hljs-built_in">window</span>.localStorage.code + <span class="hljs-string">'/loading'</span>);
             }
