@@ -218,9 +218,22 @@
       calculateRunningTotal: calculateRunningTotal
     };
 
-    <span class="hljs-keyword">return</span> services;
+    <span class="hljs-keyword">return</span> services;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p>Moved to appFactory</p>
 
-    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">calculateRunningTotal</span>(<span class="hljs-params">data</span>) </span>{
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">calculateRunningTotal</span>(<span class="hljs-params">data</span>) </span>{
       <span class="hljs-keyword">return</span> (!data) ? <span class="hljs-number">0</span> : _.filter(data.dishes, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">obj, key</span>) </span>{
           <span class="hljs-keyword">return</span> _.contains(obj.users, appFactory.getSessStorage(<span class="hljs-string">'user_id'</span>));
         })

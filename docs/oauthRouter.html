@@ -311,9 +311,7 @@
             <div class="content"><div class='highlight'><pre>          <span class="hljs-keyword">if</span> (result.length === <span class="hljs-number">0</span>) {
             db(<span class="hljs-string">'users'</span>).insert({
                 venmoUsername: venmoUsername,
-                username: profile.displayName,
-                phone: profile.phone,
-                email: profile.email
+                username: profile.displayName
               })
               .then(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
                 <span class="hljs-keyword">return</span> util.findUser(db, venmoUsername);

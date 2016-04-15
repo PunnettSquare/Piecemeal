@@ -263,7 +263,8 @@
       goToHome: goToHome,
       copySessData: copySessData,
       logout: logout,
-      checkCode: checkCode
+      checkCode: checkCode,
+      calculateRunningTotal: calculateRunningTotal
     };
 
     <span class="hljs-keyword">return</span> services;
@@ -302,7 +303,72 @@
     }
 
     <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getDishIndivCost</span>(<span class="hljs-params">dish</span>) </span>{
-      <span class="hljs-keyword">return</span> dish.cost / dish.users.length;
+      <span class="hljs-keyword">var</span> user_id = getSessStorage(<span class="hljs-string">'user_id'</span>);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-7">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <p>Calculate portions</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      <span class="hljs-keyword">var</span> count = <span class="hljs-number">0</span>;
+      dish.users.forEach(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">userId</span>) </span>{
+        <span class="hljs-keyword">if</span> (userId == user_id) {
+          count++
+        }
+      })
+      <span class="hljs-keyword">return</span> (dish.cost / dish.users.length) * count;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">calculateRunningTotal</span>(<span class="hljs-params">data</span>) </span>{
+      <span class="hljs-keyword">var</span> user_id = getSessStorage(<span class="hljs-string">'user_id'</span>);
+      <span class="hljs-keyword">return</span> (!data) ? <span class="hljs-number">0</span> : _.filter(data.dishes, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">obj, key</span>) </span>{
+          <span class="hljs-keyword">return</span> _.contains(obj.users, user_id);
+        })
+        .reduce(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">totalSoFar, dish</span>) </span>{</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-8">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-8">&#182;</a>
+              </div>
+              <p>Calculate portions per dish</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>          <span class="hljs-keyword">var</span> count = <span class="hljs-number">0</span>;
+          dish.users.forEach(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">userId</span>) </span>{
+            <span class="hljs-keyword">if</span> (userId == user_id) {
+              count++
+            }
+          })</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-9">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-9">&#182;</a>
+              </div>
+              <p>Then add together</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>          <span class="hljs-keyword">return</span> totalSoFar + (<span class="hljs-built_in">Number</span>(dish.cost) / dish.users.length) * count;
+        }, <span class="hljs-number">0</span>);
     }
 
     <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">goToAddDish</span>(<span class="hljs-params"></span>) </span>{
@@ -337,17 +403,17 @@
         </li>
         
         
-        <li id="section-7">
+        <li id="section-10">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-7">&#182;</a>
+                <a class="pilcrow" href="#section-10">&#182;</a>
               </div>
               <p>Add user id to dish and dish to user</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">shareDish</span>(<span class="hljs-params">dish_id, user_id</span>) </span>{
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">shareDish</span>(<span class="hljs-params">dish_id, user_id, firstShare</span>) </span>{
       <span class="hljs-keyword">var</span> dishObj;
       services.data.dishes.forEach(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">dish</span>) </span>{
         <span class="hljs-keyword">if</span> (dish.dish_id === dish_id) {
@@ -355,58 +421,145 @@
           dishObj = dish;
         }
       });
-      services.data.users.forEach(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">user</span>) </span>{
-        <span class="hljs-keyword">if</span> (user.id === user_id) {
-          user.dishes.push(dishObj);
-        }
-      });
+      <span class="hljs-keyword">if</span> (firstShare) {
+        services.data.users.forEach(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">user</span>) </span>{
+          <span class="hljs-keyword">if</span> (user.id === user_id) {
+            user.dishes.push(dishObj);
+          }
+        });
+      }
     }</pre></div></div>
             
         </li>
         
         
-        <li id="section-8">
+        <li id="section-11">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-8">&#182;</a>
+                <a class="pilcrow" href="#section-11">&#182;</a>
               </div>
-              <p>Remove user id from dish and dish from user</p>
+              <p>Remove portion from dish and dish from user if last portion</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">unshareDish</span>(<span class="hljs-params">dish_id, user_id</span>) </span>{
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">unshareDish</span>(<span class="hljs-params">dish_id, user_id</span>) </span>{</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-12">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-12">&#182;</a>
+              </div>
+              <p>Flag as to if user has any portions left</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      <span class="hljs-keyword">var</span> last = <span class="hljs-literal">true</span>;
       services.data.dishes.forEach(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">dish, dishIndex</span>) </span>{
         <span class="hljs-keyword">if</span> (dish.dish_id === dish_id) {
-          dish.users.splice(dish.users.indexOf(user_id), <span class="hljs-number">1</span>);
-          <span class="hljs-keyword">if</span> (dish.users.length === <span class="hljs-number">0</span>) {
+          <span class="hljs-keyword">var</span> count;
+          <span class="hljs-keyword">var</span> lastIndex;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-13">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-13">&#182;</a>
+              </div>
+              <p>Check if user is on multiple times</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>          dish.users.forEach(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">userId, index</span>) </span>{
+            <span class="hljs-keyword">if</span> (userId === user_id) {
+              count++;
+              lastIndex = index;
+            }
+          })
+
+          <span class="hljs-keyword">if</span> (count &gt; <span class="hljs-number">1</span>) {
+            last = <span class="hljs-literal">false</span>;
+          }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-14">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-14">&#182;</a>
+              </div>
+              <p>Remove one of them</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>          dish.users.splice(lastIndex, <span class="hljs-number">1</span>);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-15">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-15">&#182;</a>
+              </div>
+              <p>Remove dish entirely if this is last user on dish</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>          <span class="hljs-keyword">if</span> (dish.users.length === <span class="hljs-number">0</span>) {
             services.data.dishes.splice(dishIndex, <span class="hljs-number">1</span>);
           }
         }
-      });
-      services.data.users.forEach(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">user</span>) </span>{
-        <span class="hljs-keyword">if</span> (user.id === user_id) {
-          <span class="hljs-keyword">var</span> dishIndex = user.dishes.reduce(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">dishIndex, dish, index</span>) </span>{
-            <span class="hljs-keyword">if</span> (dishIndex || dishIndex === <span class="hljs-number">0</span>) {
-              <span class="hljs-keyword">return</span> dishIndex;
-            }
-            <span class="hljs-keyword">if</span> (dish.dish_id === dish_id) {
-              <span class="hljs-keyword">return</span> index;
-            }
-          }, <span class="hljs-literal">false</span>);
-          user.dishes.splice(dishIndex, <span class="hljs-number">1</span>);
-        }
-      });
+      });</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-16">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-16">&#182;</a>
+              </div>
+              <p>If user has no portions left on dish, remove from user model</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      <span class="hljs-keyword">if</span> (last) {
+        services.data.users.forEach(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">user</span>) </span>{
+          <span class="hljs-keyword">if</span> (user.id === user_id) {
+            <span class="hljs-keyword">var</span> dishIndex = user.dishes.reduce(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">dishIndex, dish, index</span>) </span>{
+              <span class="hljs-keyword">if</span> (dishIndex || dishIndex === <span class="hljs-number">0</span>) {
+                <span class="hljs-keyword">return</span> dishIndex;
+              }
+              <span class="hljs-keyword">if</span> (dish.dish_id === dish_id) {
+                <span class="hljs-keyword">return</span> index;
+              }
+            }, <span class="hljs-literal">false</span>);
+            user.dishes.splice(dishIndex, <span class="hljs-number">1</span>);
+          }
+        });
+      }
     }</pre></div></div>
             
         </li>
         
         
-        <li id="section-9">
+        <li id="section-17">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-9">&#182;</a>
+                <a class="pilcrow" href="#section-17">&#182;</a>
               </div>
               <p>Delete everything stored in localStorage except for login info in order to leave the bill. Redirect to homepage. (Why 1 second wait?) (Rename as leaveBill?)</p>
 
@@ -427,11 +580,11 @@
         </li>
         
         
-        <li id="section-10">
+        <li id="section-18">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-10">&#182;</a>
+                <a class="pilcrow" href="#section-18">&#182;</a>
               </div>
               <p>Turn an array into sentence format with commas and “and”</p>
 
@@ -453,23 +606,54 @@
         </li>
         
         
-        <li id="section-11">
+        <li id="section-19">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-11">&#182;</a>
+                <a class="pilcrow" href="#section-19">&#182;</a>
               </div>
               <p>Return list of users on a dish in sentence format</p>
 
             </div>
             
             <div class="content"><div class='highlight'><pre>    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getUsersByDish</span>(<span class="hljs-params">dish, users</span>) </span>{
-      <span class="hljs-keyword">return</span> arrayToSentence(
-        _(dish.users).map(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">id</span>) </span>{
-          <span class="hljs-keyword">return</span> users[_.findIndex(users, {
-            <span class="hljs-string">'id'</span>: id
+
+      <span class="hljs-keyword">var</span> tracker = {};
+
+      _.each(dish.users, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">user_id</span>) </span>{
+        <span class="hljs-keyword">if</span> (tracker[user_id]) {
+          tracker[user_id]++;
+        } <span class="hljs-keyword">else</span> {
+          tracker[user_id] = <span class="hljs-number">1</span>;
+        }
+      });
+
+      <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">findIndex</span>(<span class="hljs-params">objArray, keyObj</span>) </span>{
+        <span class="hljs-keyword">var</span> result;
+        objArray.forEach(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">obj, index</span>) </span>{
+          <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> key <span class="hljs-keyword">in</span> keyObj) {
+            <span class="hljs-keyword">if</span> (obj[key] == keyObj[key]) {
+              result = index
+            }
+          }
+        })
+        <span class="hljs-keyword">return</span> result;
+      }
+
+      <span class="hljs-keyword">var</span> shares = _.map(tracker, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">portions, user_id</span>) </span>{
+        <span class="hljs-keyword">if</span> (portions &gt; <span class="hljs-number">1</span>) {
+          <span class="hljs-keyword">return</span> users[findIndex(users, {
+            <span class="hljs-string">'id'</span>: user_id
+          })].username + <span class="hljs-string">' (x'</span> + portions + <span class="hljs-string">')'</span>;
+        } <span class="hljs-keyword">else</span> {
+          <span class="hljs-keyword">return</span> users[findIndex(users, {
+            <span class="hljs-string">'id'</span>: user_id
           })].username;
-        }).value());
+        }
+      })
+
+      <span class="hljs-keyword">return</span> arrayToSentence(shares)
+
     }
 
     <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">initListeners</span>(<span class="hljs-params"></span>) </span>{</pre></div></div>
@@ -477,11 +661,11 @@
         </li>
         
         
-        <li id="section-12">
+        <li id="section-20">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-12">&#182;</a>
+                <a class="pilcrow" href="#section-20">&#182;</a>
               </div>
               <p>RootScope Broadcast: Upon refresh, controllers attempt to reference appFactory.data faster than the asynchronous get request to retrieve data, resulting in a reference to null. Therefore, to persist data on refresh, when the ‘joined’ event is emitted, a broadcast is sent out via the $rootScope message bus in order to let controllers know it is OK to retrieve a reference to appFactory.data.</p>
 
@@ -504,11 +688,11 @@
         </li>
         
         
-        <li id="section-13">
+        <li id="section-21">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-13">&#182;</a>
+                <a class="pilcrow" href="#section-21">&#182;</a>
               </div>
               <p>data format: {cost: 3, name: “rice”, user_id: “29319”, event_id: 1, users: [“29319”]}</p>
 
@@ -523,17 +707,17 @@
         </li>
         
         
-        <li id="section-14">
+        <li id="section-22">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-14">&#182;</a>
+                <a class="pilcrow" href="#section-22">&#182;</a>
               </div>
               <p>data format: {user_id: 24, dish_id: 14}</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>        shareDish(data.dish_id, data.user_id);
+            <div class="content"><div class='highlight'><pre>        shareDish(data.dish_id, data.user_id, data.firstShare);
       });
 
       socketFactory.on(<span class="hljs-string">'dishUnshared'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">data</span>) </span>{
