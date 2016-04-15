@@ -5,8 +5,6 @@ exports.up = function(knex, Promise) {
       table.increments('id').primary();
       table.string('username');
       table.string('venmoUsername');
-      table.string('phone');
-      table.string('email');
     }),
 
     knex.schema.createTable('events', function(table) {

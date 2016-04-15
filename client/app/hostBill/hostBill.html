@@ -20,7 +20,7 @@
           Total Cost: <strong>{{ ::dish.cost | currency }}</strong>
           <br>
           <span class="dish__item--shared">
-            Each individual paid: {{ hostBill.getDishIndivCost(dish) | currency }}
+            Your portion cost: {{ hostBill.getDishIndivCost(dish) | currency }}
             <br>
           {{ hostBill.getUsersByDish(dish, hostBill.data.users) }} got this.</span>
         </li>
@@ -47,7 +47,7 @@
           <h5 class="dish__title">Tip</h5>
           <!-- tip input -->
           <div class="input">
-            <input class="tipPercent" name="tip" type="number" step="any" ng-model="hostBill.tip" placeholder="0" min="0" required>
+            <input class="tipPercent" name="tip" min="0" type="number" step="any" ng-model="hostBill.tip" placeholder="0" min="0" required>
           </div>
           <!-- Tip switch -->
           <div class="switch">
@@ -85,7 +85,7 @@
           <h5 class="dish__title">Tax</h5>
           <!-- tax input -->
           <div>
-            <input class="taxPercent" name="tax" type="number" step="any" ng-model="hostBill.tax" placeholder="0" min="0" required>
+            <input class="taxPercent" name="tax" type="number" min="0" step="any" ng-model="hostBill.tax" placeholder="0" min="0" required>
           </div>
           <!-- Tax switch -->
           <div class="switch">
@@ -211,7 +211,7 @@
           </span>
         </div>
         <div class="row center-align">
-          <button type="submit" ng-disabled="billForm.tax.$error.required || billForm.tip.$error.required" ng-click="hostBill.sendBillAndAlert()" class="sendBills btn">Send Bills to Guests</button>
+          <button type="submit" ng-disabled="billForm.tax.$error.required || billForm.tip.$error.required || !billForm.tax.$valid || !billForm.tip.$valid" ng-click="hostBill.sendBillAndAlert()" class="sendBills btn">Send Bills to Guests</button>
         </div>
 
       </form>

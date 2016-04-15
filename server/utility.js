@@ -132,7 +132,8 @@ module.exports = {
         dishId = dish_id;
         return db('usersJoinDishes').insert({
           user_id: user_id,
-          dish_id: dish_id[0]
+          dish_id: dish_id[0],
+          portions: 1
         }).returning('id');
       })
       .then(function() {
@@ -143,32 +144,69 @@ module.exports = {
   },
 
   shareDish: function(db, user_id, dish_id) {
-    return db('usersJoinDishes').insert({
-      user_id: user_id,
-      dish_id: dish_id
-    });
+    // Query DB to see if user is already on dish
+    return db('usersJoinDishes')
+      .where({
+        dish_id: dish_id,
+        user_id: user_id
+      })
+      .then(function(data) {
+        // If they are not, make new entry in table
+        if (data.length === 0) {
+          return db('usersJoinDishes').insert({
+            user_id: user_id,
+            dish_id: dish_id,
+            portions: 1
+          });
+        } else {
+        // If they already have a portion, increment the portion
+         return db('usersJoinDishes').where({
+            user_id: user_id,
+            dish_id: dish_id
+          }).update({
+            portions: 1 + data[0].portions
+          });
+        }
+      });
+
   },
 
   unshareDish: function(db, user_id, dish_id) {
-    return db('usersJoinDishes').where({
-        user_id: user_id,
-        dish_id: dish_id
-      }).del()
-      .then(function() {
-        return db('usersJoinDishes').where({
-            dish_id: dish_id
-          })
-          .returning('id');
+    return db('usersJoinDishes')
+      .where({
+        dish_id: dish_id,
+        user_id: user_id
       })
-      .then(function(ids) {
-        if (ids.length === 0) {
-          return db('dishes').where({
-            id: dish_id
-          }).del();
+      .then(function(data) {
+        if (data[0].portions > 1) {
+          return db('usersJoinDishes').where({
+             user_id: user_id,
+             dish_id: dish_id
+           }).update({
+             portions: data[0].portions - 1
+           });
         } else {
-          return;
+          return db('usersJoinDishes').where({
+              user_id: user_id,
+              dish_id: dish_id
+            }).del()
+            .then(function() {
+              return db('usersJoinDishes').where({
+                  dish_id: dish_id
+                })
+                .returning('id');
+            })
+            .then(function(ids) {
+              if (ids.length === 0) {
+                return db('dishes').where({
+                  id: dish_id
+                }).del();
+              } else {
+                return;
+              }
+            });
         }
-      });
+      })
   },
 
   removeDish: function(db, dish_id) {
@@ -241,6 +279,7 @@ module.exports = {
                 return module.exports.findUserDishes(db, user.id, event_id);
               }))
               .then(function(usersDishesArrays) {
+                // Add dish models to each user in the state
                 usersDishesArrays.forEach(function(userDishesArray) {
                   _.each(state.users, function(userObj, index, list) {
                     var username = userObj.username;
@@ -254,6 +293,7 @@ module.exports = {
                     });
                   });
                 });
+                // Add dish models section to state object
                 state.dishes = module.exports.findDishArray(usersDishesArrays);
 
                 return state;
@@ -286,7 +326,6 @@ module.exports = {
     .innerJoin('dishes', 'dishes.id', 'usersJoinDishes.dish_id')
     .where('users.id', user_id)
       .then(function(dishes) {
-        console.log(dishes);
         return dishes.filter(function(dish) {
           return dish.event_id === event_id;
         });
@@ -341,21 +380,28 @@ module.exports = {
     var result = [];
     usersDishesArray.forEach(function(dishArray) {
       dishArray.forEach(function(dishObj) {
-        //check if dish is shared
+        // Check if dish is shared
         var isSharedDish = result.reduce(function(isInside, dish, index) {
           if (isInside) {
             return true;
           }
           if (dish.dish_id === dishObj.dish_id) {
-            //if so, add user to users prop
-            result[index].users.push(dishObj.user_id);
+            // If so, add user to users prop, as many times as the portions that user has
+            while (dishObj.portions) {
+              result[index].users.push(dishObj.user_id);
+              dishObj.portions--;
+            }
             return true;
           }
         }, false);
 
         if (!isSharedDish) {
-          //otherwise add user prop and push into array
-          dishObj.users = [dishObj.user_id];
+          // Otherwise add user prop and push into array for as many portions as user has
+          dishObj.users = [];
+          while (dishObj.portions) {
+            dishObj.users.push(dishObj.user_id);
+            dishObj.portions--;
+          }            
           delete dishObj.user_id;
           delete dishObj.username;
           delete dishObj.id;

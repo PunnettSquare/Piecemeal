@@ -10,11 +10,11 @@
   angular.module('Piecemeal')
     .controller('GuestBillCtrl', GuestBillCtrl);
 
-  GuestBillCtrl.$inject = ['$scope', 'appFactory', 'allDishesFactory', 'socketFactory', '$timeout'];
+  GuestBillCtrl.$inject = ['$scope', 'appFactory', 'socketFactory', '$timeout'];
 
   // **Parameters:** TODO
 
-  function GuestBillCtrl($scope, appFactory, allDishesFactory, socketFactory, $timeout) {
+  function GuestBillCtrl($scope, appFactory, socketFactory, $timeout) {
     var self = this;
 
     // Copy data from ```window.localStorage``` onto the $scope.
@@ -63,27 +63,50 @@
       });
     };
 
-    //remove?
-    self.getGuestTotal = function(data) {
-      return allDishesFactory.calculateRunningTotal(data);
-    };
-
-    //remove
-    self.getGrandTotal = function(dishes, billData) {
-      return (!self.data) ? 0 : _.sum(_.pluck(dishes, 'cost')) + self.getGuestTip() + self.getGuestTax();
-    };
-
     self.getOtherUsersByUsername = function(dish, users, user_id) {
-      return appFactory.arrayToSentence(
-        _(dish.users).filter(function(id) {
-          return id !== user_id;
+
+      var tracker = {};
+
+      var dishUsers = dish.users.slice();
+
+      dishUsers = _.filter(dish.users, function (id) {
+        return id !== user_id;
+      });
+
+      _.each(dishUsers, function (user_id) {
+        if (tracker[user_id]) {
+          tracker[user_id]++;
+        } else {
+          tracker[user_id] = 1;
+        }
+      });
+
+      function findIndex(objArray, keyObj) {
+        var result;
+        objArray.forEach(function(obj, index) {
+          for (var key in keyObj) {
+            if (obj[key] == keyObj[key]) {
+              result = index
+            }
+          }
         })
-        .map(function(id) {
-          return users[_.findIndex(users, {
-            'id': id
+        return result;
+      }
+
+      var shares = _.map(tracker, function (portions, user_id) {
+        if (portions > 1) {
+          return users[findIndex(users, {
+            'id': user_id
+          })].username + ' (x' + portions + ')';
+        } else {
+          return users[findIndex(users, {
+            'id': user_id
           })].username;
-        }).value()
-      );
+        }
+      })
+
+      return appFactory.arrayToSentence(shares)
+
     };
 
     self.getGuestTax = function() {
@@ -103,18 +126,12 @@
     };
 
     self.getGuestSubtotal = function(data) {
-      return allDishesFactory.calculateRunningTotal(data);
+      return appFactory.calculateRunningTotal(data);
     };
 
     self.getGuestGrandTotal = function() {
-      // return (!self.data) ? 0 : Math.round(
-      //   (self.getGuestTotal(self.data)
-      //     + (self.data.billData.taxPercent * self.getGuestTotal(self.data) * 0.01)
-      //     + (self.data.billData.tipPercent * self.getGuestTotal(self.data) * 0.01)
-      //   )*100)/100;
-
       return (!self.data) ? 0 : Math.round((
-        self.getGuestTotal(self.data) + self.getGuestTax() + self.getGuestTip() + self.getGuestFee() - self.getGuestDiscount()
+        self.getGuestSubtotal(self.data) + self.getGuestTax() + self.getGuestTip() + self.getGuestFee() - self.getGuestDiscount()
       ) * 100) / 100;
     };
 

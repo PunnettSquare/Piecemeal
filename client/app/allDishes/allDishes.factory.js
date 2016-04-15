@@ -21,7 +21,7 @@
     };
 
     return services;
-
+    // Moved to appFactory
     function calculateRunningTotal(data) {
       return (!data) ? 0 : _.filter(data.dishes, function(obj, key) {
           return _.contains(obj.users, appFactory.getSessStorage('user_id'));

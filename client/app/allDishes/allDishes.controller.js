@@ -71,13 +71,16 @@
 
     // Add user's ID to dish item in appFactory, and send to the [server](../docs/sockets.js) through a socket event to update the database
     self.shareDish = function(dish_id, user_id, users) {
+      var firstShare = false;
       if (!self.isOnDish(users, user_id)) {
+        firstShare = true;
+      }
         socketFactory.emit('shareDish', {
           dish_id: dish_id,
-          user_id: user_id
+          user_id: user_id,
+          firstShare: firstShare
         });
-        appFactory.shareDish(dish_id, user_id);
-      }
+        appFactory.shareDish(dish_id, user_id, firstShare);
     };
 
     // Remove user's ID to dish item in appFactory, and send to the [server](../docs/sockets.js) through a socket event to update the database.
@@ -103,7 +106,7 @@
 
     // Calculate the user's running total bill.
     self.calcUserCurrentTotal = function(data) {
-      return (!data) ? 0 : allDishesFactory.calculateRunningTotal(data);
+      return (!data) ? 0 : appFactory.calculateRunningTotal(data);
     };
 
     // Add dish item in appFactory, and send dish item data to the [server](../docs/sockets.js) through a socket event to update the database.
