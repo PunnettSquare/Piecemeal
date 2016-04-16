@@ -411,13 +411,16 @@
             </div>
             
             <div class="content"><div class='highlight'><pre>    self.shareDish = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">dish_id, user_id, users</span>) </span>{
+      <span class="hljs-keyword">var</span> firstShare = <span class="hljs-literal">false</span>;
       <span class="hljs-keyword">if</span> (!self.isOnDish(users, user_id)) {
+        firstShare = <span class="hljs-literal">true</span>;
+      }
         socketFactory.emit(<span class="hljs-string">'shareDish'</span>, {
           dish_id: dish_id,
-          user_id: user_id
+          user_id: user_id,
+          firstShare: firstShare
         });
-        appFactory.shareDish(dish_id, user_id);
-      }
+        appFactory.shareDish(dish_id, user_id, firstShare);
     };</pre></div></div>
             
         </li>
@@ -490,7 +493,7 @@
             </div>
             
             <div class="content"><div class='highlight'><pre>    self.calcUserCurrentTotal = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">data</span>) </span>{
-      <span class="hljs-keyword">return</span> (!data) ? <span class="hljs-number">0</span> : allDishesFactory.calculateRunningTotal(data);
+      <span class="hljs-keyword">return</span> (!data) ? <span class="hljs-number">0</span> : appFactory.calculateRunningTotal(data);
     };</pre></div></div>
             
         </li>

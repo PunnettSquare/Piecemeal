@@ -216,31 +216,26 @@ module.exports = function(grunt) {
     },
 
     'string-replace': {
-        inline: {
-            files: {
-                '<%= project.dist %>/client/index.html': '<%= project.dist %>/client/index.html'
-            },
-            options: {
-                replacements: [
-                    {
-                        pattern: '<!--start PROD imports',
-                        replacement: '<!--start PROD imports-->'
-                    },
-                    {
-                        pattern: 'end PROD imports-->',
-                        replacement: '<!--end PROD imports-->'
-                    },
-                    {
-                        pattern: '<!--start DEV imports - injector:js-->',
-                        replacement: '<!--start DEV imports - injector:js'
-                    },
-                    {
-                        pattern: '<!--end DEV imports - injector-->',
-                        replacement: 'end DEV imports - injector-->'
-                    }
-                ]
-            }
+      inline: {
+        files: {
+          '<%= project.dist %>/client/index.html': '<%= project.dist %>/client/index.html'
+        },
+        options: {
+          replacements: [{
+            pattern: '<!--start PROD imports',
+            replacement: '<!--start PROD imports-->'
+          }, {
+            pattern: 'end PROD imports-->',
+            replacement: '<!--end PROD imports-->'
+          }, {
+            pattern: '<!--start DEV imports - injector:js-->',
+            replacement: '<!--start DEV imports - injector:js'
+          }, {
+            pattern: '<!--end DEV imports - injector-->',
+            replacement: 'end DEV imports - injector-->'
+          }]
         }
+      }
     },
 
     // Compiles Sass to CSS
@@ -271,7 +266,7 @@ module.exports = function(grunt) {
           banner: '<%= tag.banner %>'
         },
         files: {
-          '<%= project.dist %>/client/style.css': '<%= project.dist %>/client/style.css'
+          '<%= project.dist %>/client/app.css': '<%= project.dist %>/client/app.css'
         }
       }
     },
@@ -285,7 +280,7 @@ module.exports = function(grunt) {
       },
       files: {
         cwd: '<%= project.client %>',
-        src: ['**/*.html', '!index.html', '!**/*Old.html'],
+        src: ['**/*.html', '**/*.css', '!**/*Old.html'],
         dest: '<%= project.dist %>/client',
         expand: true
       }
@@ -294,7 +289,7 @@ module.exports = function(grunt) {
     copy: {
       files: {
         cwd: '<%= project.client %>',
-        src: ['**/*.html', '!**/*Old.html', '**/*.css', '**/*.scss'],
+        src: ['**/*.html', '!**/*Old.html', '**/*.css', '**/*.scss', '!styles/**.*'],
         dest: '<%= project.dist %>/client/',
         expand: true
       }
@@ -400,55 +395,6 @@ module.exports = function(grunt) {
           livereload: '<%= connect.options.livereload %>'
         }
       }
-      // ,
-      // karma: { // for unit tests and travis
-      //   files: ['src/**/*.js', 'test/unit/**/*.js'],
-      //   tasks: ['karma:unit:run']
-      // }
-      // injectJS: {
-      //   files: ['<%= project.client %>/app/app.module.js',
-      //     '<%= project.client %>/app/app.routes.js',
-      //     '<%= project.client %>/app/app.socket.init.js',
-      //     '<%= project.client %>/{app,components}/**/!(*.spec|*.mock).js'
-      //   ],
-      //   tasks: ['injector:scripts']
-      // },
-      // injectCss: {
-      //   files: ['<%= project.client %>/app.css'],
-      //   tasks: ['injector:css']
-      // },
-      // mochaTest: {
-      //   files: ['<%= project.server %>/**/*.{spec,integration}.js'],
-      //   tasks: ['env:test', 'mochaTest']
-      // },
-      // jsTest: {
-      //   files: ['<%= project.client %>/{app,components}/**/*.{spec,mock}.js'],
-      //   tasks: ['newer:jshint:all', 'wiredep:test', 'karma']
-      // },
-      // injectSass: {
-      //   files: ['<%= project.client %>/{app,components}/**/*.{scss,sass}'],
-      //   tasks: ['injector:sass']
-      // },
-      // sass: {
-      //   files: ['<%= project.client %>/{app,components}/**/*.{scss,sass}'],
-      //   tasks: ['sass:dev']
-      // },
-      // sass: {
-      //   files: ['<%= project.client %>/{app,components}/**/*.{scss,sass}'],
-      //   tasks: ['sass', 'postcss']
-      // },
-      // gruntfile: {
-      //   files: ['Gruntfile.js']
-      // },
-      // express: {
-      //   files: ['<%= project.server %>/**/*.{js,json}'],
-      //   tasks: ['express:dev', 'wait'],
-      //   options: {
-      //     livereload: true,
-      //     spawn: false //Without this option specified express won't be reloaded
-      //   }
-      // },
-
     },
 
     // ********* TEST *********
@@ -471,10 +417,7 @@ module.exports = function(grunt) {
     //   integration: {
     //     src: ['<%= project.server %>/**/*.integration.js']
     //   }
-    // },
-    // nodeunit: {
-    //   files: ['test/**/*_test.js']
-    // },
+    // }
 
   });
 
@@ -483,8 +426,8 @@ module.exports = function(grunt) {
   grunt.registerTask('start', ['open', 'watch']);
   grunt.registerTask('testIndiv', ['shell:testIndiv']);
   grunt.registerTask('testDup', ['shell:dupTest']);
-  grunt.registerTask('build', ['jshint', 'wiredep', 'injector:scripts', 'injector:sass', 'injector:css']);
-  grunt.registerTask('dist', ['clean', 'concat', 'ngmin', 'uglify', 'copy', 'string-replace']); // cdnify
+  grunt.registerTask('build', ['jshint', 'injector:scripts', 'injector:sass', 'injector:css']);
+  grunt.registerTask('dist', ['clean', 'concat', 'ngmin', 'uglify', 'copy', 'string-replace', 'cssmin', 'htmlmin']); // cdnify
   // grunt.registerTask('test', ['wiredep', 'karma', 'mochaTest']);
   // Tasks for karma and travis:
   // grunt.loadNpmTasks('grunt-contrib-watch');

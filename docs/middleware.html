@@ -217,11 +217,16 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-4">&#182;</a>
               </div>
-              <p><strong>Static folder for serving application assets</strong></p>
+              <p><strong>Static folders for serving application assets</strong></p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  app.use(<span class="hljs-string">'/'</span>, express.static(path.join(__dirname, <span class="hljs-string">'../../client/'</span>)));</pre></div></div>
+            <div class="content"><div class='highlight'><pre>  
+  app.use(<span class="hljs-string">'/assets'</span>, express.static(path.join(__dirname, <span class="hljs-string">'../../client/assets'</span>), {
+    maxage: <span class="hljs-number">1000</span>*<span class="hljs-number">60</span>*<span class="hljs-number">60</span>*<span class="hljs-number">24</span>*<span class="hljs-number">360</span>
+  }));
+
+  <span class="hljs-keyword">if</span> (process.env.PORT) {</pre></div></div>
             
         </li>
         
@@ -232,11 +237,12 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-5">&#182;</a>
               </div>
-              <p><strong>Static folder for serving documentation files</strong></p>
+              <p>Production static files</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  app.use(<span class="hljs-string">'/docs'</span>, express.static(path.join(__dirname, <span class="hljs-string">'../../docs'</span>)));</pre></div></div>
+            <div class="content"><div class='highlight'><pre>    app.use(<span class="hljs-string">'/'</span>, express.static(path.join(__dirname, <span class="hljs-string">'../../dist/client/'</span>)));
+  }  <span class="hljs-keyword">else</span> {</pre></div></div>
             
         </li>
         
@@ -247,11 +253,12 @@
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-6">&#182;</a>
               </div>
-              <p> <strong>Router to handle oAuth requests</strong></p>
+              <p>Development static files</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  app.use(<span class="hljs-string">'/auth'</span>, oauthRouter);</pre></div></div>
+            <div class="content"><div class='highlight'><pre>    app.use(<span class="hljs-string">'/'</span>, express.static(path.join(__dirname, <span class="hljs-string">'../../client/'</span>)));
+  }</pre></div></div>
             
         </li>
         
@@ -261,6 +268,36 @@
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <p><strong>Static folder for serving documentation files</strong></p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  app.use(<span class="hljs-string">'/docs'</span>, express.static(path.join(__dirname, <span class="hljs-string">'../../docs'</span>)));</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-8">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-8">&#182;</a>
+              </div>
+              <p> <strong>Router to handle oAuth requests</strong></p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  app.use(<span class="hljs-string">'/auth'</span>, oauthRouter);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-9">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-9">&#182;</a>
               </div>
               <p><strong>Router to handle general application requests</strong></p>
 

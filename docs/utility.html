@@ -257,6 +257,7 @@
           <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
         } <span class="hljs-keyword">else</span> {
           data[<span class="hljs-number">0</span>].isValid = <span class="hljs-literal">true</span>;
+          <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'code in util'</span>, data[<span class="hljs-number">0</span>])
           <span class="hljs-keyword">return</span> data[<span class="hljs-number">0</span>];
         }
       });
@@ -311,6 +312,26 @@
       });
   },
 
+  addVenmoUser: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">db, event_id, user_id</span>) </span>{
+    <span class="hljs-keyword">return</span> db(<span class="hljs-string">'usersJoinEvents'</span>).where({
+        event_id: event_id,
+        user_id: user_id
+      })
+      .then(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">data</span>) </span>{
+        <span class="hljs-keyword">if</span> (data.length === <span class="hljs-number">0</span>) {
+          <span class="hljs-keyword">return</span>  db(<span class="hljs-string">'usersJoinEvents'</span>).insert({
+            user_id: user_id,
+            event_id: event_id,
+            status: <span class="hljs-literal">false</span>,
+            host: <span class="hljs-literal">false</span>
+          })
+        } <span class="hljs-keyword">else</span> {
+          <span class="hljs-keyword">return</span>
+        } 
+      });
+   
+  },
+
   createDish: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">db, dishName, cost, user_id, event_id</span>) </span>{
     <span class="hljs-keyword">var</span> dishId;
     <span class="hljs-keyword">return</span> db(<span class="hljs-string">'dishes'</span>).insert({
@@ -323,7 +344,8 @@
         dishId = dish_id;
         <span class="hljs-keyword">return</span> db(<span class="hljs-string">'usersJoinDishes'</span>).insert({
           user_id: user_id,
-          dish_id: dish_id[<span class="hljs-number">0</span>]
+          dish_id: dish_id[<span class="hljs-number">0</span>],
+          portions: <span class="hljs-number">1</span>
         }).returning(<span class="hljs-string">'id'</span>);
       })
       .then(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
@@ -333,33 +355,109 @@
       });
   },
 
-  shareDish: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">db, user_id, dish_id</span>) </span>{
-    <span class="hljs-keyword">return</span> db(<span class="hljs-string">'usersJoinDishes'</span>).insert({
-      user_id: user_id,
-      dish_id: dish_id
-    });
+  shareDish: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">db, user_id, dish_id</span>) </span>{</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <p>Query DB to see if user is already on dish</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">return</span> db(<span class="hljs-string">'usersJoinDishes'</span>)
+      .where({
+        dish_id: dish_id,
+        user_id: user_id
+      })
+      .then(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">data</span>) </span>{</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-7">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <p>If they are not, make new entry in table</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">if</span> (data.length === <span class="hljs-number">0</span>) {
+          <span class="hljs-keyword">return</span> db(<span class="hljs-string">'usersJoinDishes'</span>).insert({
+            user_id: user_id,
+            dish_id: dish_id,
+            portions: <span class="hljs-number">1</span>
+          });
+        } <span class="hljs-keyword">else</span> {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-8">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-8">&#182;</a>
+              </div>
+              <p>If they already have a portion, increment the portion</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>         <span class="hljs-keyword">return</span> db(<span class="hljs-string">'usersJoinDishes'</span>).where({
+            user_id: user_id,
+            dish_id: dish_id
+          }).update({
+            portions: <span class="hljs-number">1</span> + data[<span class="hljs-number">0</span>].portions
+          });
+        }
+      });
+
   },
 
   unshareDish: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">db, user_id, dish_id</span>) </span>{
-    <span class="hljs-keyword">return</span> db(<span class="hljs-string">'usersJoinDishes'</span>).where({
-        user_id: user_id,
-        dish_id: dish_id
-      }).del()
-      .then(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
-        <span class="hljs-keyword">return</span> db(<span class="hljs-string">'usersJoinDishes'</span>).where({
-            dish_id: dish_id
-          })
-          .returning(<span class="hljs-string">'id'</span>);
+    <span class="hljs-keyword">return</span> db(<span class="hljs-string">'usersJoinDishes'</span>)
+      .where({
+        dish_id: dish_id,
+        user_id: user_id
       })
-      .then(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">ids</span>) </span>{
-        <span class="hljs-keyword">if</span> (ids.length === <span class="hljs-number">0</span>) {
-          <span class="hljs-keyword">return</span> db(<span class="hljs-string">'dishes'</span>).where({
-            id: dish_id
-          }).del();
+      .then(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">data</span>) </span>{
+        <span class="hljs-keyword">if</span> (data[<span class="hljs-number">0</span>].portions &gt; <span class="hljs-number">1</span>) {
+          <span class="hljs-keyword">return</span> db(<span class="hljs-string">'usersJoinDishes'</span>).where({
+             user_id: user_id,
+             dish_id: dish_id
+           }).update({
+             portions: data[<span class="hljs-number">0</span>].portions - <span class="hljs-number">1</span>
+           });
         } <span class="hljs-keyword">else</span> {
-          <span class="hljs-keyword">return</span>;
+          <span class="hljs-keyword">return</span> db(<span class="hljs-string">'usersJoinDishes'</span>).where({
+              user_id: user_id,
+              dish_id: dish_id
+            }).del()
+            .then(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+              <span class="hljs-keyword">return</span> db(<span class="hljs-string">'usersJoinDishes'</span>).where({
+                  dish_id: dish_id
+                })
+                .returning(<span class="hljs-string">'id'</span>);
+            })
+            .then(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">ids</span>) </span>{
+              <span class="hljs-keyword">if</span> (ids.length === <span class="hljs-number">0</span>) {
+                <span class="hljs-keyword">return</span> db(<span class="hljs-string">'dishes'</span>).where({
+                  id: dish_id
+                }).del();
+              } <span class="hljs-keyword">else</span> {
+                <span class="hljs-keyword">return</span>;
+              }
+            });
         }
-      });
+      })
   },
 
   removeDish: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">db, dish_id</span>) </span>{
@@ -390,11 +488,11 @@
         </li>
         
         
-        <li id="section-6">
+        <li id="section-9">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-6">&#182;</a>
+                <a class="pilcrow" href="#section-9">&#182;</a>
               </div>
               <p>return    db.select().from(‘events’).innerJoin(‘usersJoinEvents’, ‘events.event_id’, ‘usersJoinEvents.event_id’)</p>
 
@@ -414,7 +512,9 @@
   },
 
   getUsersEvents: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">db, user_id</span>) </span>{
-    <span class="hljs-keyword">return</span> db.select(<span class="hljs-string">'event_id'</span>).from(<span class="hljs-string">'usersJoinEvents'</span>).where(<span class="hljs-string">'usersJoinEvents.user_id'</span>, user_id);
+    <span class="hljs-keyword">return</span> db.select(<span class="hljs-string">'event_id'</span>)
+    .from(<span class="hljs-string">'usersJoinEvents'</span>)
+    .where(<span class="hljs-string">'usersJoinEvents.user_id'</span>, user_id);
   },
 
   gatherState: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">db, event_id, code</span>) </span>{
@@ -442,8 +542,22 @@
             <span class="hljs-keyword">return</span> <span class="hljs-built_in">Promise</span>.all(_.map(users, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">user</span>) </span>{
                 <span class="hljs-keyword">return</span> <span class="hljs-built_in">module</span>.exports.findUserDishes(db, user.id, event_id);
               }))
-              .then(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">usersDishesArrays</span>) </span>{
-                usersDishesArrays.forEach(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">userDishesArray</span>) </span>{
+              .then(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">usersDishesArrays</span>) </span>{</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-10">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-10">&#182;</a>
+              </div>
+              <p>Add dish models to each user in the state</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                usersDishesArrays.forEach(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">userDishesArray</span>) </span>{
                   _.each(state.users, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">userObj, index, list</span>) </span>{
                     <span class="hljs-keyword">var</span> username = userObj.username;
                     <span class="hljs-keyword">if</span> (list[index].dishes === <span class="hljs-literal">undefined</span>) {
@@ -455,8 +569,22 @@
                       }
                     });
                   });
-                });
-                state.dishes = <span class="hljs-built_in">module</span>.exports.findDishArray(usersDishesArrays);
+                });</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-11">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-11">&#182;</a>
+              </div>
+              <p>Add dish models section to state object</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>                state.dishes = <span class="hljs-built_in">module</span>.exports.findDishArray(usersDishesArrays);
 
                 <span class="hljs-keyword">return</span> state;
               });
@@ -474,11 +602,19 @@
   },
 
   findEventUsers: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">db, event_id</span>) </span>{
-    <span class="hljs-keyword">return</span> db.select(<span class="hljs-string">'users.username'</span>, <span class="hljs-string">'usersJoinEvents.status'</span>, <span class="hljs-string">'usersJoinEvents.host'</span>, <span class="hljs-string">'users.id'</span>, <span class="hljs-string">'users.venmoUsername'</span>).from(<span class="hljs-string">'events'</span>).leftJoin(<span class="hljs-string">'usersJoinEvents'</span>, <span class="hljs-string">'events.id'</span>, <span class="hljs-string">'usersJoinEvents.event_id'</span>).leftJoin(<span class="hljs-string">'users'</span>, <span class="hljs-string">'users.id'</span>, <span class="hljs-string">'usersJoinEvents.user_id'</span>).where(<span class="hljs-string">'events.id'</span>, event_id);
+    <span class="hljs-keyword">return</span> db.select(<span class="hljs-string">'users.username'</span>, <span class="hljs-string">'usersJoinEvents.status'</span>, <span class="hljs-string">'usersJoinEvents.host'</span>, <span class="hljs-string">'users.id'</span>, <span class="hljs-string">'users.venmoUsername'</span>)
+    .from(<span class="hljs-string">'events'</span>)
+    .leftJoin(<span class="hljs-string">'usersJoinEvents'</span>, <span class="hljs-string">'events.id'</span>, <span class="hljs-string">'usersJoinEvents.event_id'</span>)
+    .leftJoin(<span class="hljs-string">'users'</span>, <span class="hljs-string">'users.id'</span>, <span class="hljs-string">'usersJoinEvents.user_id'</span>)
+    .where(<span class="hljs-string">'events.id'</span>, event_id);
   },
 
   findUserDishes: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">db, user_id, event_id</span>) </span>{
-    <span class="hljs-keyword">return</span> db.select().from(<span class="hljs-string">'users'</span>).innerJoin(<span class="hljs-string">'usersJoinDishes'</span>, <span class="hljs-string">'users.id'</span>, <span class="hljs-string">'usersJoinDishes.user_id'</span>).innerJoin(<span class="hljs-string">'dishes'</span>, <span class="hljs-string">'dishes.id'</span>, <span class="hljs-string">'usersJoinDishes.dish_id'</span>).where(<span class="hljs-string">'users.id'</span>, user_id)
+    <span class="hljs-keyword">return</span> db.select()
+    .from(<span class="hljs-string">'users'</span>)
+    .innerJoin(<span class="hljs-string">'usersJoinDishes'</span>, <span class="hljs-string">'users.id'</span>, <span class="hljs-string">'usersJoinDishes.user_id'</span>)
+    .innerJoin(<span class="hljs-string">'dishes'</span>, <span class="hljs-string">'dishes.id'</span>, <span class="hljs-string">'usersJoinDishes.dish_id'</span>)
+    .where(<span class="hljs-string">'users.id'</span>, user_id)
       .then(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">dishes</span>) </span>{
         <span class="hljs-keyword">return</span> dishes.filter(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">dish</span>) </span>{
           <span class="hljs-keyword">return</span> dish.event_id === event_id;
@@ -487,8 +623,9 @@
   },
 
   findBillAmendments: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">db, event_id</span>) </span>{
-    <span class="hljs-keyword">return</span> db(<span class="hljs-string">'events'</span>).select(<span class="hljs-string">'tipPercent'</span>, <span class="hljs-string">'taxPercent'</span>, <span class="hljs-string">'feePercent'</span>, <span class="hljs-string">'discountPercent'</span>, <span class="hljs-string">'billSent'</span>)
-      .where(<span class="hljs-string">'id'</span>, event_id);
+    <span class="hljs-keyword">return</span> db(<span class="hljs-string">'events'</span>)
+    .select(<span class="hljs-string">'tipPercent'</span>, <span class="hljs-string">'taxPercent'</span>, <span class="hljs-string">'feePercent'</span>, <span class="hljs-string">'discountPercent'</span>, <span class="hljs-string">'billSent'</span>)
+    .where(<span class="hljs-string">'id'</span>, event_id);
   },
 
   generateCode: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">db</span>) </span>{
@@ -537,13 +674,13 @@
         </li>
         
         
-        <li id="section-7">
+        <li id="section-12">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-7">&#182;</a>
+                <a class="pilcrow" href="#section-12">&#182;</a>
               </div>
-              <p>check if dish is shared</p>
+              <p>Check if dish is shared</p>
 
             </div>
             
@@ -556,17 +693,20 @@
         </li>
         
         
-        <li id="section-8">
+        <li id="section-13">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-8">&#182;</a>
+                <a class="pilcrow" href="#section-13">&#182;</a>
               </div>
-              <p>if so, add user to users prop</p>
+              <p>If so, add user to users prop, as many times as the portions that user has</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>            result[index].users.push(dishObj.user_id);
+            <div class="content"><div class='highlight'><pre>            <span class="hljs-keyword">while</span> (dishObj.portions) {
+              result[index].users.push(dishObj.user_id);
+              dishObj.portions--;
+            }
             <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
           }
         }, <span class="hljs-literal">false</span>);
@@ -576,17 +716,21 @@
         </li>
         
         
-        <li id="section-9">
+        <li id="section-14">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-9">&#182;</a>
+                <a class="pilcrow" href="#section-14">&#182;</a>
               </div>
-              <p>otherwise add user prop and push into array</p>
+              <p>Otherwise add user prop and push into array for as many portions as user has</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>          dishObj.users = [dishObj.user_id];
+            <div class="content"><div class='highlight'><pre>          dishObj.users = [];
+          <span class="hljs-keyword">while</span> (dishObj.portions) {
+            dishObj.users.push(dishObj.user_id);
+            dishObj.portions--;
+          }            
           <span class="hljs-keyword">delete</span> dishObj.user_id;
           <span class="hljs-keyword">delete</span> dishObj.username;
           <span class="hljs-keyword">delete</span> dishObj.id;

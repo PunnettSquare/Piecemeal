@@ -196,7 +196,7 @@
   angular.module(<span class="hljs-string">'Piecemeal'</span>)
     .controller(<span class="hljs-string">'GuestBillCtrl'</span>, GuestBillCtrl);
 
-  GuestBillCtrl.$inject = [<span class="hljs-string">'$scope'</span>, <span class="hljs-string">'appFactory'</span>, <span class="hljs-string">'allDishesFactory'</span>, <span class="hljs-string">'socketFactory'</span>, <span class="hljs-string">'$timeout'</span>];</pre></div></div>
+  GuestBillCtrl.$inject = [<span class="hljs-string">'$scope'</span>, <span class="hljs-string">'appFactory'</span>, <span class="hljs-string">'socketFactory'</span>, <span class="hljs-string">'$timeout'</span>];</pre></div></div>
             
         </li>
         
@@ -212,7 +212,7 @@
             </div>
             
             <div class="content"><div class='highlight'><pre>
-  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">GuestBillCtrl</span>(<span class="hljs-params">$scope, appFactory, allDishesFactory, socketFactory, $timeout</span>) </span>{
+  <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">GuestBillCtrl</span>(<span class="hljs-params">$scope, appFactory, socketFactory, $timeout</span>) </span>{
     <span class="hljs-keyword">var</span> self = <span class="hljs-keyword">this</span>;</pre></div></div>
             
         </li>
@@ -366,53 +366,52 @@
       <span class="hljs-keyword">return</span> (!self.data) ? [] : _.filter(dishes, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">obj, key</span>) </span>{
         <span class="hljs-keyword">return</span> _.contains(obj.users, user_id);
       });
-    };</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-14">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-14">&#182;</a>
-              </div>
-              <p>remove?</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>    self.getGuestTotal = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">data</span>) </span>{
-      <span class="hljs-keyword">return</span> allDishesFactory.calculateRunningTotal(data);
-    };</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-15">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-15">&#182;</a>
-              </div>
-              <p>remove</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>    self.getGrandTotal = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">dishes, billData</span>) </span>{
-      <span class="hljs-keyword">return</span> (!self.data) ? <span class="hljs-number">0</span> : _.sum(_.pluck(dishes, <span class="hljs-string">'cost'</span>)) + self.getGuestTip() + self.getGuestTax();
     };
 
     self.getOtherUsersByUsername = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">dish, users, user_id</span>) </span>{
-      <span class="hljs-keyword">return</span> appFactory.arrayToSentence(
-        _(dish.users).filter(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">id</span>) </span>{
-          <span class="hljs-keyword">return</span> id !== user_id;
+
+      <span class="hljs-keyword">var</span> tracker = {};
+
+      <span class="hljs-keyword">var</span> dishUsers = dish.users.slice();
+
+      dishUsers = _.filter(dish.users, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">id</span>) </span>{
+        <span class="hljs-keyword">return</span> id !== user_id;
+      });
+
+      _.each(dishUsers, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">user_id</span>) </span>{
+        <span class="hljs-keyword">if</span> (tracker[user_id]) {
+          tracker[user_id]++;
+        } <span class="hljs-keyword">else</span> {
+          tracker[user_id] = <span class="hljs-number">1</span>;
+        }
+      });
+
+      <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">findIndex</span>(<span class="hljs-params">objArray, keyObj</span>) </span>{
+        <span class="hljs-keyword">var</span> result;
+        objArray.forEach(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">obj, index</span>) </span>{
+          <span class="hljs-keyword">for</span> (<span class="hljs-keyword">var</span> key <span class="hljs-keyword">in</span> keyObj) {
+            <span class="hljs-keyword">if</span> (obj[key] == keyObj[key]) {
+              result = index
+            }
+          }
         })
-        .map(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">id</span>) </span>{
-          <span class="hljs-keyword">return</span> users[_.findIndex(users, {
-            <span class="hljs-string">'id'</span>: id
+        <span class="hljs-keyword">return</span> result;
+      }
+
+      <span class="hljs-keyword">var</span> shares = _.map(tracker, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">portions, user_id</span>) </span>{
+        <span class="hljs-keyword">if</span> (portions &gt; <span class="hljs-number">1</span>) {
+          <span class="hljs-keyword">return</span> users[findIndex(users, {
+            <span class="hljs-string">'id'</span>: user_id
+          })].username + <span class="hljs-string">' (x'</span> + portions + <span class="hljs-string">')'</span>;
+        } <span class="hljs-keyword">else</span> {
+          <span class="hljs-keyword">return</span> users[findIndex(users, {
+            <span class="hljs-string">'id'</span>: user_id
           })].username;
-        }).value()
-      );
+        }
+      })
+
+      <span class="hljs-keyword">return</span> appFactory.arrayToSentence(shares)
+
     };
 
     self.getGuestTax = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
@@ -432,31 +431,12 @@
     };
 
     self.getGuestSubtotal = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">data</span>) </span>{
-      <span class="hljs-keyword">return</span> allDishesFactory.calculateRunningTotal(data);
+      <span class="hljs-keyword">return</span> appFactory.calculateRunningTotal(data);
     };
 
-    self.getGuestGrandTotal = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-16">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-16">&#182;</a>
-              </div>
-              <p>return (!self.data) ? 0 : Math.round(
-  (self.getGuestTotal(self.data)</p>
-<pre><code>+ (self.data.billData.taxPercent * self.getGuestTotal(self.data) * <span class="hljs-number">0.01</span>)
-+ (self.data.billData.tipPercent * self.getGuestTotal(self.data) * <span class="hljs-number">0.01</span>)
-</code></pre><p>  )*100)/100;</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>
+    self.getGuestGrandTotal = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
       <span class="hljs-keyword">return</span> (!self.data) ? <span class="hljs-number">0</span> : <span class="hljs-built_in">Math</span>.round((
-        self.getGuestTotal(self.data) + self.getGuestTax() + self.getGuestTip() + self.getGuestFee() - self.getGuestDiscount()
+        self.getGuestSubtotal(self.data) + self.getGuestTax() + self.getGuestTip() + self.getGuestFee() - self.getGuestDiscount()
       ) * <span class="hljs-number">100</span>) / <span class="hljs-number">100</span>;
     };
 
@@ -477,11 +457,11 @@
         </li>
         
         
-        <li id="section-17">
+        <li id="section-14">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-17">&#182;</a>
+                <a class="pilcrow" href="#section-14">&#182;</a>
               </div>
               <p>remove:
 self.getGrandTotal = function(dishes, billData) {
