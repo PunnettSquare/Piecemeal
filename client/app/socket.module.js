@@ -34,7 +34,10 @@
 
     function init() {
       var ioRoom = $window.location.origin + '/' + $window.localStorage.code;
-      $window.socket = io(ioRoom);
+      $window.socket = io(ioRoom, {
+        reconnectionDelayMax: 0,
+        timeout: 6000000
+      });
     }
 
     function on(eventName, callback) {
