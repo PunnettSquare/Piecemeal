@@ -289,7 +289,7 @@ module.exports = function(grunt) {
     copy: {
       files: {
         cwd: '<%= project.client %>',
-        src: ['**/*.html', '!**/*Old.html', '**/*.css', '**/*.scss', '!styles/**.*'],
+        src: ['**/*.html', '!**/*Old.html', '**/*.css', '**/*.scss', '**/manifest.json', '!styles/**.*'],
         dest: '<%= project.dist %>/client/',
         expand: true
       }
@@ -427,7 +427,7 @@ module.exports = function(grunt) {
   grunt.registerTask('testIndiv', ['shell:testIndiv']);
   grunt.registerTask('testDup', ['shell:dupTest']);
   grunt.registerTask('build', ['jshint', 'injector:scripts', 'injector:sass', 'injector:css']);
-  grunt.registerTask('dist', ['clean', 'concat', 'ngmin', 'uglify', 'copy', 'string-replace', 'cssmin', 'htmlmin']); // cdnify
+  grunt.registerTask('dist', ['clean', 'concat', 'ngmin', 'uglify', 'copy', 'string-replace', 'cssmin']); // cdnify
   // grunt.registerTask('test', ['wiredep', 'karma', 'mochaTest']);
   // Tasks for karma and travis:
   // grunt.loadNpmTasks('grunt-contrib-watch');

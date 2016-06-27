@@ -1,1 +1,58 @@
-<div class="content--centered"><div class="row" ng-cloak><div class="col s12"><header><h5>Enter</h5></header><form name="userInput"><div><br><h6>Join by entering your name:</h6><input type="text" placeholder="Name" ng-model="username" name="username" class="enterName" required id="name" required><br><div class="loading__button--enterRoom"><button ng-if="!loading.isSent" type="submit" name="username" ng-disabled="userInput.username.$error.required || loading.privateMode" value="Enter room" class="enterRoom btn loading__button--enterRoom" ng-click="loading.setSessionUser(username)">Enter Room</button></div><br></div></form><br></div><div class="roomInfo" ng-hide="loading.isError"><br><h6>Room <strong>{{loading.code}}</strong> currently has:</h6><div class="roomInfo__chips"><div class="animated fadeInUp chip--animated"><div class="chip"><div class="chip__icon"><p class="chip__letter">Y</p></div>You</div></div><div class="animated fadeInUp chip--animated" ng-repeat="user in loading.currentUsers"><div class="chip"><div class="chip__icon"><p class="chip__letter">{{_.capitalize(user[0])}}</p></div>{{_.capitalize(user)}}</div></div></div></div></div></div>
+<div class="content--centered">
+
+  <div class="row" ng-cloak>
+    <div class="col s12">
+
+
+      <!-- Header -->
+      <header>
+        <h5>Enter</h5>
+        <div class="divider"></div>
+      </header>
+
+      <!-- Add Name form -->
+      <form name="userInput">
+        <div>
+          <br>
+          <h6>Join by entering your name:</h6>
+          <input type="text" placeholder="Name" ng-model="username" name="username" class="enterName" required id="name" required>
+          <br>
+
+          <div class="loading__button--enterRoom">
+            <button ng-if="!loading.isSent" type="submit" name="username" ng-disabled="userInput.username.$error.required || loading.privateMode" value="Enter room" class="enterRoom btn loading__button--enterRoom" ng-click="loading.setSessionUser(username)">Enter Room</button>
+          </div>
+          <br>
+        </div>
+      </form>
+
+      <br>
+    </div>
+
+
+    <!-- Who is currently in the room -->
+    <div class="roomInfo" ng-hide="loading.isError">
+    <br>
+      <h6>Room <strong>{{loading.code}}</strong> currently has:</h6>
+      <div class="roomInfo__chips">
+
+
+        <div class="animated fadeInUp chip--animated">
+          <div class="chip">
+            <div class="chip__icon">
+              <p class="chip__letter">Y</p>
+            </div>
+            You
+          </div>
+        </div>
+        <div class="animated fadeInUp chip--animated" ng-repeat="user in loading.currentUsers">
+          <div class="chip">
+            <div class="chip__icon">
+              <p class="chip__letter">{{_.capitalize(user[0])}}</p>
+            </div>
+            {{_.capitalize(user)}}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

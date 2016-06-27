@@ -32,9 +32,26 @@
 
     return services;
 
+    var isActive = true;
     function init() {
       var ioRoom = $window.location.origin + '/' + $window.localStorage.code;
       $window.socket = io(ioRoom);
+
+      on('ping', function() {
+        isActive = true;
+        emit('pong');
+      });
+
+      setInterval(function() {
+        if (!isActive) {
+          $window.socket = io(ioRoom, {
+            reconnectionDelayMax: 0,
+            timeout: 600000
+          });
+        } else {
+          isActive = false;
+        }
+      }, 3000)
     }
 
     function on(eventName, callback) {
