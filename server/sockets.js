@@ -13,13 +13,13 @@ var connect = function(eventUrl, eventInfo, io, userObj) {
   var mealEvent = io.of(eventUrl);
   mealEvent.once('connection', function(socket) {
 
-    // setInterval(function() {
-    //   socket.emit('ping');
-    // }, 1500);
+    setInterval(function() {
+      socket.emit('ping');
+    }, 1500);
 
-    // socket.on('pong', function() {
-    //   console.log('heard pong');
-    // });
+    socket.on('pong', function() {
+      console.log('heard pong');
+    });
 
     console.log('Socket connection made with server: User', userObj.id, "socket id", socket.id, "on event URL", eventUrl);
 

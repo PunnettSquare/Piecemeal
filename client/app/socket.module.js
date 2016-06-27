@@ -37,22 +37,22 @@
       var ioRoom = $window.location.origin + '/' + $window.localStorage.code;
       $window.socket = io(ioRoom, {
         reconnectionDelayMax: 0,
-        timeout: 6000000
+        timeout: 600000
       });
 
-      // on('ping', function() {
-      //   console.log("Heard ping");
-      //   isActive = true;
-      //   emit('pong');
-      // });
+      on('ping', function() {
+        console.log("Heard ping");
+        isActive = true;
+        emit('pong');
+      });
 
-      // setInterval(function() {
-      //   if (!isActive) {
-      //     $window.location.reload()
-      //   } else {
-      //     isActive = false;
-      //   }
-      // }, 3000)
+      setInterval(function() {
+        if (!isActive) {
+          $window.location.reload()
+        } else {
+          isActive = false;
+        }
+      }, 3000)
     }
 
     function on(eventName, callback) {
