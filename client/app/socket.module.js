@@ -35,13 +35,9 @@
     var isActive = true;
     function init() {
       var ioRoom = $window.location.origin + '/' + $window.localStorage.code;
-      $window.socket = io(ioRoom, {
-        reconnectionDelayMax: 0,
-        timeout: 600000
-      });
+      $window.socket = io(ioRoom);
 
       on('ping', function() {
-        console.log("Heard ping");
         isActive = true;
         emit('pong');
       });
@@ -52,7 +48,6 @@
             reconnectionDelayMax: 0,
             timeout: 600000
           });
-          // $window.location.reload()
         } else {
           isActive = false;
         }
