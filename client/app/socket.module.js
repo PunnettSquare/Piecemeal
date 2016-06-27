@@ -48,7 +48,11 @@
 
       setInterval(function() {
         if (!isActive) {
-          $window.location.reload()
+          $window.socket = io(ioRoom, {
+            reconnectionDelayMax: 0,
+            timeout: 600000
+          });
+          // $window.location.reload()
         } else {
           isActive = false;
         }
