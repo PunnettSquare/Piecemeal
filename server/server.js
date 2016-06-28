@@ -10,7 +10,7 @@ var app = express();
 
 var http = require('http').Server(app);
 
-var io = require('socket.io')(http);
+var io = require('socket.io')(http, {'pingTimeout': 6000000});
 
 var port = process.env.PORT || 8080;
 
