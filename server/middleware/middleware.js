@@ -7,6 +7,11 @@
 var path = require('path');
 var bodyParser = require('body-parser');
 var morgan = require('morgan');
+//  Keep Heroku free dyno from going down
+var http = require("http");
+setInterval(function() {
+    http.get("http://piecemeal.herokuapp.com/");
+}, 300000);
 
 module.exports = function(app, express, io) {
 
